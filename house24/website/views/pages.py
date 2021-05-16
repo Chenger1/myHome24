@@ -1,4 +1,4 @@
-from db.models.pages import MainPage, AboutPage, ServicesPage
+from db.models.pages import MainPage, AboutPage, ServicesPage, ContactsPage
 
 from website.views.singleton_page_mixin import SingletonView
 
@@ -16,3 +16,8 @@ class AboutPageView(SingletonView):
 class ServicesPageView(SingletonView):
     model = ServicesPage
     template_name = 'pages/services_page.html'
+
+
+class ContactsPageView(SingletonView):
+    model = ContactsPage
+    template_name = 'pages/contacts_page.html'

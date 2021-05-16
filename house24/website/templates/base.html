@@ -33,7 +33,7 @@
                         {% block about_header %} <li class="nav-item"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
                         {% block services_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:services_page_view' %}">Услуги</a></li>{% endblock %}
                         <li class="nav-item"><a class="nav-link" href="https://avada-media.ua/myhouse24/">Условия приобретения</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Контакты</a></li>
+                        {% block contact_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:contacts_page_view' %}">Контакты</a></li>{% endblock %}
                         <li class="nav-item"><a class="nav-link" href="contact.html">
                             <i class="fas fa-sign-in-alt"></i>
                             Вход
