@@ -44,7 +44,6 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     status = models.IntegerField(choices=status_choices)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['__all__']
 
     date_joined = models.DateTimeField(default=timezone.now)
 

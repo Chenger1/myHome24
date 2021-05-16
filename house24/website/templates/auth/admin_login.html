@@ -1,0 +1,106 @@
+{% extends "auth/base_login.html" %}
+{% load static %}
+
+
+{% block content %}
+<div class="login_box" style="background-color:white;">
+    <div class="nav-tabs-custom">
+        <ul class="nav nav-tabs">
+            {% block client_link %}
+            <li class="active">
+                <a href="#for_clients" data-toggle="tab" class="active" id="client_link"
+                style="display:block;">Для жильца</a>
+            </li>
+            {% endblock %}
+            {% block admin_link %}
+            <li>
+                <a href="#admin" data-toggle="tab" id="admin_link"
+                style="display:block;">Для администрации</a>
+            </li>
+            {% endblock %}
+        </ul>
+    </div>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="for_clients">
+            <form action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <div class="login-content">
+                            <p class="login-msg">Вход в личный кабинет</p>
+
+                            <div class="input-container">
+                                <input type="email" placeholder="E-mail" class="form-control">
+                                <span class="fa fa-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="input-container">
+                                <input type="password" placeholder="Пароль" class="form-control">
+                                <span class="fa fa-lock form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 25px 25px 25px;">
+                    <div class="col-xl-12" style="padding-right: 195px;">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+                            <label for="customCheckbox1" class="custom-control-label">Запомнить меня</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-12" style="margin-top:15px;">
+                        <button type="submit" class="btn btn-primary btn-block login_button">Вход</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="admin">
+            <form action="">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <div class="login-content">
+                            <p class="login-msg">Вход в панель управления</p>
+
+                            <div class="input-container">
+                                <input type="email" placeholder="E-mail" class="form-control">
+                                <span class="fa fa-envelope form-control-feedback"></span>
+                            </div>
+                            <div class="input-container">
+                                <input type="password" placeholder="Пароль" class="form-control">
+                                <span class="fa fa-lock form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="padding: 0 25px 25px 25px;;">
+                    <div class="col-xl-12" style="padding-right: 195px;">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="customCheckbox2" value="option1">
+                            <label for="customCheckbox2" class="custom-control-label">Запомнить меня</label>
+                        </div>
+                    </div>
+                    <div class="col-xl-12" style="margin-top:15px;">
+                        <button type="submit" class="btn btn-primary btn-block login_button">Вход</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+ <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $('#client_link').on('click', function(){
+        $(this).parent().addClass('active');
+        $('#admin_link').parent().removeClass('active')
+    })
+    $('#admin_link').on('click', function(){
+        $(this).parent().addClass('active');
+        $('#client_link').parent().removeClass('active')
+    })
+</script>
+{% endblock %}
