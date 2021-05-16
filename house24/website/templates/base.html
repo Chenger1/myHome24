@@ -31,7 +31,7 @@
                     <ul class="navbar-nav ml-auto">
                         {% block main_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:main_page_view' %}">Главная</a></li>{% endblock %}
                         {% block about_header %} <li class="nav-item"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Услуги</a></li>
+                        {% block services_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:services_page_view' %}">Услуги</a></li>{% endblock %}
                         <li class="nav-item"><a class="nav-link" href="contact.html">Условия приобретения</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Контакты</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">

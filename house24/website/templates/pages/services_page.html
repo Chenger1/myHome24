@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}CRM система для ОСМД - "МОЙ ДОМ 24"{% endblock %}
+
+{% block services_header %}<li class="nav-item active"><a class="nav-link" href="{% url 'website:services_page_view' %}">Услуги</a></li>{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Услуги</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <div style="border-bottom: 1px solid #eee; margin-top:30px;"><h3>Наши услуги</h3></div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:30px;">
+            <div class="col-lg-6" style="text-align:center;">
+                <img src="{% static 'img/logo.svg' %}" class="img-fluid rounded mb-4">
+            </div>
+            <div class="col-lg-6">
+                <h2 style="border-bottom: 1px solid #eee; padding-bottom:25px;">Услуга</h2>
+                <p>Текст</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
