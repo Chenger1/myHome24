@@ -124,6 +124,7 @@ STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
 STATICFILES_DIRS = (
     ('bootstrap', Path(__file__).parent.parent.joinpath('static/bootstrap')),
     ('website', Path(__file__).parent.parent.joinpath('static/website')),
+    ('img', Path(__file__).parent.parent.joinpath('static/img')),
 )
 
 # Default primary key field type
