@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Modern Business - Start Bootstrap Template</title>
+        <title>{% block title %}Мой дом24{% endblock %}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -29,8 +29,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item active"><a class="nav-link" href="about.html">Главная</a></li>
-                        <li class="nav-item"><a class="nav-link" href="services.html">О нас</a></li>
+                        {% block main_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:main_page_view' %}">Главная</a></li>{% endblock %}
+                        {% block about_header %} <li class="nav-item"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
                         <li class="nav-item"><a class="nav-link" href="contact.html">Услуги</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Условия приобретения</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Контакты</a></li>

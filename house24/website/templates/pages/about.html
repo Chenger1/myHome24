@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}CRM-система для управляющей компании ЖКХ
+ - "МОЙ ДОМ 24"{% endblock %}
+
+{% block about_header %} <li class="nav-item active"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
+
+{% block content %}
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
+                    <li class="breadcrumb-item active" aria-current="page">О нас</li>
+                  </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <div style="border-bottom: 1px solid #eee;"><h3>О управляющей компании</h3></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text">
+                    <img src="{% static 'img/logo.svg' %}" alt="image" style="float:right; margin: 0 0 15px 15px; max-width: 250px;">
+                    Компания-застройщик не только создала этот объект для своих покупателей, но и после окончания строительства взяла на себя все услуги по обеспечению удобного проживания своих жильцов. Для этого была организована управляющая компания «Морская симфония», которая осуществляет комплексное обслуживание коммунальной сферы жизнедеятельности своих клиентов.
+
+Миссией управляющей компании является такая схема взаимодействия с жильцами дома, при которой услуги компании не отвлекают их от проживания и отдыха и создают максимально комфортную экосистему в доме. Незаметный сервис и максимально эффективная работа являются визитной карточкой компании.
+
+
+В функции управляющей компании входят как содержание и управление хозяйством комплекса, так и охраняемой придомовой территории – уборка, техническое обслуживание лифтового хозяйства, системы электро и водоснабжения дома, котельной и пожарной систем, диспетчеризация, охрана, содержание придомовой территории и многое другое. В штате компании собраны только профессионалы своего дела, которые помогут жильцам в самых трудных и критических ситуациях решить их жилищно-коммунальные проблемы семь дней в неделю круглосуточно – электрики и сантехники, инженеры, монтеры и другие специалисты имеют многолетний опыт и высокий уровень квалификации.
+
+Все это делает жилой комплекс  уникальным, комфортным и безопасным местом для проживания и отдыха всей семьи круглый год. Доверьте заботу о вашем доме и вашей квартире управляющей компании  и вы сможете круглый год наслаждаться проживанием на берегу моря и прекрасной природой Одессы.
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:50px;">
+            <div class="col-xs-12 col-sm-6 col-md-3" style="margin-bottom: 30px; text-align:center;">
+                <a href="">
+                    <img src="{% static 'img/logo.svg' %}" alt class="img-thumbnail">
+                </a>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-3">
+                <a href="">
+                    <img src="{% static 'img/logo.svg' %}" alt class="img-thumbnail">
+                </a>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 60px;">
+            <div class="col-md">
+                <div style="border-bottom: 1px solid #eee;"><h3>Дополнительные услуги</h3></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                sdf
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

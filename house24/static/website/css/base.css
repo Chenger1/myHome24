@@ -20,7 +20,7 @@
   color: black;
 }
 
-.active{
+.navbar-nav .active{
     color: black;
     background-color: #e7e7e7;
 }
@@ -67,6 +67,10 @@ footer{
     padding-bottom: 9px;
     margin: 40px 0 20px;
     border-bottom: 1px solid #eee;
+}
+
+.breadcrumb{
+    background-color: transparent;
 }
 
 
