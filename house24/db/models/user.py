@@ -40,10 +40,15 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
     phone_number = models.CharField(max_length=50, validators=[phone_validation])
-    birthday = models.DateField()
-    status = models.IntegerField(choices=status_choices)
+    birthday = models.DateField(blank=True, null=True)
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
+
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ('phone_number', )
 
     date_joined = models.DateTimeField(default=timezone.now)
 

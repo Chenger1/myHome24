@@ -31,11 +31,11 @@
                             <p class="login-msg">Вход в личный кабинет</p>
 
                             <div class="input-container">
-                                <input type="email" placeholder="E-mail" class="form-control">
+                                {{ form.email }}
                                 <span class="fa fa-envelope form-control-feedback"></span>
                             </div>
                             <div class="input-container">
-                                <input type="password" placeholder="Пароль" class="form-control">
+                                {{ form.password }}
                                 <span class="fa fa-lock form-control-feedback"></span>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
         </div>
 
         <div class="tab-pane" id="admin">
-            <form action="">
+            <form action="{% url 'website:admin_site_login_view' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col">
@@ -65,11 +65,11 @@
                             <p class="login-msg">Вход в панель управления</p>
 
                             <div class="input-container">
-                                <input type="email" placeholder="E-mail" class="form-control">
+                                {{ form.email }}
                                 <span class="fa fa-envelope form-control-feedback"></span>
                             </div>
                             <div class="input-container">
-                                <input type="password" placeholder="Пароль" class="form-control">
+                                {{ form.password }}
                                 <span class="fa fa-lock form-control-feedback"></span>
                             </div>
                         </div>
