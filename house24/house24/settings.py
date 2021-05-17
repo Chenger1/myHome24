@@ -105,7 +105,7 @@ AUTHENTICATION_BACKENDS = ['website.auth_backend.EmailBackend']
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
@@ -127,6 +127,9 @@ STATICFILES_DIRS = (
     ('img', Path(__file__).parent.parent.joinpath('static/img')),
     ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
 )
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

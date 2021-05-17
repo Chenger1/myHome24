@@ -60,7 +60,7 @@ class User(CustomAbstractUser):
 
 
 class Owner(CustomAbstractUser):
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to='users/')
     patronym = models.CharField(max_length=100)
     viber = models.CharField(max_length=100, blank=True, null=True)
     telegram = models.CharField(max_length=100, blank=True, null=True)

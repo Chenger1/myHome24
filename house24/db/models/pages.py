@@ -7,9 +7,9 @@ from db.models.mixin import SingletonModel
 
 
 class MainPage(SingletonModel):
-    slide1 = models.ImageField()
-    slide2 = models.ImageField()
-    slide3 = models.ImageField()
+    slide1 = models.ImageField(upload_to='main_page/')
+    slide2 = models.ImageField(upload_to='main_page/')
+    slide3 = models.ImageField(upload_to='main_page/')
     title = models.CharField(max_length=150)
     description = models.TextField(blank=True, null=True)
     show_link = models.BooleanField(default=1)
@@ -23,7 +23,7 @@ class MainPage(SingletonModel):
 
 class InfoBlock(models.Model):
     entity = models.ForeignKey(MainPage, related_name='blocks', on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='main_page/block/')
     title = models.CharField(max_length=100)
     description = models.TextField()
 
@@ -31,7 +31,7 @@ class InfoBlock(models.Model):
 class AboutPage(SingletonModel):
     title = models.CharField(max_length=150)
     description = models.TextField()
-    photo = models.ImageField()
+    photo = models.ImageField(upload_to='about/')
     seo_title = models.CharField(max_length=150, blank=True, null=True)
     seo_description = models.TextField(blank=True, null=True)
     seo_keywords = models.CharField(max_length=150, blank=True, null=True)
@@ -41,17 +41,17 @@ class AboutPage(SingletonModel):
 
 class AboutGallery(models.Model):
     entity = models.ForeignKey(AboutPage, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='about/gallery/')
 
 
 class AdditionalGallery(models.Model):
     entity = models.ForeignKey(AboutPage, related_name='add_images', on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='about/additional/')
 
 
 class Document(models.Model):
     name = models.CharField(max_length=100)
-    file = models.FileField()
+    file = models.FileField(upload_to='about/documents/')
 
 
 class Credentials(SingletonModel):
@@ -84,7 +84,7 @@ class ServicesPage(SingletonModel):
 
 class ServiceBlock(models.Model):
     entity = models.ForeignKey(ServicesPage, related_name='blocks', on_delete=models.CASCADE)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='services_page/')
     title = models.CharField(max_length=100)
     description = models.TextField()
 

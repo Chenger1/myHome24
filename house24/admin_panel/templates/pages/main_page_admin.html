@@ -117,8 +117,11 @@
                                 </div>
 
                                 <div class="row" style="margin-top:20px;">
-                                    {{ formset.management_form }}
+                                    {{formset.management_form}}
                                     {% for inline_form in formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
                                         <div class="col-md-4">
                                             <h4>Блок {{ forloop.counter }}</h4>
                                             {% if inline_form.instance.image %}
