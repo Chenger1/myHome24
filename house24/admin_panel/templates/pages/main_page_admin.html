@@ -45,12 +45,12 @@
                                 </div>
                             </div>
 
-                            <form action="">
+                            <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col-md-4">
                                         <h4>Слайд 1</h4>
-                                        {% if form.slide1.url %}
+                                        {% if form.slide1 %}
                                         <img src="{{ form.instance.slide1.url }}" alt class="slider_img">
                                         {% else %}
                                         <img src="{% static 'img/default_form_image.png' %}" alt class="slider_img">
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <h4>Слайд 2</h4>
-                                        {% if form.slide2.url %}
+                                        {% if form.slide2 %}
                                         <img src="{{ form.instance.slide2.url }}" alt class="slider_img">
                                         {% else %}
                                         <img src="{% static 'img/default_form_image.png' %}" alt class="slider_img">
@@ -72,7 +72,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <h4>Слайд 3</h4>
-                                        {% if form.slide3.url %}
+                                        {% if form.slide3 %}
                                         <img src="{{ form.instance.slide3.url }}" alt class="slider_img">
                                         {% else %}
                                         <img src="{% static 'img/default_form_image.png' %}" alt class="slider_img">
@@ -98,7 +98,7 @@
 
                                         <div class="form-group">
                                             <label for="description">Краткий текст</label>
-                                            {{ form.description }}
+                                            {{ form.description|safe }}
                                         </div>
 
                                         <div class="form-group form-check">
@@ -121,8 +121,8 @@
                                     {% for inline_form in formset %}
                                         <div class="col-md-4">
                                             <h4>Блок {{ forloop.counter }}</h4>
-                                            {% if inline_form.image.url %}
-                                            <img src="{{ form.instance.image.url }}" alt class="near_img">
+                                            {% if inline_form.instance.image %}
+                                            <img src="{{ inline_form.instance.image.url }}" alt class="near_img">
                                             {% else %}
                                             <img src="{% static 'img/default_form_image.png' %}" alt class="near_img">
                                             {% endif %}
@@ -187,5 +187,5 @@
       tinymce.init({
         selector: '#description'
       });
-    </script>
+</script>
 {% endblock %}

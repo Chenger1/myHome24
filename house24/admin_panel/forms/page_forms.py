@@ -32,11 +32,11 @@ class InfoBlockForm(forms.ModelForm):
             'image': forms.FileInput(attrs={'id': 'image', 'class': 'upload',
                                             'accept': '.png, .jpeg, .jpg, .svg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'id': 'description', 'class': 'form-control',
+            'description': forms.Textarea(attrs={'id': 'block_description', 'class': 'form-control',
                                                  'style': 'resize:none;'}),
         }
 
 
 mainPageFormSet = forms.inlineformset_factory(MainPage, InfoBlock,
-                                              form=InfoBlockForm, extra=6,
+                                              form=InfoBlockForm, max_num=6, extra=6,
                                               can_delete=False)

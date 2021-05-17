@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import RegexValidator
+from django.urls import reverse_lazy
 
 
 from db.models.mixin import SingletonModel
@@ -10,11 +11,14 @@ class MainPage(SingletonModel):
     slide2 = models.ImageField()
     slide3 = models.ImageField()
     title = models.CharField(max_length=150)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     show_link = models.BooleanField(default=1)
     seo_title = models.CharField(max_length=150, blank=True, null=True)
     seo_description = models.TextField(blank=True, null=True)
     seo_keywords = models.CharField(max_length=150, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse_lazy('admin_panel:main_page')
 
 
 class InfoBlock(models.Model):

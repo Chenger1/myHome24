@@ -26,3 +26,14 @@ class MainPageView(UpdateView):
         else:
             context['formset'] = self.inline_form_set(instance=self.object)
         return context
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['formset']
+        response = super().form_valid(form)
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+            return response
+        else:
+            return super().form_invalid(form)
