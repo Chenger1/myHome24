@@ -1,0 +1,191 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Редактирование страницы{% endblock %}
+
+{% block head %}
+<script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Редактирование страницы</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Редактирование страницы</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h5>Редактирование страницы "Главная"</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row border_bottom">
+                                <div class="col-12">
+                                    <h5>Слайдер</h5>
+                                </div>
+                            </div>
+
+                            <form action="">
+                                {% csrf_token %}
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-4">
+                                        <h4>Слайд 1</h4>
+                                        {% if form.slide1.url %}
+                                        <img src="{{ form.instance.slide1.url }}" alt class="slider_img">
+                                        {% else %}
+                                        <img src="{% static 'img/default_form_image.png' %}" alt class="slider_img">
+                                        {% endif %}
+                                        <label for="slide1" style="margin-top:10px;">Рекомендуемый размер:
+                                            (1920x800) </label>
+                                        {{ form.slide1 }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4>Слайд 2</h4>
+                                        {% if form.slide2.url %}
+                                        <img src="{{ form.instance.slide2.url }}" alt class="slider_img">
+                                        {% else %}
+                                        <img src="{% static 'img/default_form_image.png' %}" alt class="slider_img">
+                                        {% endif %}
+                                        <label for="slide2" style="margin-top:10px;">Рекомендуемый размер:
+                                            (1920x800) </label>
+                                        {{ form.slide2 }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h4>Слайд 3</h4>
+                                        {% if form.slide3.url %}
+                                        <img src="{{ form.instance.slide3.url }}" alt class="slider_img">
+                                        {% else %}
+                                        <img src="{% static 'img/default_form_image.png' %}" alt class="slider_img">
+                                        {% endif %}
+                                        <label for="slide3" style="margin-top:10px;">Рекомендуемый размер:
+                                            (1920x800) </label>
+                                        {{ form.slide3 }}
+                                    </div>
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Краткая информация</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="title">Заголовок</label>
+                                            {{ form.title }}
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label for="description">Краткий текст</label>
+                                            {{ form.description }}
+                                        </div>
+
+                                        <div class="form-group form-check">
+                                            {{form.show_link}}
+                                            <label for="show_link" class="form-check-label">
+                                                <strong>Показать ссылки на приложения</strong>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Рядом с нами</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    {{ formset.management_form }}
+                                    {% for inline_form in formset %}
+                                        <div class="col-md-4">
+                                            <h4>Блок {{ forloop.counter }}</h4>
+                                            {% if inline_form.image.url %}
+                                            <img src="{{ form.instance.image.url }}" alt class="near_img">
+                                            {% else %}
+                                            <img src="{% static 'img/default_form_image.png' %}" alt class="near_img">
+                                            {% endif %}
+                                            <label for="" style="margin-top:10px;">Рекомендуемый размер:
+                                                (1000x600) </label>
+                                            <div class="form-group">
+                                                {{ inline_form.image }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Заголовок блока</label>
+                                                {{ inline_form.title }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="">Описание</label>
+                                                {{ inline_form.description }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Настройки SEO</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="seo_title">Title</label>
+                                            {{ form.seo_title }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seo_description">Description</label>
+                                            {{ form.seo_description }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seo_keywords">Keywords</label>
+                                            {{ form.seo_keywords }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:15px;">
+                                    <div class="col-12 text-center">
+                                        <a href="{% url 'admin_panel:main_page' %}" class="btn btn-default">Отмена</a>
+                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+      tinymce.init({
+        selector: '#description'
+      });
+    </script>
+{% endblock %}

@@ -24,3 +24,24 @@
 .info-box .info-box-icon{
 	width: 90px;
 }
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: '>';
+}
+
+.border_bottom {
+    border-bottom: 1px solid #d2d6de;
+    padding-bottom: 20px;
+}
+
+.slider_img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.near_img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}

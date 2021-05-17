@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/css/admin.css' %}">
+    {% block head %}{% endblock %}
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -103,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="" class="nav-link {% if request.path == '/admin/' %}active{% endif %}">
+                        <a href="{% url 'admin_panel:index' %}" class="nav-link {% if request.path == '/admin/' %}active{% endif %}">
                             <i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
                             <p>Статистика</p>
                         </a>
@@ -170,7 +171,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{% url 'admin_panel:main_page' %}" class="nav-link
+                                {% if request.path == '/admin/main_page/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Главная страница</p>
                                 </a>
