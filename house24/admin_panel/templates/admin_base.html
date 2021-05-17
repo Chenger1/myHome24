@@ -1,0 +1,407 @@
+{% load static %}
+<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Мой дом 24{% endblock %}</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/css/admin.css' %}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#" role="button" id="push"><i class="fas fa-bars"></i></a>
+            </li>
+            <li class="nav-item d-none d-sm-inline-block">
+                <span class="nav-link">Панель администратора</span>
+            </li>
+        </ul>
+
+        <!-- Right navbar links -->
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-child fa-lg"></i>
+                    <span class="badge badge-warning navbar-badge" style="top: 0px;">15</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
+                    <span class="dropdown-item dropdown-header">Новых пользователей - </span>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="dropdown-item">
+                        Новый пользователь
+                    </a>
+                    <a href="#" class="dropdown-item dropdown-footer">Посмотреть всех пользователей</a>
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    <i class="fa fa-user-circle text-purple"></i>
+                    <span>Пользователь</span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg" style="left: inherit; right: 0px;">
+                    <div class="menu-header"
+                         style="padding-bottom: 50px; background-color: #f39c12; color:white; padding-top:15px;">
+                <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"
+                         style="font-size: 78px;"></i></span>
+                        <p>Пользователь</p>
+                    </div>
+                    <div class="menu-footer" style="padding: 10px;">
+                        <div class="row text-center" style="background-color: #F9F9F9">
+                            <div class="col">
+                                <a href="" class="btn btn-default btn-flat">Профиль</a>
+                            </div>
+                            <div class="col">
+                                <a href="" class="btn btn-default btn-flat">Выйти</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-light-primary elevation-4">
+        <!-- Brand Logo -->
+        <div style="border-bottom: 1px solid #dee2e6;">
+            <a href="">
+                <div style="padding:5px;">
+                    <img src="{% static 'img/logo.svg' %}" alt="AdminLTE Logo" class="brand-image admin_img"
+                         id="logo-lg">
+                    <img src="{% static 'img/logo-mini.svg' %}" alt="AdminLTE Logo" class="brand-image admin_img"
+                         style="display:none;"
+                         id="logo-mini">
+                </div>
+            </a>
+        </div>
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
+                            <p>Статистика</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-dollar-sign" aria-hidden="true"></i>
+                            <p>Касса</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon far fa-copy" aria-hidden="true"></i>
+                            <p>Квитанции на оплату</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon far fa-credit-card" aria-hidden="true"></i>
+                            <p>Лицевые счета</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-key" aria-hidden="true"></i>
+                            <p>Квартиры</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-users" aria-hidden="true"></i>
+                            <p>Владельцы квартир</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-building" aria-hidden="true"></i>
+                            <p>Дома</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon far fa-envelope" aria-hidden="true"></i>
+                            <p>Сообщения</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
+                            <p>Заявки вызова мастера</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-tachometer-alt" aria-hidden="true"></i>
+                            <p>Показания счетчиков</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
+                            <p>Управление сайтом</p>
+                            <i class="fas fa-angle-left right"></i>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Главная страница</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>О нас</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Услуги</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Тарифы</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Контакты</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-cogs" aria-hidden="true"></i>
+                            <p>Настройки системы</p>
+                            <i class="fas fa-angle-left right"></i>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-briefcase nav-icon"></i>
+                                    <p>Услуги</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-money-bill-alt nav-icon"></i>
+                                    <p>Тарифы</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user nav-icon"></i>
+                                    <p>Роли</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-user-plus nav-icon"></i>
+                                    <p>Пользователи</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-credit-card nav-icon"></i>
+                                    <p>Платежные реквизиты</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="fas fa-list-ol nav-icon"></i>
+                                    <p>Статьи платежей</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Starter Page</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Starter Page</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's
+                                    content.
+                                </p>
+
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary card-outline">
+                            <div class="card-body">
+                                <h5 class="card-title">Card title</h5>
+
+                                <p class="card-text">
+                                    Some quick example text to build on the card title and make up the bulk of the
+                                    card's
+                                    content.
+                                </p>
+                                <a href="#" class="card-link">Card link</a>
+                                <a href="#" class="card-link">Another link</a>
+                            </div>
+                        </div><!-- /.card -->
+                    </div>
+                    <!-- /.col-md-6 -->
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="m-0">Featured</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">Special title treatment</h6>
+
+                                <p class="card-text">With supporting text below as a natural lead-in to additional
+                                    content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h5 class="m-0">Featured</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="card-title">Special title treatment</h6>
+
+                                <p class="card-text">With supporting text below as a natural lead-in to additional
+                                    content.</p>
+                                <a href="#" class="btn btn-primary">Go somewhere</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.col-md-6 -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+        <div class="p-3">
+            <h5>Title</h5>
+            <p>Sidebar content</p>
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <!-- Default to the left -->
+        Разработано <a href="https://avada-media.ua/">AVADA-MEDIA</a> на базе системы управления
+        <a href="https://avada-media.ua/moydom24/">"МойДом24"</a>. Документация API доступна по <a href="http://myhouse24.avada-media.ua/doc">ссылке</a>
+    </footer>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
+</body>
+<script>
+  let mini = $('#logo-mini').first();
+  let lg = $('#logo-lg').first();
+
+  $('#push').on('click', function(){
+    if($(mini).is(':visible')){
+      $(mini).css('display', 'none');
+      $(lg).css('display', 'block');
+    }else{
+      $(lg).css('display', 'none');
+      $(mini).css('display', 'block');
+    }
+  })
+
+  $('.main-sidebar').first().mouseover(function(){
+        $(mini).css('display', 'none');
+        $(lg).css({'display': 'block', 'margin': '0 auto'});
+  })
+   $('.main-sidebar').first().mouseout(function(){
+      if($('aside').hasClass('sidebar-focused')){
+        $('aside').removeClass('sidebar-focused');
+      }
+          if($('body').hasClass('sidebar-collapse') ){
+          $(lg).css('display', 'none');
+          $(mini).css('display', 'block');
+        }
+  })
+
+
+</script>
+
+</html>

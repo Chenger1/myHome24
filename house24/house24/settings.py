@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -126,6 +125,7 @@ STATICFILES_DIRS = (
     ('bootstrap', Path(__file__).parent.parent.joinpath('static/bootstrap')),
     ('website', Path(__file__).parent.parent.joinpath('static/website')),
     ('img', Path(__file__).parent.parent.joinpath('static/img')),
+    ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
 )
 
 # Default primary key field type

@@ -30,7 +30,7 @@ class AdminLoginView(LoginViewMixin):
                 form.add_error('email', e.args[0])
                 return render(request, self.template_name, context={'form': form})
             login(request, user)
-            return redirect('website:main_page_view')
+            return redirect('admin_panel:admin_panel')
         else:
             return render(request, self.template_name, context={'form': form})
 
