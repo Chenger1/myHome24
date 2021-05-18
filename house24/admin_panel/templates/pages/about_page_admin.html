@@ -1,0 +1,230 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Редактирование страницы{% endblock %}
+
+{% block head %}
+<script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{% endblock %}
+
+
+{% block content %}
+{% if form.errors %}
+    {% include 'errors.html' with errors=form.errors %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Редактирование страницы</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Редактирование страницы</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h5>Редактирование страницы "О нас"</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row border_bottom">
+                                <div class="col-12">
+                                    <h5>Информация</h5>
+                                </div>
+                            </div>
+
+                            <form action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="title">Заголовок</label>
+                                            {{ form.title }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Краткий текст</label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <h5>Фото директора</h5>
+                                            {% if form.instance.photo %}
+                                                <img src="{{ form.photo.url }}" alt
+                                                width="250" height="300">
+                                            {% else %}
+                                                <img src="{% static 'img/glide.jpg' %}" alt
+                                                width="250" height="300">
+                                            {% endif %}
+                                            <label for="photo">Рекомендуемый размер: (250x310)</label>
+                                            {{ form.photo }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Фотогалерея</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    {{formset.management_form}}
+                                    {% for inline_form in formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                        <div class="col-xs-4 col-sm-2 text-center formset">
+                                            {% if inline_form.image %}
+                                                <img src="{% static 'img/default_form_image.png' %}" alt
+                                                class="img-thumbnail">
+                                            {% else %}
+                                                <img src="{{ inline_form.image.url }}" alt
+                                                class="img-thumbnail">
+                                            {% endif %}
+                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                            {{ inline_form.image }}
+                                        </div>
+                                    {% empty %}
+                                        Добавьте фото
+                                    {% endfor %}
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Дополнительная информация</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="additional_title">Заголовок</label>
+                                            {{ form.additional_title }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="additional_description">Краткий текст</label>
+                                            {{ form.additional_description }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:30px;">
+                                    <div class="col-12">
+                                        <h5>Дополнительная фотогалерея</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    {{additional_formset.management_form}}
+                                    {% for inline_form in additional_formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                        <div class="col-xs-4 col-sm-2 text-center formset">
+                                            {% if inline_form.image %}
+                                                <img src="{% static 'img/default_form_image.png' %}" alt
+                                                class="img-thumbnail">
+                                            {% else %}
+                                                <img src="{{ inline_form.image.url }}" alt
+                                                class="img-thumbnail">
+                                            {% endif %}
+                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                            {{ inline_form.image }}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Документы</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    {{documents_formset.management_form}}
+                                    {% for inline_form in documents_formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
+                                        <div class="col-xs-12 col-md-6 formset">
+                                            <a href="#!" class="text-red form-row-remove-btn"
+                                            style="float:right;"><i class="fa fa-trash"></i></a>
+                                            <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;" aria-hidden="true"></i>
+                                            <div class="form-group">
+                                                <label for="">PDF, JPG (макс. размер 20 Mb)</label>
+                                                {{ inline_form.file }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Название документа</label>
+                                                {{ inline_form.name }}
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:30px;">
+                                    <div class="col-12">
+                                        <h5>Настройки SEO</h5>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin-top:20px;">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="seo_title">Title</label>
+                                            {{ form.seo_title }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seo_description">Description</label>
+                                            {{ form.seo_description }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="seo_keywords">Keywords</label>
+                                            {{ form.seo_keywords }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:15px;">
+                                    <div class="col-12 text-center">
+                                        <a href="{% url 'admin_panel:main_page' %}" class="btn btn-default">Отмена</a>
+                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
+<script>
+      tinymce.init({
+        selector: '#description'
+      });
+      tinymce.init({
+        selector: '#additional_description'
+      });
+</script>
+{% endblock %}

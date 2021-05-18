@@ -66,6 +66,7 @@ class AdditionalGallery(models.Model):
 
 
 class Document(models.Model):
+    entity = models.ForeignKey(AboutPage, related_name='documents', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     file = models.FileField(upload_to='about/documents/')
 

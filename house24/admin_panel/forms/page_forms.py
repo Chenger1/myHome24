@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.pages import MainPage, InfoBlock
+from db.models.pages import MainPage, InfoBlock, AboutPage, AboutGallery, AdditionalGallery, Document
 
 
 class MainPageForm(forms.ModelForm):
@@ -37,6 +37,65 @@ class InfoBlockForm(forms.ModelForm):
         }
 
 
-mainPageFormSet = forms.inlineformset_factory(MainPage, InfoBlock,
+MainPageFormSet = forms.inlineformset_factory(MainPage, InfoBlock,
                                               form=InfoBlockForm, max_num=6, extra=6,
                                               can_delete=False)
+
+
+class AboutPageForm(forms.ModelForm):
+    class Meta:
+        model = AboutPage
+        fields = '__all__'
+        widgets = {
+            'photo': forms.FileInput(attrs={'id': 'photo', 'class': 'upload',
+                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+            'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'id': 'description'}),
+            'seo_title': forms.TextInput(attrs={'id': 'seo_title', 'class': 'form-control'}),
+            'seo_description': forms.Textarea(attrs={'id': 'seo_description', 'class': 'form-control'}),
+            'seo_keywords': forms.TextInput(attrs={'id': 'seo_keywords', 'class': 'form-control'}),
+            'additional_title': forms.TextInput(attrs={'id': 'additional_title', 'class': 'form-control'}),
+            'additional_description': forms.Textarea(attrs={'id': 'additional_description'}),
+        }
+
+
+class AboutPageGalleryForm(forms.ModelForm):
+    class Meta:
+        model = AboutGallery
+        fields = ('image', )
+        widgets = {
+            'photo': forms.FileInput(attrs={'class': 'upload',
+                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+        }
+
+
+class AboutPageAdditionalGalleryForm(forms.ModelForm):
+    class Meta:
+        model = AdditionalGallery
+        fields = ('image', )
+        widgets = {
+            'photo': forms.FileInput(attrs={'class': 'upload',
+                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+        }
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('name', 'file')
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'file': forms.FileInput(attrs={'style': 'display:block;'})
+        }
+
+
+AboutPageGalleryInlineFormset = forms.inlineformset_factory(AboutPage, AboutGallery,
+                                                            form=AboutPageGalleryForm, extra=1,
+                                                            can_delete=False)
+
+AboutPageAdditionalGalleryInlineFormset = forms.inlineformset_factory(AboutPage, AdditionalGallery,
+                                                                      form=AboutPageAdditionalGalleryForm, extra=1,
+                                                                      can_delete=False)
+
+DocumentsFormset = forms.inlineformset_factory(AboutPage, Document,
+                                               form=DocumentForm, extra=1, can_delete=False)
