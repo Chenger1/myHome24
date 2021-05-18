@@ -7,10 +7,10 @@ from db.models.mixin import SingletonModel
 
 
 class MainPage(SingletonModel):
-    slide1 = models.ImageField(upload_to='main_page/')
-    slide2 = models.ImageField(upload_to='main_page/')
-    slide3 = models.ImageField(upload_to='main_page/')
-    title = models.CharField(max_length=150)
+    slide1 = models.ImageField(upload_to='main_page/', blank=True, null=True)
+    slide2 = models.ImageField(upload_to='main_page/', blank=True, null=True)
+    slide3 = models.ImageField(upload_to='main_page/', blank=True, null=True)
+    title = models.CharField(max_length=150,  blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     show_link = models.BooleanField(default=1)
     seo_title = models.CharField(max_length=150, blank=True, null=True)
@@ -23,9 +23,9 @@ class MainPage(SingletonModel):
 
 class InfoBlock(models.Model):
     entity = models.ForeignKey(MainPage, related_name='blocks', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='main_page/block/')
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    image = models.ImageField(upload_to='main_page/block/',  blank=True, null=True)
+    title = models.CharField(max_length=100,  blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
 
 class AboutPage(SingletonModel):
