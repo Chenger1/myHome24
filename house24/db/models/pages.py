@@ -7,9 +7,9 @@ from db.models.mixin import SingletonModel
 
 
 class MainPage(SingletonModel):
-    slide1 = models.ImageField(upload_to='main_page/', blank=True, null=True)
-    slide2 = models.ImageField(upload_to='main_page/', blank=True, null=True)
-    slide3 = models.ImageField(upload_to='main_page/', blank=True, null=True)
+    slide1 = models.ImageField(upload_to='main_page/')
+    slide2 = models.ImageField(upload_to='main_page/')
+    slide3 = models.ImageField(upload_to='main_page/')
     title = models.CharField(max_length=150,  blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     show_link = models.BooleanField(default=1)

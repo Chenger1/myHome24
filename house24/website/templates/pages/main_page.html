@@ -15,13 +15,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img class="d-block w-100" src="{% static 'img/glide.jpg' %}" alt="..." />
+                        <img class="d-block w-100" src="{{ page.slide1.url }}" alt="..." />
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'img/glide.jpg' %}" alt="..." />
+                        <img class="d-block w-100" src="{{ page.slide1.url }}" alt="..." />
                     </div>
                     <div class="carousel-item">
-                        <img class="d-block w-100" src="{% static 'img/glide.jpg' %}" alt="..." />
+                        <img class="d-block w-100" src="{{ page.slide1.url }}" alt="..." />
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -42,45 +42,47 @@
                         <h1></h1>
                         <hr>
                         <div class="text">
-                            <h3>Title2</h3>
-                            <p>Жилой комплекс «NORD» расположен на берегу Черного моря в живописном районе Одессы. Оригинальная архитектура комплекса делает его уникальным объектом не только для Одессы, но и для всей Украины – дом прекрасно вписывается в архитектуру берега и открывает свои жильцам и гостям прекрасный вид на бескрайнее море. Ярким преимуществом жилого комплекса является его месторасположения – удобная транспортная развязка, социальная инфраструктура, парк и прекрасный морской воздух создают все условия для комфортного проживания.</p>
+                            <h3>{{ page.title }}</h3>
+                            <p>{{ page.description|safe }}</p>
                             <div class="row" style="align-items:center;">
                                 <div class="col-4">
                                     <a href="" class="btn btn-primary">Подробнее</a>
                                 </div>
+                                {% if page.show_link %}
                                 <div class="col-8">
                                     <a href=""><img src="{% static 'img/appstore.png' %}" alt="appStore"
                                     class="store-img"></a>
                                     <a href=""><img src="{% static 'img/googleplay.png' %}" alt="googlplay"
                                     class="store-img"></a>
                                 </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                     <div class="col-xs-12 col-sm-5 col-md-4">
-                        <h1>Contact Title</h1>
+                        <h1>Контакты</h1>
                         <hr>
                         <div class="text">
                             <h3></h3>
                             <p>
                                 <i class="fas fa-user-circle"></i>
-                                    Avada-media
+                                    AVADA-MEDIA
                             </p>
                             <p>
                                 <i class="fas fa-compass"></i>
-                                street
+                                ул. Космонавтов, 32
                             </p>
                             <p>
                                 <i class="fas fa-map-marker"></i>
-                                District
+                                Малиновский р-н, г. Одесса
                             </p>
                             <p>
                                 <i class="fas fa-phone"></i>
-                                Phone
+                                <a href="tel:+380971799663">+38 (097) 179-96-63</a>
                             </p>
                             <p>
                                 <i class="fas fa-envelope"></i>
-                                email
+                                <a href="mailto:info@avada-media.com.ua">info@avada-media.com.ua</a>
                             </p>
                         </div>
                     </div>
@@ -92,15 +94,17 @@
             <div class="container">
                 <h2 class="mb-4 near-block-header">Рядом с нами</h2>
                 <div class="row">
+                    {% for block in page.blocks.all %}
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="https://via.placeholder.com/700x400" alt="..." /></a>
+                            <a href="#!"><img class="card-img-top" src="{{ block.image.url }}" alt="..." /></a>
                             <div class="card-body">
-                                <h4 class="card-title">Project One</h4>
-                                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur eum quasi sapiente nesciunt? Voluptatibus sit, repellat sequi itaque deserunt, dolores in, nesciunt, illum tempora ex quae? Nihil, dolorem!</p>
+                                <h4 class="card-title">{{ block.title }}</h4>
+                                <p class="card-text">{{ block.description }}</p>
                             </div>
                         </div>
                     </div>
+                    {% endfor %}
                 </div>
             </div>
         </section>
