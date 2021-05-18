@@ -66,3 +66,6 @@ class Owner(CustomAbstractUser):
     telegram = models.CharField(max_length=100, blank=True, null=True)
     ID = models.IntegerField()
     about = models.TextField()
+
+    def get_images(self):
+        return [self.photo] if self.photo else None

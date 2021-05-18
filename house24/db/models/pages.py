@@ -4,6 +4,7 @@ from django.urls import reverse_lazy
 
 
 from db.models.mixin import SingletonModel
+from db.models.receiver import *
 
 
 class MainPage(SingletonModel):
@@ -20,12 +21,18 @@ class MainPage(SingletonModel):
     def get_absolute_url(self):
         return reverse_lazy('admin_panel:main_page')
 
+    def get_images(self):
+        return [self.slide1, self.slide2, self.slide3]
+
 
 class InfoBlock(models.Model):
     entity = models.ForeignKey(MainPage, related_name='blocks', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='main_page/block/',  blank=True, null=True)
     title = models.CharField(max_length=100,  blank=True, null=True)
     description = models.TextField(blank=True, null=True)
+
+    def get_images(self):
+        return [self.image] if self.image else None
 
 
 class AboutPage(SingletonModel):
@@ -38,15 +45,24 @@ class AboutPage(SingletonModel):
     additional_title = models.CharField(max_length=100, blank=True, null=True)
     additional_description = models.TextField(blank=True, null=True)
 
+    def get_images(self):
+        return [self.photo] if self.photo else None
+
 
 class AboutGallery(models.Model):
     entity = models.ForeignKey(AboutPage, related_name='images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='about/gallery/')
 
+    def get_images(self):
+        return [self.image] if self.image else None
+
 
 class AdditionalGallery(models.Model):
     entity = models.ForeignKey(AboutPage, related_name='add_images', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='about/additional/')
+
+    def get_images(self):
+        return [self.image] if self.image else None
 
 
 class Document(models.Model):
@@ -87,6 +103,9 @@ class ServiceBlock(models.Model):
     image = models.ImageField(upload_to='services_page/')
     title = models.CharField(max_length=100)
     description = models.TextField()
+
+    def get_images(self):
+        return [self.image] if self.image else None
 
 
 class TariffPage(SingletonModel):
