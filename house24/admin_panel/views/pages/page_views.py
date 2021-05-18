@@ -1,11 +1,9 @@
-from django.views.generic.edit import UpdateView
-
-from db.models.pages import MainPage, AboutPage
+from db.models.pages import MainPage, AboutPage, AboutGallery, AdditionalGallery, Document
 
 from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPageForm, AboutPageGalleryInlineFormset,
                                           AboutPageAdditionalGalleryInlineFormset, DocumentsFormset)
 
-from admin_panel.views.pages.singleton_mixin import SingletonUpdateView
+from admin_panel.views.pages.singleton_mixin import SingletonUpdateView, DeleteGalleryImageMixin
 
 
 class MainPageView(SingletonUpdateView):
@@ -51,3 +49,33 @@ class AboutPageView(SingletonUpdateView):
             context['additional_formset'] = self.inline_additional_form_set(instance=self.object)
             context['documents_formset'] = self.documents_form_set(instance=self.object)
         return context
+
+    def form_valid(self, form):
+        context = self.get_context_data(form=form)
+        formset = context['formset']
+        additional_formset = context['additional_formset']
+        documents_formset = context['documents_formset']
+        response = super().form_valid(form)
+        if formset.is_valid() and additional_formset.is_valid() and documents_formset.is_valid():
+            formset.instance = additional_formset.instance = documents_formset.instance = self.object
+            formset.save()
+            additional_formset.save()
+            documents_formset.save()
+            return response
+        else:
+            return super().form_invalid(form)
+
+
+class DeleteAboutPageGallery(DeleteGalleryImageMixin):
+    model = AboutGallery
+    redirect_url = 'admin_panel:about_page'
+
+
+class DeleteAdditionalGallery(DeleteAboutPageGallery):
+    model = AdditionalGallery
+    redirect_url = 'admin_panel:about_page'
+
+
+class DeleteDocument(DeleteGalleryImageMixin):
+    model = Document
+    redirect_url = 'admin_panel:about_page'

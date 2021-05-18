@@ -65,10 +65,10 @@
                                         <div class="form-group text-center">
                                             <h5>Фото директора</h5>
                                             {% if form.instance.photo %}
-                                                <img src="{{ form.photo.url }}" alt
+                                                <img src="{{ form.instance.photo.url }}" alt
                                                 width="250" height="300">
                                             {% else %}
-                                                <img src="{% static 'img/glide.jpg' %}" alt
+                                                <img src="{% static 'img/default_form_image.png' %}" alt
                                                 width="250" height="300">
                                             {% endif %}
                                             <label for="photo">Рекомендуемый размер: (250x310)</label>
@@ -96,18 +96,21 @@
                                             </a>
                                         </div>
                                     {% for inline_form in formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
                                         <div class="col-xs-4 col-sm-3 text-center formset_images formset_block">
-                                            {% if inline_form.image %}
-                                                <img src="{% static 'img/default_form_image.png' %}" alt
+                                            {% if inline_form.instance.image %}
+                                                <img src="{{ inline_form.instance.image.url }}" alt
                                                 class="img-thumbnail preview_img thumbnail_img">
                                             {% else %}
-                                                <img src="{{ inline_form.image.url }}" alt
+                                                <img src="{% static 'img/default_form_image.png' %}" alt
                                                 class="img-thumbnail preview_img thumbnail_img">
                                             {% endif %}
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
-                                            {% if inline_form.instance.id %}
-                                                <a href="" class="delete_icon">
+                                            {% if inline_form.instance.pk %}
+                                                <a href="{{ inline_form.instance.get_delete_url }}" class="delete_icon">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
@@ -165,18 +168,21 @@
                                         </div>
 
                                     {% for inline_form in additional_formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
                                         <div class="col-xs-4 col-sm-3 text-center add_formset formset_block">
-                                            {% if inline_form.image %}
-                                                <img src="{% static 'img/default_form_image.png' %}" alt
+                                            {% if inline_form.instance.image %}
+                                                <img src="{{inline_form.instance.image.url}}" alt
                                                 class="img-thumbnail preview_img thumbnail_img">
                                             {% else %}
-                                                <img src="{{ inline_form.image.url }}" alt
+                                                <img src="{% static 'img/default_form_image.png' %}" alt
                                                 class="img-thumbnail preview_img thumbnail_img">
                                             {% endif %}
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
-                                            {% if inline_form.instance.id %}
-                                                <a href="" class="delete_icon">
+                                            {% if inline_form.instance.pk %}
+                                                <a href="{{ inline_form.instance.get_delete_url }}" class="delete_icon">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
@@ -216,9 +222,17 @@
                                             </div>
                                         </div>
                                     {% for inline_form in documents_formset %}
+                                        {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                        {% endfor %}
                                         <div class="col-xs-12 col-md-6 documents_formset formset_block">
-                                            <a href="#!" class="text-red form-row-remove-btn delete_icon_documents"
+                                            {% if inline_form.instance.pk %}
+                                            <a href="{{ inline_form.instance.get_delete_url }}" class="text-red form-row-remove-btn delete_icon_documents"
                                             style="float:right;"><i class="fa fa-trash"></i></a>
+                                            {% else %}
+                                            <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents"
+                                            style="float:right;"><i class="fa fa-trash"></i></a>
+                                            {% endif %}
                                             <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;" aria-hidden="true"></i>
                                             <div class="form-group">
                                                 <label for="">PDF, JPG (макс. размер 20 Mb)</label>

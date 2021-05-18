@@ -64,7 +64,7 @@ class AboutPageGalleryForm(forms.ModelForm):
         model = AboutGallery
         fields = ('image', )
         widgets = {
-            'photo': forms.FileInput(attrs={'class': 'upload',
+            'image': forms.FileInput(attrs={'class': 'upload',
                                             'accept': '.png, .jpeg, .jpg, .svg'}),
         }
 
@@ -74,7 +74,7 @@ class AboutPageAdditionalGalleryForm(forms.ModelForm):
         model = AdditionalGallery
         fields = ('image', )
         widgets = {
-            'photo': forms.FileInput(attrs={'class': 'upload',
+            'image': forms.FileInput(attrs={'class': 'upload',
                                             'accept': '.png, .jpeg, .jpg, .svg'}),
         }
 
