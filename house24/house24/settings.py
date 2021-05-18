@@ -126,6 +126,7 @@ STATICFILES_DIRS = (
     ('website', Path(__file__).parent.parent.joinpath('static/website')),
     ('img', Path(__file__).parent.parent.joinpath('static/img')),
     ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
+    ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
 )
 
 MEDIA_URL = '/media/'
