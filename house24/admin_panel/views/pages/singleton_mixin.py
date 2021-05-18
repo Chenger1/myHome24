@@ -2,8 +2,10 @@ from django.views.generic.edit import UpdateView
 from django.views.generic import View
 from django.shortcuts import get_object_or_404, redirect
 
+from admin_panel.permission_mixin import AdminPermissionMixin
 
-class SingletonUpdateView(UpdateView):
+
+class SingletonUpdateView(AdminPermissionMixin, UpdateView):
     model = None
     form_class = None
     inline_form_set = None
@@ -26,7 +28,7 @@ class SingletonUpdateView(UpdateView):
         return context
 
 
-class DeleteGalleryImageMixin(View):
+class DeleteGalleryImageMixin(AdminPermissionMixin, View):
     model = None
     redirect_url = None
 
