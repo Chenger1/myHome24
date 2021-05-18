@@ -98,4 +98,4 @@ AboutPageAdditionalGalleryInlineFormset = forms.inlineformset_factory(AboutPage,
                                                                       can_delete=False)
 
 DocumentsFormset = forms.inlineformset_factory(AboutPage, Document,
-                                               form=DocumentForm, extra=1, can_delete=False)
+                                               form=DocumentForm, extra=0, can_delete=False)

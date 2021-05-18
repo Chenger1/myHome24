@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4">
-                                        <div class="form-group">
+                                        <div class="form-group text-center">
                                             <h5>Фото директора</h5>
                                             {% if form.instance.photo %}
                                                 <img src="{{ form.photo.url }}" alt
@@ -85,24 +85,45 @@
 
                                 <div class="row" style="margin-top:20px;">
                                     {{formset.management_form}}
+                                        <div class="col-xs-4 col-sm-3 text-center formset_images formset_block" style="display:none;"
+                                        id="hidden_images">
+                                            <img src="{% static 'img/default_form_image.png' %}" alt class="img-thumbnail preview_img
+                                                thumbnail_img">
+                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                            {{ formset.empty_form.image }}
+                                            <a href="javascript:void(0)" class="delete_icon  delete_icon_images">
+                                                <i class="fa fa-trash text-red" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
                                     {% for inline_form in formset %}
-                                        {% for hidden in inline_form.hidden_fields %}
-                                            {{ hidden }}
-                                        {% endfor %}
-                                        <div class="col-xs-4 col-sm-2 text-center formset">
+                                        <div class="col-xs-4 col-sm-3 text-center formset_images formset_block">
                                             {% if inline_form.image %}
                                                 <img src="{% static 'img/default_form_image.png' %}" alt
-                                                class="img-thumbnail">
+                                                class="img-thumbnail preview_img thumbnail_img">
                                             {% else %}
                                                 <img src="{{ inline_form.image.url }}" alt
-                                                class="img-thumbnail">
+                                                class="img-thumbnail preview_img thumbnail_img">
                                             {% endif %}
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
+                                            {% if inline_form.instance.id %}
+                                                <a href="" class="delete_icon">
+                                                    <i class="fa fa-trash text-red" aria-hidden="true"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="javascript:void(0)" class="delete_icon delete_icon_images">
+                                                    <i class="fa fa-trash text-red" aria-hidden="true"></i>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                     {% empty %}
                                         Добавьте фото
                                     {% endfor %}
+                                </div>
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col">
+                                        <button class="btn btn-success" id="add_images" type="button">Добавить фото</button>
+                                    </div>
                                 </div>
 
                                 <div class="row border_bottom" style="margin-top:50px;">
@@ -132,22 +153,45 @@
 
                                 <div class="row" style="margin-top:20px;">
                                     {{additional_formset.management_form}}
+                                        <div class="col-xs-4 col-sm-3 text-center add_formset formset_block" style="display: none;"
+                                        id="hidden_add_images">
+                                            <img src="{% static 'img/default_form_image.png' %}" alt class="img-thumbnail preview_img
+                                                thumbnail_img">
+                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                            {{ additional_formset.empty_form.image }}
+                                            <a href="javascript:void(0)" class="delete_icon delete_icon_add_images">
+                                                <i class="fa fa-trash text-red" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+
                                     {% for inline_form in additional_formset %}
-                                        {% for hidden in inline_form.hidden_fields %}
-                                            {{ hidden }}
-                                        {% endfor %}
-                                        <div class="col-xs-4 col-sm-2 text-center formset">
+                                        <div class="col-xs-4 col-sm-3 text-center add_formset formset_block">
                                             {% if inline_form.image %}
                                                 <img src="{% static 'img/default_form_image.png' %}" alt
-                                                class="img-thumbnail">
+                                                class="img-thumbnail preview_img thumbnail_img">
                                             {% else %}
                                                 <img src="{{ inline_form.image.url }}" alt
-                                                class="img-thumbnail">
+                                                class="img-thumbnail preview_img thumbnail_img">
                                             {% endif %}
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
+                                            {% if inline_form.instance.id %}
+                                                <a href="" class="delete_icon">
+                                                    <i class="fa fa-trash text-red" aria-hidden="true"></i>
+                                                </a>
+                                            {% else %}
+                                                <a href="javascript:void(0)" class="delete_icon delete_icon_add_images">
+                                                    <i class="fa fa-trash text-red" aria-hidden="true"></i>
+                                                </a>
+                                            {% endif %}
                                         </div>
                                     {% endfor %}
+                                </div>
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col">
+                                        <button class="btn btn-success" id="add_add_images"
+                                        type="button">Добавить фото</button>
+                                    </div>
                                 </div>
 
                                 <div class="row border_bottom" style="margin-top:50px;">
@@ -158,12 +202,22 @@
 
                                 <div class="row" style="margin-top:20px;">
                                     {{documents_formset.management_form}}
+                                    <div class="col-xs-12 col-md-6 documents_formset formset_block" style="display: none;" id="hidden_documents">
+                                            <a href="#!" class="text-red form-row-remove-btn delete_icon_documents"
+                                            style="float:right;"><i class="fa fa-trash"></i></a>
+                                            <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;" aria-hidden="true"></i>
+                                            <div class="form-group">
+                                                <label for="">PDF, JPG (макс. размер 20 Mb)</label>
+                                                {{ documents_formset.empty_form.file }}
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="name">Название документа</label>
+                                                {{ documents_formset.empty_form.name }}
+                                            </div>
+                                        </div>
                                     {% for inline_form in documents_formset %}
-                                        {% for hidden in inline_form.hidden_fields %}
-                                            {{ hidden }}
-                                        {% endfor %}
-                                        <div class="col-xs-12 col-md-6 formset">
-                                            <a href="#!" class="text-red form-row-remove-btn"
+                                        <div class="col-xs-12 col-md-6 documents_formset formset_block">
+                                            <a href="#!" class="text-red form-row-remove-btn delete_icon_documents"
                                             style="float:right;"><i class="fa fa-trash"></i></a>
                                             <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;" aria-hidden="true"></i>
                                             <div class="form-group">
@@ -177,7 +231,12 @@
                                         </div>
                                     {% endfor %}
                                 </div>
-
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col">
+                                        <button class="btn btn-success" id="add_documents"
+                                        type="button">Добавить документ</button>
+                                    </div>
+                                </div>
                                 <div class="row border_bottom" style="margin-top:30px;">
                                     <div class="col-12">
                                         <h5>Настройки SEO</h5>
@@ -219,6 +278,7 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/update_img_after_upload.js' %}"></script>
+<script src="{% static 'utils/formset.js' %}"></script>
 <script>
       tinymce.init({
         selector: '#description'
@@ -226,5 +286,47 @@
       tinymce.init({
         selector: '#additional_description'
       });
+</script>
+<script>
+// images add_images documents
+    $('.formset_images').each(function(){
+        $(this).find('input[type=file]').on('change', function(){
+            setPreview(this);
+        })
+    });
+    $('.add_formset').each(function(){
+        $(this).find('input[type=file]').on('change', function(){
+            setPreview(this);
+        })
+    });
+
+
+    $('#add_images').on('click', function(){
+       cloneRow('images', '.formset_images');
+    });
+     $('#add_add_images').on('click', function(){
+       cloneRow('add_images', '.add_formset');
+    });
+    $('#add_documents').on('click', function(){
+        cloneRow('documents', '.documents_formset')
+    })
+
+
+    $('.delete_icon_images').each(function(){
+        $(this).on('click', function(){
+            deleteRow(this, 'images', '.formset_images');
+        })
+    })
+    $('.delete_icon_add_images').each(function(){
+        $(this).on('click', function(){
+            deleteRow(this, 'add_images', '.add_formset');
+        })
+    })
+
+    $('.delete_icon_documents').each(function(){
+        $(this).on('click', function(){
+            deleteRow(this, 'documents', 'documents_formset')
+        })
+    })
 </script>
 {% endblock %}
