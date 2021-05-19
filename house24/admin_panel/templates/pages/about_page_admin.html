@@ -66,10 +66,10 @@
                                             <h5>Фото директора</h5>
                                             {% if form.instance.photo %}
                                                 <img src="{{ form.instance.photo.url }}" alt
-                                                width="250" height="300">
+                                                width="250" height="300" class="preview_img">
                                             {% else %}
                                                 <img src="{% static 'img/default_form_image.png' %}" alt
-                                                width="250" height="300">
+                                                width="250" height="300" class="preview_img">
                                             {% endif %}
                                             <label for="photo">Рекомендуемый размер: (250x310)</label>
                                             {{ form.photo }}
@@ -313,6 +313,9 @@
             setPreview(this);
         })
     });
+    $('#photo').on('change', function(){
+        setPreview(this);
+    })
 
 
     $('#add_images').on('click', function(){
