@@ -12,7 +12,7 @@ function cloneRow(prefix, selector){
 		// set new attributtes and remove 'checked' attr to create fresh form
 	});
 
-    $(newElement).closest('div[class*=col]').find('.delete_icon_'+prefix).on('click', function(){
+    $(newElement).closest(selector).find('.delete_icon_'+prefix).on('click', function(){
     	deleteRow(this, prefix, selector);
     })
 
@@ -54,7 +54,9 @@ function updateIndex(element, prefix, selector){
 
 function deleteRow(element, prefix, selector){
 	var total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val())
-	parent_div = $(element).closest('div[class*=col]')
+	// parent_div = $(element).closest('div[class*=col]')
+	parent_div = $(element).closest(selector);
+
 	parent_div.remove();
 	$('#id_'+prefix+'-TOTAL_FORMS').attr('value', total-1);
 

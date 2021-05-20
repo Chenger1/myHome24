@@ -225,7 +225,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{% url 'admin_panel:service_measure_option' %}" class="nav-link
+                                {% if request.path == '/admin/service/index/' %}active{% endif %}">
                                     <i class="fas fa-briefcase nav-icon"></i>
                                     <p>Услуги</p>
                                 </a>

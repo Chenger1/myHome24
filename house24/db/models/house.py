@@ -25,13 +25,16 @@ class Floor(models.Model):
 
 
 class Measure(models.Model):
-    name = models.CharField(max_length=50)
+    measure_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.measure_name
 
 
 class Service(models.Model):
     name = models.CharField(max_length=100)
-    measure = models.ForeignKey(Measure, related_name='services', on_delete=models.CASCADE)
-    status = models.BooleanField(default=0)
+    measure = models.ForeignKey(Measure, related_name='services', on_delete=models.CASCADE, blank=True, null=True)
+    status = models.BooleanField(default=1)
 
 
 class Tariff(models.Model):
