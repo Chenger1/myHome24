@@ -128,11 +128,14 @@ class ServiceBlock(models.Model):
 
 
 class TariffPage(SingletonModel):
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    title = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     seo_title = models.CharField(max_length=150, blank=True, null=True)
     seo_description = models.TextField(blank=True, null=True)
     seo_keywords = models.CharField(max_length=150, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('admin_panel:tariff_page')
 
 
 class TariffBlock(models.Model):

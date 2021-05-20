@@ -2,10 +2,12 @@
 {% load static %}
 
 {% block title %}Редактирование страницы{% endblock %}
+
 {% block head %}
 <script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
 {% endblock %}
+
 
 {% block content %}
 {% if form.errors %}
@@ -38,22 +40,42 @@
                 <div class="col-12">
                     <div class="card card-default">
                         <div class="card-header">
-                            <h5>Редактирование страницы "Услуги"</h5>
+                            <h5>Редактирование страницы "Тарифы"</h5>
                         </div>
                         <div class="card-body">
                             <div class="row border_bottom">
                                 <div class="col-12">
-                                    <h5>Услуги</h5>
+                                    <h5>Информация</h5>
                                 </div>
                             </div>
+
                             <form action="" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="title">Заголовок</label>
+                                            {{ form.title }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Краткий текст</label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row border_bottom" style="margin-top:50px;">
+                                    <div class="col-12">
+                                        <h5>Изображения</h5>
+                                    </div>
+                                </div>
+
                                 <div class="row" style="margin-top:20px;">
                                     {{formset.management_form}}
                                     <div class="col-md-4 formset formset_block"
                                          style="display:none;"
                                          id="hidden_blocks">
-                                        <h4>Услуга <span class="counter"></span>
+                                        <h4>Тариф <span class="counter"></span>
                                             <a href="javascript:void(0)" style="float:right;"
                                                class="text-red delete_icon_blocks">
                                                 <i class="fa fa-trash" style="font-size:18px;"></i>
@@ -67,12 +89,8 @@
                                             {{ formset.empty_form.image }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Заголовок блока</label>
+                                            <label for="">Подпись</label>
                                             {{ formset.empty_form.title }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Описание</label>
-                                            {{ formset.empty_form.description }}
                                         </div>
                                     </div>
 
@@ -82,10 +100,11 @@
                                     {{ hidden }}
                                     {% endfor %}
                                     <div class="col-md-4 formset formset_block">
-                                        <h4>Услуга <span class="counter">{{ forloop.counter }}</span>
+                                        <h4>Тариф <span class="counter">{{ forloop.counter }}</span>
                                             {% if inline_form.instance.pk %}
                                             <a href="javascript:void(0)" style="float:right;"
-                                               class="delete_icon_blocks text-red has_pk" name="{{ inline_form.instance.pk }}">
+                                               class="delete_icon_blocks text-red has_pk"
+                                               name="{{ inline_form.instance.pk }}">
                                                 <i class="fa fa-trash" style="font-size:18px;"></i>
                                             </a>
                                             {% else %}
@@ -108,16 +127,13 @@
                                             {{ inline_form.image }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Заголовок блока</label>
+                                            <label for="">Подпись</label>
                                             {{ inline_form.title }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Описание</label>
-                                            {{ inline_form.description }}
                                         </div>
                                     </div>
                                     {% endfor %}
                                 </div>
+
                                 <div class="row border_bottom" style="margin-top:30px;">
                                     <div class="col-12">
                                         <h5>Настройки SEO</h5>
@@ -142,8 +158,8 @@
                                 </div>
                                 <div class="row" style="margin-top:15px;">
                                     <div class="col-12 text-center">
-                                        <a href="{% url 'admin_panel:services_page' %}" class="btn btn-default">Отмена</a>
-                                        <button type="button" class="btn btn-success" id="add_formset">Добавить услугу
+                                        <a href="{% url 'admin_panel:tariff_page' %}" class="btn btn-default">Отмена</a>
+                                        <button type="button" class="btn btn-success" id="add_formset">Добавить тариф
                                         </button>
                                         <button type="submit" class="btn btn-success">Сохранить</button>
                                     </div>
@@ -181,18 +197,20 @@
 
 </script>
 <script>
+      tinymce.init({
+        selector: '#description'
+      });
+
+</script>
+<script>
     $('.formset').each(function(){
         $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_services_block' %}", 'blocks', '.formset')
+            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_tariff_block' %}", 'blocks', '.formset')
         });
     })
 
     $('#add_formset').on('click', function(){
-        tinymce.remove();
        cloneRow('blocks', '.formset');
-       tinymce.init({
-            selector: '.block_desc',
-        });
         this.blur();
     });
     $('.delete_icon_blocks').each(function(){
