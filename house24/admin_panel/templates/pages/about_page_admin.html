@@ -182,7 +182,7 @@
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
                                             {% if inline_form.instance.pk %}
-                                                <a href="javascript:void(0)" class="delete_icon has_pk has_pk"
+                                                <a href="javascript:void(0)" class="delete_icon has_pk"
                                                 name="{{ inline_form.instance.pk }}">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
@@ -228,7 +228,7 @@
                                         {% endfor %}
                                         <div class="col-xs-12 col-md-6 documents_formset formset_block">
                                             {% if inline_form.instance.pk %}
-                                            <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents has_pk"
+                                            <a href="javascript:void(0)" class="text-red form-row-remove-btn has_pk"
                                             style="float:right;" name="{{ inline_form.instance.pk }}"><i class="fa fa-trash"></i></a>
                                             {% else %}
                                             <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents"

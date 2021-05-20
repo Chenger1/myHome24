@@ -2,9 +2,10 @@
 {% load static %}
 
 {% block title %}CRM-система для управляющей компании ЖКХ
- - "МОЙ ДОМ 24"{% endblock %}
+- "МОЙ ДОМ 24"{% endblock %}
 
-{% block about_header %} <li class="nav-item active"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
+{% block about_header %}
+<li class="nav-item active"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
 
 {% block content %}
 <section class="py-5">
@@ -12,10 +13,10 @@
         <div class="row">
             <div class="col">
                 <nav aria-label="breadcrumb">
-                  <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
-                    <li class="breadcrumb-item active" aria-current="page">О нас</li>
-                  </ol>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
+                        <li class="breadcrumb-item active" aria-current="page">О нас</li>
+                    </ol>
                 </nav>
             </div>
         </div>
@@ -28,9 +29,11 @@
             <div class="col-md-12">
                 <div class="text">
                     {% if page.photo %}
-                        <img src="{{ page.photo.url }}" alt="image" style="float:right; margin: 0 0 15px 15px; max-width: 250px; height:310px;">
+                    <img src="{{ page.photo.url }}" alt="image"
+                         style="float:right; margin: 0 0 15px 15px; max-width: 250px; height:310px;">
                     {% else %}
-                        <img src="{% static 'img/logo.svg' %}" alt="image" style="float:right; margin: 0 0 15px 15px; max-width: 250px;">
+                    <img src="{% static 'img/logo.svg' %}" alt="image"
+                         style="float:right; margin: 0 0 15px 15px; max-width: 250px;">
                     {% endif %}
                     {{ page.description|safe }}
                 </div>
@@ -64,6 +67,26 @@
                 <a href="">
                     <img src="{{ inst.image.url }}" alt class="img-thumbnail" style="height:250px;">
                 </a>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md">
+                <div style="border-bottom: 1px solid #eee;"><h3>Документы</h3></div>
+            </div>
+        </div>
+        <div class="row" style="margin-top:50px;">
+            {% for inst in page.documents.all %}
+            <div class="col-xs-12 col-sm-6 col-md-3" style="margin-bottom: 30px;">
+                <div style="display: table-cell; vertical-align:top;">
+                    <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;"
+                   aria-hidden="true"></i>
+                </div>
+                <div style="display: table-cell; vertical-align:top;">
+                    <h5>{{ inst.name }}</h5>
+                    <a href="">Скачать документ</a>
+                </div>
             </div>
             {% endfor %}
         </div>
