@@ -1,9 +1,9 @@
 from db.models.pages import (MainPage, AboutPage, AboutGallery, AdditionalGallery, Document, ServicesPage,
-                             ServiceBlock)
+                             ServiceBlock, TariffPage, TariffBlock)
 
 from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPageForm, AboutPageGalleryInlineFormset,
                                           AboutPageAdditionalGalleryInlineFormset, DocumentsFormset,
-                                          ServicesForm, ServicesBlockFormset)
+                                          ServicesForm, ServicesBlockFormset, TariffForm, TariffBlockFormset)
 
 from admin_panel.views.pages.singleton_mixin import SingletonUpdateView, DeleteGalleryImageMixin
 
@@ -77,3 +77,15 @@ class ServicesPageView(SingletonUpdateView):
 
 class ServicesDeleteBlockView(DeleteGalleryImageMixin):
     model = ServiceBlock
+
+
+class TariffPageView(SingletonUpdateView):
+    model = TariffPage
+    form_class = TariffForm
+    inline_form_set = TariffBlockFormset
+    template_name = 'pages/tariff_page_admin.html'
+    context_object_name = 'form'
+
+
+class TariffDeleteBlockView(DeleteGalleryImageMixin):
+    model = TariffBlock
