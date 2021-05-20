@@ -55,14 +55,24 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-user-circle text-purple"></i>
-                    <span>Пользователь</span>
+                    <span>
+                        {% if request.user.last_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                        {% else %}
+                            {{ request.user }}
+                        {% endif %}
+                    </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg" style="left: inherit; right: 0px;">
                     <div class="menu-header"
                          style="padding-bottom: 50px; background-color: #f39c12; color:white; padding-top:15px;">
                 <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"
                          style="font-size: 78px;"></i></span>
-                        <p>Пользователь</p>
+                        <p>{% if request.user.last_name %}
+                            {{ request.user.first_name }} {{ request.user.last_name }}
+                        {% else %}
+                            {{ request.user }}
+                        {% endif %}</p>
                     </div>
                     <div class="menu-footer" style="padding: 10px;">
                         <div class="row text-center" style="background-color: #F9F9F9">
@@ -185,7 +195,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{% url 'admin_panel:services_page' %}" class="nav-link
+                                    {% if request.path == '/admin/services/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Услуги</p>
                                 </a>

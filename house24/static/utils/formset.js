@@ -24,6 +24,7 @@ function cloneRow(prefix, selector){
 
 	total++;
 	$('#id_'+prefix+'-TOTAL_FORMS').val(total); // increment and update TOTAL_FORMS input
+	$(newElement).closest('div[class*=col]').find('.counter').text(total);
 	$(selector).last().after(newElement); // add newElement after last one
 	return false;
 
@@ -36,6 +37,7 @@ function updateIndex(element, prefix, selector){
 		$(forms.get(i)).find(':input').each(function(){
 				let id_regex = new RegExp('(' + prefix + '-\\d+)'); // set Regular Expression to find formset inputs
 				let replacement = prefix + '-' + i;
+				$(this).closest('div[class*=col]').find('.counter').text(i+1);
 				if($(this).attr('for')){ // check 'for' attr and replace it`s value to new one`
 					$(this).attr('for', $(this).attr('for').replace(id_regex, replacement));
 				}

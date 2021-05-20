@@ -1,6 +1,7 @@
 from django import forms
 
-from db.models.pages import MainPage, InfoBlock, AboutPage, AboutGallery, AdditionalGallery, Document
+from db.models.pages import (MainPage, InfoBlock, AboutPage, AboutGallery, AdditionalGallery, Document,
+                             ServicesPage, ServiceBlock)
 
 
 class MainPageForm(forms.ModelForm):
@@ -99,3 +100,31 @@ AboutPageAdditionalGalleryInlineFormset = forms.inlineformset_factory(AboutPage,
 
 DocumentsFormset = forms.inlineformset_factory(AboutPage, Document,
                                                form=DocumentForm, extra=0, can_delete=False)
+
+
+class ServicesForm(forms.ModelForm):
+    class Meta:
+        model = ServicesPage
+        fields = '__all__'
+        widgets = {
+            'seo_title': forms.TextInput(attrs={'id': 'seo_title', 'class': 'form-control'}),
+            'seo_description': forms.Textarea(attrs={'id': 'seo_description', 'class': 'form-control'}),
+            'seo_keywords': forms.TextInput(attrs={'id': 'seo_keywords', 'class': 'form-control'}),
+        }
+
+
+class ServicesBlockForm(forms.ModelForm):
+    class Meta:
+        model = ServiceBlock
+        exclude = ('entity', )
+        widgets = {
+            'image': forms.FileInput(attrs={'id': 'image', 'class': 'upload',
+                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+            'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'id': 'block_description', 'class': 'form-control block_desc',
+                                                 'style': 'resize:none;'}),
+        }
+
+
+ServicesBlockFormset = forms.inlineformset_factory(ServicesPage, ServiceBlock,
+                                                   form=ServicesBlockForm, extra=1, can_delete=False)

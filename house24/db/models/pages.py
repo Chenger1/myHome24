@@ -113,12 +113,15 @@ class ServicesPage(SingletonModel):
     seo_description = models.TextField(blank=True, null=True)
     seo_keywords = models.CharField(max_length=150, blank=True, null=True)
 
+    def get_absolute_url(self):
+        return reverse('admin_panel:services_page')
+
 
 class ServiceBlock(models.Model):
     entity = models.ForeignKey(ServicesPage, related_name='blocks', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='services_page/')
-    title = models.CharField(max_length=100)
-    description = models.TextField()
+    image = models.ImageField(upload_to='services_page/', blank=True, null=True)
+    title = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
     def get_images(self):
         return [self.image] if self.image else None

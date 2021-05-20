@@ -1,7 +1,8 @@
-from db.models.pages import MainPage, AboutPage, AboutGallery, AdditionalGallery, Document
+from db.models.pages import MainPage, AboutPage, AboutGallery, AdditionalGallery, Document, ServicesPage
 
 from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPageForm, AboutPageGalleryInlineFormset,
-                                          AboutPageAdditionalGalleryInlineFormset, DocumentsFormset)
+                                          AboutPageAdditionalGalleryInlineFormset, DocumentsFormset,
+                                          ServicesForm, ServicesBlockFormset)
 
 from admin_panel.views.pages.singleton_mixin import SingletonUpdateView, DeleteGalleryImageMixin
 
@@ -13,17 +14,6 @@ class MainPageView(SingletonUpdateView):
     template_name = 'pages/main_page_admin.html'
     context_object_name = 'form'
     success_url = None
-
-    def form_valid(self, form):
-        context = self.get_context_data(form=form)
-        formset = context['formset']
-        response = super().form_valid(form)
-        if formset.is_valid():
-            formset.instance = self.object
-            formset.save()
-            return response
-        else:
-            return super().form_invalid(form)
 
 
 class AboutPageView(SingletonUpdateView):
@@ -52,13 +42,11 @@ class AboutPageView(SingletonUpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data(form=form)
-        formset = context['formset']
         additional_formset = context['additional_formset']
         documents_formset = context['documents_formset']
         response = super().form_valid(form)
-        if formset.is_valid() and additional_formset.is_valid() and documents_formset.is_valid():
-            formset.instance = additional_formset.instance = documents_formset.instance = self.object
-            formset.save()
+        if additional_formset.is_valid() and documents_formset.is_valid():
+            additional_formset.instance = documents_formset.instance = self.object
             additional_formset.save()
             documents_formset.save()
             return response
@@ -79,3 +67,13 @@ class DeleteAdditionalGallery(DeleteAboutPageGallery):
 class DeleteDocument(DeleteGalleryImageMixin):
     model = Document
     redirect_url = 'admin_panel:about_page'
+
+
+class ServicesPageView(SingletonUpdateView):
+    model = ServicesPage
+    form_class = ServicesForm
+    inline_form_set = ServicesBlockFormset
+    template_name = 'pages/services_page_admin.html'
+    context_object_name = 'form'
+    success_url = None
+
