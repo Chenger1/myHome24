@@ -61,3 +61,15 @@ function deleteRow(element, prefix, selector){
 	updateIndex(element, prefix, selector)
 
 }
+
+function deleteFormsetWithoutReload(element, url, prefix, selector){
+	pk = $(element).attr('name')
+	$.ajax({
+		method: 'GET',
+		url: url,
+		data: {'pk': pk},
+		success: function(response){
+			deleteRow(element, prefix, selector);
+		}
+	})
+}

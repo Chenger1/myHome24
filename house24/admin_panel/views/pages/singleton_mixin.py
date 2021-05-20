@@ -1,6 +1,7 @@
 from django.views.generic.edit import UpdateView
 from django.views.generic import View
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 from admin_panel.permission_mixin import AdminPermissionMixin
 
@@ -41,9 +42,8 @@ class SingletonUpdateView(AdminPermissionMixin, UpdateView):
 
 class DeleteGalleryImageMixin(AdminPermissionMixin, View):
     model = None
-    redirect_url = None
 
-    def get(self, request, pk):
-        inst = get_object_or_404(self.model, pk=pk)
+    def get(self, request):
+        inst = get_object_or_404(self.model, pk=request.GET.get('pk'))
         inst.delete()
-        return redirect(self.redirect_url)
+        return JsonResponse({'status': 200})

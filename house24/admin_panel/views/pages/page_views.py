@@ -1,4 +1,5 @@
-from db.models.pages import MainPage, AboutPage, AboutGallery, AdditionalGallery, Document, ServicesPage
+from db.models.pages import (MainPage, AboutPage, AboutGallery, AdditionalGallery, Document, ServicesPage,
+                             ServiceBlock)
 
 from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPageForm, AboutPageGalleryInlineFormset,
                                           AboutPageAdditionalGalleryInlineFormset, DocumentsFormset,
@@ -56,17 +57,14 @@ class AboutPageView(SingletonUpdateView):
 
 class DeleteAboutPageGallery(DeleteGalleryImageMixin):
     model = AboutGallery
-    redirect_url = 'admin_panel:about_page'
 
 
 class DeleteAdditionalGallery(DeleteAboutPageGallery):
     model = AdditionalGallery
-    redirect_url = 'admin_panel:about_page'
 
 
 class DeleteDocument(DeleteGalleryImageMixin):
     model = Document
-    redirect_url = 'admin_panel:about_page'
 
 
 class ServicesPageView(SingletonUpdateView):
@@ -75,5 +73,7 @@ class ServicesPageView(SingletonUpdateView):
     inline_form_set = ServicesBlockFormset
     template_name = 'pages/services_page_admin.html'
     context_object_name = 'form'
-    success_url = None
 
+
+class ServicesDeleteBlockView(DeleteGalleryImageMixin):
+    model = ServiceBlock

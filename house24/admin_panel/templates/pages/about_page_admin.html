@@ -110,7 +110,7 @@
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
                                             {% if inline_form.instance.pk %}
-                                                <a href="{{ inline_form.instance.get_delete_url }}" class="delete_icon">
+                                                <a href="javascript:void(0)" class="delete_icon has_pk" name="{{ inline_form.instance.pk }}">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
@@ -182,7 +182,8 @@
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
                                             {% if inline_form.instance.pk %}
-                                                <a href="{{ inline_form.instance.get_delete_url }}" class="delete_icon">
+                                                <a href="javascript:void(0)" class="delete_icon has_pk has_pk"
+                                                name="{{ inline_form.instance.pk }}">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
@@ -227,8 +228,8 @@
                                         {% endfor %}
                                         <div class="col-xs-12 col-md-6 documents_formset formset_block">
                                             {% if inline_form.instance.pk %}
-                                            <a href="{{ inline_form.instance.get_delete_url }}" class="text-red form-row-remove-btn delete_icon_documents"
-                                            style="float:right;"><i class="fa fa-trash"></i></a>
+                                            <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents has_pk"
+                                            style="float:right;" name="{{ inline_form.instance.pk }}"><i class="fa fa-trash"></i></a>
                                             {% else %}
                                             <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents"
                                             style="float:right;"><i class="fa fa-trash"></i></a>
@@ -306,13 +307,26 @@
     $('.formset_images').each(function(){
         $(this).find('input[type=file]').on('change', function(){
             setPreview(this);
-        })
+        });
+        $(this).find('.has_pk').on('click', function(){
+            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_about_gallery_image' %}", 'images', '.formset_images')
+        });
     });
     $('.add_formset').each(function(){
         $(this).find('input[type=file]').on('change', function(){
             setPreview(this);
         })
+        $(this).find('.has_pk').on('click', function(){
+            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_about_additional_gallery_image' %}", 'add_images', '.add_formset')
+        });
     });
+
+    $('.documents_formset').each(function(){
+        $(this).find('.has_pk').on('click', function(){
+            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_document' %}", 'documents', 'documents_formset')
+        });
+    })
+
     $('#photo').on('change', function(){
         setPreview(this);
     })

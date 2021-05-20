@@ -83,10 +83,17 @@
                                     {% endfor %}
                                     <div class="col-md-4 formset formset_block">
                                         <h4>Услуга <span class="counter">{{ forloop.counter }}</span>
+                                            {% if inline_form.instance.pk %}
+                                            <a href="javascript:void(0)" style="float:right;"
+                                               class="delete_icon_blocks text-red has_pk" name="{{ inline_form.instance.pk }}">
+                                                <i class="fa fa-trash" style="font-size:18px;"></i>
+                                            </a>
+                                            {% else %}
                                             <a href="javascript:void(0)" style="float:right;"
                                                class="delete_icon_blocks text-red">
                                                 <i class="fa fa-trash" style="font-size:18px;"></i>
                                             </a>
+                                            {% endif %}
                                         </h4>
                                         {% if inline_form.instance.image %}
                                         <img src="{{ inline_form.instance.image.url }}" alt
@@ -174,6 +181,12 @@
 
 </script>
 <script>
+    $('.formset').each(function(){
+        $(this).find('.has_pk').on('click', function(){
+            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_services_block' %}", 'blocks', '.formset')
+        });
+    })
+
     $('#add_formset').on('click', function(){
         tinymce.remove();
        cloneRow('blocks', '.formset');
