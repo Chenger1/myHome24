@@ -1,9 +1,12 @@
+from django.views.generic.edit import UpdateView
+
 from db.models.pages import (MainPage, AboutPage, AboutGallery, AdditionalGallery, Document, ServicesPage,
-                             ServiceBlock, TariffPage, TariffBlock)
+                             ServiceBlock, TariffPage, TariffBlock, ContactsPage)
 
 from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPageForm, AboutPageGalleryInlineFormset,
                                           AboutPageAdditionalGalleryInlineFormset, DocumentsFormset,
-                                          ServicesForm, ServicesBlockFormset, TariffForm, TariffBlockFormset)
+                                          ServicesForm, ServicesBlockFormset, TariffForm, TariffBlockFormset,
+                                          ContactsPageForm)
 
 from admin_panel.views.pages.singleton_mixin import SingletonUpdateView, DeleteGalleryImageMixin
 
@@ -89,3 +92,13 @@ class TariffPageView(SingletonUpdateView):
 
 class TariffDeleteBlockView(DeleteGalleryImageMixin):
     model = TariffBlock
+
+
+class ContactsPageView(UpdateView):
+    model = ContactsPage
+    form_class = ContactsPageForm
+    context_object_name = 'form'
+    template_name = 'pages/contacts_page_admin.html'
+
+    def get_object(self, queryset=None):
+        return self.model.load()

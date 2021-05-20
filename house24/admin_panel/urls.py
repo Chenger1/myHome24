@@ -3,7 +3,8 @@ from django.urls import path
 from admin_panel.views.index_views import IndexView, LogoutAdmin
 from admin_panel.views.pages.page_views import (MainPageView, AboutPageView, DeleteAboutPageGallery,
                                                 DeleteAdditionalGallery, DeleteDocument, ServicesPageView,
-                                                ServicesDeleteBlockView, TariffPageView, TariffDeleteBlockView)
+                                                ServicesDeleteBlockView, TariffPageView, TariffDeleteBlockView,
+                                                ContactsPageView)
 
 
 app_name = 'admin_panel'
@@ -24,4 +25,5 @@ urlpatterns = [
     path('services/delete_block/', ServicesDeleteBlockView.as_view(), name='delete_services_block'),
     path('tariffs/', TariffPageView.as_view(), name='tariff_page'),
     path('tariffs/delete_block/', TariffDeleteBlockView.as_view(), name='delete_tariff_block'),
+    path('contacts/', ContactsPageView.as_view(), name='contacts_page'),
 ]

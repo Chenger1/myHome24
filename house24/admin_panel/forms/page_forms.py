@@ -1,7 +1,7 @@
 from django import forms
 
 from db.models.pages import (MainPage, InfoBlock, AboutPage, AboutGallery, AdditionalGallery, Document,
-                             ServicesPage, ServiceBlock, TariffPage, TariffBlock)
+                             ServicesPage, ServiceBlock, TariffPage, TariffBlock, ContactsPage)
 
 
 class MainPageForm(forms.ModelForm):
@@ -157,3 +157,23 @@ class TariffBlockForm(forms.ModelForm):
 
 TariffBlockFormset = forms.inlineformset_factory(TariffPage, TariffBlock,
                                                  form=TariffBlockForm, extra=1, can_delete=False)
+
+
+class ContactsPageForm(forms.ModelForm):
+    class Meta:
+        model = ContactsPage
+        fields = '__all__'
+        widgets = {
+            'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'id': 'description'}),
+            'full_name': forms.TextInput(attrs={'id': 'full_name', 'class': 'form-control'}),
+            'location': forms.TextInput(attrs={'id': 'location', 'class': 'form-control'}),
+            'address': forms.TextInput(attrs={'id': 'address', 'class': 'form-control'}),
+            'phone': forms.TextInput(attrs={'id': 'phone', 'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'id': 'email', 'class': 'form-control'}),
+            'link': forms.URLInput(attrs={'id': 'link', 'class': 'form-control'}),
+            'map': forms.Textarea(attrs={'id': 'map', 'class': 'form-control'}),
+            'seo_title': forms.TextInput(attrs={'id': 'seo_title', 'class': 'form-control'}),
+            'seo_description': forms.Textarea(attrs={'id': 'seo_description', 'class': 'form-control'}),
+            'seo_keywords': forms.TextInput(attrs={'id': 'seo_keywords', 'class': 'form-control'}),
+        }

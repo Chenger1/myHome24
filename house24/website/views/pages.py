@@ -5,6 +5,7 @@ from website.views.singleton_page_mixin import SingletonView
 
 class MainPageView(SingletonView):
     model = MainPage
+    additional_model = ContactsPage
     template_name = 'pages/main_page.html'
 
 

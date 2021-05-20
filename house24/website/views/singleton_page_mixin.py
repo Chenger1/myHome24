@@ -5,6 +5,7 @@ from django.shortcuts import render
 class SingletonView(View):
     model = None
     template_name = None
+    additional_model = None
     context_object_name = 'page'
 
     def get(self, request):
@@ -15,4 +16,8 @@ class SingletonView(View):
         """
 
         page = self.model.load()
-        return render(request, self.template_name, context={self.context_object_name: page})
+        additional_page = None
+        if self.additional_model:
+            additional_page = self.additional_model.load()
+        return render(request, self.template_name, context={self.context_object_name: page,
+                                                            'additional_page': additional_page})

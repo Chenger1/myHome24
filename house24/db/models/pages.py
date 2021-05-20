@@ -95,7 +95,7 @@ class ContactsPage(SingletonModel):
     phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
 
     title = models.CharField(max_length=100)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     full_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
     address = models.CharField(max_length=100, blank=True, null=True)
@@ -106,6 +106,9 @@ class ContactsPage(SingletonModel):
     seo_title = models.CharField(max_length=150, blank=True, null=True)
     seo_description = models.TextField(blank=True, null=True)
     seo_keywords = models.CharField(max_length=150, blank=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('admin_panel:contacts_page')
 
 
 class ServicesPage(SingletonModel):

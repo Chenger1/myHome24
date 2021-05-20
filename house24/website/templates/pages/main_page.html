@@ -64,23 +64,23 @@
                         <div class="text">
                             <p>
                                 <i class="fas fa-user-circle"></i>
-                                    AVADA-MEDIA
+                                    {{ additional_page.full_name }}
                             </p>
                             <p>
                                 <i class="fas fa-compass"></i>
-                                ул. Космонавтов, 32
+                                    {{ additional_page.location }}
                             </p>
                             <p>
                                 <i class="fas fa-map-marker"></i>
-                                Малиновский р-н, г. Одесса
+                                    {{ additional_page.address }}
                             </p>
                             <p>
                                 <i class="fas fa-phone"></i>
-                                <a href="tel:+380971799663">+38 (097) 179-96-63</a>
+                                <a href="tel:{{ additional_page.phone }}">{{ additional_page.phone }}</a>
                             </p>
                             <p>
                                 <i class="fas fa-envelope"></i>
-                                <a href="mailto:info@avada-media.com.ua">info@avada-media.com.ua</a>
+                                <a href="mailto:{{ additional_page.email }}">{{ additional_page.email }}</a>
                             </p>
                         </div>
                     </div>
