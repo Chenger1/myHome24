@@ -15,3 +15,15 @@ def beauty_filter(value):
         '__all__': 'Ошибка'
     }
     return tags[value] if value in tags.keys() else value
+
+
+@register.filter(name='prepare_error_message')
+def prepare_message(value):
+    result = {}
+    if isinstance(value, list):
+        for item in value:
+            for key, value in item.items():
+                result[key] = value
+    elif isinstance(value, dict):
+        result.update(value)
+    return result

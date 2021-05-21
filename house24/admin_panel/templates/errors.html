@@ -1,10 +1,10 @@
 {% load static %}
 {% load beautify_line %}
-<script src="{% static 'admin_panel/plugins/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
 <script>
-{% for tag, error in form.errors.items %}
+{% for tag, error in errors.items %}
             $(document).Toasts('create', {
                 class: 'bg-danger',
                 title: '{{ tag|beauty_error_tag }}',

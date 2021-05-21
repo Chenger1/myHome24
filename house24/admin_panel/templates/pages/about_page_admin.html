@@ -12,6 +12,15 @@
 {% if form.errors %}
     {% include 'errors.html' with errors=form.errors %}
 {% endif %}
+{% if formset.errors %}
+{% include 'errors.html' with errors=formset.errors|prepare_error_message %}
+{% endif %}
+{% if additional_formset.errors %}
+{% include 'errors.html' with errors=additional_formset.errors|prepare_error_message %}
+{% endif %}
+{% if documents_formset.errors %}
+{% include 'errors.html' with errors=documents_formset.errors|prepare_error_message %}
+{% endif %}
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">

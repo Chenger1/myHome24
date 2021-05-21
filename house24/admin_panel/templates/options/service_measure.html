@@ -9,8 +9,11 @@
 {% endblock %}
 
 {% block content %}
-{% if form.errors %}
-{% include 'errors.html' with errors=form.errors %}
+{% if service_formset.errors %}
+{% include 'errors.html' with errors=service_formset.errors|prepare_error_message %}
+{% endif %}
+{% if measure_formset.errors %}
+{% include 'errors.html' with errors=measure_formset.errors|prepare_error_message %}
 {% endif %}
 <div class="content-wrapper">
     <div class="content-header">

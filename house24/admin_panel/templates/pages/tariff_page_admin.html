@@ -13,6 +13,9 @@
 {% if form.errors %}
 {% include 'errors.html' with errors=form.errors %}
 {% endif %}
+{% if formset.errors %}
+{% include 'errors.html' with errors=formset.errors|prepare_error_message %}
+{% endif %}
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">

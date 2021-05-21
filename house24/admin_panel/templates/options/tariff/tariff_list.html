@@ -55,7 +55,7 @@
                                         <td><a href="">{{ tariff.updated }}</a></td>
                                         <td>
                                             <div class="btn-group">
-                                                <a class="btn btn-default btn-sm" href="">
+                                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:duplicate_tariff' tariff.pk %}">
                                                     <i class="fa fa-clone"></i>
                                                 </a>
                                                 <a class="btn btn-default btn-sm" href="{% url 'admin_panel:update_tariff' tariff.pk %}">

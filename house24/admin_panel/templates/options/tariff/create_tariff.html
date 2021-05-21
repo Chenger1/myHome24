@@ -1,5 +1,6 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load beautify_line %}
 
 {% block title %}Редактирование страницы{% endblock %}
 
@@ -7,6 +8,9 @@
 {% block content %}
 {% if form.errors %}
 {% include 'errors.html' with errors=form.errors %}
+{% endif %}
+{% if formset.errors %}
+{% include 'errors.html' with errors=formset.errors|prepare_error_message %}
 {% endif %}
 <div class="content-wrapper">
     <div class="content-header">
@@ -124,7 +128,7 @@
                                                             <select name="measure" class="form-control"
                                                                     disabled>
                                                                 {% if inline_form.instance.pk %}
-                                                                <option value="">{{ inline_form.instance.service.name }}
+                                                                <option value="">{{ inline_form.instance.service.measure }}
                                                                 </option>
                                                                 {% else %}
                                                                 <option value=""></option>
@@ -167,6 +171,7 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
     $('#add_service').on('click', function(){
        cloneRow('services', '.formset', setEvent);
@@ -182,21 +187,11 @@
 
 </script>
 <script>
-    $('.service_select').each(function(){
-        $(this).on('change', function(){
-             let selected = $(this).find(':selected').attr('value');
-            console.log(selected);
-        })
-    })
-
-
-
-</script>
-<script>
     function setEvent(element, selector){
         let select = $(element).closest(selector).find('.service_select');
         let select_measure = $(element).closest(selector).find('select[name=measure]');
         $(element).closest(selector).find('.currency').val('грн.');
+
         $(select).on('change', function(){
             let selected = $(this).find(':selected').attr('value');
             $.ajax({
@@ -208,13 +203,17 @@
                 console.log(response)
                 $(select_measure).children().remove();
                 $(select_measure).append('<option>'+ response['measure_name'] +'</option>')
-
             })
-            
         })
     }
-
-
-
+</script>
+<script>
+    $('.service_select').each(function(){
+        let select_measure = $(this).closest('.formset').find('select[name=measure]');
+        let selected = $(this).find(':selected').attr('value');
+        $(this).closest('.formset').find('.currency').val('грн.');
+        send_request('{% url "admin_panel:get_service_measure" %}', selected, select_measure);
+        setEvent(this, '.formset');
+    })
 </script>
 {% endblock %}
