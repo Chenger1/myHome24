@@ -50,13 +50,14 @@ class TariffForm(forms.ModelForm):
 class TariffServiceBlockForm(forms.ModelForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control service_select'}))
+    currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency', 'disabled': 'true'}),
+                               required=False)
 
     class Meta:
         model = TariffService
         exclude = ('tariff', )
         widgets = {
             'price': forms.NumberInput(attrs={'class': 'form-control'}),
-            'currency': forms.TextInput(attrs={'class': 'form-control currency', 'disabled': 'true'})
         }
 
 

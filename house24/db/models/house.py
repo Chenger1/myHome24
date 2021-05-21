@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 from db.models.user import User, Owner
 
@@ -43,6 +44,10 @@ class Service(models.Model):
 class Tariff(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
+    updated = models.DateField(auto_now=True)
+
+    def get_absolute_url(self):
+        return reverse('admin_panel:update_tariff', args=[self.pk])
 
 
 class TariffService(models.Model):
