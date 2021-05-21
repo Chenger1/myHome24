@@ -36,116 +36,129 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12" style="margin-top:15px;">
-                    <div class="card card-default">
-                        <div class="row">
-                            <div class="col-12 col-xl-10 col-lg-10">
-                                <div class="card-body">
-                                    <div class="form-group">
-                                        <label for="name">Название тарифа</label>
-                                        {{ form.name }}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="description">Описание тарифа</label>
-                                        {{ form.description }}
-                                    </div>
-                                    <div class="form-group">
-                                        {{ formset.management_form }}
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="card card-default">
+                            <div class="row">
+                                <div class="col-12 col-xl-10 col-lg-10">
 
-                                        <div class="row formset" style="display: none;" id="hidden_services">
-                                            <div class="col-6 col-md-4">
-                                                <div class="form-group">
-                                                    <label for="service">Услуга</label>
-                                                    {{ formset.empty_form.service }}
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <label for="name">Название тарифа</label>
+                                            {{ form.name }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="description">Описание тарифа</label>
+                                            {{ form.description }}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ formset.management_form }}
+
+                                            <div class="row formset" style="display: none;" id="hidden_services">
+                                                <div class="col-6 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="service">Услуга</label>
+                                                        {{ formset.empty_form.service }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="">Цена</label>
-                                                    {{ formset.empty_form.price }}
+                                                <div class="col-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="">Цена</label>
+                                                        {{ formset.empty_form.price }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 col-md-2">
-                                                <div class="form-group">
-                                                    <label for="">Валюта</label>
-                                                    {{ formset.empty_form.currency }}
+                                                <div class="col-6 col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="">Валюта</label>
+                                                        {{ formset.empty_form.currency }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="">Ед. изм.</label>
-                                                    <div class="input-group">
-                                                        <select name="measure" class="form-control"
-                                                                disabled>
-                                                            <option value=""></option>
-                                                        </select>
-                                                        <div class="delete_input">
+                                                <div class="col-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="">Ед. изм.</label>
+                                                        <div class="input-group">
+                                                            <select name="measure" class="form-control"
+                                                                    disabled>
+                                                                <option value=""></option>
+                                                            </select>
+                                                            <div class="delete_input">
                                                             <span class="input-group-btn">
                                                                 <button type="button"
                                                                         class="btn btn-default delete_icon_services"
                                                                         name="4"><i class="fa fa-trash"></i></button>
                                                             </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
 
-                                        {% for inline_form in formset %}
-                                        {% for hidden in inline_form.hidden_fields %}
-                                        {{ hidden }}
-                                        {% endfor %}
-                                        <div class="row">
-                                            <div class="col-6 col-md-4">
-                                                <div class="form-group">
-                                                    <label for="service">Услуга</label>
-                                                    {{ inline_form.service }}
+                                            {% for inline_form in formset %}
+                                            {% for hidden in inline_form.hidden_fields %}
+                                            {{ hidden }}
+                                            {% endfor %}
+                                            <div class="row">
+                                                <div class="col-6 col-md-4">
+                                                    <div class="form-group">
+                                                        <label for="service">Услуга</label>
+                                                        {{ inline_form.service }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="">Цена</label>
-                                                    {{ inline_form.price }}
+                                                <div class="col-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="">Цена</label>
+                                                        {{ inline_form.price }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 col-md-2">
-                                                <div class="form-group">
-                                                    <label for="">Валюта</label>
-                                                    {{ inline_form.currency }}
+                                                <div class="col-6 col-md-2">
+                                                    <div class="form-group">
+                                                        <label for="">Валюта</label>
+                                                        {{ inline_form.currency }}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6 col-md-3">
-                                                <div class="form-group">
-                                                    <label for="">Ед. изм.</label>
-                                                    <div class="input-group">
-                                                        <select name="measure" class="form-control"
-                                                                disabled>
-                                                            {% if inline_form.instance.pk %}
-                                                            <option value="">{{ inline_form.instance.service.name }}
-                                                            </option>
-                                                            {% else %}
-                                                            <option value=""></option>
-                                                            {% endif %}
-                                                        </select>
-                                                        <div class="delete_input">
+                                                <div class="col-6 col-md-3">
+                                                    <div class="form-group">
+                                                        <label for="">Ед. изм.</label>
+                                                        <div class="input-group">
+                                                            <select name="measure" class="form-control"
+                                                                    disabled>
+                                                                {% if inline_form.instance.pk %}
+                                                                <option value="">{{ inline_form.instance.service.name }}
+                                                                </option>
+                                                                {% else %}
+                                                                <option value=""></option>
+                                                                {% endif %}
+                                                            </select>
+                                                            <div class="delete_input">
                                                             <span class="input-group-btn">
                                                                 <button type="button"
                                                                         class="btn btn-default delete_icon_services {% if inline_form.instance.pk %}has_pk{% endif %}"
-                                                                        name="{{ inline_form.instance.pk }}"><i class="fa fa-trash"></i></button>
+                                                                        name="{{ inline_form.instance.pk }}"><i
+                                                                        class="fa fa-trash"></i></button>
                                                             </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {% endfor %}
+                                            {% endfor %}
 
-                                        <button class="btn btn-primary" id="add_service">Добавить услугу</button>
+                                            <button class="btn btn-primary" id="add_service" type="button">Добавить услугу</button>
+                                        </div>
                                     </div>
+
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top:15px; margin-bottom: 15px;">
+                                <div class="col-12 text-center">
+                                    <a href="{% url 'admin_panel:list_tariff_admin' %}"
+                                       class="btn btn-default">Отмена</a>
+                                    <button type="submit" class="btn btn-success">Сохранить</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -163,6 +176,9 @@
             deleteRow(this, 'services', '.formset');
         })
     })
+
+
+
 </script>
 <script>
     $('.service_select').each(function(){
@@ -171,6 +187,9 @@
             console.log(selected);
         })
     })
+
+
+
 </script>
 <script>
     function setEvent(element, selector){
@@ -193,5 +212,8 @@
             
         })
     }
+
+
+
 </script>
 {% endblock %}
