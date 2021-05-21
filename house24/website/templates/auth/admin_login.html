@@ -14,8 +14,13 @@
             {% endblock %}
             {% block admin_link %}
             <li>
+                {% if request.user.is_staff and request.user.is_authenticated %}
+                <a href="{% url 'admin_panel:index' %}"
+                style="display:block;">Для администрации</a>
+                {% else %}
                 <a href="#admin" data-toggle="tab" id="admin_link"
                 style="display:block;">Для администрации</a>
+                {% endif %}
             </li>
             {% endblock %}
         </ul>
