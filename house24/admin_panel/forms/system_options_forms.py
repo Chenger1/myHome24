@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.house import Service, Measure
+from db.models.house import Service, Measure, Tariff, TariffService
 
 
 class MeasureForm(forms.ModelForm):
@@ -34,3 +34,31 @@ class ServiceForm(forms.ModelForm):
 
 
 ServiceFormset = forms.modelformset_factory(model=Service, form=ServiceForm, can_delete=False, extra=1)
+
+
+class TariffForm(forms.ModelForm):
+    class Meta:
+        model = Tariff
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'id': 'description', 'class': 'form-control',
+                                                 'style': 'resize:none;'})
+        }
+
+
+class TariffServiceBlockForm(forms.ModelForm):
+    service = forms.ModelChoiceField(queryset=Service.objects.all(),
+                                     widget=forms.Select(attrs={'class': 'form-control'}))
+
+    class Meta:
+        model = TariffService
+        exclude = ('tariff', )
+        widgets = {
+            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'currency': forms.TextInput(attrs={'class': 'form-control', 'disabled': 'true'})
+        }
+
+
+TariffServiceBlockFormset = forms.inlineformset_factory(Tariff, TariffService, form=TariffServiceBlockForm,
+                                                        can_delete=False, extra=0)

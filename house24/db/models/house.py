@@ -36,6 +36,9 @@ class Service(models.Model):
     measure = models.ForeignKey(Measure, related_name='services', on_delete=models.CASCADE, blank=True, null=True)
     status = models.BooleanField(default=1)
 
+    def __str__(self):
+        return self.name
+
 
 class Tariff(models.Model):
     name = models.CharField(max_length=100)
@@ -46,7 +49,7 @@ class TariffService(models.Model):
     tariff = models.ForeignKey(Tariff, related_name='services', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='tariffs', on_delete=models.CASCADE)
     price = models.IntegerField()
-    currency = models.CharField(max_length=30)
+    currency = models.CharField(max_length=30, default='грн.')
 
 
 class PersonalAccount(models.Model):
