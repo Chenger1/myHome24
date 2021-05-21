@@ -156,12 +156,42 @@
 <script src="{% static 'utils/formset.js' %}"></script>
 <script>
     $('#add_service').on('click', function(){
-       cloneRow('services', '.formset');
+       cloneRow('services', '.formset', setEvent);
     });
     $('.delete_icon_services').each(function(){
         $(this).on('click', function(){
             deleteRow(this, 'services', '.formset');
         })
     })
+</script>
+<script>
+    $('.service_select').each(function(){
+        $(this).on('change', function(){
+             let selected = $(this).find(':selected').attr('value');
+            console.log(selected);
+        })
+    })
+</script>
+<script>
+    function setEvent(element, selector){
+        let select = $(element).closest(selector).find('.service_select');
+        let select_measure = $(element).closest(selector).find('select[name=measure]');
+        $(element).closest(selector).find('.currency').val('грн.');
+        $(select).on('change', function(){
+            let selected = $(this).find(':selected').attr('value');
+            $.ajax({
+                url: '{% url "admin_panel:get_service_measure" %}',
+                type: 'GET',
+                data: {'pk': selected},
+            })
+            .done(function(response) {
+                console.log(response)
+                $(select_measure).children().remove();
+                $(select_measure).append('<option>'+ response['measure_name'] +'</option>')
+
+            })
+            
+        })
+    }
 </script>
 {% endblock %}

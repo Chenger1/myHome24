@@ -1,4 +1,4 @@
-function cloneRow(prefix, selector){
+function cloneRow(prefix, selector, callback=undefined){
     let total = $('#id_'+prefix+'-TOTAL_FORMS').val();;
 
     let newElement = $('#hidden_'+prefix).clone(true).css('display', '').removeAttr('id');
@@ -25,6 +25,10 @@ function cloneRow(prefix, selector){
 	total++;
 	$('#id_'+prefix+'-TOTAL_FORMS').val(total); // increment and update TOTAL_FORMS input
 	$(newElement).closest('div[class*=col]').find('.counter').text(total);
+	if(callback){ // for some purposes we can add function that initiate additional functionality 
+		callback(newElement, selector);
+	}
+
 	$(selector).last().after(newElement); // add newElement after last one
 	return false;
 

@@ -1,7 +1,10 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
+from django.views.generic import View
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
-from db.models.house import Tariff
+from db.models.house import Tariff, Service
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
 
@@ -36,3 +39,12 @@ class CreateTariff(CreateView):
             return response
         else:
             return self.form_invalid(form)
+
+
+class GetServiceMeasure(View):
+    model = Service
+
+    def get(self, request):
+        service = get_object_or_404(Service, pk=request.GET.get('pk'))
+        measure = service.measure.measure_name
+        return JsonResponse({'measure_name': measure})
