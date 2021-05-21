@@ -3,6 +3,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import View
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
+from django.urls import reverse_lazy
 
 from db.models.house import Tariff, Service, TariffService
 
@@ -22,6 +23,7 @@ class CreateTariff(CreateView):
     formset_class = TariffServiceBlockFormset
     template_name = 'options/tariff/create_tariff.html'
     context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_tariff_admin')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -53,6 +55,7 @@ class UpdateTariff(UpdateView):
     formset_class = TariffServiceBlockFormset
     template_name = 'options/tariff/create_tariff.html'
     context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_tariff_admin')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -129,7 +132,7 @@ class DuplicateTariff(View):
                     new_form = form.save(commit=False)
                     new_form.tariff = obj
                     new_form.save()
-                return redirect(obj.get_absolute_url())
+                return redirect('admin_panel:list_tariff_admin')
             else:
                 errors = prepare_error_message(formset.errors)
                 return render(request, self.template_name, context={self.context_object_name: form,
