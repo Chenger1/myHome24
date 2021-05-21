@@ -1,0 +1,80 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Редактирование страницы{% endblock %}
+
+
+{% block content %}
+{% if form.errors %}
+{% include 'errors.html' with errors=form.errors %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Тарифы</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Тарифы</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <a href="" class="btn btn-success" style="float: right;">Добавить тариф</a>
+                </div>
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-hover table-striped text-nowrap linkedRow">
+                                <thead>
+                                <tr>
+                                    <th><a href="">Название тарифа</a></th>
+                                    <th>Описание тарифа</th>
+                                    <th>Дата редактирования</th>
+                                    <th style="width: 40px"></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><a href="">Основной тариф 2</a></td>
+                                        <td><a href="">Описание тарифа</a></td>
+                                        <td><a href="">18.02.2021</a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a class="btn btn-default btn-sm" href="">
+                                                    <i class="fa fa-clone"></i>
+                                                </a>
+                                                <a class="btn btn-default btn-sm" href="">
+                                                    <i class="fas fa-edit"></i>
+                                                </a>
+                                                <a class="btn btn-default btn-sm" href="">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

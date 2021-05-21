@@ -61,3 +61,17 @@
     height: 150px;
     object-fit: cover;
 }
+
+.table-hover{
+    font-size: 14px;
+}
+.table-hover td{
+    border: 1px solid #c9c9c9;
+}
+
+.linkedRow td{
+    cursor: pointer;
+}
+.linkedRow td>a{
+    color: black;
+}
