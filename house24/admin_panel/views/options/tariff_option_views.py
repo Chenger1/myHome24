@@ -4,7 +4,7 @@ from django.views.generic import View
 from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 
-from db.models.house import Tariff, Service
+from db.models.house import Tariff, Service, TariffService
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
 
@@ -90,3 +90,12 @@ class DeleteTariff(View):
         if tariff:
             tariff.delete()
         return redirect(self.success_url)
+
+
+class DeleteTariffService(View):
+    model = TariffService
+
+    def get(self, request):
+        service = get_object_or_404(TariffService, pk=request.GET.get('pk'))
+        service.delete()
+        return JsonResponse({'status': 200})

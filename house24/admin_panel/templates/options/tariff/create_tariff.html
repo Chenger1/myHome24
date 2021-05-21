@@ -98,7 +98,7 @@
                                             {% for hidden in inline_form.hidden_fields %}
                                             {{ hidden }}
                                             {% endfor %}
-                                            <div class="row">
+                                            <div class="row formset">
                                                 <div class="col-6 col-md-4">
                                                     <div class="form-group">
                                                         <label for="service">Услуга</label>
@@ -176,8 +176,9 @@
             deleteRow(this, 'services', '.formset');
         })
     })
-
-
+    $('.formset').find('.has_pk').on('click', function(){
+        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_tariff_service' %}", 'services', '.formset')
+    })
 
 </script>
 <script>

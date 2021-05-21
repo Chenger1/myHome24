@@ -323,7 +323,7 @@
 
     $('.documents_formset').each(function(){
         $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_document' %}", 'documents', 'documents_formset')
+            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_document' %}", 'documents', '.documents_formset')
         });
     })
 
