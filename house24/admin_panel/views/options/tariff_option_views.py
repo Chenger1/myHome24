@@ -1,7 +1,7 @@
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.views.generic import View
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.http import JsonResponse
 
 from db.models.house import Tariff, Service
@@ -48,3 +48,14 @@ class GetServiceMeasure(View):
         service = get_object_or_404(Service, pk=request.GET.get('pk'))
         measure = service.measure.measure_name
         return JsonResponse({'measure_name': measure})
+
+
+class DeleteTariff(View):
+    model = Tariff
+    success_url = 'admin_panel:list_tariff_admin'
+
+    def get(self, request, pk):
+        tariff = get_object_or_404(Tariff, pk=pk)
+        if tariff:
+            tariff.delete()
+        return redirect(self.success_url)

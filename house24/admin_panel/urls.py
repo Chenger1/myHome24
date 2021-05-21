@@ -7,7 +7,7 @@ from admin_panel.views.pages.page_views import (MainPageView, AboutPageView, Del
                                                 ContactsPageView)
 from admin_panel.views.options.option_views import (ServiceOptionView, SaveServiceForm, SaveMeasureForm,
                                                     DeleteServiceBlock, DeleteMeasureBlock)
-from admin_panel.views.options.tariff_option_views import ListTariff, CreateTariff, GetServiceMeasure
+from admin_panel.views.options.tariff_option_views import ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff
 
 
 app_name = 'admin_panel'
@@ -41,4 +41,5 @@ urlpatterns = [
     path('tariff/index/', ListTariff.as_view(), name='list_tariff_admin'),
     path('tariff/index/create/', CreateTariff.as_view(), name='create_tariff'),
     path('tariff/index/get_service_measure/', GetServiceMeasure.as_view(), name='get_service_measure'),
+    path('tariff/index/delete/<int:pk>/', DeleteTariff.as_view(), name='delete_tariff'),
 ]
