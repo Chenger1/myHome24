@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from db.models.user import Role
 
 from admin_panel.forms.user_forms import RoleFormSet, SearchForm, CreateAdminUserForm, UpdateAdminUserForm
+from admin_panel.views.mixins import DeleteInstanceView
 
 
 User = get_user_model()
@@ -67,3 +68,8 @@ class UpdateAdminUser(UpdateView):
     template_name = 'user/create_admin_user.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_users_admin')
+
+
+class DeleteAdminUser(DeleteInstanceView):
+    model = User
+    redirect_url = 'admin_panel:list_users_admin'

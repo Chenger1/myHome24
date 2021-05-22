@@ -2,7 +2,7 @@
 {% load static %}
 {% load beautify_line %}
 
-{% block title %}Редактирование страницы{% endblock %}
+{% block title %}Пользователи{% endblock %}
 
 
 {% block content %}
@@ -115,7 +115,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="">
+                                               href="{% url 'admin_panel:delete_user_admin' user.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>

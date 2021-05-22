@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from db.models.house import Tariff, Service, TariffService
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
+from admin_panel.views.mixins import DeleteInstanceView
 
 
 class ListTariff(ListView):
@@ -84,15 +85,9 @@ class GetServiceMeasure(View):
         return JsonResponse({'measure_name': measure})
 
 
-class DeleteTariff(View):
+class DeleteTariff(DeleteInstanceView):
     model = Tariff
-    success_url = 'admin_panel:list_tariff_admin'
-
-    def get(self, request, pk):
-        tariff = get_object_or_404(Tariff, pk=pk)
-        if tariff:
-            tariff.delete()
-        return redirect(self.success_url)
+    redirect_url = 'admin_panel:list_tariff_admin'
 
 
 class DeleteTariffService(View):
