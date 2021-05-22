@@ -120,9 +120,11 @@
                                 <tr>
                                     <td>{{ user.pk }}</td>
                                     <td>{{ user.get_full_name }}</td>
-                                    <td>{{ user.role }}</td>
                                     <td>{{ user.phone_number }}</td>
                                     <td>{{ user.email }}</td>
+                                    <td>{{ user.houses.all }}</td>
+                                    <td>{{ user.flats.all }}</td>
+                                    <td>{{ user.date_joined }}</td>
                                     <td class="text-center">
                                         {% if user.status == 0 %}
                                         <small class="label label-success">{{ user.get_status_display }}</small>
@@ -132,6 +134,7 @@
                                         <small class="label label-danger">{{ user.get_status_display }}</small>
                                         {% endif %}
                                     </td>
+                                    <td>{{ user.has_debt }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
