@@ -49,6 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'admin_panel.middleware.AdminCheckMiddleware'
 ]
 
 ROOT_URLCONF = 'house24.urls'
@@ -137,4 +139,4 @@ MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'db.CustomAbstractUser'
+AUTH_USER_MODEL = 'db.User'

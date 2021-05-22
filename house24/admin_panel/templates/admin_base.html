@@ -113,66 +113,87 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
+                    {% if request.user.role.statistic %}
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:index' %}" class="nav-link {% if request.path == '/admin/' %}active{% endif %}">
                             <i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
                             <p>Статистика</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.cashbox %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-dollar-sign" aria-hidden="true"></i>
                             <p>Касса</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.ticket %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon far fa-copy" aria-hidden="true"></i>
                             <p>Квитанции на оплату</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.personal_account %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon far fa-credit-card" aria-hidden="true"></i>
                             <p>Лицевые счета</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.flats %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-key" aria-hidden="true"></i>
                             <p>Квартиры</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.owner %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
                             <p>Владельцы квартир</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.houses %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-building" aria-hidden="true"></i>
                             <p>Дома</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.messages %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon far fa-envelope" aria-hidden="true"></i>
                             <p>Сообщения</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.master_request %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
                             <p>Заявки вызова мастера</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.meters %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-tachometer-alt" aria-hidden="true"></i>
                             <p>Показания счетчиков</p>
                         </a>
                     </li>
+                    {% endif %}
+                    {% if request.user.role.site_control %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
@@ -217,6 +238,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </li>
                         </ul>
                     </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-cogs" aria-hidden="true"></i>
@@ -224,6 +246,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <i class="fas fa-angle-left right"></i>
                         </a>
                         <ul class="nav nav-treeview">
+                            {% if request.user.role.services %}
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:service_measure_option' %}" class="nav-link
                                 {% if request.path == '/admin/service/index/' %}active{% endif %}">
@@ -231,6 +254,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p>Услуги</p>
                                 </a>
                             </li>
+                            {% endif %}
+                            {% if request.user.role.tariffs %}
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:list_tariff_admin' %}" class="nav-link
                                 {% if request.path == '/admin/tariff/index/' %}active{% endif %}">
@@ -238,6 +263,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p>Тарифы</p>
                                 </a>
                             </li>
+                            {% endif %}
+                            {% if request.user.role.roles %}
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:list_roles_admin' %}" class="nav-link
                                 {% if request.path == '/admin/roles/index/' %}active{% endif %}">
@@ -245,12 +272,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p>Роли</p>
                                 </a>
                             </li>
+                            {% endif %}
+                            {% if request.user.role.users %}
                             <li class="nav-item">
                                 <a href="" class="nav-link">
                                     <i class="fas fa-user-plus nav-icon"></i>
                                     <p>Пользователи</p>
                                 </a>
                             </li>
+                            {% endif %}
+                            {% if request.user.role.credentials %}
                             <li class="nav-item">
                                 <a href="" class="nav-link">
                                     <i class="far fa-credit-card nav-icon"></i>
@@ -263,6 +294,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <p>Статьи платежей</p>
                                 </a>
                             </li>
+                            {% endif %}
                         </ul>
                     </li>
                 </ul>

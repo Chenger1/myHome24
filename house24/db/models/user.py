@@ -58,16 +58,13 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 
 class User(CustomAbstractUser):
-    role = models.ForeignKey(Role, related_name='admin_users', on_delete=models.CASCADE)
-
-
-class Owner(CustomAbstractUser):
-    photo = models.ImageField(upload_to='users/')
-    patronym = models.CharField(max_length=100)
+    role = models.ForeignKey(Role, related_name='admin_roles', on_delete=models.CASCADE, blank=True, null=True)
+    photo = models.ImageField(upload_to='users/', blank=True, null=True)
+    patronym = models.CharField(max_length=100, blank=True, null=True)
     viber = models.CharField(max_length=100, blank=True, null=True)
     telegram = models.CharField(max_length=100, blank=True, null=True)
-    ID = models.IntegerField()
-    about = models.TextField()
+    ID = models.IntegerField(blank=True, null=True)
+    about = models.TextField(blank=True, null=True)
 
     def get_images(self):
         return [self.photo] if self.photo else None

@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from db.models.user import User, Owner
+from db.models.user import User
 
 
 class House(models.Model):
@@ -67,7 +67,7 @@ class PersonalAccount(models.Model):
 class Flat(models.Model):
     number = models.IntegerField()
     square = models.IntegerField()
-    owner = models.ForeignKey(Owner, related_name='flats', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='flats', on_delete=models.CASCADE)
     house = models.ForeignKey(House, related_name='flats', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='flats', on_delete=models.CASCADE)
     floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.CASCADE)
@@ -120,12 +120,12 @@ class PaymentItem(models.Model):
 class Income(models.Model):
     number = models.IntegerField()
     created = models.DateField()
-    owner = models.ForeignKey(Owner, related_name='incomes', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='owner_incomes', on_delete=models.CASCADE)
     personal_account = models.ForeignKey(PersonalAccount, related_name='incomes', on_delete=models.CASCADE)
     type = models.ForeignKey(PaymentItem, related_name='incomes', on_delete=models.CASCADE)
     sum = models.IntegerField()
     status = models.BooleanField(default=0)
-    manager = models.ForeignKey(User, related_name='incomes', on_delete=models.SET_NULL, blank=True, null=True)
+    manager = models.ForeignKey(User, related_name='master_incomes', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
 
 
@@ -158,6 +158,6 @@ class MasterRequest(models.Model):
     comment = models.TextField()
     type = models.IntegerField(choices=type_choices, default=type_choices[0])
     status = models.IntegerField(choices=status_choices)
-    owner = models.ForeignKey(Owner, related_name='requests', on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, related_name='owner_requests', on_delete=models.CASCADE)
     flat = models.ForeignKey(Flat, related_name='requests', on_delete=models.CASCADE)
-    master = models.ForeignKey(User, related_name='requests', on_delete=models.CASCADE)
+    master = models.ForeignKey(User, related_name='master_requests', on_delete=models.CASCADE)
