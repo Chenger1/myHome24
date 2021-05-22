@@ -44,3 +44,22 @@ class RoleForm(forms.ModelForm):
 
 
 RoleFormSet = forms.modelformset_factory(model=Role, form=RoleForm, extra=0, can_delete=False)
+
+
+class SearchForm(forms.Form):
+    status_choices = [
+        (0, 'Активен'),
+        (1, 'Новый'),
+        (2, 'Отключен')
+    ]
+
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                               required=False)
+    role = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                                  queryset=Role.objects.all(), required=False)
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                            required=False)
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                            required=False)
+    status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                               choices=status_choices, required=False)

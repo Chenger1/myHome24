@@ -28,6 +28,9 @@ class Role(models.Model):
     users = models.BooleanField(default=1)
     credentials = models.BooleanField(default=1)
 
+    def __str__(self):
+        return self.name
+
 
 class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     status_choices = [
@@ -56,6 +59,9 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+    def get_full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class User(CustomAbstractUser):
     role = models.ForeignKey(Role, related_name='admin_roles', on_delete=models.CASCADE, blank=True, null=True)
@@ -68,3 +74,23 @@ class User(CustomAbstractUser):
 
     def get_images(self):
         return [self.photo] if self.photo else None
+
+    @classmethod
+    def search(cls, data):
+        users = cls.objects.all()
+        name = data.get('name')
+        role = data.get('role')
+        phone = data.get('phone')
+        email = data.get('email')
+        status = data.get('status')
+        if name:
+            users = users.filter(first_name__in=name, last_name__in=name)
+        if role:
+            users = users.filter(role=role)
+        if phone:
+            users = users.filter(phone=phone)
+        if email:
+            users = users.filter(email=email)
+        if status:
+            users = users.filter(status=status)
+        return users

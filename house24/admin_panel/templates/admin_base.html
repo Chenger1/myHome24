@@ -275,7 +275,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% endif %}
                             {% if request.user.role.users %}
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{% url 'admin_panel:list_users_admin' %}" class="nav-link
+                                {% if request.path == '/admin/user-admin/index/' %}active{% endif %}">
                                     <i class="fas fa-user-plus nav-icon"></i>
                                     <p>Пользователи</p>
                                 </a>

@@ -79,3 +79,20 @@
 .breadcrumb_pull_right{
     float: right;
 }
+
+.label{
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+.label-success{
+    background-color: #28a745;
+}
+
+.label-primary{
+    background-color: #007bff;
+}
+
+.label-danger{
+    background-color: #dc3545;
+}

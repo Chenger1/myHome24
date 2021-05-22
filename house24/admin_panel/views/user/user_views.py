@@ -1,9 +1,9 @@
-from django.views.generic import View
+from django.views.generic import View, ListView
 from django.shortcuts import render, redirect
 
-from db.models.user import Role
+from db.models.user import Role, User
 
-from admin_panel.forms.user_forms import RoleFormSet
+from admin_panel.forms.user_forms import RoleFormSet, SearchForm
 
 
 class UpdateRolesView(View):
@@ -23,3 +23,27 @@ class UpdateRolesView(View):
             return redirect('admin_panel:list_roles_admin')
         else:
             return render(request, self.template_name, context={'roles': formset})
+
+
+class ListUsersView(View):
+    model = User
+    template_name = 'user/list_users_admin.html'
+    context_object_name = 'users'
+
+    def get(self, request):
+        if request.GET:
+            form = SearchForm(request.GET)
+            if form.is_valid():
+                users = self.model.search(form.cleaned_data)
+                return render(request, self.template_name, context={'form': form,
+                                                                    'users': users})
+            else:
+                users = self.model.objects.filter(is_staff=True)
+                return render(request, self.template_name, context={'form': form,
+                                                                    'users': users})
+        else:
+            form = SearchForm()
+            users = self.model.objects.filter(is_staff=True)
+        return render(request, self.template_name, context={'form': form,
+                                                            'users': users})
+

@@ -1,0 +1,145 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}Редактирование страницы{% endblock %}
+
+
+{% block content %}
+{% if roles.errors %}
+{% include 'errors.html' with errors=roles.errors|prepare_error_message %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Пользователи</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Пользователи</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <a href="" class="btn btn-success" style="float: right;">Добавить
+                        пользователя</a>
+                </div>
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-hover table-striped text-nowrap linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Пользователь</th>
+                                    <th>Роль</th>
+                                    <th>Телефон</th>
+                                    <th>Email(логин)</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.username }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.role }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.phone }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.email }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.status }}
+                                        </form>
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.pk }}</td>
+                                    <td>{{ user.get_full_name }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td>{{ user.phone }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td class="text-center">
+                                        {% if user.status == 0 %}
+                                        <small class="label label-success">{{ user.get_status_display }}</small>
+                                        {% elif user.status == 1 %}
+                                        <small class="label label-blue">{{ user.get_status_display }}</small>
+                                        {% else %}
+                                        <small class="label label-danger">{{ user.get_status_display }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-redo-alt"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $('.search_form').each(function(){
+        $(this).on('change', function(){
+            $(this).submit();
+        })
+    })
+
+</script>
+{% endblock %}
