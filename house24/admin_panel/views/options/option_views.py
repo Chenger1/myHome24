@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset, CredentialsForm, PaymentItemForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.views.pages.singleton_mixin import DeleteGalleryImageMixin
+from admin_panel.views.mixins import DeleteInstanceView
 
 from db.models.house import Measure, Service, PaymentItem
 from db.models.pages import Credentials
@@ -94,3 +95,8 @@ class UpdatePaymentItemView(UpdateView):
     context_object_name = 'form'
     template_name = 'options/payment_items/create_payment_item.html'
     success_url = reverse_lazy('admin_panel:payment_items_admin')
+
+
+class DeletePaymentItemView(DeleteInstanceView):
+    model = PaymentItem
+    redirect_url = 'admin_panel:payment_items_admin'

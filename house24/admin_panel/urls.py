@@ -7,7 +7,8 @@ from admin_panel.views.pages.page_views import (MainPageView, AboutPageView, Del
                                                 ContactsPageView)
 from admin_panel.views.options.option_views import (ServiceOptionView, SaveServiceForm, SaveMeasureForm,
                                                     DeleteServiceBlock, DeleteMeasureBlock, CredentialsView,
-                                                    PaymentItemsListView, CreatePaymentItemView, UpdatePaymentItemView)
+                                                    PaymentItemsListView, CreatePaymentItemView, UpdatePaymentItemView,
+                                                    DeletePaymentItemView)
 from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff,
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
@@ -64,4 +65,5 @@ urlpatterns = [
     path('payment_items/index/', PaymentItemsListView.as_view(), name='payment_items_admin'),
     path('payment_items/index/create_item/', CreatePaymentItemView.as_view(), name='create_payment_item_admin'),
     path('payment_items/index/update_item/<int:pk>/', UpdatePaymentItemView.as_view(), name='update_payment_item_admin'),
+    path('payment_items/index/delete_item/<int:pk>/', DeletePaymentItemView.as_view(), name='delete_payment_item_admin'),
 ]
