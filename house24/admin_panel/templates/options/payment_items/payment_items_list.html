@@ -1,7 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 
-{% block title %}Тарифы{% endblock %}
+{% block title %}Статьи приходов/расходов{% endblock %}
 
 
 {% block content %}
@@ -33,7 +33,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'admin_panel:create_tariff' %}" class="btn btn-success" style="float: right;">Добавить
+                    <a href="{% url 'admin_panel:create_payment_item_admin' %}" class="btn btn-success" style="float: right;">Добавить
                         статью</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">

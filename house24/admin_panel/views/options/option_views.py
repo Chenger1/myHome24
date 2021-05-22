@@ -1,7 +1,8 @@
-from django.views.generic import View, UpdateView, ListView
+from django.views.generic import View, UpdateView, ListView, CreateView
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 
-from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset, CredentialsForm
+from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset, CredentialsForm, PaymentItemForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.views.pages.singleton_mixin import DeleteGalleryImageMixin
 
@@ -77,3 +78,11 @@ class PaymentItemsListView(ListView):
     model = PaymentItem
     context_object_name = 'items'
     template_name = 'options/payment_items/payment_items_list.html'
+
+
+class CreatePaymentItemView(CreateView):
+    model = PaymentItem
+    form_class = PaymentItemForm
+    context_object_name = 'form'
+    template_name = 'options/payment_items/create_payment_item.html'
+    success_url = reverse_lazy('admin_panel:payment_items_admin')
