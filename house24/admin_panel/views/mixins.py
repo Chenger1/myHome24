@@ -1,8 +1,10 @@
 from django.views.generic import View
 from django.shortcuts import redirect, get_object_or_404
 
+from admin_panel.permission_mixin import AdminPermissionMixin
 
-class DeleteInstanceView(View):
+
+class DeleteInstanceView(AdminPermissionMixin, View):
     model = None
     redirect_url = None
 

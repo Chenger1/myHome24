@@ -9,15 +9,16 @@ from db.models.house import Tariff, Service, TariffService
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
 from admin_panel.views.mixins import DeleteInstanceView
+from admin_panel.permission_mixin import AdminPermissionMixin
 
 
-class ListTariff(ListView):
+class ListTariff(AdminPermissionMixin, ListView):
     model = Tariff
     template_name = 'options/tariff/tariff_list.html'
     context_object_name = 'tariffs'
 
 
-class CreateTariff(CreateView):
+class CreateTariff(AdminPermissionMixin, CreateView):
     model = Tariff
     form_class = TariffForm
     formset_class = TariffServiceBlockFormset
@@ -49,7 +50,7 @@ class CreateTariff(CreateView):
             return self.form_invalid(form)
 
 
-class UpdateTariff(UpdateView):
+class UpdateTariff(AdminPermissionMixin, UpdateView):
     model = Tariff
     form_class = TariffForm
     formset_class = TariffServiceBlockFormset
@@ -76,7 +77,7 @@ class UpdateTariff(UpdateView):
             return self.form_invalid(form)
 
 
-class GetServiceMeasure(View):
+class GetServiceMeasure(AdminPermissionMixin, View):
     model = Service
 
     def get(self, request):
@@ -90,7 +91,7 @@ class DeleteTariff(DeleteInstanceView):
     redirect_url = 'admin_panel:list_tariff_admin'
 
 
-class DeleteTariffService(View):
+class DeleteTariffService(AdminPermissionMixin, View):
     model = TariffService
 
     def get(self, request):
@@ -99,7 +100,7 @@ class DeleteTariffService(View):
         return JsonResponse({'status': 200})
 
 
-class DuplicateTariff(View):
+class DuplicateTariff(AdminPermissionMixin, View):
     model = Tariff
     form_class = TariffForm
     formset_class = TariffServiceBlockFormset

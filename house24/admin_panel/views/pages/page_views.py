@@ -9,6 +9,7 @@ from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPa
                                           ContactsPageForm)
 
 from admin_panel.views.pages.singleton_mixin import SingletonUpdateView, DeleteGalleryImageMixin
+from admin_panel.permission_mixin import AdminPermissionMixin
 
 
 class MainPageView(SingletonUpdateView):
@@ -94,7 +95,7 @@ class TariffDeleteBlockView(DeleteGalleryImageMixin):
     model = TariffBlock
 
 
-class ContactsPageView(UpdateView):
+class ContactsPageView(AdminPermissionMixin, UpdateView):
     model = ContactsPage
     form_class = ContactsPageForm
     context_object_name = 'form'
