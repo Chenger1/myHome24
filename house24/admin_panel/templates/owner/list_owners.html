@@ -1,10 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "admin_base.html" %}
+{% load static %}
 
-</body>
-</html>
+{% block title %}Владельцы квартир{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Владельцы квартир</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Владельцы квартир</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'admin_panel:create_user_admin' %}" class="btn btn-success" style="float: right;">Добавить
+                        пользователя</a>
+                </div>
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-hover table-striped text-nowrap linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>ФИО</th>
+                                    <th>Телефон</th>
+                                    <th>Email</th>
+                                    <th>Дом</th>
+                                    <th>Квартира</th>
+                                    <th>Добавлен</th>
+                                    <th>Статус</th>
+                                    <th>Есть долг</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.id_field }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.username }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.phone }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.email }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.house }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.flat }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.date_joined }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.status }}
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="" method="get" class="search_form">
+                                            {% csrf_token %}
+                                            {{ form.is_debt }}
+                                        </form>
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ user.pk }}</td>
+                                    <td>{{ user.get_full_name }}</td>
+                                    <td>{{ user.role }}</td>
+                                    <td>{{ user.phone_number }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td class="text-center">
+                                        {% if user.status == 0 %}
+                                        <small class="label label-success">{{ user.get_status_display }}</small>
+                                        {% elif user.status == 1 %}
+                                        <small class="label label-blue">{{ user.get_status_display }}</small>
+                                        {% else %}
+                                        <small class="label label-danger">{{ user.get_status_display }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-redo-alt"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="{% url 'admin_panel:update_user_admin' user.pk %}">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="{% url 'admin_panel:delete_user_admin' user.pk %}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $('.search_form').each(function(){
+        $(this).on('change', function(){
+            $(this).submit();
+        })
+    })
+
+
+
+
+
+</script>
+{% endblock %}

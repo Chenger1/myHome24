@@ -153,9 +153,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     {% endif %}
-                    {% if request.user.role.owner %}
+                    {% if request.user.role.owners %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_owners_admin' %}" class="nav-link
+                        {% if '/admin/owners/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-users" aria-hidden="true"></i>
                             <p>Владельцы квартир</p>
                         </a>

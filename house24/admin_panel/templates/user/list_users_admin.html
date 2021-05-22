@@ -1,14 +1,10 @@
 {% extends "admin_base.html" %}
 {% load static %}
-{% load beautify_line %}
 
 {% block title %}Пользователи{% endblock %}
 
 
 {% block content %}
-{% if roles.errors %}
-{% include 'errors.html' with errors=roles.errors|prepare_error_message %}
-{% endif %}
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
