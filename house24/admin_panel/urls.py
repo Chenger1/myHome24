@@ -6,7 +6,8 @@ from admin_panel.views.pages.page_views import (MainPageView, AboutPageView, Del
                                                 ServicesDeleteBlockView, TariffPageView, TariffDeleteBlockView,
                                                 ContactsPageView)
 from admin_panel.views.options.option_views import (ServiceOptionView, SaveServiceForm, SaveMeasureForm,
-                                                    DeleteServiceBlock, DeleteMeasureBlock, CredentialsView)
+                                                    DeleteServiceBlock, DeleteMeasureBlock, CredentialsView,
+                                                    PaymentItemsListView)
 from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff,
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
@@ -58,4 +59,7 @@ urlpatterns = [
 
     # # CREDENTIALS
     path('credentials/index/', CredentialsView.as_view(), name='credentials_admin'),
+
+    # # PAYMENT ITEMS
+    path('payment_items/index/', PaymentItemsListView.as_view(), name='payment_items_admin'),
 ]

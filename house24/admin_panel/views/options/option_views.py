@@ -1,11 +1,11 @@
-from django.views.generic import View, UpdateView
+from django.views.generic import View, UpdateView, ListView
 from django.shortcuts import render, redirect
 
 from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset, CredentialsForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.views.pages.singleton_mixin import DeleteGalleryImageMixin
 
-from db.models.house import Measure, Service
+from db.models.house import Measure, Service, PaymentItem
 from db.models.pages import Credentials
 
 
@@ -71,3 +71,9 @@ class CredentialsView(AdminPermissionMixin, UpdateView):
 
     def get_object(self, queryset=None):
         return self.model.load()
+
+
+class PaymentItemsListView(ListView):
+    model = PaymentItem
+    context_object_name = 'items'
+    template_name = 'options/payment_items/payment_items_list.html'

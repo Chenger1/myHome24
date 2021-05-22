@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.house import Service, Measure, Tariff, TariffService
+from db.models.house import Service, Measure, Tariff, TariffService, PaymentItem
 from db.models.pages import Credentials
 
 
@@ -74,4 +74,14 @@ class CredentialsForm(forms.ModelForm):
             'name': forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}),
             'information': forms.Textarea(attrs={'id': 'information', 'class': 'form-control',
                                                  'style': 'resize:none;'})
+        }
+
+
+class PaymentItemForm(forms.ModelForm):
+    class Meta:
+        model = PaymentItem
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}),
+            'type': forms.Select(attrs={'id': 'type', 'class': 'form-control'})
         }
