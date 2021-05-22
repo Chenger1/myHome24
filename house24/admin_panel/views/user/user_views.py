@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 
 from db.models.user import Role
 
-from admin_panel.forms.user_forms import RoleFormSet, SearchForm, CreateAdminUserForm, UpdateAdminUserForm
+from admin_panel.forms.user_forms import RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm
 from admin_panel.views.mixins import DeleteInstanceView, ListUsersViewMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
 
@@ -35,7 +35,7 @@ class UpdateRolesView(AdminPermissionMixin, View):
 class ListUsersView(ListUsersViewMixin):
     model = User
     template_name = 'user/list_users_admin.html'
-    search_form = SearchForm
+    is_staff = True
 
 
 class CreateAdminUser(AdminPermissionMixin, CreateView):

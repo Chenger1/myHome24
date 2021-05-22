@@ -4,6 +4,7 @@ from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ValidationError
 
 from db.models.user import Role
+from db.models.house import House, Flat
 
 
 User = get_user_model()
@@ -58,17 +59,31 @@ class SearchForm(forms.Form):
         (1, 'Новый'),
         (2, 'Отключен')
     ]
+    debt_choices = [
+        (0, 'Да')
+    ]
 
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                               required=False)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     role = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
                                   queryset=Role.objects.all(), required=False)
-    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                            required=False)
-    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                            required=False)
+    phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
                                choices=status_choices, required=False)
+
+    id_field = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'id_field',
+                                                                  'class': 'form-control'}), required=False)
+    house = forms.ModelChoiceField(queryset=House.objects.all(),
+                                   widget=forms.Select(attrs={'id': 'house',
+                                                              'class': 'form-control'}), required=False)
+    flat = forms.ModelChoiceField(queryset=Flat.objects.all(),
+                                  widget=forms.Select(attrs={'id': 'flat',
+                                                             'class': 'form-control'}), required=False)
+    date_joined = forms.DateField(widget=forms.DateInput(attrs={'id': 'date',
+                                                                'class': 'form-control'}), required=False)
+    is_debt = forms.ChoiceField(choices=debt_choices,
+                                widget=forms.Select(attrs={'id': 'is_debt',
+                                                           'class': 'form-control'}), required=False)
 
 
 class AdminUserForm(forms.ModelForm):
