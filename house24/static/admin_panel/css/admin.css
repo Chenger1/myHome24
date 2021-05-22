@@ -75,3 +75,7 @@
 .linkedRow td>a{
     color: black;
 }
+
+.breadcrumb_pull_right{
+    float: right;
+}
