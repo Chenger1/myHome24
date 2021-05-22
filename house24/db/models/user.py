@@ -78,13 +78,11 @@ class User(CustomAbstractUser):
     @classmethod
     def search(cls, data):
         users = cls.objects.all()
-        name = data.get('name')
+        username = data.get('username')
         role = data.get('role')
         phone = data.get('phone')
         email = data.get('email')
         status = data.get('status')
-        if name:
-            users = users.filter(first_name__contains=name, last_name__contains=name)
         if role:
             users = users.filter(role=role)
         if phone:
@@ -93,4 +91,6 @@ class User(CustomAbstractUser):
             users = users.filter(email=email)
         if status:
             users = users.filter(status=status)
+        if username:
+            users = [user for user in users if username in user.get_full_name()]
         return users
