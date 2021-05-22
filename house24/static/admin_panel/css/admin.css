@@ -145,3 +145,11 @@ select{
 .input-group-btn{
     white-space: nowrap;
 }
+
+.photo_image{
+    height: 160px;
+    width: 160px;
+    border-radius: 50%;
+    float: left;
+    margin: 0 15px 15px 0;
+}
