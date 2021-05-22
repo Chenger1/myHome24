@@ -96,3 +96,52 @@
 .label-danger{
     background-color: #dc3545;
 }
+
+.is_valid{
+    border-color: #28a745;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.is_invalid{
+    border-color: #dc3545;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.is_valid_label{
+    color: #28a745;
+}
+.is_invalid_label{
+    color: #dc3545;
+}
+
+.input_group{
+    display: table;
+}
+
+select{
+    display: table-cell;
+}
+
+.delete_input{
+    display: table-cell;
+    width: 1%;
+}
+
+.btn{
+	vertical-align: inherit!important;
+	border: 2px solid transparent !important;
+}
+.btn-hover-blue:hover{
+    background-color: #3c8dbc;
+    color: white;
+}
+
+.input-group-btn{
+    white-space: nowrap;
+}

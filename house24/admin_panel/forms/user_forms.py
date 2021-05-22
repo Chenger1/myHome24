@@ -71,22 +71,23 @@ class SearchForm(forms.Form):
 
 
 class AdminUserForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control',
-                                                                 'type': 'password'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control',
-                                                                 'type': 'password'}))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}))
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'phone_number', 'role', 'status',
                   'email')
         widgets = {
-            'first_name': forms.TextInput(attrs={'id': 'first_name', 'class': 'form-control'}),
-            'last_name': forms.TextInput(attrs={'id': 'last_name', 'class': 'form-control'}),
-            'phone_number': forms.TextInput(attrs={'id': 'phone', 'class': 'form-control'}),
-            'status': forms.Select(attrs={'id': 'status', 'class': 'form-control'}),
-            'role': forms.Select(attrs={'id': 'role', 'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'id': 'email', 'class': 'form-control'})
+            'first_name': forms.TextInput(attrs={'id': 'first_name', 'class': 'form-control to_valid'}),
+            'last_name': forms.TextInput(attrs={'id': 'last_name', 'class': 'form-control to_valid'}),
+            'phone_number': forms.TextInput(attrs={'id': 'phone', 'class': 'form-control to_valid',
+                                                   'placeholder': '+380638271139'}),
+            'status': forms.Select(attrs={'id': 'status', 'class': 'form-control to_valid'}),
+            'role': forms.Select(attrs={'id': 'role', 'class': 'form-control to_valid'}),
+            'email': forms.EmailInput(attrs={'id': 'email', 'class': 'form-control to_valid'})
         }
 
     def clean(self):
