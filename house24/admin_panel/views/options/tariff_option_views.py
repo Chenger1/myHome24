@@ -8,7 +8,6 @@ from django.urls import reverse_lazy
 from db.models.house import Tariff, Service, TariffService
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
-from admin_panel.service.utils import prepare_error_message
 
 
 class ListTariff(ListView):
@@ -128,14 +127,15 @@ class DuplicateTariff(View):
             formset = self.formset_class(request.POST, instance=old_obj)
             if formset.is_valid():
                 for form in formset:
-                    form.instance.pk = None
-                    new_form = form.save(commit=False)
-                    new_form.tariff = obj
-                    new_form.save()
+                    if not form.empty_permitted and form.has_changed():
+                        #  If form is empty - just pass
+                        form.instance.pk = None
+                        new_form = form.save(commit=False)
+                        new_form.tariff = obj
+                        new_form.save()
                 return redirect('admin_panel:list_tariff_admin')
             else:
-                errors = prepare_error_message(formset.errors)
+                obj.delete()
                 return render(request, self.template_name, context={self.context_object_name: form,
-                                                                    'formset': formset, 'errors': errors})
-        errors = prepare_error_message(form.errors)
-        return render(request, self.template_name, context={self.context_object_name: form, 'errors': errors})
+                                                                    'formset': formset})
+        return render(request, self.template_name, context={self.context_object_name: form})
