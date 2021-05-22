@@ -1,11 +1,11 @@
-from django.views.generic import View, CreateView
+from django.views.generic import View, CreateView, UpdateView
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
 from db.models.user import Role
 
-from admin_panel.forms.user_forms import RoleFormSet, SearchForm, AdminUserForm
+from admin_panel.forms.user_forms import RoleFormSet, SearchForm, CreateAdminUserForm, UpdateAdminUserForm
 
 
 User = get_user_model()
@@ -55,7 +55,15 @@ class ListUsersView(View):
 
 class CreateAdminUser(CreateView):
     model = User
-    form_class = AdminUserForm
+    form_class = CreateAdminUserForm
+    template_name = 'user/create_admin_user.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_users_admin')
+
+
+class UpdateAdminUser(UpdateView):
+    model = User
+    form_class = UpdateAdminUserForm
     template_name = 'user/create_admin_user.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_users_admin')

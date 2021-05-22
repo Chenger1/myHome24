@@ -84,7 +84,7 @@ class User(CustomAbstractUser):
         email = data.get('email')
         status = data.get('status')
         if name:
-            users = users.filter(first_name__in=name, last_name__in=name)
+            users = users.filter(first_name__contains=name, last_name__contains=name)
         if role:
             users = users.filter(role=role)
         if phone:

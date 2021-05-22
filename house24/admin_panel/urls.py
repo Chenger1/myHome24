@@ -9,7 +9,7 @@ from admin_panel.views.options.option_views import (ServiceOptionView, SaveServi
                                                     DeleteServiceBlock, DeleteMeasureBlock)
 from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff,
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
-from admin_panel.views.user.user_views import UpdateRolesView, ListUsersView, CreateAdminUser
+from admin_panel.views.user.user_views import UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser
 
 
 app_name = 'admin_panel'
@@ -52,4 +52,5 @@ urlpatterns = [
     path('roles/index/', UpdateRolesView.as_view(), name='list_roles_admin'),
     path('user-admin/index/', ListUsersView.as_view(), name='list_users_admin'),
     path('user-admin/index/create_user_admin/', CreateAdminUser.as_view(), name='create_user_admin'),
+    path('user-admin/index/update_user_admin/<int:pk>/', UpdateAdminUser.as_view(), name='update_user_admin'),
 ]

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ValidationError
 
 from db.models.user import Role
@@ -71,11 +72,6 @@ class SearchForm(forms.Form):
 
 
 class AdminUserForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control to_valid',
-                                                                  'type': 'password'}))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
-                                                                  'type': 'password'}))
-
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'phone_number', 'role', 'status',
@@ -101,6 +97,35 @@ class AdminUserForm(forms.ModelForm):
         user = super().save(commit=False)
         user.is_staff = True
         user.set_password(self.cleaned_data['password2'])
+        if commit:
+            user.save()
+        update_last_login(None, user)
+        return user
+
+
+class CreateAdminUserForm(AdminUserForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}))
+
+
+class UpdateAdminUserForm(AdminUserForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}),
+                                required=False)
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}),
+                                required=False)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data['password1']
+        if password:
+            user.set_password(password)
+        else:
+            old_pass = User.objects.get(pk=self.instance.pk).password
+            user.password = old_pass
         if commit:
             user.save()
         return user

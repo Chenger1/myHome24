@@ -128,7 +128,7 @@
 <script>
     $('button[type=submit]').on('click', function(e){
         $('.to_valid').each(function(){
-            if($(this).val() == ''){
+            if($(this).val() == '' && $(this).attr('required')){
                 e.preventDefault();
                 colorize_input_invalid(this);
             }
