@@ -203,35 +203,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:main_page' %}" class="nav-link
-                                {% if request.path == '/admin/main_page/' %}active{% endif %}">
+                                {% if request.path == '/admin/main_page/index' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Главная страница</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:about_page' %}" class="nav-link
-                                   {% if request.path == '/admin/about/' %}active{% endif %}">
+                                   {% if request.path == '/admin/about/index' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>О нас</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:services_page' %}" class="nav-link
-                                    {% if request.path == '/admin/services/' %}active{% endif %}">
+                                    {% if request.path == '/admin/services/index' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Услуги</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:tariff_page' %}" class="nav-link
-                                    {% if request.path == '/admin/tariffs/' %}active{% endif %}">
+                                    {% if request.path == '/admin/tariffs/index' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Тарифы</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:contacts_page' %}" class="nav-link
-                                    {% if request.path == '/admin/contacts/' %}active{% endif %}">
+                                    {% if request.path == '/admin/contacts/index' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Контакты</p>
                                 </a>

@@ -21,17 +21,17 @@ urlpatterns = [
     path('logout/', LogoutAdmin.as_view(), name='logout_admin'),
 
     # PAGES
-    path('main_page/', MainPageView.as_view(), name='main_page'),
-    path('about/', AboutPageView.as_view(), name='about_page'),
+    path('main_page/index', MainPageView.as_view(), name='main_page'),
+    path('about/index', AboutPageView.as_view(), name='about_page'),
     path('about/delete_gallery_image/', DeleteAboutPageGallery.as_view(), name='delete_about_gallery_image'),
     path('about/delete_additional_gallery_image/', DeleteAdditionalGallery.as_view(),
          name='delete_about_additional_gallery_image'),
     path('about/delete_document/', DeleteDocument.as_view(), name='delete_document'),
-    path('services/', ServicesPageView.as_view(), name='services_page'),
+    path('services/index', ServicesPageView.as_view(), name='services_page'),
     path('services/delete_block/', ServicesDeleteBlockView.as_view(), name='delete_services_block'),
-    path('tariffs/', TariffPageView.as_view(), name='tariff_page'),
+    path('tariffs/index', TariffPageView.as_view(), name='tariff_page'),
     path('tariffs/delete_block/', TariffDeleteBlockView.as_view(), name='delete_tariff_block'),
-    path('contacts/', ContactsPageView.as_view(), name='contacts_page'),
+    path('contacts/index', ContactsPageView.as_view(), name='contacts_page'),
 
     # OPTIONS
     path('service/index/', ServiceOptionView.as_view(), name='service_measure_option'),

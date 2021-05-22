@@ -31,6 +31,24 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+    def get_available_url_pattern_by_role(self):
+        if self.statistic:
+            return 'admin_panel:index'
+        elif self.site_control:
+            return 'admin_panel:main_page'
+        elif self.services:
+            return 'admin_panel:service_measure_option'
+        elif self.tariffs:
+            return 'admin_panel:list_tariff_admin'
+        elif self.roles:
+            return 'admin_panel:list_roles_admin'
+        elif self.users:
+            return 'admin_panel:list_users_admin'
+        elif self.credentials:
+            return 'admin_panel:credentials_admin'
+        else:
+            return 'website:main_page_view'
+
 
 class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     status_choices = [
