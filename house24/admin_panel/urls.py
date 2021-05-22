@@ -13,6 +13,7 @@ from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTar
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
                                                DeleteAdminUser)
+from admin_panel.views.user.owner_views import ListOwnerView
 
 
 app_name = 'admin_panel'
@@ -66,4 +67,7 @@ urlpatterns = [
     path('payment_items/index/create_item/', CreatePaymentItemView.as_view(), name='create_payment_item_admin'),
     path('payment_items/index/update_item/<int:pk>/', UpdatePaymentItemView.as_view(), name='update_payment_item_admin'),
     path('payment_items/index/delete_item/<int:pk>/', DeletePaymentItemView.as_view(), name='delete_payment_item_admin'),
+
+    # OWNERS
+    path('owners/index/', ListOwnerView.as_view(), name='list_owners_admin'),
 ]

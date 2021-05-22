@@ -34,6 +34,8 @@ class Role(models.Model):
     def get_available_url_pattern_by_role(self):
         if self.statistic:
             return 'admin_panel:index'
+        elif self.owners:
+            return 'admin_panel:list_owners_admin'
         elif self.site_control:
             return 'admin_panel:main_page'
         elif self.services:
