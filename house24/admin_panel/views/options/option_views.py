@@ -1,6 +1,5 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 
 from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset
 from admin_panel.permission_mixin import AdminPermissionMixin

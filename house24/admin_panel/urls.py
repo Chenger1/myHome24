@@ -9,6 +9,7 @@ from admin_panel.views.options.option_views import (ServiceOptionView, SaveServi
                                                     DeleteServiceBlock, DeleteMeasureBlock)
 from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff,
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
+from admin_panel.views.user.user_views import UpdateRolesView
 
 
 app_name = 'admin_panel'
@@ -46,4 +47,7 @@ urlpatterns = [
     path('tariff/index/update/<int:pk>/', UpdateTariff.as_view(), name='update_tariff'),
     path('tariff/index/delete_service/', DeleteTariffService.as_view(), name='delete_tariff_service'),
     path('tariff/index/duplicate/<int:pk>/', DuplicateTariff.as_view(), name='duplicate_tariff'),
+
+    # # Roles
+    path('roles/index/', UpdateRolesView.as_view(), name='list_roles_admin'),
 ]

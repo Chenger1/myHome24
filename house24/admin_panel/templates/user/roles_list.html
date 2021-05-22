@@ -1,0 +1,175 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}Редактирование страницы{% endblock %}
+
+
+{% block content %}
+{% if roles.errors %}
+{% include 'errors.html' with errors=roles.errors|prepare_error_message %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Роли</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Роли</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="card-body card-body table-responsive p-0">
+                                <table class="table table-hover table-striped text-nowrap linkedRow">
+                                    <thead>
+                                    <tr>
+                                        <th>Роль</th>
+                                        <th>Статистика</th>
+                                        <th>Касса</th>
+                                        <th>Квитанции на оплату</th>
+                                        <th>Лицевые счета</th>
+                                        <th>Квартиры</th>
+                                        <th>Владельцы квартир</th>
+                                        <th>Дома</th>
+                                        <th>Сообщения</th>
+                                        <th>Заявки вызова мастера</th>
+                                        <th>Счетчики</th>
+                                        <th>Управление сайтом</th>
+                                        <th>Услуги</th>
+                                        <th>Тарифы</th>
+                                        <th>Роли</th>
+                                        <th>Пользователи</th>
+                                        <th>Платежные реквизиты</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {{ roles.management_form }}
+                                    {% for role in roles %}
+                                            {% for hidden in role.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
+                                    <tr>
+                                        <td>{{ role.instance.name }}</td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.statistic }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.cashbox }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.ticket }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.personal_account }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.flats }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.owners }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.houses }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.messages }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.master_request }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.meters }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.site_control }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.services }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.tariffs }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.roles }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.users }}
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="form-group form-check">
+                                                {{ role.credentials }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:15px;">
+                                <div class="col-12">
+                                    <div style="float:right;">
+                                        <a href="{% url 'admin_panel:list_roles_admin' %}"
+                                           class="btn btn-default">Отмена</a>
+                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}
