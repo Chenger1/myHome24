@@ -8,6 +8,8 @@ from db.models.manager import UserManager
 
 
 class Role(models.Model):
+    reserved_names = ('Директор', 'Управляющий', 'Бухгалтер', 'Электрик', 'Сантехник')
+
     name = models.CharField(max_length=100)
     statistic = models.BooleanField(default=1)
     cashbox = models.BooleanField(default=1)
