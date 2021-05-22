@@ -30,8 +30,14 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'admin_panel:create_user_admin' %}" class="btn btn-success" style="float: right;">Добавить
-                        пользователя</a>
+                    <button class="btn btn-success dropdown-toggle breadcrumb_pull_right" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Выберите действие
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Добавить владельца квартиры</a>
+                        <a class="dropdown-item" href="#">Отправить сообщение должникам</a>
+                        <a class="dropdown-item" href="#">Отправить приглашение</a>
+                    </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
@@ -162,6 +168,7 @@
             $(this).submit();
         })
     })
+
 
 
 
