@@ -175,3 +175,24 @@ class CreateOwnerForm(OwnerForm):
                                                                   'type': 'password'}))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
                                                                   'type': 'password'}))
+
+
+class UpdateOwnerUserForm(OwnerForm):
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}),
+                                required=False)
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
+                                                                  'type': 'password'}),
+                                required=False)
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        password = self.cleaned_data['password1']
+        if password:
+            user.set_password(password)
+        else:
+            old_pass = User.objects.get(pk=self.instance.pk).password
+            user.password = old_pass
+        if commit:
+            user.save()
+        return user

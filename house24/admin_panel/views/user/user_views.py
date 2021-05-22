@@ -5,7 +5,8 @@ from django.urls import reverse_lazy
 
 from db.models.user import Role
 
-from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm)
+from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm,
+                                          UpdateOwnerUserForm)
 from admin_panel.views.mixins import DeleteInstanceView, ListUsersViewMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
 
@@ -69,6 +70,14 @@ class ListOwnerView(ListUsersViewMixin):
 class CreateOwnerUser(AdminPermissionMixin, CreateView):
     model = User
     form_class = CreateOwnerForm
+    template_name = 'owner/create_owner_user.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_owners_admin')
+
+
+class UpdateOwnerUser(AdminPermissionMixin, UpdateView):
+    model = User
+    form_class = UpdateOwnerUserForm
     template_name = 'owner/create_owner_user.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_owners_admin')

@@ -12,7 +12,7 @@ from admin_panel.views.options.option_views import (ServiceOptionView, SaveServi
 from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff,
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
-                                               DeleteAdminUser, ListOwnerView, CreateOwnerUser)
+                                               DeleteAdminUser, ListOwnerView, CreateOwnerUser, UpdateOwnerUser)
 
 
 app_name = 'admin_panel'
@@ -70,4 +70,5 @@ urlpatterns = [
     # OWNERS
     path('owners/index/', ListOwnerView.as_view(), name='list_owners_admin'),
     path('owners/index/create_owner/', CreateOwnerUser.as_view(), name='create_owner_admin'),
+    path('owners/index/update_owner/<int:pk>/', UpdateOwnerUser.as_view(), name='update_owner_admin'),
 ]
