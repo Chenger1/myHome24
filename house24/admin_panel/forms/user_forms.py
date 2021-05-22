@@ -43,4 +43,4 @@ class RoleForm(forms.ModelForm):
         }
 
 
-RoleFormSet = forms.formset_factory(RoleForm, can_delete=False, extra=0)
+RoleFormSet = forms.modelformset_factory(model=Role, form=RoleForm, extra=0, can_delete=False)
