@@ -113,3 +113,10 @@ class User(CustomAbstractUser):
         if username:
             users = [user for user in users if username in user.get_full_name()]
         return users
+
+    @classmethod
+    def get_next_pk(cls):
+        last_pk = cls.objects.last().pk
+        if last_pk:
+            return last_pk + 1
+        return 1
