@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from db.models.user import Role
 
 from admin_panel.forms.user_forms import RoleFormSet, SearchForm, CreateAdminUserForm, UpdateAdminUserForm
-from admin_panel.views.mixins import DeleteInstanceView
+from admin_panel.views.mixins import DeleteInstanceView, ListUsersViewMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 
@@ -32,27 +32,10 @@ class UpdateRolesView(AdminPermissionMixin, View):
             return render(request, self.template_name, context={'roles': formset})
 
 
-class ListUsersView(AdminPermissionMixin, View):
+class ListUsersView(ListUsersViewMixin):
     model = User
     template_name = 'user/list_users_admin.html'
-    context_object_name = 'users'
-
-    def get(self, request):
-        if request.GET:
-            form = SearchForm(request.GET)
-            if form.is_valid():
-                users = self.model.search(form.cleaned_data)
-                return render(request, self.template_name, context={'form': form,
-                                                                    'users': users})
-            else:
-                users = self.model.objects.filter(is_staff=True)
-                return render(request, self.template_name, context={'form': form,
-                                                                    'users': users})
-        else:
-            form = SearchForm()
-            users = self.model.objects.filter(is_staff=True)
-        return render(request, self.template_name, context={'form': form,
-                                                            'users': users})
+    search_form = SearchForm
 
 
 class CreateAdminUser(AdminPermissionMixin, CreateView):
