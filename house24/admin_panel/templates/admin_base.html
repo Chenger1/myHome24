@@ -258,7 +258,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% if request.user.role.tariffs %}
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:list_tariff_admin' %}" class="nav-link
-                                {% if request.path == '/admin/tariff/index/' %}active{% endif %}">
+                                {% if '/admin/tariff/index/' in request.path %}active{% endif %}">
                                     <i class="fas fa-money-bill-alt nav-icon"></i>
                                     <p>Тарифы</p>
                                 </a>
@@ -276,7 +276,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% if request.user.role.users %}
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:list_users_admin' %}" class="nav-link
-                                {% if request.path == '/admin/user-admin/index/' %}active{% endif %}">
+                                {% if '/admin/user-admin/index/' in request.path %}active{% endif %}">
                                     <i class="fas fa-user-plus nav-icon"></i>
                                     <p>Пользователи</p>
                                 </a>
