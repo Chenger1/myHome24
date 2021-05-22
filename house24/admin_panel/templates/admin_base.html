@@ -284,7 +284,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% endif %}
                             {% if request.user.role.credentials %}
                             <li class="nav-item">
-                                <a href="" class="nav-link">
+                                <a href="{% url 'admin_panel:credentials_admin' %}" class="nav-link
+                                {% if request.path == '/admin/credentials/index/' %}active{% endif %}">
                                     <i class="far fa-credit-card nav-icon"></i>
                                     <p>Платежные реквизиты</p>
                                 </a>

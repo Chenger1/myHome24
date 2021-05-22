@@ -1,6 +1,7 @@
 from django import forms
 
 from db.models.house import Service, Measure, Tariff, TariffService
+from db.models.pages import Credentials
 
 
 class MeasureForm(forms.ModelForm):
@@ -63,3 +64,14 @@ class TariffServiceBlockForm(forms.ModelForm):
 
 TariffServiceBlockFormset = forms.inlineformset_factory(Tariff, TariffService, form=TariffServiceBlockForm,
                                                         can_delete=False, extra=0)
+
+
+class CredentialsForm(forms.ModelForm):
+    class Meta:
+        model = Credentials
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}),
+            'information': forms.Textarea(attrs={'id': 'information', 'class': 'form-control',
+                                                 'style': 'resize:none;'})
+        }

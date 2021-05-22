@@ -20,6 +20,8 @@ class AdminCheckMiddleware(MiddlewareMixin):
                     raise Http404()
                 elif 'user-admin/index/' in request.path and not request.user.role.users:
                     raise Http404()
+                elif 'credentials/index/' in request.path and not request.user.role.credentials:
+                    raise Http404()
                 elif 'main_page' in request.path or 'about' in request.path or 'services' in request.path \
                      or 'tariffs' in request.path or 'contacts' in request.path:
                     if not request.user.role.site_control:

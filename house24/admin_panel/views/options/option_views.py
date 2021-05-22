@@ -1,11 +1,12 @@
-from django.views.generic import View
+from django.views.generic import View, UpdateView
 from django.shortcuts import render, redirect
 
-from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset
+from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset, CredentialsForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.views.pages.singleton_mixin import DeleteGalleryImageMixin
 
 from db.models.house import Measure, Service
+from db.models.pages import Credentials
 
 
 class ServiceOptionView(AdminPermissionMixin, View):
@@ -60,3 +61,13 @@ class DeleteServiceBlock(DeleteGalleryImageMixin):
 
 class DeleteMeasureBlock(DeleteGalleryImageMixin):
     model = Measure
+
+
+class CredentialsView(AdminPermissionMixin, UpdateView):
+    model = Credentials
+    form_class = CredentialsForm
+    context_object_name = 'form'
+    template_name = 'options/credentials.html'
+
+    def get_object(self, queryset=None):
+        return self.model.load()

@@ -90,6 +90,9 @@ class Credentials(SingletonModel):
     name = models.CharField(max_length=150)
     information = models.TextField()
 
+    def get_absolute_url(self):
+        return reverse('admin_panel:credentials_admin')
+
 
 class ContactsPage(SingletonModel):
     phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
