@@ -50,11 +50,11 @@
                                 <tbody>
                                 {% for item in items %}
                                 <tr>
-                                    <td><a href="">{{ item.name }}</a></td>
-                                    <td><a href="">{{ item.get_type_display }}</a></td>
+                                    <td><a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}">{{ item.name }}</a></td>
+                                    <td><a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}">{{ item.get_type_display }}</a></td>
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn btn-default btn-sm" href="">
+                                            <a class="btn btn-default btn-sm" href="{% url 'admin_panel:update_payment_item_admin' item.pk%}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm" href="">

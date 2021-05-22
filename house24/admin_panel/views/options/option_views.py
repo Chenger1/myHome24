@@ -86,3 +86,11 @@ class CreatePaymentItemView(CreateView):
     context_object_name = 'form'
     template_name = 'options/payment_items/create_payment_item.html'
     success_url = reverse_lazy('admin_panel:payment_items_admin')
+
+
+class UpdatePaymentItemView(UpdateView):
+    model = PaymentItem
+    form_class = PaymentItemForm
+    context_object_name = 'form'
+    template_name = 'options/payment_items/create_payment_item.html'
+    success_url = reverse_lazy('admin_panel:payment_items_admin')
