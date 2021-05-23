@@ -14,6 +14,17 @@ class House(models.Model):
     image5 = models.ImageField()
     user = models.ManyToManyField(User, related_name='houses')
 
+    @classmethod
+    def search(cls, data):
+        houses = cls.objects.all()
+        name = data.get('name')
+        address = data.get('address')
+        if name:
+            houses = houses.filter(name=name)
+        if address:
+            houses = houses.filter(address=address)
+        return houses
+
 
 class Section(models.Model):
     house = models.ForeignKey(House, related_name='sections', on_delete=models.CASCADE)
