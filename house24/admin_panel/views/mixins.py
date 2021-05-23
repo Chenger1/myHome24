@@ -15,26 +15,37 @@ class DeleteInstanceView(AdminPermissionMixin, View):
         return redirect(self.redirect_url)
 
 
-class ListUsersViewMixin(AdminPermissionMixin, View):
+class ListInstancesMixin(AdminPermissionMixin, View):
     model = None
     template_name = None
-    context_object_name = 'users'
     search_form = SearchForm
-    is_staff = None
 
     def get(self, request):
         if request.GET:
             form = self.search_form(request.GET)
             if form.is_valid():
-                users = self.model.search(form.cleaned_data, self.is_staff)
+                instances = self.get_filtered_query(form.cleaned_data)
                 return render(request, self.template_name, context={'form': form,
-                                                                    'users': users})
+                                                                    'instances': instances})
             else:
-                users = self.model.objects.filter(is_staff=self.is_staff)
+                instances = self.get_queryset()
                 return render(request, self.template_name, context={'form': form,
-                                                                    'users': users})
+                                                                    'instances': instances})
         else:
             form = self.search_form()
-            users = self.model.objects.filter(is_staff=self.is_staff)
+            instances = self.get_queryset()
         return render(request, self.template_name, context={'form': form,
-                                                            'users': users})
+                                                            'instances': instances})
+
+    def get_filtered_query(self, form_data):
+        """
+            Redefine if you need more specific search arguments
+        """
+        instances = self.model.search(form_data)
+        return instances
+
+    def get_queryset(self):
+        """
+            Redefine if you need more specific filtered queryset
+        """
+        return self.model.objects.all()

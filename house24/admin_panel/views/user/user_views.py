@@ -7,7 +7,7 @@ from db.models.user import Role
 
 from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm,
                                           UpdateOwnerUserForm)
-from admin_panel.views.mixins import DeleteInstanceView, ListUsersViewMixin
+from admin_panel.views.mixins import DeleteInstanceView, ListInstancesMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 
@@ -33,10 +33,16 @@ class UpdateRolesView(AdminPermissionMixin, View):
             return render(request, self.template_name, context={'roles': formset})
 
 
-class ListUsersView(ListUsersViewMixin):
+class ListUsersView(ListInstancesMixin):
     model = User
     template_name = 'user/list_users_admin.html'
-    is_staff = True
+
+    def get_queryset(self):
+        return self.model.objects.filter(is_staff=True)
+
+    def get_filtered_query(self, form_data):
+        instances = self.model.search(form_data, is_staff=True)
+        return instances
 
 
 class CreateAdminUser(AdminPermissionMixin, CreateView):
@@ -60,11 +66,16 @@ class DeleteAdminUser(DeleteInstanceView):
     redirect_url = 'admin_panel:list_users_admin'
 
 
-class ListOwnerView(ListUsersViewMixin):
+class ListOwnerView(ListInstancesMixin):
     model = User
     template_name = 'owner/list_owners.html'
-    context_object_name = 'users'
-    is_staff = False
+
+    def get_queryset(self):
+        return self.model.objects.filter(is_staff=False)
+
+    def get_filtered_query(self, form_data):
+        instances = self.model.search(form_data, is_staff=False)
+        return instances
 
 
 class CreateOwnerUser(AdminPermissionMixin, CreateView):
