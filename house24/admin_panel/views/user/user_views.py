@@ -81,3 +81,8 @@ class UpdateOwnerUser(AdminPermissionMixin, UpdateView):
     template_name = 'owner/create_owner_user.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_owners_admin')
+
+
+class DeleteOwnerUser(DeleteInstanceView):
+    model = User
+    redirect_url = 'admin_panel:list_owners_admin'
