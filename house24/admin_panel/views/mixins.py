@@ -26,7 +26,7 @@ class ListUsersViewMixin(AdminPermissionMixin, View):
         if request.GET:
             form = self.search_form(request.GET)
             if form.is_valid():
-                users = self.model.search(form.cleaned_data)
+                users = self.model.search(form.cleaned_data, self.is_staff)
                 return render(request, self.template_name, context={'form': form,
                                                                     'users': users})
             else:

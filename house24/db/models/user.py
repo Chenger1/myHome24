@@ -95,13 +95,16 @@ class User(CustomAbstractUser):
         return [self.photo] if self.photo else None
 
     @classmethod
-    def search(cls, data):
-        users = cls.objects.all()
+    def search(cls, data, is_staff):
+        users = cls.objects.filter(is_staff=is_staff)
         username = data.get('username')
         role = data.get('role')
         phone = data.get('phone')
         email = data.get('email')
         status = data.get('status')
+        house = data.get('house')
+        flat = data.get('flat')
+        date_joined = data.get('date_joined')
         if role:
             users = users.filter(role=role)
         if phone:
@@ -110,6 +113,12 @@ class User(CustomAbstractUser):
             users = users.filter(email=email)
         if status:
             users = users.filter(status=status)
+        if house:
+            users = users.filter(houses__in=house)
+        if flat:
+            users = users.filter(flats__in=flat)
+        if date_joined:
+            users = users.filter(date_joined=date_joined)
         if username:
             users = [user for user in users if username in user.get_full_name()]
         return users
