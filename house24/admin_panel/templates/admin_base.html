@@ -164,7 +164,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.houses %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_houses_admin' %}" class="nav-link
+                        {% if '/admin/houses/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-building" aria-hidden="true"></i>
                             <p>Дома</p>
                         </a>

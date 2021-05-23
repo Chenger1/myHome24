@@ -5,4 +5,4 @@ from db.models.house import House
 
 class ListHousesView(ListInstancesMixin):
     model = House
-    template_name = 'house/list_houses_view.html'
+    template_name = 'houses/list_houses_admin.html'
