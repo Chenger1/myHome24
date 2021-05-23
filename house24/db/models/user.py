@@ -36,6 +36,8 @@ class Role(models.Model):
             return 'admin_panel:index'
         elif self.owners:
             return 'admin_panel:list_owners_admin'
+        elif self.houses:
+            return 'admin_panel:list_houses_admin'
         elif self.site_control:
             return 'admin_panel:main_page'
         elif self.services:

@@ -14,6 +14,7 @@ from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTar
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
                                                DeleteAdminUser, ListOwnerView, CreateOwnerUser, UpdateOwnerUser,
                                                DeleteOwnerUser)
+from admin_panel.views.house_views import ListHousesView
 
 
 app_name = 'admin_panel'
@@ -73,4 +74,7 @@ urlpatterns = [
     path('owners/index/create_owner/', CreateOwnerUser.as_view(), name='create_owner_admin'),
     path('owners/index/update_owner/<int:pk>/', UpdateOwnerUser.as_view(), name='update_owner_admin'),
     path('owners/index/delete_owner/<int:pk>/', DeleteOwnerUser.as_view(), name='delete_owner_delete'),
+
+    # HOUSES
+    path('houses/index/', ListHousesView.as_view(), name='list_houses_admin'),
 ]
