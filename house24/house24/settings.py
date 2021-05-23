@@ -107,7 +107,7 @@ AUTHENTICATION_BACKENDS = ['website.auth_backend.EmailBackend']
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
-LANGUAGE_CODE = 'ru-RU'
+LANGUAGE_CODE = 'en-EN'
 
 TIME_ZONE = 'UTC'
 
