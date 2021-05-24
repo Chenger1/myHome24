@@ -46,7 +46,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12" style="margin-top:15px;">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="card card-default">
 
@@ -184,6 +184,9 @@
 
 
                                                     {% for inline_form in section_formset %}
+                                                    {% for hidden in inline_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
                                                     <div class="form-group section_formset">
                                                         <label for="">Название</label>
                                                         <div class="input-group">
@@ -223,6 +226,9 @@
 
 
                                                     {% for inline_form in floor_formset %}
+                                                    {% for hidden in inline_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
                                                     <div class="form-group floor_formset">
                                                         <label for="">Название</label>
                                                         <div class="input-group">
@@ -271,6 +277,9 @@
 
 
                                                     {% for inline_form in user_formset %}
+                                                    {% for hidden in inline_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
                                                     <div class="row users_formset">
                                                         <div class="col-12 col-sm-7">
                                                             <div class="form-group">
