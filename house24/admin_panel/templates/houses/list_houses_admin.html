@@ -30,7 +30,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="" class="btn btn-success" style="float: right;">Добавить
+                    <a href="{% url 'admin_panel:create_house_admin' %}" class="btn btn-success" style="float: right;">Добавить
                         дом</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
@@ -66,8 +66,8 @@
                                 {% for house in instances %}
                                 <tr>
                                     <td>{{ house.pk }}</td>
-                                    <td>{{ user.name }}</td>
-                                    <td>{{ user.address }}</td>
+                                    <td>{{ house.name }}</td>
+                                    <td>{{ house.address }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"

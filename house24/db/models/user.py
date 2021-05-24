@@ -81,7 +81,8 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    def get_full_name(self):
+    @property
+    def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
 
@@ -131,3 +132,6 @@ class User(CustomAbstractUser):
         if last_pk:
             return last_pk + 1
         return 1
+
+    def __str__(self):
+        return self.full_name
