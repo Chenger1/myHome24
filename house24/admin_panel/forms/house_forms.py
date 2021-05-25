@@ -25,26 +25,27 @@ class CreateHouseForm(forms.ModelForm):
 
 
 class SectionForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           required=False)
+
     class Meta:
         model = Section
         fields = ('name', )
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'})
-        }
 
 
 class FloorForm(forms.ModelForm):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           required=False)
+
     class Meta:
         model = Floor
         fields = ('name', )
-        widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'})
-        }
 
 
 class UserForm(forms.Form):
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
-                                  widget=forms.Select(attrs={'class': 'form-control users_select'}))
+                                  widget=forms.Select(attrs={'class': 'form-control users_select'}),
+                                  required=False)
 
 
 SectionFormset = forms.inlineformset_factory(House, Section,
