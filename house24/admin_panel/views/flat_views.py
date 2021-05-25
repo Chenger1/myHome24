@@ -16,26 +16,18 @@ class ListFlatsView(ListInstancesMixin):
     search_form = FlatSearchForm
 
 
-class CreateFlatView(AdminPermissionMixin, View):
-    model = Flat
-    form_class = CreateFlatForm
-    template_name = 'flat/create_flat_admin.html'
-    redirect_url = 'admin_panel:list_flats_admin'
+class PostInstanceMixin:
+    template_name = ''
 
-    def get(self, request):
-        form = CreateFlatForm()
-        personal_accounts = PersonalAccount.objects.filter(flats__isnull=False)
-        return render(request, self.template_name, context={'form': form,
-                                                            'personal_accounts': personal_accounts})
-
-    def post(self, request):
-        form = CreateFlatForm(request.POST)
+    def save_form(self, form, request):
         if form.is_valid():
             obj = form.save()
-            personal_account = PersonalAccount.find_inst(form.cleaned_data['personal_account'])
+            personal_account = PersonalAccount.find_inst(form.cleaned_data['account'])
             if personal_account:
                 # if this account already exists  - set it as account for this flat
                 obj.personal_account = personal_account
+                obj.save()
+                return redirect('admin_panel:list_flats_admin')
             else:
                 #  otherwise - we will create new personal account using given data
                 data = {'number': form.cleaned_data['account'],
@@ -44,17 +36,55 @@ class CreateFlatView(AdminPermissionMixin, View):
                 account_form = PersonalAccountForm(data)
                 if account_form.is_valid():
                     obj.personal_account = account_form.save()
+                    obj.save()
                     return redirect('admin_panel:list_flats_admin')
                 else:
                     obj.delete()
-                    personal_accounts = PersonalAccount.objects.filter(flats__isnull=False)
-                    return render(request, self.template_name, context={'form': form,
-                                                                        'personal_accounts': personal_accounts,
-                                                                        'account_errors':account_form.errors})
+
         else:
-            personal_accounts = PersonalAccount.objects.filter(flats__isnull=False)
+            personal_accounts = PersonalAccount.objects.filter(flats__isnull=True)
             return render(request, self.template_name, context={'form': form,
                                                                 'personal_accounts': personal_accounts})
+
+
+class CreateFlatView(AdminPermissionMixin, View, PostInstanceMixin):
+    model = Flat
+    form_class = CreateFlatForm
+    template_name = 'flat/create_flat_admin.html'
+    redirect_url = 'admin_panel:list_flats_admin'
+
+    def get(self, request, pk=None):
+        form = self.form_class()
+        personal_accounts = PersonalAccount.objects.filter(flats__isnull=True)
+        return render(request, self.template_name, context={'form': form,
+                                                            'personal_accounts': personal_accounts})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        return super().save_form(form, request)
+
+
+class UpdateFlatView(AdminPermissionMixin, View, PostInstanceMixin):
+    model = Flat
+    form_class = CreateFlatForm
+    template_name = 'flat/create_flat_admin.html'
+    redirect_url = 'admin_panel:list_flats_admin'
+
+    def get(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
+        try:
+            personal_account = obj.personal_account.number
+        except AttributeError:
+            personal_account = None
+        form = CreateFlatForm(instance=obj, **{'account_number': personal_account})
+        personal_accounts = PersonalAccount.objects.filter(flats__isnull=True)
+        return render(request, self.template_name, context={'form': form,
+                                                            'personal_accounts': personal_accounts})
+
+    def post(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
+        form = CreateFlatForm(request.POST, instance=obj)
+        return super().save_form(form, request)
 
 
 class GetHouseSectionAndFloor(View):

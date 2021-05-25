@@ -1,6 +1,7 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
-from db.models.house import House, Section, Floor, Flat
+from db.models.house import House, Section, Floor, Flat, PersonalAccount
 from db.models.user import User
 
 
@@ -26,10 +27,11 @@ class FlatSearchForm(forms.Form):
 
 
 class CreateFlatForm(forms.ModelForm):
-    owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
-                                   widget=forms.Select(attrs={'class': 'form-control to_valid select2bs4'}))
-    account = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'personal_account',
-                                                                 'class': 'form-control to_valid'}))
+    def __init__(self, *args, **kwargs):
+        account_number = kwargs.pop('account_number', None)
+        super().__init__(*args, **kwargs)
+        if account_number:
+            self.fields['account'].initial = account_number
 
     class Meta:
         model = Flat
@@ -42,3 +44,13 @@ class CreateFlatForm(forms.ModelForm):
             'floor': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
             'tariff': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'tariff'}),
         }
+
+    owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
+                                   widget=forms.Select(attrs={'class': 'form-control to_valid select2bs4'}))
+    account = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'personal_account',
+                                                                 'class': 'form-control to_valid'}))
+
+    def clean(self):
+        account_number = self.cleaned_data['account']
+        if PersonalAccount.objects.filter(number=account_number).exists():
+            raise ValidationError('Такой лицевой счет уже существует')

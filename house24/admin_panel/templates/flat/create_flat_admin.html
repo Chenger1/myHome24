@@ -1,7 +1,13 @@
 {% extends "admin_base.html" %}
 {% load static %}
 
-{% block title %}Новая квартира{% endblock %}
+{% block title %}
+    {% if form.instance.pk %}
+        Квартира
+    {% else %}
+        Новая квартира
+    {% endif %}
+{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
@@ -71,15 +77,17 @@
                                       </div>
                                       <div class="form-group">
                                           <label for="section">Секция</label>
-                                          <select name="section" id="section" class="form-control to_valid" required>
-                                              <option disabled selected>---------</option>
-                                          </select>
+<!--                                          <select name="section" id="section" class="form-control to_valid" required>-->
+<!--                                              <option disabled selected>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+<!--                                          </select>-->
+                                          {{ form.section }}
                                       </div>
                                       <div class="form-group">
                                           <label for="floor">Этаж</label>
-                                          <select name="floor" id="floor" class="form-control to_valid" required>
-                                            <option disabled selected>---------</option>
-                                          </select>
+<!--                                          <select name="floor" id="floor" class="form-control to_valid" required>-->
+<!--                                            <option disabled selected>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+<!--                                          </select>-->
+                                          {{ form.floor }}
                                       </div>
                                       <div class="form-group">
                                           <label for="owner">Владелец</label>
@@ -160,6 +168,11 @@
         $('.select2bs4').on('change', function(e){
           colorize_input_valid(this);
         })
+        $('#personal_account_select').on('change', function(e){
+          $('#personal_account').val($(this).find(':selected').text());
+          colorize_input_valid(this);
+          $(this).val('').trigger('change.select2');
+        })
     });
 </script>
 <script>
@@ -169,4 +182,11 @@
     })
   })
 </script>
+{% if not form.instance.pk %}
+<script>
+  $(document).ready(function(){
+    send_request_to_get_house_info(element=$('select[name=house]'), url='{% url "admin_panel:get_house_section_and_floor" %}');
+  })
+</script>
+{% endif %}
 {% endblock %}
