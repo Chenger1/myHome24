@@ -266,7 +266,7 @@
                                                     <div class="row users_formset" style="display: none;" id="hidden_users">
                                                         <div class="col-12 col-sm-7">
                                                             <div class="form-group">
-                                                                <label for="">Название</label>
+                                                                <label for="">Пользователь</label>
                                                                 {{ user_formset.empty_form.user }}
                                                             </div>
                                                         </div>
@@ -293,7 +293,7 @@
                                                     <div class="row users_formset">
                                                         <div class="col-12 col-sm-7">
                                                             <div class="form-group">
-                                                                <label for="">Название</label>
+                                                                <label for="">Пользователь</label>
                                                                 {{ inline_form.user }}
                                                             </div>
                                                         </div>
@@ -404,6 +404,20 @@
         $(this).on('click', function(){
             deleteRow(this, 'users', '.users_formset');
         })
+    })
+    $('.users_select').each(function(){
+        let selected_role = $(this).closest('.users_formset').find('.user_role');
+        let selected = $(this).find(':selected').attr('value');
+        $.ajax({
+            url: '{% url "admin_panel:get_user_role" %}',
+            type: 'GET',
+            data: {'pk': selected},
+                })
+        .done(function(response) {
+            console.log(response)
+            $(selected_role).val(response['role']);
+         })
+        setEvent(this, '.users_formset');
     })
 </script>
 {% endblock %}
