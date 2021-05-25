@@ -2,7 +2,7 @@ from django.views.generic import View
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.forms.flat_forms import FlatSearchForm, CreateFlatForm
 from admin_panel.forms.account_forms import PersonalAccountForm
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -104,3 +104,8 @@ class GetHouseSectionAndFloor(View):
             result.update({index: {'pk': inst.pk,
                                    'name': inst.name}})
         return result
+
+
+class DeleteFlatView(DeleteInstanceView):
+    model = Flat
+    redirect_url = 'admin_panel:list_flats_admin'
