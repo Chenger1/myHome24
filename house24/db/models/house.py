@@ -24,6 +24,9 @@ class House(models.Model):
             houses = houses.filter(address__contains=address)
         return houses
 
+    def __str__(self):
+        return self.name
+
 
 class HouseUser(models.Model):
     user = models.ForeignKey(User, related_name='houses', on_delete=models.CASCADE)
@@ -34,10 +37,16 @@ class Section(models.Model):
     house = models.ForeignKey(House, related_name='sections', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.name
+
 
 class Floor(models.Model):
     house = models.ForeignKey(House, related_name='floors', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Measure(models.Model):
