@@ -341,6 +341,7 @@
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/update_img_after_upload.js' %}"></script>
 <script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
     $('#image1').on('change', function(){
         setPreview(this, '.row', '#preview_image1');
@@ -386,6 +387,9 @@
         $(this).on('click', function(){
             deleteRow(this, 'sections', '.section_formset');
         })
+    });
+    $('.section_formset').find('.has_pk').on('click', function(){
+        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_section_admin' %}", 'sections', '.section_formset')
     })
 // Floor init
     $('#add_floors').on('click', function(){
@@ -396,6 +400,9 @@
             deleteRow(this, 'floors', '.floor_formset');
         })
     })
+    $('.floor_formset').find('.has_pk').on('click', function(){
+        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_floor_admin' %}", 'floors', '.floor_formset')
+    })
 // User init
     $('#add_users').on('click', function(){
        cloneRow('users',  '.users_formset', setEvent);
@@ -404,6 +411,9 @@
         $(this).on('click', function(){
             deleteRow(this, 'users', '.users_formset');
         })
+    })
+    $('.users_formset').find('.has_pk').on('click', function(){
+        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_house_user_admin' %}", 'users', '.users_formset')
     })
     $('.users_select').each(function(){
         let selected_role = $(this).closest('.users_formset').find('.user_role');

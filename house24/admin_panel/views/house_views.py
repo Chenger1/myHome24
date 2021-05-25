@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
-from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
 from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, SectionFormset, FloorFormset, UserFormset
 
 from db.models.house import House, Section, Floor, HouseUser
@@ -105,6 +105,13 @@ class DeleteHouseInstance(DeleteInstanceView):
     redirect_url = 'admin_panel:list_houses_admin'
 
 
-class DeleteSection(DeleteHouseInstance):
+class DeleteSection(DeleteInstanceWithoutReload):
     model = Section
-    redirect_url = ''
+
+
+class DeleteFloor(DeleteInstanceWithoutReload):
+    model = Floor
+
+
+class DeleteHouseUser(DeleteInstanceWithoutReload):
+    model = HouseUser
