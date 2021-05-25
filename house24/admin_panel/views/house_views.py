@@ -3,11 +3,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
+from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, SectionFormset, FloorFormset, UserFormset
 
 from db.models.house import House
-
-from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, SectionFormset, FloorFormset, UserFormset
 
 
 User = get_user_model()
@@ -77,7 +76,7 @@ class UpdateHouseView(View):
         floor_formset = FloorFormset(request.POST, instance=inst)
         user_formset = UserFormset(request.POST, prefix='users', instance=inst)
         if form.is_valid() and section_formset.is_valid() and floor_formset.is_valid() and user_formset.is_valid():
-            obj = form.save()
+            form.save()
             section_formset.save()
             floor_formset.save()
             user_formset.save()
@@ -99,3 +98,8 @@ class GetUserRole(View):
         except AttributeError:
             role = 'Нет роли'
         return JsonResponse({'role': role})
+
+
+class DeleteHouseInstance(DeleteInstanceView):
+    model = House
+    redirect_url = 'admin_panel:list_houses_admin'
