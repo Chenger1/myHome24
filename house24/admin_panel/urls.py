@@ -16,6 +16,7 @@ from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, C
                                                DeleteOwnerUser, DetailOwnerView)
 from admin_panel.views.house_views import (ListHousesView, CreateHouseView, UpdateHouseView, GetUserRole,
                                            DeleteHouseInstance, DeleteSection, DeleteFloor, DeleteHouseUser)
+from admin_panel.views.flat_views import ListFlatsView
 
 
 app_name = 'admin_panel'
@@ -86,4 +87,7 @@ urlpatterns = [
     path('houses/index/delete_section/', DeleteSection.as_view(), name='delete_section_admin'),
     path('houses/index/delete_floor/', DeleteFloor.as_view(), name='delete_floor_admin'),
     path('houses/index/delete_house_user/', DeleteHouseUser.as_view(), name='delete_house_user_admin'),
+
+    # FLATS
+    path('flats/index/', ListFlatsView.as_view(), name='list_flats_admin'),
 ]
