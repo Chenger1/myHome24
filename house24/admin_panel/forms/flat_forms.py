@@ -28,6 +28,8 @@ class FlatSearchForm(forms.Form):
 class CreateFlatForm(forms.ModelForm):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control to_valid select2bs4'}))
+    account = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'personal_account',
+                                                                 'class': 'form-control to_valid'}))
 
     class Meta:
         model = Flat
@@ -39,5 +41,4 @@ class CreateFlatForm(forms.ModelForm):
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
             'floor': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
             'tariff': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'tariff'}),
-            'personal_account': forms.TextInput(attrs={'id': 'personal_account', 'class': 'form-control to_valid'})
         }

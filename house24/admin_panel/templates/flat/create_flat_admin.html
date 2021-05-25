@@ -12,6 +12,9 @@
 {% if form.errors %}
 {% include 'errors.html' with errors=form.errors %}
 {% endif %}
+{% if account_errors %}
+{% include 'errors.html' with errors=account_errors %}
+{% endif %}
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -90,8 +93,9 @@
                                   <div class="col-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="personal_account">Лицевой счет</label>
-                                            {{ form.personal_account }}
+                                            {{ form.account }}
                                             <select id="personal_account_select" class="form-control">
+                                                <option></option>
                                                 {% for account in personal_accounts %}
                                                     <option value="{{ account.pk }}">{{ account.number }}</option>
                                                 {% endfor %}

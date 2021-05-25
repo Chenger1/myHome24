@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.core.exceptions import ObjectDoesNotExist
 
 from db.models.user import User
 
@@ -86,9 +87,16 @@ class TariffService(models.Model):
 
 class PersonalAccount(models.Model):
     number = models.IntegerField()
-    status = models.BooleanField(default=0)
+    status = models.BooleanField(default=1)
     house = models.ForeignKey(House, related_name='accounts', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE)
+
+    @classmethod
+    def find_inst(cls, number):
+        try:
+            return cls.objects.get(number=number)
+        except ObjectDoesNotExist:
+            return None
 
 
 class Flat(models.Model):
@@ -99,7 +107,8 @@ class Flat(models.Model):
     section = models.ForeignKey(Section, related_name='flats', on_delete=models.CASCADE)
     floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.CASCADE)
     tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.CASCADE)
-    personal_account = models.OneToOneField(PersonalAccount, related_name='flats', on_delete=models.CASCADE)
+    personal_account = models.OneToOneField(PersonalAccount, related_name='flats', on_delete=models.CASCADE,
+                                            blank=True, null=True, unique=True)
 
 
 class PaymentTicket(models.Model):
