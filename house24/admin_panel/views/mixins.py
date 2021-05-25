@@ -1,5 +1,6 @@
 from django.views.generic import View
 from django.shortcuts import redirect, get_object_or_404, render
+from django.http import JsonResponse
 
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.user_forms import SearchForm
@@ -13,6 +14,15 @@ class DeleteInstanceView(AdminPermissionMixin, View):
         inst = get_object_or_404(self.model, pk=pk)
         inst.delete()
         return redirect(self.redirect_url)
+
+
+class DeleteInstanceWithoutReload(AdminPermissionMixin, View):
+    model = None
+
+    def get(self, request):
+        inst = get_object_or_404(self.model, pk=request.GET.get('pk'))
+        inst.delete()
+        return JsonResponse({'status': 200})
 
 
 class ListInstancesMixin(AdminPermissionMixin, View):

@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, SectionFormset, FloorFormset, UserFormset
 
-from db.models.house import House
+from db.models.house import House, Section, Floor, HouseUser
 
 
 User = get_user_model()
@@ -103,3 +103,8 @@ class GetUserRole(View):
 class DeleteHouseInstance(DeleteInstanceView):
     model = House
     redirect_url = 'admin_panel:list_houses_admin'
+
+
+class DeleteSection(DeleteHouseInstance):
+    model = Section
+    redirect_url = ''
