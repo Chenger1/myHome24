@@ -12,7 +12,7 @@ class House(models.Model):
     image3 = models.ImageField()
     image4 = models.ImageField()
     image5 = models.ImageField()
-    users = models.ManyToManyField(User, related_name='houses', blank=True, null=True)
+    users = models.ManyToManyField(User, related_name='houses', blank=True)
 
     @classmethod
     def search(cls, data):
