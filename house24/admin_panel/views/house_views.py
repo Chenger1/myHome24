@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
 from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, SectionFormset, FloorFormset, UserFormset
+from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import House, Section, Floor, HouseUser
 
@@ -18,7 +19,7 @@ class ListHousesView(ListInstancesMixin):
     search_form = HouseSearchForm
 
 
-class CreateHouseView(View):
+class CreateHouseView(AdminPermissionMixin, View):
     model = House
     template_name = 'houses/create_house_admin.html'
     redirect_url = 'admin_panel:list_houses_admin'
@@ -52,7 +53,7 @@ class CreateHouseView(View):
                                                                 'user_formset': user_formset})
 
 
-class UpdateHouseView(View):
+class UpdateHouseView(AdminPermissionMixin, View):
     model = House
     template_name = 'houses/create_house_admin.html'
     redirect_url = 'admin_panel:list_houses_admin'
@@ -88,7 +89,7 @@ class UpdateHouseView(View):
                                                                 'user_formset': user_formset})
 
 
-class GetUserRole(View):
+class GetUserRole(AdminPermissionMixin, View):
     model = User
 
     def get(self, request):
