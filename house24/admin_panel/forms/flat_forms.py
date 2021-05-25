@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.house import House, Section, Floor
+from db.models.house import House, Section, Floor, Flat
 from db.models.user import User
 
 
@@ -19,5 +19,25 @@ class FlatSearchForm(forms.Form):
     floor = forms.ModelChoiceField(queryset=Floor.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
                                    required=False)
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
-                                  widget=forms.Select(attrs={'class': 'form-control'}))
-    debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+                                  widget=forms.Select(attrs={'class': 'form-control'}),
+                                  required=False)
+    debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control'}),
+                             required=False)
+
+
+class CreateFlatForm(forms.ModelForm):
+    owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
+                                   widget=forms.Select(attrs={'class': 'form-control to_valid select2bs4'}))
+
+    class Meta:
+        model = Flat
+        fields = '__all__'
+        widgets = {
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
+            'square': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'square'}),
+            'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
+            'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+            'floor': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
+            'tariff': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'tariff'}),
+            'personal_account': forms.TextInput(attrs={'id': 'personal_account', 'class': 'form-control to_valid'})
+        }

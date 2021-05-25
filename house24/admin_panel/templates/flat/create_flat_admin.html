@@ -1,0 +1,168 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Новая квартира{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+{% include 'errors.html' with errors=form.errors %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        {% if form.instance.pk %}
+                        Квартира
+                        {% else %}
+                        Новая квартира
+                        {% endif %}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_flats_admin' %}"
+                                   style="color: black;">Квартиры</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Новая квартира</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="card card-default">
+
+                            <div class="card-body">
+                                <div class="row">
+                                  <div class="col-12 col-sm-6">
+                                      <div class="form-group">
+                                        <label for="number">Номер квартиры</label>
+                                          {{ form.number }}
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="square">Площадь (кв.м.)</label>
+                                          {{ form.square }}
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="house">Дом</label>
+                                          {{ form.house }}
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="section">Секция</label>
+                                          <select name="section" id="section" class="form-control to_valid" required>
+                                              <option disabled selected>---------</option>
+                                          </select>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="floor">Этаж</label>
+                                          <select name="floor" id="floor" class="form-control to_valid" required>
+                                            <option disabled selected>---------</option>
+                                          </select>
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="owner">Владелец</label>
+                                          {{ form.owner }}
+                                      </div>
+                                      <div class="form-group">
+                                          <label for="tariff">Тариф</label>
+                                          {{ form.tariff }}
+                                      </div>
+                                  </div>
+                                  <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="personal_account">Лицевой счет</label>
+                                            {{ form.personal_account }}
+                                            <select id="personal_account_select" class="form-control">
+                                                {% for account in personal_accounts %}
+                                                    <option value="{{ account.pk }}">{{ account.number }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                  </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
+                                <div class="col-12 text-right">
+                                    <a href="{% url 'admin_panel:list_users_admin' %}"
+                                       class="btn btn-default">Отмена</a>
+                                    <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить</button>
+                                    <button type="submit" class="btn btn-success" name="multiple" value="1">Сохранить и добавить новую</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+<script>
+    $('.to_valid').each(function(){
+        $(this).on('change', function(){
+            if($(this).val() != ''){
+                colorize_input_valid(this);
+            }else{
+                colorize_input_invalid(this);
+            }
+        })
+    })
+</script>
+<script>
+    $('button[type=submit]').on('click', function(e){
+        $('.to_valid').each(function(){
+            if($(this).val() == '' && $(this).attr('required')){
+                e.preventDefault();
+                colorize_input_invalid(this);
+            }
+        })
+    })
+</script>
+<script>
+    $(document).ready(function() {
+        $('.select2bs4').select2({
+            theme: 'bootstrap4',
+            width: '100%'
+        });
+        $('#personal_account_select').select2({
+            theme: 'bootstrap4',
+            placeholder: 'или выберите из списка',
+            width: '100%'
+        });
+        $('.select2bs4').on('change', function(e){
+          colorize_input_valid(this);
+        })
+    });
+</script>
+<script>
+  $(document).ready(function(){
+    $('select[name=house]').on('change', function(){
+      send_request_to_get_house_info(element=this, url='{% url "admin_panel:get_house_section_and_floor" %}');
+    })
+  })
+</script>
+{% endblock %}
