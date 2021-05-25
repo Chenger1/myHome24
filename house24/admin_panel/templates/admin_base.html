@@ -147,7 +147,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.flats %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_flats_admin' %}" class="nav-link
+                        {% if '/admin/flats/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-key" aria-hidden="true"></i>
                             <p>Квартиры</p>
                         </a>
