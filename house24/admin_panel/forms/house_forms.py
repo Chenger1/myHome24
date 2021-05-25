@@ -5,8 +5,10 @@ from db.models.user import User
 
 
 class HouseSearchForm(forms.Form):
-    name = forms.CharField(widget=forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}))
-    address = forms.CharField(widget=forms.TextInput(attrs={'id': 'address', 'class': 'form-control'}))
+    name = forms.CharField(widget=forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}),
+                           required=False)
+    address = forms.CharField(widget=forms.TextInput(attrs={'id': 'address', 'class': 'form-control'}),
+                              required=False)
 
 
 class CreateHouseForm(forms.ModelForm):

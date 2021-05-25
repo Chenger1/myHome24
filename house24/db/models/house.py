@@ -19,9 +19,9 @@ class House(models.Model):
         name = data.get('name')
         address = data.get('address')
         if name:
-            houses = houses.filter(name=name)
+            houses = houses.filter(name__contains=name)
         if address:
-            houses = houses.filter(address=address)
+            houses = houses.filter(address__contains=address)
         return houses
 
 
