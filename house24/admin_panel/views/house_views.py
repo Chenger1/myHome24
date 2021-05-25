@@ -95,4 +95,8 @@ class GetUserRole(View):
 
     def get(self, request):
         user = get_object_or_404(User, pk=request.GET.get('pk'))
-        return JsonResponse({'role': user.role.name})
+        try:
+            role = user.role.name
+        except AttributeError:
+            role = 'Нет роли'
+        return JsonResponse({'role': role})
