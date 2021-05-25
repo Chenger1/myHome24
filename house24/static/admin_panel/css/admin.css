@@ -172,3 +172,9 @@ select{
 .margin-auto-bottom-30{
     margin:0 auto 30px;
 }
+
+@media screen and (max-width: 766px){
+    .profile_img{
+        margin: 0 auto 15px;
+    }
+}

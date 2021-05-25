@@ -118,10 +118,10 @@
 
                                 {% for user in instances %}
                                 <tr>
-                                    <td>{{ user.pk }}</td>
-                                    <td>{{ user.full_name }}</td>
-                                    <td>{{ user.phone_number }}</td>
-                                    <td>{{ user.email }}</td>
+                                    <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.pk }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.full_name }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.phone_number }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.email }}</a></td>
                                     <td>{{ user.houses.all }}</td>
                                     <td>{{ user.flats.all }}</td>
                                     <td>{{ user.date_joined }}</td>
@@ -146,7 +146,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:delete_owner_delete' user.pk %}">
+                                               href="{% url 'admin_panel:delete_owner_admin' user.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>

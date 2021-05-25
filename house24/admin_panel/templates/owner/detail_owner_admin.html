@@ -1,0 +1,223 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Профиль владельца{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        Профиль владельца
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_owners_admin' %}"
+                                   style="color: black;">Владельцы квартир</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Профиль владельца</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:update_owner_admin' user.pk %}" class="btn btn-primary btn-sm"
+                               style="float:right; margin-left:5px;">
+                                Редактировать профиль
+                            </a>
+                            <a href="" class="btn btn-default btn-sm" style="float:right;">
+                                <i class="fas fa-external-link-alt"></i>
+                                Перейти в кабинет
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div>
+                                        <img src="{% static 'img/default_form_image.png' %}" alt=""
+                                             class="photo_image img_responsive preview_img profile_img" style="float:none;">
+                                    </div>
+                                    <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <tbody>
+                                            <tr>
+                                                <td>Статус</td>
+                                                <td>
+                                                    {% if user.status == 0 %}
+                                                    <small class="label label-success">{{ user.get_status_display }}</small>
+                                                    {% elif user.status == 1 %}
+                                                    <small class="label label-blue">{{ user.get_status_display }}</small>
+                                                    {% else %}
+                                                    <small class="label label-danger">{{ user.get_status_display }}</small>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>ID</td>
+                                                <td>{{ user.pk }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Фамилия</td>
+                                                <td>{{ user.last_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Имя</td>
+                                                <td>{{ user.first_name }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Отчество</td>
+                                                <td>{% if user.patronym %}{{ user.patronym }}{% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Дата рождения</td>
+                                                <td>{% if user.birthday %}{{ user.birthday }}{% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>О владельце (заметки)</td>
+                                                <td>{{ user.about }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Телефон</td>
+                                                <td>{{ user.phone_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Viber</td>
+                                                <td>{% if user.viber %}{{ user.viber }}{% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Telegram</td>
+                                                <td>{% if user.telegram %}{{ user.telegram }}{% endif %}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>{{ user.email }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <h4>Квартиры</h4>
+                                    <div class="table-responsive no-padding" style="margin-top: 15px;">
+                                        <table class="table table-bordered table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>#</th>
+                                                    <th>Дом</th>
+                                                    <th>Секция</th>
+                                                    <th>Квартира</th>
+                                                    <th>Лицевой счет</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for flat in user.flats.all %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><a href="">{{ flat.house.name }}</a></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Section</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ flat.number }}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{ flat.personal_account }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/generate_password.js' %}"></script>
+<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
+<script>
+    $('.to_valid').each(function(){
+        $(this).on('change', function(){
+            if($(this).val() != ''){
+                colorize_input_valid(this);
+            }else{
+                colorize_input_invalid(this);
+            }
+        })
+    })
+
+
+
+</script>
+<script>
+    $('button[type=submit]').on('click', function(e){
+        $('.to_valid').each(function(){
+            if($(this).val() == '' && $(this).attr('required')){
+                e.preventDefault();
+                colorize_input_invalid(this);
+            }
+        })
+    })
+
+
+
+</script>
+<script>
+    $('#generate_pass').on('click', function(){
+        let value = generatePassword();
+        $('#password1').val(value);
+        $('#password2').val(value);
+        colorize_input_valid('#password1');
+        colorize_input_valid('#password2');
+    })
+    $('#open_button').on('click', function(){
+        let pass_input = $('#password1');
+        if($(pass_input).prop('type') == 'password'){
+            $(pass_input).prop('type', 'text');
+            $('#password2').prop('type', 'text');
+            $('#eye_icon').removeClass('fa-eye');
+            $('#eye_icon').addClass('fa-eye-slash');
+        }else{
+            $(pass_input).prop('type', 'password');
+            $('#password2').prop('type', 'password');
+            $('#eye_icon').removeClass('fa-eye-slash');
+            $('#eye_icon').addClass('fa-eye');
+        }
+    })
+
+
+
+</script>
+<script>
+    $('#photo').on('change', function(){
+        setPreview(this, 'div[class=row]');
+    })
+
+
+
+</script>
+{% endblock %}

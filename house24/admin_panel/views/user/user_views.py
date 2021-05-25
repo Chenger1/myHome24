@@ -1,4 +1,4 @@
-from django.views.generic import View, CreateView, UpdateView
+from django.views.generic import View, CreateView, UpdateView, DetailView
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
@@ -97,3 +97,9 @@ class UpdateOwnerUser(AdminPermissionMixin, UpdateView):
 class DeleteOwnerUser(DeleteInstanceView):
     model = User
     redirect_url = 'admin_panel:list_owners_admin'
+
+
+class DetailOwnerView(AdminPermissionMixin, DetailView):
+    model = User
+    template_name = 'owner/detail_owner_admin.html'
+    context_object_name = 'user'

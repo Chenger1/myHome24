@@ -13,7 +13,7 @@ from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTar
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
                                                DeleteAdminUser, ListOwnerView, CreateOwnerUser, UpdateOwnerUser,
-                                               DeleteOwnerUser)
+                                               DeleteOwnerUser, DetailOwnerView)
 from admin_panel.views.house_views import (ListHousesView, CreateHouseView, UpdateHouseView, GetUserRole,
                                            DeleteHouseInstance, DeleteSection, DeleteFloor, DeleteHouseUser)
 
@@ -74,7 +74,8 @@ urlpatterns = [
     path('owners/index/', ListOwnerView.as_view(), name='list_owners_admin'),
     path('owners/index/create_owner/', CreateOwnerUser.as_view(), name='create_owner_admin'),
     path('owners/index/update_owner/<int:pk>/', UpdateOwnerUser.as_view(), name='update_owner_admin'),
-    path('owners/index/delete_owner/<int:pk>/', DeleteOwnerUser.as_view(), name='delete_owner_delete'),
+    path('owners/index/delete_owner/<int:pk>/', DeleteOwnerUser.as_view(), name='delete_owner_admin'),
+    path('owners/index/detail_owner/<int:pk>/', DetailOwnerView.as_view(), name='detail_owner_admin'),
 
     # HOUSES
     path('houses/index/', ListHousesView.as_view(), name='list_houses_admin'),
