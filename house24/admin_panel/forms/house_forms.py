@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.house import House, Section, Floor
+from db.models.house import House, Section, Floor, HouseUser
 from db.models.user import User
 
 
@@ -42,10 +42,13 @@ class FloorForm(forms.ModelForm):
         fields = ('name', )
 
 
-class UserForm(forms.Form):
-    user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
-                                  widget=forms.Select(attrs={'class': 'form-control users_select'}),
-                                  required=False)
+class HouseUserForm(forms.ModelForm):
+    class Meta:
+        model = HouseUser
+        fields = '__all__'
+        widgets = {
+            'user': forms.Select(attrs={'class': 'form-control users_select'})
+        }
 
 
 SectionFormset = forms.inlineformset_factory(House, Section,
@@ -55,4 +58,5 @@ SectionFormset = forms.inlineformset_factory(House, Section,
 FloorFormset = forms.inlineformset_factory(House, Floor,
                                            form=FloorForm, can_delete=False, extra=0)
 
-UserFormset =forms.formset_factory(UserForm, can_delete=False, extra=0)
+UserFormset = forms.inlineformset_factory(House, HouseUser, form=HouseUserForm, extra=0, can_delete=False)
+
