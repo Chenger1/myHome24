@@ -73,6 +73,9 @@ class Tariff(models.Model):
     def get_absolute_url(self):
         return reverse('admin_panel:update_tariff', args=[self.pk])
 
+    def __str__(self):
+        return self.name
+
 
 class TariffService(models.Model):
     tariff = models.ForeignKey(Tariff, related_name='services', on_delete=models.CASCADE)
