@@ -98,6 +98,9 @@ class PersonalAccount(models.Model):
         except ObjectDoesNotExist:
             return None
 
+    def __str__(self):
+        return str(self.number)
+
 
 class Flat(models.Model):
     number = models.IntegerField()
@@ -109,6 +112,10 @@ class Flat(models.Model):
     tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.CASCADE)
     personal_account = models.OneToOneField(PersonalAccount, related_name='flats', on_delete=models.CASCADE,
                                             blank=True, null=True, unique=True)
+
+    @classmethod
+    def search(cls, data):
+        return cls.objects.all()
 
 
 class PaymentTicket(models.Model):

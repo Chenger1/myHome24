@@ -122,8 +122,16 @@
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.full_name }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.phone_number }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.email }}</a></td>
-                                    <td>{{ user.houses.all }}</td>
-                                    <td>{{ user.flats.all }}</td>
+                                    <td>
+                                        {% for flat in user.flats.all %}
+                                            <a href="">{{ flat.house.name }}</a>{% if not forloop.last %},{% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% for flat in user.flats.all %}
+                                            <a href="">{{ flat.number }}</a>{% if not forloop.last %},{% endif %}
+                                        {% endfor %}
+                                    </td>
                                     <td>{{ user.date_joined }}</td>
                                     <td class="text-center">
                                         {% if user.status == 0 %}

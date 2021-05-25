@@ -128,18 +128,10 @@
                                                 {% for flat in user.flats.all %}
                                                     <tr>
                                                         <td>{{ forloop.counter }}</td>
-                                                    </tr>
-                                                    <tr>
                                                         <td><a href="">{{ flat.house.name }}</a></td>
-                                                    </tr>
-                                                    <tr>
                                                         <td>{{ flat.section.name }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ flat.number }}</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>{{ flat.personal_account }}</td>
+                                                        <td><a href="">{{ flat.number }}</a></td>
+                                                        <td><a href="">{{ flat.personal_account }}</a></td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
