@@ -43,12 +43,12 @@ class FloorForm(forms.ModelForm):
 
 
 class HouseUserForm(forms.ModelForm):
+    user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
+                                  widget=forms.Select(attrs={'class': 'form-control users_select'}))
+
     class Meta:
         model = HouseUser
         fields = '__all__'
-        widgets = {
-            'user': forms.Select(attrs={'class': 'form-control users_select'})
-        }
 
 
 SectionFormset = forms.inlineformset_factory(House, Section,
@@ -58,5 +58,6 @@ SectionFormset = forms.inlineformset_factory(House, Section,
 FloorFormset = forms.inlineformset_factory(House, Floor,
                                            form=FloorForm, can_delete=False, extra=0)
 
-UserFormset = forms.inlineformset_factory(House, HouseUser, form=HouseUserForm, extra=0, can_delete=False)
+UserFormset = forms.inlineformset_factory(parent_model=House, model=HouseUser, form=HouseUserForm,
+                                          extra=0, can_delete=False)
 

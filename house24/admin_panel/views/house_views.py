@@ -29,7 +29,6 @@ class CreateHouseView(View):
         section_formset = SectionFormset()
         floor_formset = FloorFormset()
         user_formset = UserFormset(prefix='users')
-        user_formset.forms = []
         return render(request, self.template_name, context={'form': form,
                                                             'section_formset': section_formset,
                                                             'floor_formset': floor_formset,
