@@ -40,15 +40,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-child fa-lg"></i>
-                    <span class="badge badge-warning navbar-badge" style="top: 0px;">15</span>
+                    <span class="badge badge-warning navbar-badge" style="top: 0px;">{{ new_users_count }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                    <span class="dropdown-item dropdown-header">Новых пользователей - </span>
+                    <span class="dropdown-item dropdown-header">Новых пользователей - {{ new_users_count }}</span>
                     <div class="dropdown-divider"></div>
+                    {% for new_user in new_users_query %}
                     <a href="#" class="dropdown-item">
-                        Новый пользователь
+                        {{ new_user.full_name }}
                     </a>
-                    <a href="#" class="dropdown-item dropdown-footer">Посмотреть всех пользователей</a>
+                    {% endfor %}
+                    <a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">Посмотреть всех пользователей</a>
                 </div>
             </li>
 
