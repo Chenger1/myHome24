@@ -141,7 +141,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.personal_account %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_accounts_admin' %}" class="nav-link
+                        {% if '/admin/accounts/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon far fa-credit-card" aria-hidden="true"></i>
                             <p>Лицевые счета</p>
                         </a>

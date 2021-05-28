@@ -1,0 +1,178 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Лицевые счета{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Лицевые счета</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Лицевые счета</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-12 col-lg-9">
+                  <div class="row">
+                    <div class="col-12 col-md-4">
+                      <div class="small-box bg-green overflow-hidden">
+                        <div class="inner">
+                            <h3>000000 грн</h3>
+                            <p>Состояние кассы</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                      <!--<span class="small-box-footer">&nbsp;</span>-->
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <div class="small-box bg-blue overflow-hidden">
+                        <div class="inner">
+                            <h3>000000 грн</h3>
+                            <p>Баланс по счетам</p>
+                        </div>
+                        <div class="icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                      <!--<span class="small-box-footer">&nbsp;</span>-->
+                      </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <div class="small-box bg-red overflow-hidden">
+                        <div class="inner">
+                            <h3>0000000 грн</h3>
+                            <p>Задолженность по счетам</p>
+                        </div>
+                        <div class="icon">
+                             <i class="fas fa-dollar-sign"></i>
+                        </div>
+                        <!--<span class="small-box-footer">&nbsp;</span>-->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-3">
+                   <button class="btn btn-success dropdown-toggle breadcrumb_pull_right" type="button" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">Выберите действие
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="">Добавить лицевой счет</a>
+                        <a class="dropdown-item" href="#">Выгрузить в Excel</a>
+                    </div>
+                </div>
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-hover table-striped text-nowrap linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Статус</th>
+                                    <th>Квартира</th>
+                                    <th>Дом</th>
+                                    <th>Секция</th>
+                                    <th>Владелец</th>
+                                    <th>Остаток(грн)</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        {{ form.number }}
+                                    </td>
+                                    <td>
+                                        {{ form.status }}
+                                    </td>
+                                    <td>
+                                        {{ form.flat }}
+                                    </td>
+                                    <td>
+                                        {{ form.house }}
+                                    </td>
+                                    <td>
+                                        {{ form.section }}
+                                    </td>
+                                    <td>
+                                        {{ form.user }}
+                                    </td>
+                                    <td>
+                                        {{ form.debt }}
+                                    </td>
+                                    <td></td>
+                                </tr>
+
+                                {% for account in instances %}
+                                <tr>
+                                    <td><a href="">{{ account.number }}</a></td>
+                                    <td class="text-center">
+                                        {% if account.status == 0 %}
+                                        <small class="label label-success">Активен</small>
+                                        {% else %}
+                                        <small class="label label-danger">Неактивен</small>
+                                        {% endif %}
+                                    </td>
+                                    <td><a href="">{{ account.flat }}</a></td>
+                                    <td><a href="">{{ account.house }}</a></td>
+                                    <td><a href="">{{ account.section }}</a></td>
+                                    <th><a href="">{{ account.flat.owner.full_name }}</a></th>
+                                    <th><a href="">{{ account.is_debt }}</a></th>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-redo-alt"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            Количество домов: <strong>{{ instances.count }}</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $('.search_form').each(function(){
+        $(this).on('change', function(){
+            $(this).submit();
+        })
+    })
+
+</script>
+{% endblock %}

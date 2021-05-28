@@ -20,6 +20,7 @@ from admin_panel.views.house_views import (ListHousesView, CreateHouseView, Upda
                                            DetailHouseView)
 from admin_panel.views.flat_views import (ListFlatsView, CreateFlatView, UpdateFlatView, GetHouseSectionAndFloor,
                                           DeleteFlatView, DetailFlatView)
+from admin_panel.views import accounts
 
 
 app_name = 'admin_panel'
@@ -100,4 +101,7 @@ urlpatterns = [
     path('flats/index/delete_flat/<int:pk>/', DeleteFlatView.as_view(), name='delete_flat_admin'),
     path('flats/index/get_house_section_floor/', GetHouseSectionAndFloor.as_view(), name='get_house_section_and_floor'),
     path('flats/index/detail_flat/<int:pk>/', DetailFlatView.as_view(), name='detail_flat_admin'),
+
+    # ACCOUNTS
+    path('accounts/index/', accounts.ListPersonalAccountsView.as_view(), name='list_accounts_admin'),
 ]

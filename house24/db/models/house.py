@@ -110,7 +110,7 @@ class Flat(models.Model):
     section = models.ForeignKey(Section, related_name='flats', on_delete=models.CASCADE)
     floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.CASCADE)
     tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.CASCADE)
-    personal_account = models.OneToOneField(PersonalAccount, related_name='flats', on_delete=models.CASCADE,
+    personal_account = models.OneToOneField(PersonalAccount, related_name='flat', on_delete=models.CASCADE,
                                             blank=True, null=True, unique=True)
 
     @classmethod
