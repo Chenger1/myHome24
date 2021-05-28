@@ -203,7 +203,7 @@
                                                             {{ inline_form.name }}
                                                             <span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger has_pk"
+                                                                        class="btn btn-danger delete_icon_sections has_pk"
                                                                         name="{{ inline_form.instance.pk }}"><i
                                                                         class="fa fa-trash"
                                                                         style="color: white;"></i></button>
@@ -245,7 +245,7 @@
                                                             {{ inline_form.name }}
                                                             <span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger has_pk"
+                                                                        class="btn btn-danger delete_icon_floors has_pk"
                                                                         name="{{ inline_form.instance.pk }}"><i
                                                                         class="fa fa-trash"
                                                                         style="color: white;"></i></button>
@@ -304,7 +304,7 @@
                                                                 <div class="delete_input">
                                                             <span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger has_pk"
+                                                                        class="btn btn-danger delete_icon_users has_pk"
                                                                         name="{{ inline_form.instance.pk }}"><i class="fa fa-trash" style="color: white;"></i></button>
                                                             </span>
                                                                 </div>
@@ -340,7 +340,7 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/update_img_after_upload.js' %}"></script>
-<script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
     $('#image1').on('change', function(){
@@ -380,40 +380,23 @@
 </script>
 <script>
 // Section init
+    let section_cloner = new BaseCloner('sections', '.section_formset', "{% url 'admin_panel:delete_section_admin' %}");
+    section_cloner.init();
     $('#add_sections').on('click', function(){
-       cloneRow('sections', '.section_formset');
-    });
-    $('.delete_icon_sections').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'sections', '.section_formset');
-        })
-    });
-    $('.section_formset').find('.has_pk').on('click', function(){
-        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_section_admin' %}", 'sections', '.section_formset')
+        section_cloner.clone();
     })
 // Floor init
+    let floor_cloner = new BaseCloner('floors', '.floor_formset', "{% url 'admin_panel:delete_floor_admin' %}");
+    floor_cloner.init();
     $('#add_floors').on('click', function(){
-       cloneRow('floors', '.floor_formset');
-    });
-    $('.delete_icon_floors').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'floors', '.floor_formset');
-        })
-    })
-    $('.floor_formset').find('.has_pk').on('click', function(){
-        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_floor_admin' %}", 'floors', '.floor_formset')
+        floor_cloner.clone();
     })
 // User init
+    let user_cloner = new FormsetClonerWithCallback('users', '.users_formset', "{% url 'admin_panel:delete_house_user_admin' %}",
+                                                    setEvent);
+    user_cloner.init();
     $('#add_users').on('click', function(){
-       cloneRow('users',  '.users_formset', setEvent);
-    });
-    $('.delete_icon_users').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'users', '.users_formset');
-        })
-    })
-    $('.users_formset').find('.has_pk').on('click', function(){
-        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_house_user_admin' %}", 'users', '.users_formset')
+        user_cloner.clone();
     })
     $('.users_select').each(function(){
         let selected_role = $(this).closest('.users_formset').find('.user_role');

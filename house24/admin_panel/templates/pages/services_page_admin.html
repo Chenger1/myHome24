@@ -165,7 +165,7 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/update_img_after_upload.js' %}"></script>
-<script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script>
     let prefix = '{{ formset.prefix }}' // prefix is a unique identifier for formset
     let total = parseInt($('#id_'+prefix+'-TOTAL_FORMS').val()); // parseInt returns integer of TOTAL_FORMS
@@ -185,25 +185,16 @@
 
 </script>
 <script>
-    $('.formset').each(function(){
-        $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_services_block' %}", 'blocks', '.formset')
-        });
-    })
-
+// init formset block cloner
+    let formset_cloner = new AdvancedFormsetCloner('blocks', '.formset', "{% url 'admin_panel:delete_services_block' %}");
+    formset_cloner.init();
     $('#add_formset').on('click', function(){
         tinymce.remove();
-       cloneRow('blocks', '.formset');
-       tinymce.init({
+        formset_cloner.clone();
+        tinymce.init({
             selector: '.block_desc',
         });
         this.blur();
-    });
-    $('.delete_icon_blocks').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'blocks', '.formset');
-        })
     })
-
 </script>
 {% endblock %}

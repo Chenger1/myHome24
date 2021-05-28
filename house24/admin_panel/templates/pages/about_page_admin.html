@@ -120,7 +120,7 @@
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
                                             {% if inline_form.instance.pk %}
-                                                <a href="javascript:void(0)" class="delete_icon has_pk" name="{{ inline_form.instance.pk }}">
+                                                <a href="javascript:void(0)" class="delete_icon delete_icon_images has_pk" name="{{ inline_form.instance.pk }}">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
                                             {% else %}
@@ -192,7 +192,7 @@
                                             <label for="">Рекомендуемый размер: (1200x1200)</label>
                                             {{ inline_form.image }}
                                             {% if inline_form.instance.pk %}
-                                                <a href="javascript:void(0)" class="delete_icon has_pk"
+                                                <a href="javascript:void(0)" class="delete_icon delete_icon_add_images has_pk"
                                                 name="{{ inline_form.instance.pk }}">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
                                                 </a>
@@ -238,7 +238,7 @@
                                         {% endfor %}
                                         <div class="col-xs-12 col-md-6 documents_formset formset_block">
                                             {% if inline_form.instance.pk %}
-                                            <a href="javascript:void(0)" class="text-red form-row-remove-btn has_pk"
+                                            <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents has_pk"
                                             style="float:right;" name="{{ inline_form.instance.pk }}"><i class="fa fa-trash"></i></a>
                                             {% else %}
                                             <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents"
@@ -303,7 +303,7 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/update_img_after_upload.js' %}"></script>
-<script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script>
       tinymce.init({
         selector: '#description'
@@ -313,61 +313,29 @@
       });
 </script>
 <script>
-// images add_images documents
-    $('.formset_images').each(function(){
-        $(this).find('input[type=file]').on('change', function(){
-            setPreview(this);
-        });
-        $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_about_gallery_image' %}", 'images', '.formset_images')
-        });
-    });
-    $('.add_formset').each(function(){
-        $(this).find('input[type=file]').on('change', function(){
-            setPreview(this);
-        })
-        $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_about_additional_gallery_image' %}", 'add_images', '.add_formset')
-        });
-    });
+// init images cloner
+    let images_cloner = new AdvancedFormsetCloner('images', '.formset_images', "{% url 'admin_panel:delete_about_gallery_image' %}");
+    images_cloner.init();
+    $('#add_images').on('click', function(){
+        images_cloner.clone();
+    })
 
-    $('.documents_formset').each(function(){
-        $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_document' %}", 'documents', '.documents_formset')
-        });
+// init additional images cloner
+    let additional_cloner = new AdvancedFormsetCloner('add_images', '.add_formset', "{% url 'admin_panel:delete_about_additional_gallery_image' %}");
+    additional_cloner.init();
+    $('#add_add_images').on('click', function(){
+        additional_cloner.clone();
+    })
+
+// init documents cloner
+    let documents_cloner = new BaseCloner('documents', '.documents_formset', "{% url 'admin_panel:delete_document' %}")
+    documents_cloner.init();
+    $('#add_documents').on('click', function(){
+        documents_cloner.clone();
     })
 
     $('#photo').on('change', function(){
         setPreview(this);
-    })
-
-
-    $('#add_images').on('click', function(){
-       cloneRow('images', '.formset_images');
-    });
-     $('#add_add_images').on('click', function(){
-       cloneRow('add_images', '.add_formset');
-    });
-    $('#add_documents').on('click', function(){
-        cloneRow('documents', '.documents_formset')
-    })
-
-
-    $('.delete_icon_images').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'images', '.formset_images');
-        })
-    })
-    $('.delete_icon_add_images').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'add_images', '.add_formset');
-        })
-    })
-
-    $('.delete_icon_documents').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'documents', 'documents_formset')
-        })
     })
 </script>
 {% endblock %}

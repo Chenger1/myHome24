@@ -65,6 +65,9 @@
                                             {{ formset.management_form }}
 
                                             <div class="row formset" style="display: none;" id="hidden_services">
+                                                {% for hidden in formset.empty_form.hidden_fields %}
+                                                    {{ hidden }}
+                                                {% endfor %}
                                                 <div class="col-6 col-md-4">
                                                     <div class="form-group">
                                                         <label for="service">Услуга</label>
@@ -176,22 +179,8 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
-<script>
-    $('#add_service').on('click', function(){
-       cloneRow('services', '.formset', setEvent);
-    });
-    $('.delete_icon_services').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'services', '.formset');
-        })
-    })
-    $('.formset').find('.has_pk').on('click', function(){
-        deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_tariff_service' %}", 'services', '.formset')
-    })
-
-</script>
 <script>
     function setEvent(element, selector){
         let select = $(element).closest(selector).find('.service_select');
@@ -212,6 +201,14 @@
             })
         })
     }
+</script>
+<script>
+    let service_cloner = new FormsetClonerWithCallback('services', '.formset', "{% url 'admin_panel:delete_tariff_service' %}",
+                                                       setEvent);
+    service_cloner.init();
+    $('#add_service').on('click', function(){
+        service_cloner.clone();
+    });
 </script>
 <script>
     $('.service_select').each(function(){

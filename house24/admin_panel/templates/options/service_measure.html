@@ -214,37 +214,21 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'utils/formset.js' %}"></script>
+<script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script>
-    $('.service_formset').each(function(){
-        $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_service_option' %}", 'services', '.service_formset')
-        });
-    })
-    $('.measure_formset').each(function(){
-        $(this).find('.has_pk').on('click', function(){
-            deleteFormsetWithoutReload(this, "{% url 'admin_panel:delete_measure_option' %}", 'measure', '.measure_formset')
-        });
-    })
-
-     $('#add_service_formset').on('click', function(){
-        cloneRow('services', '.service_formset');
+    // init service formset cloner
+    let service_cloner = new BaseCloner('services', '.service_formset', "{% url 'admin_panel:delete_service_option' %}");
+    service_cloner.init(); // init base events for server-side rendered forms 
+    $('#add_service_formset').on('click', function(){
+        service_cloner.clone();
         this.blur();
-    });
-    $('.delete_icon_services').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'services', '.service_formset');
-        })
     })
-
+    // init measure formset cloner
+    let measure_cloner = new BaseCloner('measure', '.measure_formset', "{% url 'admin_panel:delete_measure_option' %}");
+    measure_cloner.init(); // init base events for server-side rendered forms 
     $('#add_measure_formset').on('click', function(){
-        cloneRow('measure', '.measure_formset');
+        measure_cloner.clone();
         this.blur();
-    });
-    $('.delete_icon_measure').each(function(){
-        $(this).on('click', function(){
-            deleteRow(this, 'measure', '.measure_formset');
-        })
     })
 </script>
 <script>

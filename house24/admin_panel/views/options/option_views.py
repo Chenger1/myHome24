@@ -45,7 +45,7 @@ class SaveServiceForm(AdminPermissionMixin, View):
         if formset.is_valid():
             for form in formset:
                 form.save()
-            return redirect('admin_panel:service_measure_option')
+        return redirect('admin_panel:service_measure_option')
 
 
 class SaveMeasureForm(AdminPermissionMixin, View):
@@ -54,7 +54,7 @@ class SaveMeasureForm(AdminPermissionMixin, View):
         if formset.is_valid():
             for form in formset:
                 form.save()
-            return redirect('admin_panel:service_measure_option')
+        return redirect('admin_panel:service_measure_option')
 
 
 class DeleteServiceBlock(DeleteGalleryImageMixin):
