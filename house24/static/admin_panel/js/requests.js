@@ -11,31 +11,21 @@ function send_request(url, pk, select_measure){
      })
 }
 
-
-function send_request_to_get_house_info(element, url){
-    let value = $(element).find(':selected').val();
-    let sections = $('#section');
-    let floors = $('#floor');
+function update_select(element, url, parent_pk){
     $.ajax({
-      url: url,
-      type: 'GET',
-      data: {'pk': value},
+        url: url,
+        type: 'GET',
+        data: {'pk': parent_pk},
     })
-    .done(function(response) {
-      sections.children().remove();
-      floors.children().remove();
-      sections.append('<option disabled selected>---------</option>');
-      floors.append('<option disabled selected>---------</option>');
-      for(key in response['sections']){
-        append_select_option(sections, response['sections'][key]);
-      }
-      for(key in response['floors']){
-        append_select_option(floors, response['floors'][key]);
-      }
-
+    .done(function(response){
+        $(element).children().remove();
+        for(key in response){
+            append_select_option(element, response[key]);
+        }
     })
 }
 
+
 function append_select_option(selector, data){
-    $(selector).append('<option value='+ data['pk'] +' >' + data['name'] + '</option>')
+    $(selector).append('<option value='+ data['id'] +' >' + data['name'] + '</option>')
 }
