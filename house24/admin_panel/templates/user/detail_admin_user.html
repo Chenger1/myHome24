@@ -1,0 +1,95 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Пользователь{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        Пользователь
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_users_admin' %}"
+                                   style="color: black;">Пользователи</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Пользователь</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:update_user_admin' user.pk %}" class="btn btn-primary btn-sm"
+                               style="float:right; margin-left:5px;">
+                                Редактировать пользователя
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-lg-4">
+                                    <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <tbody>
+                                            <tr>
+                                                <td>Пользователь</td>
+                                                <td>
+                                                    {{ user.full_name }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Роль</td>
+                                                <td>{{ user.role }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Телефон</td>
+                                                <td>{{ user.phone_number }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Email(логин)</td>
+                                                <td>{{ user.email }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Статус</td>
+                                                <td>
+                                                    {% if user.status == 0 %}
+                                                    <small class="label label-success">{{ user.get_status_display }}</small>
+                                                    {% elif user.status == 1 %}
+                                                    <small class="label label-blue">{{ user.get_status_display }}</small>
+                                                    {% else %}
+                                                    <small class="label label-danger">{{ user.get_status_display }}</small>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

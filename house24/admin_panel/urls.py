@@ -12,7 +12,8 @@ from admin_panel.views.options.option_views import (ServiceOptionView, SaveServi
 from admin_panel.views.options.tariff_option_views import (ListTariff, CreateTariff, GetServiceMeasure, DeleteTariff,
                                                            UpdateTariff, DeleteTariffService, DuplicateTariff)
 from admin_panel.views.user.user_views import (UpdateRolesView, ListUsersView, CreateAdminUser, UpdateAdminUser,
-                                               DeleteAdminUser, ListOwnerView, CreateOwnerUser, UpdateOwnerUser,
+                                               DeleteAdminUser, DetailAdminUser, ListOwnerView, CreateOwnerUser,
+                                               UpdateOwnerUser,
                                                DeleteOwnerUser, DetailOwnerView)
 from admin_panel.views.house_views import (ListHousesView, CreateHouseView, UpdateHouseView, GetUserRole,
                                            DeleteHouseInstance, DeleteSection, DeleteFloor, DeleteHouseUser)
@@ -62,6 +63,7 @@ urlpatterns = [
     path('user-admin/index/create_user_admin/', CreateAdminUser.as_view(), name='create_user_admin'),
     path('user-admin/index/update_user_admin/<int:pk>/', UpdateAdminUser.as_view(), name='update_user_admin'),
     path('user-admin/index/delete_user_admin/<int:pk>/', DeleteAdminUser.as_view(), name='delete_user_admin'),
+    path('user-admin/index/detail_user_admin/<int:pk>/', DetailAdminUser.as_view(), name='detail_user_admin'),
 
     # # CREDENTIALS
     path('credentials/index/', CredentialsView.as_view(), name='credentials_admin'),

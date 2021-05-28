@@ -66,6 +66,12 @@ class DeleteAdminUser(DeleteInstanceView):
     redirect_url = 'admin_panel:list_users_admin'
 
 
+class DetailAdminUser(AdminPermissionMixin, DetailView):
+    model = User
+    template_name = 'user/detail_admin_user.html'
+    context_object_name = 'user'
+
+
 class ListOwnerView(ListInstancesMixin):
     model = User
     template_name = 'owner/list_owners.html'

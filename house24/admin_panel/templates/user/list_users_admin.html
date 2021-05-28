@@ -86,11 +86,11 @@
 
                                 {% for user in instances %}
                                 <tr>
-                                    <td>{{ user.pk }}</td>
-                                    <td>{{ user.full_name }}</td>
-                                    <td>{{ user.role }}</td>
-                                    <td>{{ user.phone_number }}</td>
-                                    <td>{{ user.email }}</td>
+                                    <td><a href="{% url 'admin_panel:detail_user_admin' user.pk %}">{{ user.pk }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_user_admin' user.pk %}">{{ user.full_name }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_user_admin' user.pk %}">{{ user.role }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_user_admin' user.pk %}">{{ user.phone_number }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_user_admin' user.pk %}">{{ user.email }}</a></td>
                                     <td class="text-center">
                                         {% if user.status == 0 %}
                                         <small class="label label-success">{{ user.get_status_display }}</small>
