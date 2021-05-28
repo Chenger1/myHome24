@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'db',
     'website',
+    'rest_api',
     'admin_panel',
 ]
 
