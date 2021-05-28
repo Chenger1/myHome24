@@ -34,3 +34,17 @@ class AccountSearchForm(forms.Form):
     debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                              required=False)
     status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+class CreatePersonalAccountForm(forms.ModelForm):
+    class Meta:
+        model = PersonalAccount
+        fields = '__all__'
+        widgets = {
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
+            'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
+            'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
+            'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+        }
+    flat = forms.ChoiceField(choices=(),
+                             widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}))

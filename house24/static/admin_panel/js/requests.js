@@ -11,21 +11,28 @@ function send_request(url, pk, select_measure){
      })
 }
 
-function update_select(element, url, parent_pk){
+function update_select(element, url, parent_pk, constructor){
     $.ajax({
         url: url,
         type: 'GET',
         data: {'pk': parent_pk},
     })
     .done(function(response){
+        console.log(response);
         $(element).children().remove();
-        for(key in response){
-            append_select_option(element, response[key]);
+        $(element).append('<option>---------</option>')
+        for(key of response){
+            constructor(element, key);
         }
     })
 }
 
 
-function append_select_option(selector, data){
-    $(selector).append('<option value='+ data['id'] +' >' + data['name'] + '</option>')
+function append_select_section_floor(selector, data){
+    $(selector).append('<option value='+ data['id'] +' >' + data['name'] + '</option>');
+}
+function append_select_flat(selector, data){
+    $(selector).append('<option value="'+ data['id'] +'">'+ data['number'] +'</options>');
+    $('#owner').text(data['owner']['first_name']+ ' ' +data['owner']['last_name']);
+    $('#phone').text(data['owner']['phone_number']);
 }

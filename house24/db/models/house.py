@@ -86,8 +86,13 @@ class TariffService(models.Model):
 
 
 class PersonalAccount(models.Model):
+    status_choices = [
+        (0, 'Активен'),
+        (1, 'Неактивен')
+    ]
+
     number = models.IntegerField()
-    status = models.BooleanField(default=1)
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     house = models.ForeignKey(House, related_name='accounts', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE)
 

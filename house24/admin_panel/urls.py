@@ -104,4 +104,5 @@ urlpatterns = [
 
     # ACCOUNTS
     path('accounts/index/', accounts.ListPersonalAccountsView.as_view(), name='list_accounts_admin'),
+    path('accounts/index/create_account/', accounts.CreatePersonalAccountView.as_view(), name='create_account_admin'),
 ]

@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from db.models.house import Section, Floor
+from db.models.house import Section, Floor, Flat
+from db.models.user import User
 
 
 class SectionSerializer(serializers.ModelSerializer):
@@ -13,3 +14,17 @@ class FloorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Floor
         fields = ('id', 'house', 'name', )
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'first_name', 'last_name', 'phone_number')
+
+
+class FlatSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+
+    class Meta:
+        model = Flat
+        fields = ('id', 'number', 'owner', )

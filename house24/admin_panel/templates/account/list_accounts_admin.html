@@ -74,7 +74,7 @@
                             aria-haspopup="true" aria-expanded="false">Выберите действие
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="">Добавить лицевой счет</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_account_admin' %}">Добавить лицевой счет</a>
                         <a class="dropdown-item" href="#">Выгрузить в Excel</a>
                     </div>
                 </div>
@@ -157,7 +157,7 @@
                             </table>
                         </div>
                         <div class="card-footer">
-                            Количество домов: <strong>{{ instances.count }}</strong>
+                            Количество счетов: <strong>{{ instances.count }}</strong>
                         </div>
                     </div>
                 </div>
