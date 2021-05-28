@@ -1,4 +1,4 @@
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
@@ -99,6 +99,12 @@ class GetUserRole(AdminPermissionMixin, View):
         except AttributeError:
             role = 'Нет роли'
         return JsonResponse({'role': role})
+
+
+class DetailHouseView(DetailView):
+    model = House
+    template_name = 'houses/detail_house_admin.html'
+    context_object_name = 'house'
 
 
 class DeleteHouseInstance(DeleteInstanceView):

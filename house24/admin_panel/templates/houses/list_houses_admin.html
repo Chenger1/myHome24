@@ -65,9 +65,9 @@
 
                                 {% for house in instances %}
                                 <tr>
-                                    <td>{{ house.pk }}</td>
-                                    <td>{{ house.name }}</td>
-                                    <td>{{ house.address }}</td>
+                                    <td><a href="{% url 'admin_panel:detail_house_admin' house.pk %}">{{ house.pk }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_house_admin' house.pk %}">{{ house.name }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_house_admin' house.pk %}">{{ house.address }}</a></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
