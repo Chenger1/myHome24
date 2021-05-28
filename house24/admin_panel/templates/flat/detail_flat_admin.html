@@ -1,0 +1,113 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Квартира №{{ flat.number }}, {{ flat.house }}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        Квартира №{{ flat.number }}, {{ flat.house }}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_flats_admin' %}"
+                                   style="color: black;">Квартиры</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Квартира №{{ flat.number }}, {{ flat.house }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 style="display: inline-block; margin: 0;">Просмотр квартиры</h3>
+                            <a href="{% url 'admin_panel:update_user_admin' user.pk %}" class="btn btn-primary btn-sm"
+                               style="float:right; margin-left:5px;">
+                                Редактировать квартиру
+                            </a>
+                            <a href="" class="btn btn-default    btn-sm"
+                               style="float:right; margin-left:5px;">
+                                <i class="far fa-copy"></i> Оформить квитанцию
+                            </a>
+                            <a href="" class="btn btn-default btn-sm"
+                               style="float:right; margin-left:5px;">
+                                <i class="fas fa-dollar-sign"></i> Принять платеж
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <tbody>
+                                            <tr>
+                                                <td>Лицевой счет</td>
+                                                <td>
+                                                    {{ flat.personal_account }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Номер квартиры</td>
+                                                <td>{{ flat }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Площадь</td>
+                                                <td>{{ flat.square }} м <sup>2</sup></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Дом</td>
+                                                <td>{{ flat.house }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Секция</td>
+                                                <td>{{ flat.section }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Этаж</td>
+                                                <td>{{ flat.floor }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Владелец</td>
+                                                <td>{{ flat.owner }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тариф</td>
+                                                <td>{{ flat.tariff }}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div>
+                                            <p><a href="">Посмотреть показания счетчиков</a></p>
+                                            <p><a href="">Посмотреть приходы</a></p>
+                                            <p><a href="">Посмотреть квитанции</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

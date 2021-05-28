@@ -1,4 +1,4 @@
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -109,3 +109,9 @@ class GetHouseSectionAndFloor(View):
 class DeleteFlatView(DeleteInstanceView):
     model = Flat
     redirect_url = 'admin_panel:list_flats_admin'
+
+
+class DetailFlatView(DetailView):
+    model = Flat
+    template_name = 'flat/detail_flat_admin.html'
+    context_object_name = 'flat'

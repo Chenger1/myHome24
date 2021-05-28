@@ -117,6 +117,9 @@ class Flat(models.Model):
     def search(cls, data):
         return cls.objects.all()
 
+    def __str__(self):
+        return str(self.number)
+
 
 class PaymentTicket(models.Model):
     status_choices = [

@@ -90,11 +90,11 @@
 
                                 {% for flat in instances %}
                                 <tr>
-                                    <td><a href="">{{ flat.number }}</a></td>
-                                    <td><a href="">{{ flat.house }}</a></td>
-                                    <td><a href="">{{ flat.section }}</a></td>
-                                    <td><a href="">{{ flat.floor }}</a></td>
-                                    <td><a href="">{{ flat.owner }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.number }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.house }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.section }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.floor }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.owner }}</a></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
