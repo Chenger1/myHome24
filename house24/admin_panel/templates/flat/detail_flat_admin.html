@@ -38,7 +38,7 @@
                     <div class="card card-default">
                         <div class="card-header">
                             <h3 style="display: inline-block; margin: 0;">Просмотр квартиры</h3>
-                            <a href="{% url 'admin_panel:update_user_admin' user.pk %}" class="btn btn-primary btn-sm"
+                            <a href="{% url 'admin_panel:update_flat_admin' flat.pk %}" class="btn btn-primary btn-sm"
                                style="float:right; margin-left:5px;">
                                 Редактировать квартиру
                             </a>
@@ -60,7 +60,7 @@
                                             <tr>
                                                 <td>Лицевой счет</td>
                                                 <td>
-                                                    {{ flat.personal_account }}
+                                                    {{ flat.account }}
                                                 </td>
                                             </tr>
                                             <tr>

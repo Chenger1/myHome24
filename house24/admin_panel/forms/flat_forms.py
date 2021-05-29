@@ -46,11 +46,8 @@ class CreateFlatForm(forms.ModelForm):
         }
 
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
-                                   widget=forms.Select(attrs={'class': 'form-control to_valid select2bs4'}))
+                                   widget=forms.Select(attrs={'class': 'form-control to_valid select2bs4'}),
+                                   required=False)
     account = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'personal_account',
-                                                                 'class': 'form-control to_valid'}))
-
-    def clean(self):
-        account_number = self.cleaned_data['account']
-        if PersonalAccount.objects.filter(number=account_number).exists():
-            raise ValidationError('Такой лицевой счет уже существует')
+                                                                 'class': 'form-control to_valid'}),
+                                 required=False)
