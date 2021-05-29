@@ -54,13 +54,13 @@ class ListInstancesMixin(AdminPermissionMixin, View):
             Redefine if you need more specific search arguments
         """
         instances = self.model.search(form_data)
-        return instances
+        return instances[::-1]
 
     def get_queryset(self):
         """
             Redefine if you need more specific filtered queryset
         """
-        return self.model.objects.all()
+        return self.model.objects.all()[::-1]
 
 
 class FlatOwner(View):
