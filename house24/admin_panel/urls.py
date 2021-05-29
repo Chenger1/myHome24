@@ -22,6 +22,7 @@ from admin_panel.views.flat_views import (ListFlatsView, CreateFlatView, UpdateF
                                           DeleteFlatView, DetailFlatView)
 from admin_panel.views import accounts
 from admin_panel.views.mixins import FlatOwner
+from admin_panel.views import meter_views
 
 
 app_name = 'admin_panel'
@@ -112,4 +113,7 @@ urlpatterns = [
          name='update_account_admin'),
     path('accounts/index/detail_account/<int:pk>/', accounts.PersonalAccountDetailView.as_view(),
          name='detail_account_admin'),
+
+    # METERS
+    path('meters/index/', meter_views.ListMetersView.as_view(), name='list_meters_admin'),
 ]
