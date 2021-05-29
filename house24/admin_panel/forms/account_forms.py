@@ -37,6 +37,13 @@ class AccountSearchForm(forms.Form):
 
 
 class CreatePersonalAccountForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        house_pk = kwargs.pop('house_pk', None)
+        super().__init__(*args, **kwargs)
+        if house_pk:
+            self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
+            self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
+
     class Meta:
         model = PersonalAccount
         fields = '__all__'

@@ -1,5 +1,6 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, View
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect, render
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -24,6 +25,34 @@ class CreatePersonalAccountView(AdminPermissionMixin, CreateView):
         context = super().get_context_data(**kwargs)
         context['next_number'] = self.model.get_next_account_number()
         return context
+
+
+class UpdatePersonalAccountView(AdminPermissionMixin, View):
+    model = PersonalAccount
+    form = CreatePersonalAccountForm
+    template_name = 'account/create_account_admin.html'
+
+    def get(self, request, pk):
+        instance = get_object_or_404(self.model, pk=pk)
+        if instance.house:
+            house_pk = instance.house.pk
+            form = self.form(instance=instance, **{'house_pk': house_pk})
+        else:
+            form = self.form(instance=instance)
+        context = {'form': form}
+        if instance.flat:
+            owner = instance.flat.owner.full_name
+            phone = instance.flat.owner.phone_number
+            context.update({'owner': owner, 'phone': phone})
+        return render(request, self.template_name, context=context)
+
+    def post(self, request, pk):
+        instance = get_object_or_404(self.model, pk=pk)
+        form = self.form(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_panel:list_accounts_admin')
+        return render(request, self.template_name, context={'form': form})
 
 
 class DeleteAccountView(DeleteInstanceView):

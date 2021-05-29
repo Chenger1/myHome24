@@ -96,10 +96,20 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div>
-                                            <strong>Владелец: </strong><span id="owner">Не выбран</span>
+                                            <strong>Владелец: </strong>
+                                            {% if owner %}
+                                                <span id="owner">{{ owner }}</span>
+                                            {% else %}
+                                                <span id="owner">Не выбран</span>
+                                            {% endif %}
                                         </div>
                                         <div>
-                                            <strong>Телефон: </strong><span id="phone">Не выбран</span>
+                                            <strong>Телефон: </strong>
+                                            {% if phone %}
+                                                <span id="phone">{{ phone }}</span>
+                                            {% else %}
+                                                <span id="phone">Не выбран</span>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -161,9 +171,12 @@
     }
 
     $(document).ready(function(){
-        update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
-        update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}");
+        {% if not form.instance.pk %}
+            update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
+            update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}");
+        {% else %}
 
+        {% endif %}
 
         $('select[name=house]').on('change', function(){
             let value = $(this).find(':selected').val();
