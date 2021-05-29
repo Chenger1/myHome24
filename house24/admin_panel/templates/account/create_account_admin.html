@@ -62,7 +62,9 @@
                                         <div class="input-group-addon to_valid">
                                             №
                                         </div>
-                                        {{ form.number }}
+                                        <input type="text" class="form-control to_valid"
+                                        value="{% if form.instance.pk %}{{ form.instance.number }}
+                                               {% else %}{{ next_number }}{% endif %}" name="number">
                                     </div>
                                 </div>
                             </div>
@@ -148,6 +150,16 @@
     })
 </script>
 <script>
+    function update_owner_info(data){
+        if(!jQuery.isEmptyObject(data)){
+            $('#owner').text(data[0]['owner']['first_name']+ ' ' +data[0]['owner']['last_name']);
+            $('#phone').text(data[0]['owner']['phone_number']);
+        }else{
+            $('#owner').text('Не выбран');
+            $('#phone').text('Не выбран');
+        }
+    }
+
     $(document).ready(function(){
         update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
         update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}");
@@ -159,6 +171,10 @@
                             constructor=append_select_section_floor);
             update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}", parent_pk=value,
                             constructor=append_select_flat);
+        });
+        $('select[name=flat]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            send_request_to_api('{% url "rest_api:get_flat_list" %}', value, update_owner_info);
         })
     })
 </script>

@@ -45,6 +45,5 @@ class CreatePersonalAccountForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+            'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'})
         }
-    flat = forms.ChoiceField(choices=(),
-                             widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}))

@@ -85,28 +85,6 @@ class TariffService(models.Model):
     currency = models.CharField(max_length=30, default='грн.')
 
 
-class PersonalAccount(models.Model):
-    status_choices = [
-        (0, 'Активен'),
-        (1, 'Неактивен')
-    ]
-
-    number = models.IntegerField()
-    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
-    house = models.ForeignKey(House, related_name='accounts', on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE)
-
-    @classmethod
-    def find_inst(cls, number):
-        try:
-            return cls.objects.get(number=number)
-        except ObjectDoesNotExist:
-            return None
-
-    def __str__(self):
-        return str(self.number)
-
-
 class Flat(models.Model):
     number = models.IntegerField()
     square = models.IntegerField()
@@ -115,12 +93,41 @@ class Flat(models.Model):
     section = models.ForeignKey(Section, related_name='flats', on_delete=models.CASCADE)
     floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.CASCADE)
     tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.CASCADE)
-    personal_account = models.OneToOneField(PersonalAccount, related_name='flat', on_delete=models.CASCADE,
-                                            blank=True, null=True, unique=True)
 
     @classmethod
     def search(cls, data):
         return cls.objects.all()
+
+    def __str__(self):
+        return str(self.number)
+
+
+class PersonalAccount(models.Model):
+    status_choices = [
+        (0, 'Активен'),
+        (1, 'Неактивен')
+    ]
+
+    number = models.IntegerField()
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
+    house = models.ForeignKey(House, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
+    section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
+    flat = models.OneToOneField(Flat, related_name='account', on_delete=models.CASCADE, blank=True, null=True)
+
+    @classmethod
+    def get_next_account_number(cls):
+        last = cls.objects.last()
+        if last:
+            return last.number + 1
+        else:
+            return 1
+
+    @classmethod
+    def find_inst(cls, number):
+        try:
+            return cls.objects.get(number=number)
+        except ObjectDoesNotExist:
+            return None
 
     def __str__(self):
         return str(self.number)
