@@ -118,7 +118,7 @@ class PersonalAccount(models.Model):
     def get_next_account_number(cls):
         last = cls.objects.last()
         if last:
-            return last.number + 1
+            return last.pk + 1
         else:
             return 1
 
@@ -155,10 +155,17 @@ class PaymentTicket(models.Model):
 
 
 class Meter(models.Model):
+    status_choices = [
+        (0, 'Новое'),
+        (1, 'Учтено'),
+        (2, 'Учтено и оплачен'),
+        (3, 'Нулевое')
+    ]
+
     number = models.IntegerField()
     date = models.DateField()
     status = models.BooleanField()
-    data = models.DateField()
+    data = models.IntegerField()
     flat = models.ForeignKey(Flat, related_name='meters', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='meters', on_delete=models.CASCADE)
     house = models.ForeignKey(House, related_name='meters', on_delete=models.CASCADE)
