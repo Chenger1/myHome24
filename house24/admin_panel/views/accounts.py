@@ -1,10 +1,11 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
+from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.account_forms import AccountSearchForm, CreatePersonalAccountForm
 
-from db.models.house import PersonalAccount, Flat
+from db.models.house import PersonalAccount
 
 
 class ListPersonalAccountsView(ListInstancesMixin):
@@ -13,7 +14,7 @@ class ListPersonalAccountsView(ListInstancesMixin):
     template_name = 'account/list_accounts_admin.html'
 
 
-class CreatePersonalAccountView(View):
+class CreatePersonalAccountView(AdminPermissionMixin, View):
     model = PersonalAccount
     form = CreatePersonalAccountForm
     template_name = 'account/create_account_admin.html'
@@ -32,3 +33,8 @@ class CreatePersonalAccountView(View):
             return redirect('admin_panel:list_accounts_admin')
         return render(request, self.template_name, context={'form': form,
                                                             'next_number': next_number})
+
+
+class DeleteAccountView(DeleteInstanceView):
+    model = PersonalAccount
+    redirect_url = 'admin_panel:list_accounts_admin'
