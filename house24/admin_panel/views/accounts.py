@@ -1,5 +1,5 @@
-from django.views.generic import View
-from django.shortcuts import render, redirect
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -14,25 +14,16 @@ class ListPersonalAccountsView(ListInstancesMixin):
     template_name = 'account/list_accounts_admin.html'
 
 
-class CreatePersonalAccountView(AdminPermissionMixin, View):
+class CreatePersonalAccountView(AdminPermissionMixin, CreateView):
     model = PersonalAccount
-    form = CreatePersonalAccountForm
+    form_class = CreatePersonalAccountForm
     template_name = 'account/create_account_admin.html'
+    success_url = reverse_lazy('admin_panel:list_accounts_admin')
 
-    def get(self, request):
-        form = self.form()
-        next_number = self.model.get_next_account_number()
-        return render(request, self.template_name, context={'form': form,
-                                                            'next_number': next_number})
-
-    def post(self, request):
-        form = self.form(request.POST)
-        next_number = self.model.get_next_account_number()
-        if form.is_valid():
-            form.save()
-            return redirect('admin_panel:list_accounts_admin')
-        return render(request, self.template_name, context={'form': form,
-                                                            'next_number': next_number})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['next_number'] = self.model.get_next_account_number()
+        return context
 
 
 class DeleteAccountView(DeleteInstanceView):
