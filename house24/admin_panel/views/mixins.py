@@ -36,31 +36,34 @@ class ListInstancesMixin(AdminPermissionMixin, View):
         if request.GET:
             form = self.search_form(request.GET)
             if form.is_valid():
-                instances = self.get_filtered_query(form.cleaned_data)
+                instances = self.get_filtered_query(form.cleaned_data)[::-1]
                 return render(request, self.template_name, context={'form': form,
-                                                                    'instances': instances})
+                                                                    'instances': instances,
+                                                                    'count': len(instances)})
             else:
-                instances = self.get_queryset()
+                instances = self.get_queryset()[::-1]
                 return render(request, self.template_name, context={'form': form,
-                                                                    'instances': instances})
+                                                                    'instances': instances,
+                                                                    'count': len(instances)})
         else:
             form = self.search_form()
-            instances = self.get_queryset()
+            instances = self.get_queryset()[::-1]
         return render(request, self.template_name, context={'form': form,
-                                                            'instances': instances})
+                                                            'instances': instances,
+                                                            'count': len(instances)})
 
     def get_filtered_query(self, form_data):
         """
             Redefine if you need more specific search arguments
         """
         instances = self.model.search(form_data)
-        return instances[::-1]
+        return instances
 
     def get_queryset(self):
         """
             Redefine if you need more specific filtered queryset
         """
-        return self.model.objects.all()[::-1]
+        return self.model.objects.all()
 
 
 class FlatOwner(View):
