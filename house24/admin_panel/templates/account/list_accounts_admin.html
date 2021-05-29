@@ -122,7 +122,7 @@
 
                                 {% for account in instances %}
                                 <tr>
-                                    <td><a href="">{{ account.number }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{{ account.number }}</a></td>
                                     <td class="text-center">
                                         {% if account.status == 0 %}
                                         <small class="label label-success">Активен</small>
@@ -130,12 +130,16 @@
                                         <small class="label label-danger">Неактивен</small>
                                         {% endif %}
                                     </td>
-                                    <td><a href="">
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">
                                         {% if account.flat %}{{ account.flat }}{% endif %}
                                     </a></td>
-                                    <td><a href="">{% if account.house %}{{ account.house }}{% endif %}</a></td>
-                                    <td><a href="">{% if account.section %}{{ account.section }}{% endif %}</a></td>
-                                    <th><a href="">{{ account.flat.owner.full_name }}</a></th>
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{% if account.house %}{{ account.house }}{% endif %}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{% if account.section %}{{ account.section }}{% endif %}</a></td>
+                                    <th>
+                                        {% if account.flat.owner %}
+                                            <a href="{% url 'admin_panel:detail_owner_admin' account.flat.owner.pk %}">{{ account.flat.owner.full_name }}</a>
+                                        {% endif %}
+                                    </th>
                                     <th><a href="">{{ account.is_debt }}</a></th>
                                     <td>
                                         <div class="btn-group">

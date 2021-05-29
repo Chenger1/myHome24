@@ -110,4 +110,6 @@ urlpatterns = [
     path('accounts/index/delete_account/<int:pk>/', accounts.DeleteAccountView.as_view(), name='delete_account_admin'),
     path('accounts/index/update_account/<int:pk>/', accounts.UpdatePersonalAccountView.as_view(),
          name='update_account_admin'),
+    path('accounts/index/detail_account/<int:pk>/', accounts.PersonalAccountDetailView.as_view(),
+         name='detail_account_admin'),
 ]

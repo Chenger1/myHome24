@@ -1,0 +1,154 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Лицевой счет{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">
+                        Лицевой счет
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_accounts_admin' %}"
+                                   style="color: black;">Лицевые счета</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Лицевой счет</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-4 col-lg-4">
+                    <div class="field-account-uid required has-success">
+                        <div class="input-group">
+                            <div class="input-group-addon to_valid">
+                                №
+                            </div>
+                            <input type="text" class="form-control to_valid"
+                                   value="{{ account.number }}" name="number" disabled>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 style="display: inline-block; margin: 0;">Просмотр лицевого счета</h3>
+                            <a href="{% url 'admin_panel:update_account_admin' account.pk %}"
+                               class="btn btn-primary btn-sm"
+                               style="float:right; margin-left:5px;">
+                                Редактировать счет
+                            </a>
+                            <a href="" class="btn btn-default    btn-sm"
+                               style="float:right; margin-left:5px;">
+                                <i class="far fa-copy"></i> Оформить квитанцию
+                            </a>
+                            <a href="" class="btn btn-default btn-sm"
+                               style="float:right; margin-left:5px;">
+                                <i class="fas fa-dollar-sign"></i> Принять платеж
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <tbody>
+                                            <tr>
+                                                <td>Статус</td>
+                                                <td>
+                                                    {% if account.status == 0 %}
+                                                    <small class="label label-success">Активен</small>
+                                                    {% else %}
+                                                    <small class="label label-danger">Неактивен</small>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Дом</td>
+                                                <td>
+                                                    {% if account.house %}
+                                                    {{ account.house }}
+                                                    {% else %}
+                                                    Не указано
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Секция</td>
+                                                <td>
+                                                    {% if account.section %}
+                                                    {{ account.section }}
+                                                    {% else %}
+                                                    Не указано
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Квартира</td>
+                                                <td>
+                                                    {% if account.flat %}
+                                                    {{ account.flat }}
+                                                    {% else %}
+                                                    Не указано
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Владелец</td>
+                                                <td>
+                                                    {% if account.flat.owner %}
+                                                    {{ account.flat.owner.full_name }}
+                                                    {% else %}
+                                                    Не указано
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тариф</td>
+                                                <td>
+                                                    {% if account.tariff %}
+                                                    {{ account.tariff }}
+                                                    {% else %}
+                                                    Не указано
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        <div>
+                                            <p><a href="">Посмотреть показания счетчиков</a></p>
+                                            <p><a href="">Посмотреть приходы</a></p>
+                                            <p><a href="">Посмотреть квитанции</a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

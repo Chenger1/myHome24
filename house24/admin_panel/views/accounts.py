@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, View
+from django.views.generic import CreateView, View, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -58,3 +58,9 @@ class UpdatePersonalAccountView(AdminPermissionMixin, View):
 class DeleteAccountView(DeleteInstanceView):
     model = PersonalAccount
     redirect_url = 'admin_panel:list_accounts_admin'
+
+
+class PersonalAccountDetailView(AdminPermissionMixin, DetailView):
+    model = PersonalAccount
+    template_name = 'account/personal_account_detail_admin.html'
+    context_object_name = 'account'
