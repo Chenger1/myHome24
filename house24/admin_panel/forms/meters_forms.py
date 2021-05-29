@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.house import House, Section, Service, Meter
+from db.models.house import House, Section, Service, Meter, Flat
 
 from datetime import datetime
 
@@ -16,6 +16,13 @@ class SearchMeasureForm(forms.Form):
 
 
 class CreateMeterForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        house_pk = kwargs.pop('house_pk', None)
+        super().__init__(*args, **kwargs)
+        if house_pk:
+            self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
+            self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
+
     class Meta:
         model = Meter
         fields = '__all__'
