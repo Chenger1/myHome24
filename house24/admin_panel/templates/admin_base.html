@@ -193,7 +193,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.meters %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_meters_admin' %}" class="nav-link
+                                 {% if '/admin/meters/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-tachometer-alt" aria-hidden="true"></i>
                             <p>Показания счетчиков</p>
                         </a>

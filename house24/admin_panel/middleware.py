@@ -12,7 +12,7 @@ class AdminCheckMiddleware(MiddlewareMixin):
             if user.is_authenticated:
                 if request.path == '/admin/' and not request.user.role.statistic:
                     return redirect(request.user.role.get_available_url_pattern_by_role())
-                elif 'accounts/index/' in request.oath and not request.user.role.personal_account:
+                elif 'accounts/index/' in request.path and not request.user.role.personal_account:
                     return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'meters/index/' in request.path and not request.user.role.meters:
                     return redirect(request.path.role.get_available_url_pattern_by_role())

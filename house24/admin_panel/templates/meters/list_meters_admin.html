@@ -1,0 +1,110 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Счетчики{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-9">
+                    <h1 class="m-0">Счетчики</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-3">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Счетчики</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'admin_panel:create_house_admin' %}" class="btn btn-success" style="float: right;">Добавить
+                        показание</a>
+                </div>
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-hover table-striped text-nowrap linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>Дом</th>
+                                    <th>Секция</th>
+                                    <th>№ квартиры</th>
+                                    <th>Счетчик</th>
+                                    <th>Текущее показание</th>
+                                    <th>Ед. изм.</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ form.house }}</td>
+                                    <td>
+                                        {{ form.section }}
+                                    </td>
+                                    <td>
+                                        {{ form.flat }}
+                                    </td>
+                                    <td>
+                                        {{ form.service }}
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                                {% for meter in instances %}
+                                <tr>
+                                    <td><a href="">{{ meter.house }}</a></td>
+                                    <td><a href="">{{ meter.section }}</a></td>
+                                    <td><a href="">{{ meter.flat }}</a></td>
+                                    <td><a href="">{{ meter.service }}</a></td>
+                                    <td><a href="">{{ meter.data }}</a></td>
+                                    <td><a href="">{{ meter.service.measure }}</a></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-tachometer-alt"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $('.search_form').each(function(){
+        $(this).on('change', function(){
+            $(this).submit();
+        })
+    })
+
+
+</script>
+{% endblock %}
