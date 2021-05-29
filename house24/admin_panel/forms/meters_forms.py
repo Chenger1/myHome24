@@ -2,6 +2,8 @@ from django import forms
 
 from db.models.house import House, Section, Service, Meter
 
+from datetime import datetime
+
 
 class SearchMeasureForm(forms.Form):
     house = forms.ModelChoiceField(queryset=House.objects.all(),
@@ -16,9 +18,14 @@ class SearchMeasureForm(forms.Form):
 class CreateMeterForm(forms.ModelForm):
     class Meta:
         model = Meter
+        fields = '__all__'
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
-            'date': forms.DateInput(attrs={'class': 'form-control to valid', 'id': 'date'}),
+            'date': forms.DateInput(format=('%Y-%m-%d'), attrs={
+                'type': "date",
+                'value': datetime.now().strftime('%Y-%m-%d'),
+                'class': "form-control to_valid",
+            }),
             'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
             'data': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'data'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),

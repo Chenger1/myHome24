@@ -164,7 +164,7 @@ class Meter(models.Model):
 
     number = models.IntegerField()
     date = models.DateField()
-    status = models.BooleanField()
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     data = models.IntegerField()
     flat = models.ForeignKey(Flat, related_name='meters', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='meters', on_delete=models.CASCADE)

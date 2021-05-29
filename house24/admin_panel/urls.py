@@ -116,5 +116,5 @@ urlpatterns = [
 
     # METERS
     path('meters/index/', meter_views.ListMetersView.as_view(), name='list_meters_admin'),
-    path('meters/index/', meter_views.CreateMeterView.as_view(), name='create_meter_admin'),
+    path('meters/index/create_meter/', meter_views.CreateMeterView.as_view(), name='create_meter_admin'),
 ]

@@ -180,6 +180,13 @@ select{
     border-radius: .25rem;
 }
 
+.page-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 @media screen and (max-width: 766px){
     .profile_img{
         margin: 0 auto 15px;
