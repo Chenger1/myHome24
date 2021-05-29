@@ -21,6 +21,7 @@ from admin_panel.views.house_views import (ListHousesView, CreateHouseView, Upda
 from admin_panel.views.flat_views import (ListFlatsView, CreateFlatView, UpdateFlatView, GetHouseSectionAndFloor,
                                           DeleteFlatView, DetailFlatView)
 from admin_panel.views import accounts
+from admin_panel.views.mixins import FlatOwner
 
 
 app_name = 'admin_panel'
@@ -29,6 +30,7 @@ app_name = 'admin_panel'
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
     path('logout/', LogoutAdmin.as_view(), name='logout_admin'),
+    path('flat_owner/', FlatOwner.as_view(), name='get_flat_owner'),
 
     # PAGES
     path('main_page/index', MainPageView.as_view(), name='main_page'),

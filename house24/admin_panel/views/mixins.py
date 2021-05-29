@@ -5,6 +5,8 @@ from django.http import JsonResponse
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.user_forms import SearchForm
 
+from db.models.house import Flat
+
 
 class DeleteInstanceView(AdminPermissionMixin, View):
     model = None
@@ -59,3 +61,15 @@ class ListInstancesMixin(AdminPermissionMixin, View):
             Redefine if you need more specific filtered queryset
         """
         return self.model.objects.all()
+
+
+class FlatOwner(View):
+    model = Flat
+
+    def get(self, request):
+        flat = get_object_or_404(self.model, pk=request.GET.get('pk'))
+        owner = dict()
+        if flat.owner:
+            owner = {'full_name': flat.owner.full_name,
+                     'phone': flat.owner.phone_number}
+        return JsonResponse(owner)
