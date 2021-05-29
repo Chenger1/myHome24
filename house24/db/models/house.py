@@ -171,6 +171,14 @@ class Meter(models.Model):
     house = models.ForeignKey(House, related_name='meters', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='meters', on_delete=models.CASCADE)
 
+    @classmethod
+    def get_next_meter_number(cls):
+        last = cls.objects.last()
+        if last:
+            return last.pk + 1
+        else:
+            return 1
+
 
 class PaymentItem(models.Model):
     type_choices = [
