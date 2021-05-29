@@ -130,9 +130,11 @@
                                         <small class="label label-danger">Неактивен</small>
                                         {% endif %}
                                     </td>
-                                    <td><a href="">{{ account.flat }}</a></td>
-                                    <td><a href="">{{ account.house }}</a></td>
-                                    <td><a href="">{{ account.section }}</a></td>
+                                    <td><a href="">
+                                        {% if account.flat %}{{ account.flat }}{% endif %}
+                                    </a></td>
+                                    <td><a href="">{% if account.house %}{{ account.house }}{% endif %}</a></td>
+                                    <td><a href="">{% if account.section %}{{ account.section }}{% endif %}</a></td>
                                     <th><a href="">{{ account.flat.owner.full_name }}</a></th>
                                     <th><a href="">{{ account.is_debt }}</a></th>
                                     <td>
