@@ -68,22 +68,22 @@
 
                                 {% for req in instances %}
                                 <tr>
-                                    <td><a href="">{{ req.pk }}</a></td>
-                                    <td><a href="">{{req.date}} - {{ req.time }}</a></td>
-                                    <td><a href="">{{ req.get_type_display }}</a></td>
-                                    <td><a href="">{{ req.description|truncatechars:30|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.pk }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{req.date}} - {{ req.time }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.get_type_display }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.description|truncatechars:30|filter_none }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_flat_admin' req.flat.pk %}"
                                     style="color: #007bff;">{{ req.flat }}, {{ req.flat.house }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' req.owner.pk %}"
                                            style="color: #007bff;">{{ req.owner|filter_none }}</a></td>
-                                    <td><a href="">{{ req.owner.phone_number|filter_none }}</a></td>
-                                    <td><a href="">{{ req.master|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.owner.phone_number|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.master|filter_none }}</a></td>
                                     <td class="text-center">
-                                        {% if meter.status == 0 %}
+                                        {% if req.status == 0 %}
                                         <small class="label label-primary">Новое</small>
-                                        {% elif meter.status == 1 %}
+                                        {% elif req.status == 1 %}
                                         <small class="label label-warning">В работе</small>
-                                        {% elif meter.status == 2 %}
+                                        {% elif req.status == 2 %}
                                         <small class="label label-success">Выполнено</small>
                                         {% endif %}
                                     </td>

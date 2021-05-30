@@ -123,4 +123,6 @@ urlpatterns = [
          name='update_master_request_admin'),
     path('master_request/index/delete_request/<int:pk>/', master_request_views.DeleteMasterRequest.as_view(),
          name='delete_master_request_admin'),
+    path('master_request/index/detail_request/<int:pk>/', master_request_views.DetailMasterRequest.as_view(),
+         name='detail_master_request_admin'),
 ]

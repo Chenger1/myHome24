@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
 from django.urls import reverse_lazy
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
@@ -44,3 +44,9 @@ class UpdateMasterRequestView(AdminPermissionMixin, UpdateView):
 class DeleteMasterRequest(DeleteInstanceView):
     model = MasterRequest
     redirect_url = 'admin_panel:list_master_requests_admin'
+
+
+class DetailMasterRequest(AdminPermissionMixin, DetailView):
+    model = MasterRequest
+    template_name = 'master/detail_master_request_admin.html'
+    context_object_name = 'req'

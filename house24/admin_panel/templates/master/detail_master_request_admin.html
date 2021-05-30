@@ -1,0 +1,137 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% load right_date %}
+{% load beautify_line %}
+
+{% block title %}Заявка №{{ req.pk }}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">
+                        Заявка №{{ req.pk }}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_meters_admin' %}"
+                                   style="color: black;">Заявки вызова мастера</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Заявка №{{ req.pk }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-7 col-lg-6">
+                    <div class="page-header">
+                        <div class="form-group" style="margin: 0; flex-basis: 45%;">
+                            <div class="input-group">
+                                <input type="date" disabled value="{{ req.date|valid_date_format }}" class="form-control">
+                            </div>
+                        </div>
+                        <span style="margin: 0 15px;">от</span>
+                        <div class="form-group" style="margin: 0; flex-basis: 45%;">
+                            <div class="input-group">
+                                <input type="time" disabled value="{{ req.time.hour }}:{{ req.time.minute }}" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:update_master_request_admin' req.pk %}"
+                               class="btn btn-primary btn-sm"
+                               style="float:right; margin-left:5px;">
+                                Редактировать заявку
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <tbody>
+                                            <tr>
+                                                <td>Статус</td>
+                                                <td>
+                                                    {% if req.status == 0 %}
+                                                    <small class="label label-primary">Новое</small>
+                                                    {% elif req.status == 1 %}
+                                                    <small class="label label-warning">В работе</small>
+                                                    {% elif req.status == 2 %}
+                                                    <small class="label label-success">Выполнено</small>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Владелец</td>
+                                                <td>{{ req.owner|filter_none }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Телефон</td>
+                                                <td>{{ req.owner.phone_number|filter_none }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Квартира</td>
+                                                <td>
+                                                    {{ req.flat }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Тип мастера</td>
+                                                <td>
+                                                    {{ req.get_type_display|filter_none }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Мастер</td>
+                                                <td>
+                                                    {{ req.master|filter_none }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Описание</td>
+                                                <td>
+                                                    {{ req.description|filter_none }}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Добавлено</td>
+                                                <td>
+                                                    {{ req.date }} - {{ req.time }}
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}
