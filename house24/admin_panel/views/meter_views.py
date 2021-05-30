@@ -8,6 +8,8 @@ from admin_panel.forms.meters_forms import SearchMeasureForm, CreateMeterForm, S
 
 from db.models.house import Meter, Flat
 
+import datetime
+
 
 class ListMetersView(ListInstancesMixin):
     model = Meter
@@ -87,3 +89,26 @@ class MeterDetailView(AdminPermissionMixin, DetailView):
 class DeleteMeterView(DeleteInstanceView):
     model = Meter
     redirect_url = 'admin_panel:list_meters_admin'
+
+
+class DuplicateMeterView(AdminPermissionMixin, View):
+    model = Meter
+    form = CreateMeterForm
+    template_name = 'meters/create_meter_admin.html'
+
+    def get(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
+        form = self.form(instance=obj, initial={'number': self.model.get_next_meter_number(),
+                                                'date': datetime.datetime.now().strftime('%Y-%m-%d'),
+                                                'status': 0, 'data': ''})
+        form.instance.number = self.model.get_next_meter_number()
+        return render(request, self.template_name, context={'form': form})
+
+    def post(self, request, pk):
+        form = self.form(request.POST)
+        if form.is_valid():
+            form.instance.pk = None
+            form.save()
+            return redirect('admin_panel:list_meters_admin')
+        else:
+            return render(request, self.template_name, context={'form': form})

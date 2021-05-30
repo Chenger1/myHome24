@@ -58,9 +58,12 @@
                                             <div class="input-group-addon to_valid">
                                                 №
                                             </div>
+                                            {% if next_number %}
                                             <input type="text" class="form-control to_valid"
-                                                   value="{% if form.instance.pk %}{{ form.instance.number }}
-                                               {% else %}{{ next_number }}{% endif %}" name="number">
+                                                   value="{{ next_number }}" name="number">
+                                            {% else %}
+                                             {{ form.number }}
+                                            {% endif %}
                                         </div>
                                     </div>
                                     <span style="margin: 0 15px;">от</span>
