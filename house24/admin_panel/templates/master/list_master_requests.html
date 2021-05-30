@@ -72,8 +72,10 @@
                                     <td><a href="">{{req.date}} - {{ req.time }}</a></td>
                                     <td><a href="">{{ req.get_type_display }}</a></td>
                                     <td><a href="">{{ req.description|truncatechars:30|filter_none }}</a></td>
-                                    <td><a href="">{{ req.flat }}</a></td>
-                                    <td><a href="">{{ req.owner|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_flat_admin' req.flat.pk %}"
+                                    style="color: #007bff;">{{ req.flat }}, {{ req.flat.house }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_owner_admin' req.owner.pk %}"
+                                           style="color: #007bff;">{{ req.owner|filter_none }}</a></td>
                                     <td><a href="">{{ req.owner.phone_number|filter_none }}</a></td>
                                     <td><a href="">{{ req.master|filter_none }}</a></td>
                                     <td class="text-center">
