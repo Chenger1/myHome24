@@ -1,5 +1,6 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load beautify_line %}
 
 {% block title %}Квартира №{{ flat.number }}, {{ flat.house }}{% endblock %}
 
@@ -60,7 +61,7 @@
                                             <tr>
                                                 <td>Лицевой счет</td>
                                                 <td>
-                                                    {{ flat.account }}
+                                                    {{ flat.account|filter_none }}
                                                 </td>
                                             </tr>
                                             <tr>
@@ -69,27 +70,33 @@
                                             </tr>
                                             <tr>
                                                 <td>Площадь</td>
-                                                <td>{{ flat.square }} м <sup>2</sup></td>
+                                                <td>{{ flat.square|filter_none }} м <sup>2</sup></td>
                                             </tr>
                                             <tr>
                                                 <td>Дом</td>
-                                                <td>{{ flat.house }}</td>
+                                                <td><a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}">{{ flat.house }}</a></td>
                                             </tr>
                                             <tr>
                                                 <td>Секция</td>
-                                                <td>{{ flat.section }}</td>
+                                                <td>{{ flat.section|filter_none }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Этаж</td>
-                                                <td>{{ flat.floor }}</td>
+                                                <td>{{ flat.floor|filter_none }}</td>
                                             </tr>
                                             <tr>
                                                 <td>Владелец</td>
-                                                <td>{{ flat.owner }}</td>
+                                                <td>
+                                                    {% if flat.owner %}
+                                                    <a href="{% url 'admin_panel:detail_owner_admin' flat.owner.pk %}">{{ flat.owner.full_name }}</a>
+                                                    {% else %}
+                                                        Не указано
+                                                    {% endif %}
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <td>Тариф</td>
-                                                <td>{{ flat.tariff }}</td>
+                                                <td>{{ flat.tariff|filter_none }}</td>
                                             </tr>
                                             </tbody>
                                         </table>

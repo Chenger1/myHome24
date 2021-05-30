@@ -32,5 +32,5 @@ def prepare_message(value):
 @register.filter(name='filter_none')
 def filter_none(value):
     if not value:
-        return 'Не выбрано'
+        return 'Не указано'
     return value

@@ -1,5 +1,6 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load beautify_line %}
 
 {% block title %}Лицевые счета{% endblock %}
 
@@ -131,16 +132,19 @@
                                         {% endif %}
                                     </td>
                                     <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">
-                                        {% if account.flat %}{{ account.flat }}{% endif %}
+                                        {{ account.flat|filter_none }}
                                     </a></td>
-                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{% if account.house %}{{ account.house }}{% endif %}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{% if account.section %}{{ account.section }}{% endif %}</a></td>
-                                    <th>
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{{ account.house|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{{ account.section|filter_none }}</a></td>
+                                    <td>
                                         {% if account.flat.owner %}
-                                            <a href="{% url 'admin_panel:detail_owner_admin' account.flat.owner.pk %}">{{ account.flat.owner.full_name }}</a>
+                                            <a href="{% url 'admin_panel:detail_owner_admin' account.flat.owner.pk %}"
+                                            style="color: #007bff;">{{ account.flat.owner.full_name|filter_none }}</a>
+                                        {% else %}
+                                            Не указано
                                         {% endif %}
-                                    </th>
-                                    <th><a href="">{{ account.is_debt }}</a></th>
+                                    </td>
+                                    <td><a href="">{{ account.is_debt|filter_none }}</a></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"

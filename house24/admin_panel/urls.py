@@ -64,9 +64,12 @@ urlpatterns = [
 
     # # PAYMENT ITEMS
     path('payment_items/index/', option_views.PaymentItemsListView.as_view(), name='payment_items_admin'),
-    path('payment_items/index/create_item/', option_views.CreatePaymentItemView.as_view(), name='create_payment_item_admin'),
-    path('payment_items/index/update_item/<int:pk>/', option_views.UpdatePaymentItemView.as_view(), name='update_payment_item_admin'),
-    path('payment_items/index/delete_item/<int:pk>/', option_views.DeletePaymentItemView.as_view(), name='delete_payment_item_admin'),
+    path('payment_items/index/create_item/', option_views.CreatePaymentItemView.as_view(),
+         name='create_payment_item_admin'),
+    path('payment_items/index/update_item/<int:pk>/', option_views.UpdatePaymentItemView.as_view(),
+         name='update_payment_item_admin'),
+    path('payment_items/index/delete_item/<int:pk>/', option_views.DeletePaymentItemView.as_view(),
+         name='delete_payment_item_admin'),
 
     # OWNERS
     path('owners/index/', user_views.ListOwnerView.as_view(), name='list_owners_admin'),

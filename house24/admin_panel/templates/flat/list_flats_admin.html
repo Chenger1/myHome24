@@ -92,10 +92,19 @@
                                 {% for flat in instances %}
                                 <tr>
                                     <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.number }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.house }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}"
+                                    style="color: #007bff;">{{ flat.house }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.section|filter_none }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.floor|filter_none }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.owner|filter_none }}</a></td>
+                                    <td>
+                                        {% if flat.owner %}
+                                            <a href="{% url 'admin_panel:detail_owner_admin' flat.pk %}"
+                                            style="color: #007bff;">{{ flat.owner|filter_none }}</a>
+                                        {% else %}
+                                            Не указано
+                                        {% endif %}
+                                    </td>
+                                    <td></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"

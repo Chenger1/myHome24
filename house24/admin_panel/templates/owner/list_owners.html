@@ -124,12 +124,18 @@
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.email }}</a></td>
                                     <td>
                                         {% for flat in user.flats.all %}
-                                            <a href="">{{ flat.house.name }}</a>{% if not forloop.last %},{% endif %}
+                                            <a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}" style="color: #007bff;">
+                                                {{ flat.house.name }}
+                                            </a>
+                                        {% if not forloop.last %},{% endif %}
                                         {% endfor %}
                                     </td>
                                     <td>
                                         {% for flat in user.flats.all %}
-                                            <a href="">{{ flat.number }}</a>{% if not forloop.last %},{% endif %}
+                                            <a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}" style="color: #007bff;">
+                                                {{ flat.number }}
+                                            </a>
+                                        {% if not forloop.last %},{% endif %}
                                         {% endfor %}
                                     </td>
                                     <td>{{ user.date_joined }}</td>
