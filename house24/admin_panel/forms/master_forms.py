@@ -16,7 +16,7 @@ class MasterRequestSearchForm(forms.Form):
         (2, 'Выполнено')
     ]
 
-    number = forms.IntegerField(widgets=forms.NumberInput(attrs={'class': 'form-control'}),
+    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),
                                 required=False)
     time = forms.DateTimeField(widget=forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime'}),
                                required=False)

@@ -1,0 +1,121 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Заявки вызова мастера{% endblock %}
+
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Заявки вызова мастера</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Заявки вызова мастера</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <a href="{% url 'admin_panel:create_flat_admin' %}" class="btn btn-success" style="float: right;">Добавить
+                        заявку</a>
+                </div>
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-hover table-striped text-nowrap linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>№ заявки</th>
+                                    <th>Удобное время</th>
+                                    <th>Тип мастера</th>
+                                    <th>Описание</th>
+                                    <th>Квартира</th>
+                                    <th>Владелец</th>
+                                    <th>Телефон</th>
+                                    <th>Мастер</th>
+                                    <th>Статус</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{{ form.number }}</td>
+                                    <td>{{ form.time }}</td>
+                                    <td>{{ form.type }}</td>
+                                    <td>{{ form.description }}</td>
+                                    <td>{{ form.flat }}</td>
+                                    <td>{{ form.owner }}</td>
+                                    <td>{{ form.phone }}</td>
+                                    <td>{{ form.master }}</td>
+                                    <td>{{ form.status }}</td>
+                                    <td></td>
+                                </tr>
+
+                                {% for req in instances %}
+                                <tr>
+                                    <td><a href="">{{ req.number }}</a></td>
+                                    <td><a href="">{{ req.time }}</a></td>
+                                    <td><a href="">{{ req.get_type_display }}</a></td>
+                                    <td><a href="">{{ req.description|truncatechars:30 }}</a></td>
+                                    <td><a href="">{{ req.owner }}</a></td>
+                                    <td><a href="">{{ req.phone }}</a></td>
+                                    <td><a href="">{{ req.master }}</a></td>
+                                    <td class="text-center">
+                                        {% if meter.status == 0 %}
+                                        <small class="label label-primary">Новое</small>
+                                        {% elif meter.status == 1 %}
+                                        <small class="label label-warning">В работе</small>
+                                        {% elif meter.status == 2 %}
+                                        <small class="label label-success">Выполнено</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-default btn-sm"
+                                               href="">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $('.search_form').each(function(){
+        $(this).on('change', function(){
+            $(this).submit();
+        })
+    })
+
+
+</script>
+{% endblock %}
