@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 
 from db.models.user import User
 
+import datetime
+
 
 class House(models.Model):
     name = models.CharField(max_length=100)
@@ -178,6 +180,14 @@ class Meter(models.Model):
             return last.pk + 1
         else:
             return 1
+
+    @property
+    def meter_month(self):
+        return datetime.date(month=self.date.month, year=self.date.year, day=self.date.day).strftime('%b %Y')
+
+    @property
+    def meter_date(self):
+        return datetime.date(month=self.date.month, year=self.date.year, day=self.date.day).strftime('%d.%m.%Y')
 
 
 class PaymentItem(models.Model):

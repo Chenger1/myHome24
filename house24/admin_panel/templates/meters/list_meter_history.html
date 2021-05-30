@@ -1,7 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 
-{% block title %}Счетчики{% endblock %}
+{% block title %}Показания счетчиков, кв.{{ flat.number }}{% endblock %}
 
 
 {% block content %}
@@ -10,14 +10,16 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-9">
-                    <h1 class="m-0">Счетчики</h1>
+                    <h1 class="m-0">Показания счетчиков, кв.{{ flat.number }}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-3">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
                                 <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Счетчики</li>
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:list_meters_admin' %}" style="color: black;">
+                                Счетчики</a></li>
+                            <li class="breadcrumb-item active">Показания счетчиков, кв.{{ flat.number }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -30,7 +32,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'admin_panel:create_meter_admin' %}" class="btn btn-success" style="float: right;">Добавить
+                    <a href="" class="btn btn-success" style="float: right;">Добавить
                         показание</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
@@ -39,27 +41,29 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
+                                    <th>№</th>
+                                    <th>Статус</th>
+                                    <th>Дата</th>
+                                    <th>Месяц</th>
                                     <th>Дом</th>
                                     <th>Секция</th>
                                     <th>№ квартиры</th>
                                     <th>Счетчик</th>
-                                    <th>Текущее показание</th>
+                                    <th>Показания</th>
                                     <th>Ед. изм.</th>
                                     <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
+                                    <td>{{ form.number }}</td>
+                                    <td>{{ form.status }}</td>
+                                    <td>{{ form.date }}</td>
+                                    <td></td>
                                     <td>{{ form.house }}</td>
-                                    <td>
-                                        {{ form.section }}
-                                    </td>
-                                    <td>
-                                        {{ form.flat }}
-                                    </td>
-                                    <td>
-                                        {{ form.service }}
-                                    </td>
+                                    <td>{{ form.section }}</td>
+                                    <td>{{ form.number }}</td>
+                                    <td>{{ form.service }}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
@@ -67,21 +71,35 @@
 
                                 {% for meter in instances %}
                                 <tr>
-                                    <td><a href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">{{ meter.house }}</a></td>
-                                    <td><a href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">{{ meter.section }}</a></td>
-                                    <td><a href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">{{ meter.flat }}</a></td>
-                                    <td><a href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">{{ meter.service }}</a></td>
-                                    <td><a href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">{{ meter.data }}</a></td>
-                                    <td><a href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">{{ meter.service.measure }}</a></td>
+                                    <td><a href="">{{ meter.number }}</a></td>
+                                    <td class="text-center"><a href="">
+                                        {% if meter.status == 0 %}
+                                        <small class="label label-warning">Новое</small>
+                                        {% elif meter.status == 1 %}
+                                        <small class="label label-success">Учтено</small>
+                                        {% elif meter.status == 2 %}
+                                        <small class="label label-success">Учтено и оплачено</small>
+                                        {% else %}
+                                        <small class="label label-primary">Нулевое</small>
+                                        {% endif %}
+                                    </a></td>
+                                    <td><a href="">{{ meter.meter_date }}</a></td>
+                                    <td><a href="">{{ meter.meter_month }}</a></td>
+                                    <td><a href="">{{ meter.house }}</a></td>
+                                    <td><a href="">{{ meter.section }}</a></td>
+                                    <td><a href="">{{ meter.flat.number }}</a></td>
+                                    <td><a href="">{{ meter.service }}</a></td>
+                                    <th><a href="">{{ meter.data }}</a></th>
+                                    <td><a href="">{{ meter.service.measure }}</a></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
                                                href="">
-                                                <i class="fas fa-tachometer-alt"></i>
+                                                <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">
-                                                <i class="fas fa-eye"></i>
+                                               href="">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>
@@ -104,7 +122,5 @@
             $(this).submit();
         })
     })
-
-
 </script>
 {% endblock %}

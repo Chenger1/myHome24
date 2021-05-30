@@ -97,6 +97,10 @@
     background-color: #dc3545;
 }
 
+.label-warning{
+    background-color: #f39c12;
+}
+
 .is_valid{
     border-color: #28a745;
     padding-right: 2.25rem;
