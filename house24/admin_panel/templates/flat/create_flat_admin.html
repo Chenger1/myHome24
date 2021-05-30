@@ -115,7 +115,7 @@
 
                             <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
                                 <div class="col-12 text-right">
-                                    <a href="{% url 'admin_panel:list_users_admin' %}"
+                                    <a href="{% url 'admin_panel:list_flats_admin' %}"
                                        class="btn btn-default">Отмена</a>
                                     <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить</button>
                                     <button type="submit" class="btn btn-success" name="multiple" value="1">Сохранить и добавить новую</button>
@@ -131,7 +131,6 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
-<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
     $('.to_valid').each(function(){
