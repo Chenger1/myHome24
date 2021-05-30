@@ -177,8 +177,10 @@
 </script>
 <script>
     $(document).ready(function(){
-        update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
-        update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");
+        {% if not form.instance.pk and not form.errors %}
+            update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
+            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");
+        {% endif %}
 
 
         $('select[name=house]').on('change', function(){
