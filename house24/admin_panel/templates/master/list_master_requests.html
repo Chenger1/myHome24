@@ -1,5 +1,6 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load beautify_line %}
 
 {% block title %}Заявки вызова мастера{% endblock %}
 
@@ -67,13 +68,14 @@
 
                                 {% for req in instances %}
                                 <tr>
-                                    <td><a href="">{{ req.number }}</a></td>
-                                    <td><a href="">{{ req.time }}</a></td>
+                                    <td><a href="">{{ req.pk }}</a></td>
+                                    <td><a href="">{{req.date}} - {{ req.time }}</a></td>
                                     <td><a href="">{{ req.get_type_display }}</a></td>
-                                    <td><a href="">{{ req.description|truncatechars:30 }}</a></td>
-                                    <td><a href="">{{ req.owner }}</a></td>
-                                    <td><a href="">{{ req.phone }}</a></td>
-                                    <td><a href="">{{ req.master }}</a></td>
+                                    <td><a href="">{{ req.description|truncatechars:30|filter_none }}</a></td>
+                                    <td><a href="">{{ req.flat }}</a></td>
+                                    <td><a href="">{{ req.owner|filter_none }}</a></td>
+                                    <td><a href="">{{ req.phone|filter_none }}</a></td>
+                                    <td><a href="">{{ req.master|filter_none }}</a></td>
                                     <td class="text-center">
                                         {% if meter.status == 0 %}
                                         <small class="label label-primary">Новое</small>

@@ -27,3 +27,10 @@ def prepare_message(value):
     elif isinstance(value, dict):
         result.update(value)
     return result
+
+
+@register.filter(name='filter_none')
+def filter_none(value):
+    if not value:
+        return ''
+    return value
