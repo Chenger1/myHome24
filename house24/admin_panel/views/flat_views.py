@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404, render, redirect
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.forms.flat_forms import FlatSearchForm, CreateFlatForm
-from admin_panel.forms.account_forms import PersonalAccountForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import Flat, House, PersonalAccount
@@ -24,31 +23,16 @@ class PostInstanceMixin:
             obj = form.save()
             account_data = form.cleaned_data.get('account')
             if account_data:
-                personal_account = PersonalAccount.find_inst(account_data)
-                if personal_account:
-                    # if this account already exists  - set it as account for this flat
+                personal_account, created = PersonalAccount.objects.get_or_create(number=account_data,
+                                                                                  defaults={'house': form.cleaned_data.get('house'),
+                                                                                            'section': form.cleaned_data.get('section')})
+                if hasattr(obj, 'account'):
                     old_account = obj.account
-                    old_account.flat = None  # clear old one-to-one field
+                    old_account.flat = None
                     old_account.save()
-                    personal_account.flat = obj
-                    personal_account.save()
-                    return redirect('admin_panel:list_flats_admin')
-                else:
-                    #  otherwise - we will create new personal account using given data
-                    data = {'number': form.cleaned_data['account'],
-                            'house': form.cleaned_data.get('house'),
-                            'section': form.cleaned_data.get('section')}
-                    account_form = PersonalAccountForm(data)
-                    if account_form.is_valid():
-                        new_account = account_form.save()
-                        new_account.flat = obj
-                        new_account.save()
-                        return redirect('admin_panel:list_flats_admin')
-                    else:
-                        obj.delete()
-                        personal_accounts = PersonalAccount.objects.filter(flat__isnull=True)
-                        return render(request, self.template_name, context={'form': form,
-                                                                            'personal_accounts': personal_accounts})
+                personal_account.flat = obj
+                personal_account.save()
+                return redirect('admin_panel:list_flats_admin')
             else:
                 return redirect('admin_panel:list_flats_admin')
         else:
@@ -86,7 +70,8 @@ class UpdateFlatView(AdminPermissionMixin, View, PostInstanceMixin):
             personal_account = obj.account.number
         except AttributeError:
             personal_account = None
-        form = CreateFlatForm(instance=obj, **{'account_number': personal_account})
+        form = CreateFlatForm(instance=obj, **{'account_number': personal_account,
+                                               'house_pk': obj.house.pk})
         personal_accounts = PersonalAccount.objects.filter(flat__isnull=True)
         return render(request, self.template_name, context={'form': form,
                                                             'personal_accounts': personal_accounts})

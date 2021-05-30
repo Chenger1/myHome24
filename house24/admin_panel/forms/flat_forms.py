@@ -1,7 +1,6 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
-from db.models.house import House, Section, Floor, Flat, PersonalAccount
+from db.models.house import House, Section, Floor, Flat
 from db.models.user import User
 
 
@@ -29,9 +28,12 @@ class FlatSearchForm(forms.Form):
 class CreateFlatForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         account_number = kwargs.pop('account_number', None)
+        house_pk = kwargs.pop('house_pk', None)
         super().__init__(*args, **kwargs)
         if account_number:
             self.fields['account'].initial = account_number
+            self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
+            self.fields['floor'].queryset = Floor.objects.filter(house__pk=house_pk)
 
     class Meta:
         model = Flat
