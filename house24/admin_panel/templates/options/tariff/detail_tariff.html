@@ -1,0 +1,109 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}Тариф: {{ tariff.name }}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">
+                        Тариф: {{ tariff.name }}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_tariff_admin' %}"
+                                   style="color: black;">Тарифы</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Тариф: {{ tariff.name }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 col-md-7 col-lg-6">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <a href=""
+                               class="btn btn-primary btn-sm"
+                               style="float:right; margin-left:5px;">
+                                Редактировать тариф
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <tbody>
+                                              <tr>
+                                                <td>Название тарифа</td>
+                                                <td>{{ tariff.name }}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Описание</td>
+                                                <td>{{ tariff.description }}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>Дата редактирования</td>
+                                                <td>{{ tariff.updated }}</td>
+                                              </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                  <div class="table-responsive no-padding">
+                                        <table class="table table-bordered table-striped table-view">
+                                            <thead>
+                                              <tr>
+                                                <th>#</th>
+                                                <th>Услуга</th>
+                                                <th>Eд. изм.</th>
+                                                <th>Цена за ед.,грн</th>
+                                                <th>Валюта</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for service in tariff.services.all %}
+                                                    <tr>
+                                                        <td>{{ service.pk }}</td>
+                                                        <td>{{ service.service.name }}</td>
+                                                        <td>{{ service.service.measure }}</td>
+                                                        <td>{{ service.price }}</td>
+                                                        <td>{{ service.currency }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

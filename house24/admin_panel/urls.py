@@ -50,6 +50,8 @@ urlpatterns = [
     path('tariff/index/update/<int:pk>/', tariff_option_views.UpdateTariff.as_view(), name='update_tariff'),
     path('tariff/index/delete_service/', tariff_option_views.DeleteTariffService.as_view(), name='delete_tariff_service'),
     path('tariff/index/duplicate/<int:pk>/', tariff_option_views.DuplicateTariff.as_view(), name='duplicate_tariff'),
+    path('tariff/index/detail_tariff/<int:pk>/', tariff_option_views.DetailTariffView.as_view(),
+         name='detail_tariff_admin'),
 
     # # USERS
     path('roles/index/', user_views.UpdateRolesView.as_view(), name='list_roles_admin'),

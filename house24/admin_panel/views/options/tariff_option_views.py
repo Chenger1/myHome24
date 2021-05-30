@@ -1,5 +1,4 @@
-from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, ListView, DetailView
 from django.views.generic import View
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
@@ -16,6 +15,9 @@ class ListTariff(AdminPermissionMixin, ListView):
     model = Tariff
     template_name = 'options/tariff/tariff_list.html'
     context_object_name = 'tariffs'
+
+    def get_queryset(self):
+        return self.model.objects.all()[::-1]
 
 
 class CreateTariff(AdminPermissionMixin, CreateView):
@@ -130,3 +132,9 @@ class DuplicateTariff(AdminPermissionMixin, View):
                 return render(request, self.template_name, context={self.context_object_name: form,
                                                                     'formset': formset})
         return render(request, self.template_name, context={self.context_object_name: form})
+
+
+class DetailTariffView(AdminPermissionMixin, DetailView):
+    model = Tariff
+    template_name = 'options/tariff/detail_tariff.html'
+    context_object_name = 'tariff'
