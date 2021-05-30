@@ -2,7 +2,7 @@ from django.views.generic import CreateView, View, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.meters_forms import SearchMeasureForm, CreateMeterForm, SearchMeasureHistoryForm
 
@@ -82,3 +82,8 @@ class MeterDetailView(AdminPermissionMixin, DetailView):
     model = Meter
     template_name = 'meters/meter_detail_admin.html'
     context_object_name = 'meter'
+
+
+class DeleteMeterView(DeleteInstanceView):
+    model = Meter
+    redirect_url = 'admin_panel:list_meters_admin'
