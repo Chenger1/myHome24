@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, View
+from django.views.generic import CreateView, View, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404, render, redirect
 
@@ -76,3 +76,9 @@ class ListMeterHistory(ListInstancesMixin):
         context = super().get_context_data()
         context['flat'] = get_object_or_404(Flat, pk=self.pk)
         return context
+
+
+class MeterDetailView(AdminPermissionMixin, DetailView):
+    model = Meter
+    template_name = 'meters/meter_detail_admin.html'
+    context_object_name = 'meter'

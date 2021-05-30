@@ -119,4 +119,5 @@ urlpatterns = [
     path('meters/index/create_meter/', meter_views.CreateMeterView.as_view(), name='create_meter_admin'),
     path('meters/index/update_meter/<int:pk>/', meter_views.UpdateMeterView.as_view(), name='update_meter_admin'),
     path('meters/index/list_history/<int:pk>/', meter_views.ListMeterHistory.as_view(), name='list_meter_history'),
+    path('meters/index/detail_meter/<int:pk>/', meter_views.MeterDetailView.as_view(), name='detail_meter_admin'),
 ]
