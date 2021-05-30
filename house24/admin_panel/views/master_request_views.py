@@ -1,7 +1,7 @@
 from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.master_forms import MasterRequestSearchForm, CreateMasterRequestForm
 
@@ -39,3 +39,8 @@ class UpdateMasterRequestView(AdminPermissionMixin, UpdateView):
         context['flats'] = Flat.objects.all()
         context['masters'] = User.objects.filter(is_staff=True)
         return context
+
+
+class DeleteMasterRequest(DeleteInstanceView):
+    model = MasterRequest
+    redirect_url = 'admin_panel:list_master_requests_admin'
