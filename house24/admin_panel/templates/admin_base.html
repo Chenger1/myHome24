@@ -185,7 +185,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.master_request %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_master_requests_admin' %}" class="nav-link
+                                 {% if '/admin/master_request/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
                             <p>Заявки вызова мастера</p>
                         </a>

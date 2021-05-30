@@ -10,6 +10,7 @@ from admin_panel.views import flat_views
 from admin_panel.views import accounts
 from admin_panel.views.mixins import FlatOwner
 from admin_panel.views import meter_views
+from admin_panel.views import master_request_views
 
 
 app_name = 'admin_panel'
@@ -112,4 +113,8 @@ urlpatterns = [
     path('meters/index/delete_meter/<int:pk>/', meter_views.DeleteMeterView.as_view(), name='delete_meter_admin'),
     path('meters/index/duplicate_meter/<int:pk>/', meter_views.DuplicateMeterView.as_view(),
          name='duplicate_meter_admin'),
+
+    # MASTER REQUESTS
+    path('master_request/index/', master_request_views.ListMasterRequestsView.as_view(),
+         name='list_master_requests_admin'),
 ]

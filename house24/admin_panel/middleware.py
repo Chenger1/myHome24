@@ -18,6 +18,8 @@ class AdminCheckMiddleware(MiddlewareMixin):
                     return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'owners/index/' in request.path and not request.user.role.owners:
                     return redirect(request.path.role.get_available_url_pattern_by_role())
+                elif 'master_request/index/' in request.path and not request.user.role.master_request:
+                    return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'houses/index/' in request.path and not request.user.role.houses:
                     return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'flats/index/' in request.path and not request.user.role.flats:
