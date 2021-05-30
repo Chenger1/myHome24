@@ -238,9 +238,11 @@ class MasterRequest(models.Model):
     date = models.DateField()
     time = models.TimeField()
     description = models.TextField()
-    comment = models.TextField()
-    type = models.IntegerField(choices=type_choices, default=type_choices[0])
-    status = models.IntegerField(choices=status_choices)
-    owner = models.ForeignKey(User, related_name='owner_requests', on_delete=models.CASCADE)
+    comment = models.TextField(blank=True, null=True)
+    type = models.IntegerField(choices=type_choices, default=type_choices[0][0])
+    status = models.IntegerField(choices=status_choices, default=[0][0])
+    owner = models.ForeignKey(User, related_name='owner_requests', on_delete=models.CASCADE,
+                              blank=True, null=True)
     flat = models.ForeignKey(Flat, related_name='requests', on_delete=models.CASCADE)
-    master = models.ForeignKey(User, related_name='master_requests', on_delete=models.CASCADE)
+    master = models.ForeignKey(User, related_name='master_requests', on_delete=models.CASCADE,
+                               blank=True, null=True)
