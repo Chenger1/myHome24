@@ -32,25 +32,24 @@ class ListInstancesMixin(AdminPermissionMixin, View):
     template_name = None
     search_form = SearchForm
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.instances = None
+        self.form = None
+
     def get(self, request):
         if request.GET:
-            form = self.search_form(request.GET)
-            if form.is_valid():
-                instances = self.get_filtered_query(form.cleaned_data)[::-1]
-                return render(request, self.template_name, context={'form': form,
-                                                                    'instances': instances,
-                                                                    'count': len(instances)})
+            self.form = self.search_form(request.GET)
+            if  self.form.is_valid():
+                self.instances = self.get_filtered_query( self.form.cleaned_data)[::-1]
+                return render(request, self.template_name, context=self.get_context_data())
             else:
                 instances = self.get_queryset()[::-1]
-                return render(request, self.template_name, context={'form': form,
-                                                                    'instances': instances,
-                                                                    'count': len(instances)})
+                return render(request, self.template_name, context=self.get_context_data())
         else:
-            form = self.search_form()
-            instances = self.get_queryset()[::-1]
-        return render(request, self.template_name, context={'form': form,
-                                                            'instances': instances,
-                                                            'count': len(instances)})
+            self.form = self.search_form()
+            self.instances = self.get_queryset()[::-1]
+        return render(request, self.template_name, context=self.get_context_data())
 
     def get_filtered_query(self, form_data):
         """
@@ -64,6 +63,15 @@ class ListInstancesMixin(AdminPermissionMixin, View):
             Redefine if you need more specific filtered queryset
         """
         return self.model.objects.all()
+
+    def get_context_data(self):
+        """
+            Redefine if you need to add additional context variables
+        """
+        context = {'form': self.form,
+                   'instances': self.instances,
+                   'count': len(self.instances)}
+        return context
 
 
 class FlatOwner(View):
