@@ -119,4 +119,6 @@ urlpatterns = [
          name='list_master_requests_admin'),
     path('master_request/index/create_request/', master_request_views.CreateMasterRequestView.as_view(),
          name='create_master_request_admin'),
+    path('master_request/index/update_request/<int:pk>/', master_request_views.UpdateMasterRequestView.as_view(),
+         name='update_master_request_admin'),
 ]

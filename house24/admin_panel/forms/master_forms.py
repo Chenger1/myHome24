@@ -41,8 +41,6 @@ class MasterRequestSearchForm(forms.Form):
 class CreateMasterRequestForm(forms.ModelForm):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False)
-    master = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
-                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False)
 
     class Meta:
         model = MasterRequest

@@ -98,7 +98,8 @@
                                             <select name="flat" id="id_flat" class="to_valid">
                                                 <option value>---------</option>
                                                 {% for flat in flats %}
-                                                    <option value="{{ flat.pk }}">{{ flat.number }}, {{ flat.house }}</option>
+                                                        <option value="{{ flat.pk }}"
+                                                        {% if flat.pk == form.instance.flat.pk %}selected{% endif %}>{{ flat.number }}, {{ flat.house }}</option>
                                                 {% endfor %}
                                             </select>
                                         </div>
@@ -112,7 +113,13 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="master">Мастер</label>
-                                            {{ form.master }}
+                                            <select name="master" id="id_master" class="form-control to_valid">
+                                                <option value>---------</option>
+                                                {% for master in masters %}
+                                                        <option value="{{ master.pk }}"
+                                                        {% if master.pk == form.instance.master.pk %}selected{% endif %}>{{ master.role }} - {{ master.full_name }}</option>
+                                                {% endfor %}
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

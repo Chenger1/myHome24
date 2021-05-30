@@ -74,7 +74,7 @@
                                     <td><a href="">{{ req.description|truncatechars:30|filter_none }}</a></td>
                                     <td><a href="">{{ req.flat }}</a></td>
                                     <td><a href="">{{ req.owner|filter_none }}</a></td>
-                                    <td><a href="">{{ req.phone|filter_none }}</a></td>
+                                    <td><a href="">{{ req.owner.phone_number|filter_none }}</a></td>
                                     <td><a href="">{{ req.master|filter_none }}</a></td>
                                     <td class="text-center">
                                         {% if meter.status == 0 %}
@@ -88,7 +88,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="">
+                                               href="{% url 'admin_panel:update_master_request_admin' req.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
