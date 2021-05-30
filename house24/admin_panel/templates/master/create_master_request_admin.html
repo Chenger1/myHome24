@@ -1,0 +1,196 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}
+{% if form.instance.pk %}
+Заявка - {{ form.instance.pk }}
+{% else %}
+Новая заявка
+{% endif %}
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+{% include 'errors.html' with errors=form.errors %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">
+                        {% if form.instance.pk %}
+                        Заявка - {{ form.instance.pk }}
+                        {% else %}
+                        Новая заявка
+                        {% endif %}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_master_requests_admin' %}"
+                                   style="color: black;">Заявки вызова мастера</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Новая заявка</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12 col-md-7 col-lg-6">
+                                <div class="page-header">
+                                    <div class="form-group" style="margin: 0; flex-basis: 45%;">
+                                        <div class="input-group">
+                                            {{ form.date }}
+                                        </div>
+                                    </div>
+                                    <span style="margin: 0 15px;">от</span>
+                                    <div class="form-group" style="margin: 0; flex-basis: 45%;">
+                                        <div class="input-group">
+                                            {{ form.time }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-default">
+
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="owner">Владелец квартиры</label>
+                                            {{ form.owner }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6"></div>
+                                    <div class="clearfix"></div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="description">Описание</label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group">
+                                            <label for="flat">Квартира</label>
+                                            <select name="flat" id="id_flat" class="to_valid">
+                                                <option value>---------</option>
+                                                {% for flat in flats %}
+                                                    <option value="{{ flat.pk }}">{{ flat.number }}, {{ flat.house }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="type">Тип мастера</label>
+                                            {{ form.type }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="status">Статус</label>
+                                            {{ form.status }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="master">Мастер</label>
+                                            {{ form.master }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="comment">Комментарий</label>
+                                        {{ form.comment }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
+                                <div class="col-12 text-right">
+                                    <a href="{% url 'admin_panel:list_master_requests_admin' %}"
+                                       class="btn btn-default">Отмена</a>
+                                    <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+<script>
+      tinymce.init({
+        selector: '#comment'
+      });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#id_owner').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid'
+        });
+        $('#id_flat').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid'
+        });
+        $('#id_owner').on('change', function(e){
+          colorize_input_valid(this);
+        })
+        $('#id_flat').on('change', function(e){
+          colorize_input_valid(this);
+        })
+    });
+</script>
+<script>
+    $('.to_valid').each(function(){
+        $(this).on('change', function(){
+            if($(this).val() != ''){
+                colorize_input_valid(this);
+            }else{
+                colorize_input_invalid(this);
+            }
+        })
+    })
+</script>
+<script>
+    $('button[type=submit]').on('click', function(e){
+        $('.to_valid').each(function(){
+            if($(this).val() == '' && $(this).attr('required')){
+                e.preventDefault();
+                colorize_input_invalid(this);
+            }
+            if($('#id_flat').find(':selected').val() == ''){
+                e.preventDefault();
+                colorize_input_invalid($('#id_flat'));
+            }
+        })
+    })
+</script>
+{% endblock %}

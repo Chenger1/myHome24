@@ -117,4 +117,6 @@ urlpatterns = [
     # MASTER REQUESTS
     path('master_request/index/', master_request_views.ListMasterRequestsView.as_view(),
          name='list_master_requests_admin'),
+    path('master_request/index/create_request/', master_request_views.CreateMasterRequestView.as_view(),
+         name='create_master_request_admin'),
 ]
