@@ -55,6 +55,12 @@ class Floor(models.Model):
 class Measure(models.Model):
     measure_name = models.CharField(max_length=50)
 
+    @property
+    def service_exists(self):
+        if self.services.exists():
+            return True
+        return False
+
     def __str__(self):
         return self.measure_name
 
@@ -63,6 +69,12 @@ class Service(models.Model):
     name = models.CharField(max_length=100)
     measure = models.ForeignKey(Measure, related_name='services', on_delete=models.CASCADE, blank=True, null=True)
     status = models.BooleanField(default=1)
+
+    @property
+    def tariff_exists(self):
+        if self.tariffs.exists():
+            return True
+        return False
 
     def __str__(self):
         return self.name

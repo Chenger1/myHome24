@@ -118,10 +118,16 @@
                                                                 {{ form.measure }}
                                                                 <div class="delete_input">
                                                                                 <span class="input-group-btn">
+                                                                                    {% if form.instance.tariff_exists %}
+                                                                                    <button type="button"
+                                                                                            class="btn btn-default disabled_button"><i
+                                                                                            class="fa fa-trash"></i></button>
+                                                                                    {% else %}
                                                                                     <button type="button"
                                                                                             class="btn btn-default delete_icon_services {% if form.instance.pk %}has_pk{% endif %}"
                                                                                             name="{{ form.instance.pk }}"><i
                                                                                             class="fa fa-trash"></i></button>
+                                                                                    {% endif %}
                                                                                 </span>
                                                                 </div>
                                                             </div>
@@ -181,10 +187,16 @@
                                                             <div class="input-group">
                                                                 {{ form.measure_name }}
                                                                 <span class="input-group-btn">
+                                                                                    {% if form.instance.service_exists %}
                                                                                     <button type="button"
+                                                                                            class="btn btn-default disabled_button"><i
+                                                                                            class="fa fa-trash"></i></button>
+                                                                                    {% else %}
+                                                                                            <button type="button"
                                                                                             class="btn btn-default delete_icon_measure {% if form.instance.pk %}has_pk{% endif %}"
                                                                                             name="{{ form.instance.pk }}"><i
                                                                                             class="fa fa-trash"></i></button>
+                                                                                    {% endif %}
                                                                         </span>
                                                             </div>
                                                         </div>
@@ -226,12 +238,23 @@
         service_cloner.clone();
         this.blur();
     })
+    $('.service_formset').find('.disabled_button').each(function(){
+        $(this).on('click', function(){
+            confirm('Эту услугу нельзя удалить. Она используется в тарифах');
+        })
+    })
+
     // init measure formset cloner
     let measure_cloner = new BaseCloner('measure', '.measure_formset', "{% url 'admin_panel:delete_measure_option' %}");
     measure_cloner.init(); // init base events for server-side rendered forms 
     $('#add_measure_formset').on('click', function(){
         measure_cloner.clone();
         this.blur();
+    })
+    $('.measure_formset').find('.disabled_button').each(function(){
+        $(this).on('click', function(){
+            confirm('Эту единицу измерения нельзя удалить. Она используется в услугах');
+        })
     })
 </script>
 <script>

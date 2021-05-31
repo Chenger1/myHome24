@@ -195,6 +195,12 @@ select{
     display: none;
 }
 
+.disabled_button{
+    cursor: not-allowed!important;
+    box-shadow: none;
+    opacity: .65;
+}
+
 @media screen and (max-width: 766px){
     .profile_img{
         margin: 0 auto 15px;
