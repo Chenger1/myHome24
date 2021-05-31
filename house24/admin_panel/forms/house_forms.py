@@ -54,12 +54,12 @@ class HouseUserForm(forms.ModelForm):
 
 
 SectionFormset = forms.inlineformset_factory(House, Section,
-                                             form=SectionForm, can_delete=False, extra=0)
+                                             form=SectionForm, can_delete=True, extra=0)
 
 
 FloorFormset = forms.inlineformset_factory(House, Floor,
-                                           form=FloorForm, can_delete=False, extra=0)
+                                           form=FloorForm, can_delete=True, extra=0)
 
 UserFormset = forms.inlineformset_factory(parent_model=House, model=HouseUser, form=HouseUserForm,
-                                          extra=0, can_delete=False)
+                                          extra=0, can_delete=True)
 

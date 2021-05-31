@@ -31,7 +31,7 @@ class InfoBlockForm(forms.ModelForm):
         exclude = ('entity', )
         widgets = {
             'image': forms.FileInput(attrs={'id': 'image', 'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+                                            'accept': '.png, .jpeg, .jpg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'id': 'block_description', 'class': 'form-control',
                                                  'style': 'resize:none;'}),
@@ -49,7 +49,7 @@ class AboutPageForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'photo': forms.FileInput(attrs={'id': 'photo', 'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+                                            'accept': '.png, .jpeg, .jpg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'id': 'description'}),
             'seo_title': forms.TextInput(attrs={'id': 'seo_title', 'class': 'form-control'}),
@@ -66,7 +66,7 @@ class AboutPageGalleryForm(forms.ModelForm):
         fields = ('image', )
         widgets = {
             'image': forms.FileInput(attrs={'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+                                            'accept': '.png, .jpeg, .jpg'}),
         }
 
 
@@ -76,7 +76,7 @@ class AboutPageAdditionalGalleryForm(forms.ModelForm):
         fields = ('image', )
         widgets = {
             'image': forms.FileInput(attrs={'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+                                            'accept': '.png, .jpeg, .jpg'}),
         }
 
 
@@ -91,15 +91,15 @@ class DocumentForm(forms.ModelForm):
 
 
 AboutPageGalleryInlineFormset = forms.inlineformset_factory(AboutPage, AboutGallery,
-                                                            form=AboutPageGalleryForm, extra=1,
-                                                            can_delete=False)
+                                                            form=AboutPageGalleryForm, extra=0,
+                                                            can_delete=True)
 
 AboutPageAdditionalGalleryInlineFormset = forms.inlineformset_factory(AboutPage, AdditionalGallery,
-                                                                      form=AboutPageAdditionalGalleryForm, extra=1,
-                                                                      can_delete=False)
+                                                                      form=AboutPageAdditionalGalleryForm, extra=0,
+                                                                      can_delete=True)
 
 DocumentsFormset = forms.inlineformset_factory(AboutPage, Document,
-                                               form=DocumentForm, extra=0, can_delete=False)
+                                               form=DocumentForm, extra=0, can_delete=True)
 
 
 class ServicesForm(forms.ModelForm):
@@ -119,7 +119,7 @@ class ServicesBlockForm(forms.ModelForm):
         exclude = ('entity', )
         widgets = {
             'image': forms.FileInput(attrs={'id': 'image', 'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+                                            'accept': '.png, .jpeg, .jpg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'id': 'block_description', 'class': 'form-control block_desc',
                                                  'style': 'resize:none;'}),
@@ -127,7 +127,7 @@ class ServicesBlockForm(forms.ModelForm):
 
 
 ServicesBlockFormset = forms.inlineformset_factory(ServicesPage, ServiceBlock,
-                                                   form=ServicesBlockForm, extra=1, can_delete=False)
+                                                   form=ServicesBlockForm, extra=0, can_delete=True)
 
 
 class TariffForm(forms.ModelForm):
@@ -150,13 +150,13 @@ class TariffBlockForm(forms.ModelForm):
         exclude = ('entity', )
         widgets = {
             'image': forms.FileInput(attrs={'id': 'image', 'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg, .svg'}),
+                                            'accept': '.png, .jpeg, .jpg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
         }
 
 
 TariffBlockFormset = forms.inlineformset_factory(TariffPage, TariffBlock,
-                                                 form=TariffBlockForm, extra=1, can_delete=False)
+                                                 form=TariffBlockForm, extra=0, can_delete=True)
 
 
 class ContactsPageForm(forms.ModelForm):

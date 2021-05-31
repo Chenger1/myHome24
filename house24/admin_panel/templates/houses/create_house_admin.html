@@ -1,6 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load utils %}
 
 {% block title %}Новый дом{% endblock %}
 
@@ -198,6 +199,7 @@
                                                         {{ hidden }}
                                                     {% endfor %}
                                                     <div class="form-group section_formset">
+                                                        {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                         <label for="">Название</label>
                                                         <div class="input-group">
                                                             {{ inline_form.name }}
@@ -240,6 +242,7 @@
                                                         {{ hidden }}
                                                     {% endfor %}
                                                     <div class="form-group floor_formset">
+                                                        {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                         <label for="">Название</label>
                                                         <div class="input-group">
                                                             {{ inline_form.name }}
@@ -291,6 +294,7 @@
                                                         {{ hidden }}
                                                     {% endfor %}
                                                     <div class="row users_formset">
+                                                        {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                         <div class="col-12 col-sm-7">
                                                             <div class="form-group">
                                                                 <label for="">Пользователь</label>

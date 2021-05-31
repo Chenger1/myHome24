@@ -13,7 +13,7 @@ class MeasureForm(forms.ModelForm):
         }
 
 
-MeasureFormset = forms.modelformset_factory(model=Measure, form=MeasureForm, can_delete=False, extra=1)
+MeasureFormset = forms.modelformset_factory(model=Measure, form=MeasureForm, can_delete=True, extra=0)
 
 
 class ServiceForm(forms.ModelForm):
@@ -34,7 +34,7 @@ class ServiceForm(forms.ModelForm):
         super().save(commit=commit)
 
 
-ServiceFormset = forms.modelformset_factory(model=Service, form=ServiceForm, can_delete=False, extra=1)
+ServiceFormset = forms.modelformset_factory(model=Service, form=ServiceForm, can_delete=True, extra=0)
 
 
 class TariffForm(forms.ModelForm):
@@ -63,7 +63,7 @@ class TariffServiceBlockForm(forms.ModelForm):
 
 
 TariffServiceBlockFormset = forms.inlineformset_factory(Tariff, TariffService, form=TariffServiceBlockForm,
-                                                        can_delete=False, extra=0)
+                                                        can_delete=True, extra=0)
 
 
 class CredentialsForm(forms.ModelForm):

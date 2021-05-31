@@ -191,6 +191,10 @@ select{
     margin-bottom: 15px;
 }
 
+.delete-input-hidden{
+    display: none;
+}
+
 @media screen and (max-width: 766px){
     .profile_img{
         margin: 0 auto 15px;

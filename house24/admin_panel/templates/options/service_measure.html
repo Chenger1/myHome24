@@ -1,6 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load utils %}
 
 {% block title %}Услуги и ед. изм.{% endblock %}
 {% block head %}
@@ -103,6 +104,7 @@
                                                 {{ hidden }}
                                                 {% endfor %}
                                                 <div class="row service_formset">
+                                                    {{ form.DELETE|add_class:'delete-input-hidden' }}
                                                     <div class="col-12 col-sm-7">
                                                         <div class="form-group">
                                                             <label for="name">Услуга</label>
@@ -172,6 +174,7 @@
                                                 {{ hidden }}
                                                 {% endfor %}
                                                 <div class="row measure_formset">
+                                                    {{ form.DELETE|add_class:'delete-input-hidden' }}
                                                     <div class="col-12">
                                                         <div class="form-group">
                                                             <label for="measure-{{forloop.counter0}}-name">Ед.изм.</label>

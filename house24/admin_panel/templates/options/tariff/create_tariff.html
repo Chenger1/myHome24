@@ -1,6 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load utils %}
 
 {% block title %}Новый тариф{% endblock %}
 
@@ -112,6 +113,7 @@
                                             {{ hidden }}
                                             {% endfor %}
                                             <div class="row formset">
+                                                {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                 <div class="col-6 col-md-4">
                                                     <div class="form-group">
                                                         <label for="service">Услуга</label>
@@ -195,7 +197,6 @@
                 data: {'pk': selected},
             })
             .done(function(response) {
-                console.log(response)
                 $(select_measure).children().remove();
                 $(select_measure).append('<option>'+ response['measure_name'] +'</option>')
             })

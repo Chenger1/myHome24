@@ -44,7 +44,8 @@ class SaveServiceForm(AdminPermissionMixin, View):
         formset = ServiceFormset(request.POST, prefix='services')
         if formset.is_valid():
             for form in formset:
-                form.save()
+                if not form.cleaned_data.get('DELETE'):
+                    form.save()
         return redirect('admin_panel:service_measure_option')
 
 
@@ -53,7 +54,8 @@ class SaveMeasureForm(AdminPermissionMixin, View):
         formset = MeasureFormset(request.POST, prefix='measure')
         if formset.is_valid():
             for form in formset:
-                form.save()
+                if not form.cleaned_data.get('DELETE'):
+                    form.save()
         return redirect('admin_panel:service_measure_option')
 
 

@@ -1,6 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load utils %}
 
 {% block title %}Редактирование страницы{% endblock %}
 
@@ -110,6 +111,7 @@
                                             {{ hidden }}
                                         {% endfor %}
                                         <div class="col-xs-4 col-sm-3 text-center formset_images formset_block">
+                                            {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                             {% if inline_form.instance.image %}
                                                 <img src="{{ inline_form.instance.image.url }}" alt
                                                 class="img-thumbnail preview_img thumbnail_img">
@@ -182,6 +184,7 @@
                                             {{ hidden }}
                                         {% endfor %}
                                         <div class="col-xs-4 col-sm-3 text-center add_formset formset_block">
+                                            {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                             {% if inline_form.instance.image %}
                                                 <img src="{{inline_form.instance.image.url}}" alt
                                                 class="img-thumbnail preview_img thumbnail_img">
@@ -237,6 +240,7 @@
                                             {{ hidden }}
                                         {% endfor %}
                                         <div class="col-xs-12 col-md-6 documents_formset formset_block">
+                                            {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                             {% if inline_form.instance.pk %}
                                             <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents has_pk"
                                             style="float:right;" name="{{ inline_form.instance.pk }}"><i class="fa fa-trash"></i></a>
