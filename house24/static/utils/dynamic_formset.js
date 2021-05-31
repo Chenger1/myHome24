@@ -76,9 +76,15 @@ class BaseCloner {
 		this.updateIndex(element); // update all formset sets according to new value in total
 	}
 
+	hideRow(element){
+		let parent_div = $(element).closest(this.selector);
+		parent_div.find('input[type=checkbox][name*="-DELETE"]').prop('checked', true);
+		parent_div.hide();
+	}
+
 	deleteRowWithoutReload(element){
 		let local_url = this.url; // we have to bind method locally because of specifi behaviour of "this" keyword
-		let local_deleteRow = this.deleteRow.bind(this);// we have to bind method locally because of specifi behaviour of "this" keyword
+		let local_deleteRow = this.hideRow.bind(this);// we have to bind method locally because of specifi behaviour of "this" keyword
 		let pk = $(element).attr('name');
 		$.ajax({
 			method: 'GET',
