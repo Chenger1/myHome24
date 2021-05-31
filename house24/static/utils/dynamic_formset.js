@@ -41,9 +41,16 @@ class BaseCloner {
 		// template
 		this.cloneRow();
 		this.setPreviewEvent();
-		this.updateCounter();
+		this.updateCounter(this.newElement, this.getCounterVal());
 		this.setCallback();
 		return true;
+	}
+
+	getCounterVal(){
+		let total = $('#id_'+this.prefix+'-TOTAL_FORMS').val();
+		let hidden_forms = $(this.selector+':hidden').not('#hidden_'+this.prefix);
+		let counter_val = Number(total) - hidden_forms.length;
+		return counter_val;
 	}
 
 	cloneRow(){
@@ -80,6 +87,7 @@ class BaseCloner {
 		let parent_div = $(element).closest(this.selector);
 		parent_div.find('input[type=checkbox][name*="-DELETE"]').prop('checked', true);
 		parent_div.hide();
+		this.updateIndex(element)
 	}
 
 	deleteRowWithoutReload(element){
@@ -100,11 +108,13 @@ class BaseCloner {
 		const forms = this.getForms(); // because of different html block structure we have to get forms specific to each case
 		const local_prefix = this.prefix; // we have to bind method locally because of specifi behaviour of "this" keyword
 		const id_regex = new RegExp('(' + this.prefix + '-\\d+)'); // set Regular Expression to find formset inputs
+		let local_updateCounter = this.updateCounter.bind(this);
 		let i;
 		for(i=0; i<forms.length; i++){
 			$(forms.get(i)).find(':input').each(function(){
 				const replacement = local_prefix + '-' + i;
-				$(this).closest('div[class*=col]').find('.counter').text(i+1);
+				// $(this).closest('div[class*=col]').find('.counter').text(i+1);
+				local_updateCounter($(this), i+1);
 				if($(this).attr('for')){ // check 'for' attr and replace it`s value to new one`
 					$(this).attr('for', $(this).attr('for').replace(id_regex, replacement));
 				};
@@ -146,9 +156,21 @@ class AdvancedFormsetCloner extends BaseCloner{
 
 	getForms(){
 		// get all forms
-		return $(this.selector).closest('.row').find(this.selector).not('div[id*=hidden_]');
+		return $(this.selector).closest('.row').find(this.selector).not('div[id*=hidden_]').not(':hidden');
 	}
 }
+
+
+class AdvancedFormsetClonerWithCounter extends AdvancedFormsetCloner{
+	constructor(prefix, selector, url){
+		super(prefix, selector, url);
+	}
+
+	updateCounter(element, value){
+		$(element).closest('div[class*=col]').find('.counter').text(value);
+	}
+}
+
 
 
 class FormsetClonerWithCallback extends BaseCloner{
