@@ -58,6 +58,7 @@ class TicketServiceForm(forms.ModelForm):
         model = PaymentTicketService
         exclude = ('payment_ticket', )
         widgets = {
+            'id': forms.HiddenInput(),
             'service': forms.Select(attrs={'class': 'form-control to_valid service'}),
             'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid outcome'}),
             'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid unit_price'}),

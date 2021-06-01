@@ -1,8 +1,10 @@
 from rest_framework import generics
+from django.http import JsonResponse
+from django.views.generic import View
 
 from rest_api import serializers
 
-from db.models.house import Section, Floor, Flat
+from db.models.house import Section, Floor, Flat, TariffService
 
 
 class SectionList(generics.ListAPIView):
@@ -42,3 +44,22 @@ class FlatList(generics.ListAPIView):
         else:
             queryset = []
         return queryset
+
+
+class GetTariffServices(View):
+    model = TariffService
+
+    def get(self, request):
+        services = self.model.objects.filter(tariff__pk=request.GET.get('pk'))
+        return JsonResponse(self.serialize(services))
+
+    def serialize(self, queryset):
+        result = {}
+        for index, inst in enumerate(queryset):
+            result.update({index: {
+                'id': inst.service.pk,
+                'name': inst.service.name,
+                'price': inst.price,
+                'measure': inst.service.measure.measure_name
+            }})
+        return result
