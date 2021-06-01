@@ -7,4 +7,4 @@ from db.models.house import PaymentTicket
 class ListPaymentTicketsView(ListInstancesMixin):
     model = PaymentTicket
     search_form = PaymentTicketSearch
-    template_name = 'tickets/list_payment_tickets.html'
+    template_name = 'ticket/list_payment_tickets.html'
