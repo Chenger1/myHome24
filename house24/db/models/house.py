@@ -95,7 +95,7 @@ class Tariff(models.Model):
 class TariffService(models.Model):
     tariff = models.ForeignKey(Tariff, related_name='services', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='tariffs', on_delete=models.CASCADE)
-    price = models.IntegerField()
+    price = models.FloatField()
     currency = models.CharField(max_length=30, default='грн.')
 
 
