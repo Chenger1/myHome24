@@ -118,7 +118,9 @@
                                     <a href="{% url 'admin_panel:list_flats_admin' %}"
                                        class="btn btn-default">Отмена</a>
                                     <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить</button>
+                                    {% if not form.instance.pk %}
                                     <button type="submit" class="btn btn-success" name="multiple" value="1">Сохранить и добавить новую</button>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>

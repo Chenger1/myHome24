@@ -21,12 +21,17 @@ class CreateMeterView(AdminPermissionMixin, CreateView):
     model = Meter
     form_class = CreateMeterForm
     template_name = 'meters/create_meter_admin.html'
-    success_url = reverse_lazy('admin_panel:list_meters_admin')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['next_number'] = self.model.get_next_meter_number()
         return context
+
+    def get_success_url(self):
+        trigger = int(self.request.POST.get('multiple'))
+        if trigger:
+            return reverse_lazy('admin_panel:create_meter_admin')
+        return reverse_lazy('admin_panel:list_meters_admin')
 
 
 class UpdateMeterView(AdminPermissionMixin, View):

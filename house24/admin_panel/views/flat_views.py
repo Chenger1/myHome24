@@ -17,6 +17,7 @@ class ListFlatsView(ListInstancesMixin):
 
 class PostInstanceMixin:
     template_name = ''
+    redirect_url = None
 
     def save_form(self, form, request):
         if form.is_valid():
@@ -32,9 +33,9 @@ class PostInstanceMixin:
                     old_account.save()
                 personal_account.flat = obj
                 personal_account.save()
-                return redirect('admin_panel:list_flats_admin')
+                return redirect(self.redirect_url)
             else:
-                return redirect('admin_panel:list_flats_admin')
+                return redirect(self.redirect_url)
         else:
             personal_accounts = PersonalAccount.objects.filter(flat__isnull=True)
             return render(request, self.template_name, context={'form': form,
@@ -55,7 +56,14 @@ class CreateFlatView(AdminPermissionMixin, View, PostInstanceMixin):
 
     def post(self, request):
         form = self.form_class(request.POST)
+        self.redirect_url = self.get_redirect_url(request)
         return super().save_form(form, request)
+
+    def get_redirect_url(self, request):
+        trigger = int(request.POST.get('multiple'))
+        if trigger:
+            return 'admin_panel:create_flat_admin'
+        return 'admin_panel:list_flats_admin'
 
 
 class UpdateFlatView(AdminPermissionMixin, View, PostInstanceMixin):
