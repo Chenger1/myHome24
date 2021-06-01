@@ -180,9 +180,9 @@ class PaymentTicket(models.Model):
 class PaymentTicketService(models.Model):
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='services', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='payment_tickets_service', on_delete=models.CASCADE)
-    outcome = models.IntegerField()
-    unit_price = models.IntegerField()
-    cost = models.IntegerField()
+    outcome = models.FloatField()
+    unit_price = models.FloatField()
+    cost = models.FloatField()
 
 
 class Meter(models.Model):
