@@ -24,7 +24,7 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
         form = CreatePaymentTicketForm()
         formset = TicketServiceFormset
         next_number = self.model.get_next_ticket_number()
-        meters = Meter.objects.all()
+        meters = Meter.objects.all()[:20:-1]
         return render(request, self.template_name, context={'form': form,
                                                             'formset': formset,
                                                             'next_number': next_number,
@@ -39,7 +39,7 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
             formset.save()
             return redirect(self.redirect_url)
         else:
-            meters = Meter.objects.all()
+            meters = Meter.objects.all()[:20:-1]
             return render(request, self.template_name, context={'form': form,
                                                                 'formset': formset,
                                                                 'meters': meters})
