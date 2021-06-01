@@ -81,13 +81,15 @@ class BaseCloner {
 		parent_div.remove();
 		$('#id_'+this.prefix+'-TOTAL_FORMS').attr('value', total-1); // update total 
 		this.updateIndex(element); // update all formset sets according to new value in total
+		this.deleteEvent();
 	}
 
 	hideRow(element){
 		let parent_div = $(element).closest(this.selector);
 		parent_div.find('input[type=checkbox][name*="-DELETE"]').prop('checked', true);
 		parent_div.hide();
-		this.updateIndex(element)
+		this.updateIndex(element);
+		this.deleteEvent();
 	}
 
 	deleteRowWithoutReload(element){
@@ -138,6 +140,7 @@ class BaseCloner {
 	setPreviewEvent(){};
 	updateCounter(){};
 	setCallback(event=undefined){};
+	deleteEvent(){};
 }
 
 
@@ -174,12 +177,17 @@ class AdvancedFormsetClonerWithCounter extends AdvancedFormsetCloner{
 
 
 class FormsetClonerWithCallback extends BaseCloner{
-	constructor(prefix, selector, url, event){
+	constructor(prefix, selector, url, event, delete_event){
 		super(prefix, selector, url);
-		this.event = event
+		this.event = event;
+		this.delete_event = delete_event;
 	}
 
 	setCallback(){
-		this.event(this.newElement, this.selector)
+		this.event(this.newElement, this.selector);
+	}
+
+	deleteEvent(){
+		this.delete_event(this.newElement, this.selector);
 	}
 }

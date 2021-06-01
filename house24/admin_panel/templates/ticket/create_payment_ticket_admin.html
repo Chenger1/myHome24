@@ -160,16 +160,33 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <tr class="formset" id="hidden_services" style="display: none;">
+                                                        <td>{{ formset.empty_form.service }}</td>
+                                                        <td>{{ formset.empty_form.outcome }}</td>
+                                                        <td><input type="text" disabled class="form-control measure" name="__prefix__"></td>
+                                                        <td>{{ formset.empty_form.unit_price }}</td>
+                                                        <td>{{ formset.empty_form.cost }}</td>
+                                                        <td>
+                                                            <button type="button"
+                                                                    class="btn btn-default delete_icon_services">
+                                                                <i class="fa fa-trash"></i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+
                                                     {% for inline_form in formset %}
-                                                        <tr>
+                                                    {% for hidden in inline_form.hidden_fields %}
+                                                        {{ hidden }}
+                                                    {% endfor %}
+                                                        <tr class="formset">
                                                             <td>{{ inline_form.service }}</td>
                                                             <td>{{ inline_form.outcome }}</td>
-                                                            <td><input type="text" disabled class="form-control"></td>
+                                                            <td><input type="text" disabled class="form-control measure" name="__prefix__"></td>
                                                             <td>{{ inline_form.unit_price }}</td>
                                                             <td>{{ inline_form.cost }}</td>
                                                             <td>
                                                                 <button type="button"
-                                                                        class="btn btn-default delete_icon_measure {% if form.instance.pk %}has_pk{% endif %}"
+                                                                        class="btn btn-default delete_icon_services {% if form.instance.pk %}has_pk{% endif %}"
                                                                         name="{{ form.instance.pk }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </button>
@@ -180,12 +197,13 @@
                                                 <tfoot>
                                                     <tr>
                                                         <td colspan="4">
-                                                            <button type="button" class="btn btn-default">Добавить услугу</button>
+                                                            <button type="button" class="btn btn-default"
+                                                            id="add_services">Добавить услугу</button>
                                                             <button type="button" class="btn btn-default">Установить все услуги согласно тарифу</button>
                                                             <button type="button" class="btn btn-default">Добавить показания счетчиков</button>
                                                         </td>
                                                         <td>
-                                                            <h4>Итого: </h4>
+                                                            <h4>Итого: <strong id="total_sum">0.00</strong> грн.</h4>
                                                         </td>
                                                         <td></td>
                                                     </tr>
@@ -270,6 +288,63 @@
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
+<script src="{% static 'utils/dynamic_formset.js' %}"></script>
+<script>
+    function sumPrice(outcome, unit_price, cost){
+        let new_cost = Number(outcome.val())*Number(unit_price.val());
+        cost.val(new_cost);
+    }
+
+    function setEvent(element, selector){
+        let select = $(element).closest(selector).find('select');
+        let select_measure = $(element).closest(selector).find('.measure');
+        $(element).closest(selector).find('.unit_price');
+
+        $(select).on('change', function(){
+            let selected = $(this).find(':selected').attr('value');
+            $.ajax({
+                url: '{% url "admin_panel:get_service_measure" %}',
+                type: 'GET',
+                data: {'pk': selected},
+            })
+            .done(function(response) {
+                select_measure.val(response['measure_name']);
+            })
+        })
+
+        let outcome = $(element).closest(selector).find('.outcome');
+        let unit_price = $(element).closest(selector).find('.unit_price');
+        let cost = $(element).closest(selector).find('.cost');
+        
+
+        $(outcome).on('change', function(){
+            sumPrice(outcome, unit_price, cost);
+            calculateTotalSum(selector);
+        });
+        $(unit_price).on('change', function(){
+            sumPrice(outcome, unit_price, cost);
+            calculateTotalSum(selector);
+        })
+
+    }
+
+    function calculateTotalSum(element, selector){
+        let total_price = $('#total_sum'); 
+        let forms = $('.formset').find('.cost').not('input[id*="__prefix__"]')
+        sum = 0;
+        for(value of forms){
+            sum += parseFloat($(value).val());
+        }
+        total_price.text(sum > 0 ? sum.toFixed(2) : 0);
+    }
+</script>
+<script>
+    let formset_cloner = new FormsetClonerWithCallback('services', '.formset', '', setEvent, calculateTotalSum);
+    formset_cloner.init();
+    $('#add_services').on('click', function(){
+        formset_cloner.clone();
+    })
+</script>
 <script>
     $('.to_valid').each(function(){
         $(this).on('change', function(){
@@ -280,7 +355,6 @@
             }
         })
     })
-
 </script>
 <script>
     $('button[type=submit]').on('click', function(e){
@@ -291,7 +365,6 @@
             }
         })
     })
-
 </script>
 <script>
     $(document).ready(function(){
@@ -308,6 +381,5 @@
                             constructor=append_select_flat);
         });
     })
-
 </script>
 {% endblock %}

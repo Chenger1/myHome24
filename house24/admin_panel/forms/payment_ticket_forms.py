@@ -58,10 +58,10 @@ class TicketServiceForm(forms.ModelForm):
         model = PaymentTicketService
         exclude = ('payment_ticket', )
         widgets = {
-            'service': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'service'}),
-            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'outcome'}),
-            'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'unit_price'}),
-            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'cost'}),
+            'service': forms.Select(attrs={'class': 'form-control to_valid service'}),
+            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid outcome'}),
+            'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid unit_price'}),
+            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid cost'}),
         }
 
 
