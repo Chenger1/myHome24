@@ -170,6 +170,14 @@ class PaymentTicket(models.Model):
     created = models.DateField(auto_now_add=True)
 
 
+class PaymentTicketService(models.Model):
+    payment_ticket = models.ForeignKey(PaymentTicket, related_name='services', on_delete=models.CASCADE)
+    service = models.ForeignKey(Service, related_name='payment_tickets_service', on_delete=models.CASCADE)
+    outcome = models.IntegerField()
+    unit_price = models.IntegerField()
+    cost = models.IntegerField()
+
+
 class Meter(models.Model):
     status_choices = [
         (0, 'Новое'),
