@@ -1,6 +1,7 @@
 from django import forms
 
 from db.models.user import User
+from db.models.house import PaymentTicket, PaymentTicketService
 
 
 class PaymentTicketSearch(forms.Form):
@@ -22,3 +23,42 @@ class PaymentTicketSearch(forms.Form):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}))
     is_done = forms.ChoiceField(choices=done_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+
+
+class CreatePaymentTicketForm(forms.ModelForm):
+    class Meta:
+        model = PaymentTicket
+        exclude = '__all__'
+        widgets = {
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
+            'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
+            'is_done': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_done'}),
+            'start': forms.DateInput(attrs={'class': 'form-control to_valid', 'id': 'start',
+                                            'type': 'date'}),
+            'end': forms.DateInput(attrs={'class': 'form-control to_valid', 'id': 'end',
+                                          'type': 'date'}),
+            'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+            'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
+            'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
+            'personal_account': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'account'}),
+            'tariff': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'tariff'}),
+            'sum': forms.HiddenInput(attrs={'class': 'form-control to_valid', 'id': 'ticket_sum'}),
+            'created': forms.DateInput(attrs={'class': 'form-control to_valid', 'id': 'created',
+                                              'type': 'date'}),
+        }
+
+
+class TicketServiceForm(forms.ModelForm):
+    class Meta:
+        model = PaymentTicketService
+        exclude = ('payment_ticket', )
+        widgets = {
+            'service': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'service'}),
+            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'outcome'}),
+            'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'unit_price'}),
+            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'cost'}),
+        }
+
+
+TicketServiceFormset = forms.inlineformset_factory(PaymentTicket, PaymentTicketService,
+                                                   form=TicketServiceForm, extra=0, can_delete=True)

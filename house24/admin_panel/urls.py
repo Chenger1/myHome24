@@ -135,4 +135,6 @@ urlpatterns = [
     # PAYMENT TICKET
     path('payment_ticket/index/', payment_ticket_views.ListPaymentTicketsView.as_view(),
          name='list_payment_ticket_admin'),
+    path('payment_ticket/index/create_ticket/', payment_ticket_views.CreatePaymentTicketView.as_view(),
+         name='create_payment_ticket_admin'),
 ]
