@@ -165,7 +165,7 @@ class PaymentTicket(models.Model):
                                          blank=True, null=True)
     house = models.ForeignKey(House, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
     tariff = models.ForeignKey(Tariff, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
-    sum = models.IntegerField()
+    sum = models.FloatField()
     created = models.DateField()
 
     @classmethod
