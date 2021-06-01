@@ -155,17 +155,19 @@ class PaymentTicket(models.Model):
     ]
 
     number = models.IntegerField()
-    status = models.IntegerField(choices=status_choices, default=status_choices[2])
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][1])
     is_done = models.BooleanField(default=0)
     start = models.DateField()
     end = models.DateField()
-    section = models.ForeignKey(Section, related_name='tickets', on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
     flat = models.ForeignKey(Flat, related_name='tickets', on_delete=models.CASCADE)
-    personal_account = models.ForeignKey(PersonalAccount, related_name='tickets', on_delete=models.CASCADE)
-    house = models.ForeignKey(House, related_name='tickets', on_delete=models.CASCADE)
-    tariff = models.ForeignKey(Tariff, related_name='tickets', on_delete=models.CASCADE)
+    personal_account = models.ForeignKey(PersonalAccount, related_name='tickets', on_delete=models.CASCADE,
+                                         blank=True, null=True)
+    house = models.ForeignKey(House, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
+    tariff = models.ForeignKey(Tariff, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
     service = models.ForeignKey(Service, related_name='tickets', on_delete=models.CASCADE)
-    created = models.DateField()
+    sum = models.IntegerField()
+    created = models.DateField(auto_now_add=True)
 
 
 class Meter(models.Model):
