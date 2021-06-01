@@ -166,7 +166,7 @@ class PaymentTicket(models.Model):
     house = models.ForeignKey(House, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
     tariff = models.ForeignKey(Tariff, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
     sum = models.IntegerField()
-    created = models.DateField(auto_now_add=True)
+    created = models.DateField()
 
     @classmethod
     def get_next_ticket_number(cls):
