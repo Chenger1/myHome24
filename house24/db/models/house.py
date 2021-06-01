@@ -168,6 +168,14 @@ class PaymentTicket(models.Model):
     sum = models.IntegerField()
     created = models.DateField(auto_now_add=True)
 
+    @classmethod
+    def get_next_ticket_number(cls):
+        last = cls.objects.last()
+        if last:
+            return last.pk + 1
+        else:
+            return 1
+
 
 class PaymentTicketService(models.Model):
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='services', on_delete=models.CASCADE)
