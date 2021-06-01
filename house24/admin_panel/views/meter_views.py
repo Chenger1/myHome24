@@ -52,16 +52,6 @@ class UpdateMeterView(AdminPermissionMixin, View):
         return render(request, self.template_name, context={'form': form})
 
 
-class ListMeterHistory2(AdminPermissionMixin, View):
-    model = Meter
-    template_name = 'meters/list_meter_history.html'
-
-    def get(self, request, pk):
-        flat = get_object_or_404(Flat, pk=pk)
-        return render(request, self.template_name, {'flat': flat,
-                                                    'queryset': flat.meters.all()})
-
-
 class ListMeterHistory(ListInstancesMixin):
     model = Meter
     template_name = 'meters/list_meter_history.html'
