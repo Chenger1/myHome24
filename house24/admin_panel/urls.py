@@ -11,6 +11,7 @@ from admin_panel.views import accounts
 from admin_panel.views.mixins import FlatOwner
 from admin_panel.views import meter_views
 from admin_panel.views import master_request_views
+from admin_panel.views import payment_ticket_views
 
 
 app_name = 'admin_panel'
@@ -130,4 +131,8 @@ urlpatterns = [
          name='delete_master_request_admin'),
     path('master_request/index/detail_request/<int:pk>/', master_request_views.DetailMasterRequest.as_view(),
          name='detail_master_request_admin'),
+
+    # PAYMENT TICKET
+    path('payment_ticket/index/', payment_ticket_views.ListPaymentTicketsView.as_view(),
+         name='list_payment_ticket_admin'),
 ]

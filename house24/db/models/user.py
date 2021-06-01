@@ -36,6 +36,8 @@ class Role(models.Model):
             return 'admin_panel:index'
         elif self.personal_account:
             return 'admin_panel:list_accounts_admin'
+        elif self.ticket:
+            return 'admin_panel:list_payment_ticket_admin'
         elif self.meters:
             return 'admin_panel:list_meters_admin'
         elif self.owners:

@@ -133,7 +133,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.ticket %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_payment_ticket_admin' %}" class="nav-link
+                        {% if '/admin/payment_ticket/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon far fa-copy" aria-hidden="true"></i>
                             <p>Квитанции на оплату</p>
                         </a>
