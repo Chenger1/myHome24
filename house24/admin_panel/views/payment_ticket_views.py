@@ -1,5 +1,5 @@
 from django.views.generic import View
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from admin_panel.views.mixins import ListInstancesMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearch, CreatePaymentTicketForm, TicketServiceFormset
@@ -16,6 +16,7 @@ class ListPaymentTicketsView(ListInstancesMixin):
 class CreatePaymentTicketView(View):
     model = PaymentTicket
     template_name = 'ticket/create_payment_ticket_admin.html'
+    redirect_url = 'admin_panel:list_payment_ticket_admin'
 
     def get(self, request):
         form = CreatePaymentTicketForm()
@@ -26,3 +27,17 @@ class CreatePaymentTicketView(View):
                                                             'formset': formset,
                                                             'next_number': next_number,
                                                             'meters': meters})
+
+    def post(self, request):
+        form = CreatePaymentTicketForm(request.POST)
+        formset = TicketServiceFormset(request.POST)
+        if form.is_valid() and formset.is_valid():
+            obj = form.save()
+            formset.instance = obj
+            formset.save()
+            return redirect(self.redirect_url)
+        else:
+            meters = Meter.objects.all()
+            return render(request, self.template_name, context={'form': form,
+                                                                'formset': formset,
+                                                                'meters': meters})
