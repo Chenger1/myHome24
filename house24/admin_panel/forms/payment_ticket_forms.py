@@ -3,6 +3,8 @@ from django import forms
 from db.models.user import User
 from db.models.house import PaymentTicket, PaymentTicketService
 
+import datetime
+
 
 class PaymentTicketSearch(forms.Form):
     status_choices = [
@@ -33,18 +35,21 @@ class CreatePaymentTicketForm(forms.ModelForm):
             'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
             'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
             'is_done': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_done'}),
-            'start': forms.DateInput(attrs={'class': 'form-control to_valid', 'id': 'start',
-                                            'type': 'date'}),
-            'end': forms.DateInput(attrs={'class': 'form-control to_valid', 'id': 'end',
-                                          'type': 'date'}),
+            'start': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
+                                                                 'value': datetime.datetime.now().strftime('%Y-%m-%d'),
+                                                                 'class': "form-control to_valid", 'id': 'start'}),
+            'end':forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
+                                                              'value': datetime.datetime.now().strftime('%Y-%m-%d'),
+                                                              'class': "form-control to_valid", 'id': 'end'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
             'personal_account': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'account'}),
             'tariff': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'tariff'}),
             'sum': forms.HiddenInput(attrs={'class': 'form-control to_valid', 'id': 'ticket_sum'}),
-            'created': forms.DateInput(attrs={'class': 'form-control to_valid', 'id': 'created',
-                                              'type': 'date'}),
+            'created': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
+                                                                   'value': datetime.datetime.now().strftime('%Y-%m-%d'),
+                                                                   'class': "form-control to_valid", 'id': 'created'})
         }
 
 
