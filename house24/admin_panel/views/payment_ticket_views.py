@@ -1,12 +1,11 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearch, CreatePaymentTicketForm, TicketServiceFormset
 
-from db.models.house import PaymentTicket, Meter, TariffService
+from db.models.house import PaymentTicket, Meter
 
 
 class ListPaymentTicketsView(ListInstancesMixin):
@@ -43,3 +42,8 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
             return render(request, self.template_name, context={'form': form,
                                                                 'formset': formset,
                                                                 'meters': meters})
+
+
+class DeletePaymentTicketView(DeleteInstanceView):
+    model = PaymentTicket
+    redirect_url = 'admin_panel:list_payment_ticket_admin'
