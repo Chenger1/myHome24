@@ -176,6 +176,14 @@ class PaymentTicket(models.Model):
         else:
             return 1
 
+    @property
+    def ticket_month(self):
+        return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%b %Y')
+
+    @property
+    def ticket_date(self):
+        return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
+
 
 class PaymentTicketService(models.Model):
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='services', on_delete=models.CASCADE)

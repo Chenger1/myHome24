@@ -124,6 +124,7 @@
                                         {{ form.is_done }}
                                     </td>
                                     <td></td>
+                                    <td></td>
                                 </tr>
 
                                 {% for ticket in instances %}
@@ -141,12 +142,23 @@
                                         <small class="label label-danger">Неоплачена</small>
                                         {% endif %}
                                     </td>
-                                    <td>{{ ticket.date }}</td>
-                                    <td>{{ ticket.month }}</td>
-                                    <td>{{ ticket.flat }}, {{ ticket.flat.house }}</td>
-                                    <td>{{ ticket.owner }}</td>
-                                    <td>{{ ticket.get_is_done_display }}</td>
-                                    <td>{{ ticket.sum }}</td>
+                                    <td>{{ ticket.ticket_date|filter_none }}</td>
+                                    <td>{{ ticket.ticket_month|filter_none }}</td>
+                                    <td>{% if ticket.flat %}
+                                            {{ ticket.flat }}, {{ ticket.flat.house }}
+                                        {% else %}
+                                            Не указано
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ ticket.flat.owner|filter_none }}</td>
+                                    <td>
+                                        {% if ticket.is_done %}
+                                            Проведена
+                                        {% else %}
+                                            Не проведена
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ ticket.sum|filter_none }}</td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
