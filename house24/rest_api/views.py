@@ -86,3 +86,29 @@ class CreateMeterApiView(View):
             else:
                 return JsonResponse({'status': 400})
         return JsonResponse({'status': 200})
+
+
+class GetMeterDataApiView(View):
+    model = Meter
+
+    def get(self, request):
+        meters = self.model.objects.all()[:20:-1]
+        serialized = self.serialize(meters)
+        return JsonResponse(serialized)
+
+    def serialize(self, queryset):
+        result = {}
+        for index, inst in enumerate(queryset):
+            result.update({index: {
+                'number': inst.number,
+                'status': inst.status,
+                'date': inst.meter_date,
+                'month': inst.meter_month,
+                'house': inst.house.name,
+                'section': inst.section.name,
+                'flat': inst.flat.number,
+                'service': inst.service.name,
+                'data': inst.data,
+                'measure': inst.service.measure.measure_name
+            }})
+        return result
