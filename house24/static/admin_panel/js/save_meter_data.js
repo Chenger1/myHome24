@@ -1,4 +1,4 @@
-function saveMeter(url){
+function saveMeter(url, callback_url){
 	let context = {};
 	context['date'] = $('#created').val();
 	context['house'] = $('#house').find(':selected').val();
@@ -33,12 +33,49 @@ function saveMeter(url){
 		data: {'data':JSON.stringify(context)},
 		success: function(response){
 			if(response['status'] == 200){
-				renderNewMeter(context);
+				updateMeterTable(callback_url);
 			}
 		}
 	})
 }
 
-function renderNewMeter(response){
+function updateMeterTable(url){
+	$.ajax({
+		method: 'GET',
+		url: url,
+		success: function(response){
+			renderNewMeter(response);
+		}
+	})
+}
 
+function renderNewMeter(response){
+	$('#meters_table > tbody').empty();
+	let table =  $('#meters_table');
+	for(index in response){
+		let tr = $('<tr />');
+		tr.append($('<td />', {text: response[index]['number']}));
+		tr.append($('<td />', {html: getStatusWidget(response[index]['status'])}))
+		tr.append($('<td />', {text: response[index]['date']}));
+		tr.append($('<td />', {text: response[index]['month']}));
+		tr.append($('<td />', {text: response[index]['house']}));
+		tr.append($('<td />', {text: response[index]['section']}));
+		tr.append($('<td />', {text: response[index]['flat']}));
+		tr.append($('<td />', {text: response[index]['service']}));
+		tr.append($('<td />', {text: response[index]['data']}));
+		tr.append($('<td />', {text: response[index]['measure']}));
+		table.append(tr);
+	}
+}
+
+function getStatusWidget(status){
+	if(status == 0){
+		return '<small class="label label-warning">Новое</small>';
+	}else if(status == 1){
+		return '<small class="label label-success">Учтено</small>';
+	}else if(status == 2){
+		return '<small class="label label-success">Учтено и оплачено</small>';
+	}else{
+		return '<small class="label label-primary">Нулевое</small>';
+	}
 }
