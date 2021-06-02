@@ -73,9 +73,3 @@ class CreateMeterForm(forms.ModelForm):
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
             'service': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'service'})
         }
-
-    def clean(self):
-        number = self.cleaned_data['number']
-        flat = self.cleaned_data['flat']
-        if Flat.objects.filter(pk=flat.pk, meters__number=number).exists():
-            raise ValidationError(f'Для этой квартиры уже есть показания с таким номером: №{number}')
