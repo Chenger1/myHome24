@@ -204,7 +204,8 @@
                                                             id="add_services">Добавить услугу</button>
                                                             <button type="button" class="btn btn-default"
                                                             id="add_tariff_services">Установить все услуги согласно тарифу</button>
-                                                            <button type="button" class="btn btn-default">Добавить показания счетчиков</button>
+                                                            <button type="button" class="btn btn-default"
+                                                            id="save_meter">Добавить показания счетчиков</button>
                                                         </td>
                                                         <td>
                                                             <h4>Итого: <strong id="total_sum">0.00</strong> грн.</h4>
@@ -293,6 +294,7 @@
 <script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script src="{% static 'utils/dynamic_formset.js' %}"></script>
+<script src="{% static 'admin_panel/js/save_meter_data.js' %}"></script>
 <script>
     function sumPrice(outcome, unit_price, cost){
         let new_cost = Number(outcome.val())*Number(unit_price.val());
@@ -416,5 +418,10 @@
             }
         })
     })
+</script>
+<script>
+    $('#save_meter').on('click', function(){
+        saveMeter('s');
+    });
 </script>
 {% endblock %}
