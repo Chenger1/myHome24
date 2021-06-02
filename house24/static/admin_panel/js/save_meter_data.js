@@ -1,9 +1,10 @@
 function saveMeter(url){
-	const date = $('#created').val();
-	const house = $('#house').find(':selected').val();
-	const section = $('#section').find(':selected').val();
-	const flat = $('#flat').find(':selected').val();
-	if(!flat){
+	let context = {};
+	context['date'] = $('#created').val();
+	context['house'] = $('#house').find(':selected').val();
+	context['section'] = $('#section').find(':selected').val();
+	context['flat'] = $('#flat').find(':selected').val();
+	if(!context['flat']){
 		confirm('Выберите квартиру чтобы сохранить новые показания!');
 		return false;
 	}
@@ -18,22 +19,26 @@ function saveMeter(url){
 		let current_form = $(form);
 		let selected = current_form.find(':selected');
 		let outcome = current_form.find('.outcome');
-		data[selected.text()] = {
-			'pk': selected.val(),
-			'outcome': outcome.val(),
+		if(!outcome.val()){
+			confirm('Добавьте расход для: "'+ selected.text() +'", чтобы сохранить новые показания!');
+			return false;
 		}
+		data[selected.val()] = outcome.val();
 	}
+	context['data'] = data;
 
 	$.ajax({
 		method: 'GET',
 		url: url,
-		data: {'date': date,
-			   'house': house,
-			   'section': section,
-				'flat': flat,
-				'data': data},
+		data: {'data':JSON.stringify(context)},
 		success: function(response){
-			console.log(response);
+			if(response['status'] == 200){
+				renderNewMeter(context);
+			}
 		}
 	})
+}
+
+function renderNewMeter(response){
+
 }

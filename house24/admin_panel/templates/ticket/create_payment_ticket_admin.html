@@ -421,7 +421,7 @@
 </script>
 <script>
     $('#save_meter').on('click', function(){
-        saveMeter('s');
+        saveMeter('{% url "rest_api:create_meter_api" %}');
     });
 </script>
 {% endblock %}

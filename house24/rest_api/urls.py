@@ -10,4 +10,5 @@ urlpatterns = [
     path('floor_list/', views.FloorList.as_view(), name='get_floor_list'),
     path('flat_list/', views.FlatList.as_view(), name='get_flat_list'),
     path('tariff_services/', views.GetTariffServices.as_view(), name='get_tariff_services'),
+    path('create_meter_api/', views.CreateMeterApiView.as_view(), name='create_meter_api'),
 ]

@@ -4,7 +4,11 @@ from django.views.generic import View
 
 from rest_api import serializers
 
-from db.models.house import Section, Floor, Flat, TariffService
+from db.models.house import Section, Floor, Flat, TariffService, Meter
+
+from admin_panel.forms.meters_forms import CreateMeterForm
+
+import json
 
 
 class SectionList(generics.ListAPIView):
@@ -63,3 +67,22 @@ class GetTariffServices(View):
                 'measure': inst.service.measure.measure_name
             }})
         return result
+
+
+class CreateMeterApiView(View):
+    model = Meter
+    form = CreateMeterForm
+
+    def get(self, request):
+        data = json.loads(request.GET.get('data'))
+        for service, value in data['data'].items():
+            form = CreateMeterForm({'date': data['date'], 'house': data['house'],
+                                   'section': data['section'], 'flat': data['flat'],
+                                    'service': service, 'data': value,
+                                    'number': self.model.get_next_meter_number(),
+                                    'status': 0})
+            if form.is_valid():
+                form.save()
+            else:
+                return JsonResponse({'status': 400})
+        return JsonResponse({'status': 200})
