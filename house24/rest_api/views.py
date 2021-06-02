@@ -92,7 +92,7 @@ class GetMeterDataApiView(View):
     model = Meter
 
     def get(self, request):
-        meters = self.model.objects.all()[:20:-1]
+        meters = self.model.objects.all()[20::-1]
         serialized = self.serialize(meters)
         return JsonResponse(serialized)
 
