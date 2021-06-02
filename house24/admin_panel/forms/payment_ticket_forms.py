@@ -32,7 +32,8 @@ class CreatePaymentTicketForm(forms.ModelForm):
         model = PaymentTicket
         exclude = '__all__'
         widgets = {
-            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number',
+                                               'min': '0'}),
             'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
             'is_done': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'is_done'}),
             'start': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
@@ -60,9 +61,10 @@ class TicketServiceForm(forms.ModelForm):
         widgets = {
             'id': forms.HiddenInput(),
             'service': forms.Select(attrs={'class': 'form-control to_valid service'}),
-            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid outcome'}),
-            'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid unit_price'}),
-            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid cost'}),
+            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid outcome', 'min': '0'}),
+            'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid unit_price',
+                                                   'min': '0'}),
+            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid cost', 'min': '0'}),
         }
 
 

@@ -365,6 +365,27 @@
 </script>
 <script>
     $('button[type=submit]').on('click', function(e){
+        $('.formset').not('#hidden_services').each(function(){
+            if(!$(this).find('.service').find(':selected').val()){
+                e.preventDefault();
+                confirm('Вы не выбрали услугу!');
+                return false;
+            }else if(!$(this).find('.outcome').val()){
+                e.preventDefault();
+                confirm('Вы не ввели расход!');
+                return false;
+            }else if(!$(this).find('.unit_price').val()){
+                e.preventDefault();
+                confirm('Вы не ввели цену за единицу!');
+                return false;
+            }else if(!$(this).find('.cost').val()){
+                e.preventDefault();
+                confirm('Вы не ввели суммарную стоимость услуги!');
+                return false;
+            }
+        })
+
+
         $('#ticket_sum').val(parseFloat($('#total_sum').text()));
     })
 </script>
