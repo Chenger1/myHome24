@@ -187,7 +187,14 @@
                                                     {% endfor %}
                                                             <td>{{ inline_form.service }}</td>
                                                             <td>{{ inline_form.outcome }}</td>
-                                                            <td><input type="text" disabled class="form-control measure" name="__prefix__"></td>
+                                                            <td>
+                                                                {% if inline_form.instance.pk %}
+                                                                    <input type="text" disabled="" class="form-control measure"
+                                                                    name="__prefix__" value="{{ inline_form.instance.service.measure }}">
+                                                                {% else %}
+                                                                <input type="text" disabled class="form-control measure" name="__prefix__">
+                                                                {% endif %}
+                                                            </td>
                                                             <td>{{ inline_form.unit_price }}</td>
                                                             <td>{{ inline_form.cost }}</td>
                                                             <td>
