@@ -134,7 +134,7 @@ class BaseCloner {
 
 	getForms(){
 		// get forms
-		return $(this.selector).not('div[id*=hidden_]');
+		return $(this.selector).not('[id*=hidden_]');
 	}
 
 	setPreviewEvent(){};

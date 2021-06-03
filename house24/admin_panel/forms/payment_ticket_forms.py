@@ -1,7 +1,7 @@
 from django import forms
 
 from db.models.user import User
-from db.models.house import PaymentTicket, PaymentTicketService
+from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat
 
 import datetime
 
@@ -28,6 +28,13 @@ class PaymentTicketSearch(forms.Form):
 
 
 class CreatePaymentTicketForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        house_pk = kwargs.pop('house_pk', None)
+        super().__init__(*args, **kwargs)
+        if house_pk:
+            self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
+            self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
+
     class Meta:
         model = PaymentTicket
         exclude = '__all__'

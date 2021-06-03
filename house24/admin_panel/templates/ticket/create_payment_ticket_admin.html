@@ -1,5 +1,6 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load utils %}
 
 {% block title %}
 {% if form.instance.pk %}
@@ -12,6 +13,9 @@
 {% block content %}
 {% if form.errors %}
 {% include 'errors.html' with errors=form.errors %}
+{% endif %}
+{% if formset.errors %}
+{% include 'errors.html' with errors=formset.errors %}
 {% endif %}
 <div class="content-wrapper">
     <div class="content-header">
@@ -177,20 +181,20 @@
                                                     </tr>
 
                                                     {% for inline_form in formset %}
+                                                        <tr class="formset {% if inline_form.instance.pk %}has_instance_pk{% endif %}">
                                                     {% for hidden in inline_form.hidden_fields %}
                                                         {{ hidden }}
                                                     {% endfor %}
-                                                        <tr class="formset">
-                                                            {{ inline_form.id }}
                                                             <td>{{ inline_form.service }}</td>
                                                             <td>{{ inline_form.outcome }}</td>
                                                             <td><input type="text" disabled class="form-control measure" name="__prefix__"></td>
                                                             <td>{{ inline_form.unit_price }}</td>
                                                             <td>{{ inline_form.cost }}</td>
                                                             <td>
+                                                                {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                                 <button type="button"
-                                                                        class="btn btn-default delete_icon_services {% if form.instance.pk %}has_pk{% endif %}"
-                                                                        name="{{ form.instance.pk }}">
+                                                                        class="btn btn-default delete_icon_services {% if inline_form.instance.pk %}has_pk{% endif %}"
+                                                                        name="{{ inline_form.instance.pk }}">
                                                                     <i class="fa fa-trash"></i>
                                                                 </button>
                                                             </td>
@@ -311,16 +315,17 @@
 
     function calculateTotalSum(element, selector){
         let total_price = $('#total_sum'); 
-        let forms = $('.formset').find('.cost').not('input[id*="__prefix__"]')
+        let forms = $('.formset').find('.cost').not('input[id*="__prefix__"]').not(':hidden');
         sum = 0;
         for(value of forms){
             sum += parseFloat($(value).val() ? $(value).val(): 0);
         }
-        total_price.text(sum > 0 ? sum.toFixed(2) : 0);
+        total_price.text(sum > 0 ? sum.toFixed(2) : '0.00');
     }
 </script>
 <script>
-    let formset_cloner = new FormsetClonerWithCallback('services', '.formset', '', setEvent, calculateTotalSum);
+    let formset_cloner = new FormsetClonerWithCallback('services', '.formset', 
+                                                     '{% url "admin_panel:delete_payment_ticket_service_admin" %}', setEvent, calculateTotalSum);
     formset_cloner.init();
     $('#add_services').on('click', function(){
         formset_cloner.clone();
@@ -361,6 +366,7 @@
             update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}", parent_pk=value,
                             constructor=append_select_flat);
         });
+        calculateTotalSum();
     })
 </script>
 <script>
@@ -392,8 +398,13 @@
 <script>
     function renderTariffServiceFormset(response){
         $('#total_sum').text('0.00');
-        $('.formset').not('#hidden_services').remove();
-        let tariff_formset_cloner = new FormsetClonerWithCallback('services', '.formset', '', setEvent, calculateTotalSum);
+        $('.formset').not('#hidden_services').not('.has_instance_pk').remove();
+        $('.has_instance_pk').each(function(){
+            $(this).find('input[type=checkbox][name*="-DELETE"]').prop('checked', true);
+            $(this).hide();
+        })
+        let tariff_formset_cloner = new FormsetClonerWithCallback('services', '.formset', 
+                                                    '{% url "admin_panel:delete_payment_ticket_service_admin" %}', setEvent, calculateTotalSum);
         for(key in response){
             tariff_formset_cloner.clone();
             let newElement = tariff_formset_cloner.newElement;
@@ -405,6 +416,9 @@
 
     $('#add_tariff_services').on('click', function(){
         let tariff = $('#tariff').find(':selected').val();
+        if(!confirm('Вы уверены что хотите удалить текущие тарифы?')){
+            return false;
+        }
         $.ajax({
             type: 'GET',
             url: '{% url "rest_api:get_tariff_services" %}',

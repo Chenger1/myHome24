@@ -109,10 +109,10 @@
 
 
                                             {% for inline_form in formset %}
+                                            <div class="row formset">
                                             {% for hidden in inline_form.hidden_fields %}
                                             {{ hidden }}
                                             {% endfor %}
-                                            <div class="row formset">
                                                 {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                 <div class="col-6 col-md-4">
                                                     <div class="form-group">
