@@ -132,6 +132,7 @@
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
     $('.to_valid').each(function(){
         $(this).on('change', function(){
@@ -154,16 +155,6 @@
     })
 </script>
 <script>
-    function update_owner_info(data){
-        if(!jQuery.isEmptyObject(data)){
-            $('#owner').text(data['full_name']);
-            $('#phone').text(data['phone']);
-        }else{
-            $('#owner').text('Не выбран');
-            $('#phone').text('Не выбран');
-        }
-    }
-
     $(document).ready(function(){
         {% if not form.instance.pk and not form.errors %}
             update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");

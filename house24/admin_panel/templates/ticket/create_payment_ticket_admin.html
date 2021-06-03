@@ -143,8 +143,8 @@
                                             <label for="account">Лицевой счет</label>
                                             {{ form.personal_account }}
                                         </div>
-                                        <p style="margin:0px;"><strong>Владелец:</strong> </p>
-                                        <p><strong>Телефон:</strong> </p>
+                                        <p style="margin:0px;"><strong>Владелец:</strong> <span id="owner"></span></p>
+                                        <p><strong>Телефон:</strong> <span id="phone"></span></p>
                                         {{ form.sum }}
                                     </div>
                                     <div class="col-12 col-sm-6"></div>
@@ -275,6 +275,7 @@
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script src="{% static 'admin_panel/js/save_meter_data.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
     function sumPrice(outcome, unit_price, cost){
         let new_cost = Number(outcome.val())*Number(unit_price.val());
@@ -367,6 +368,15 @@
                             constructor=append_select_flat);
         });
         calculateTotalSum();
+        update_owner_info();
+        $('select[name=flat]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            send_request_to_api('{% url "admin_panel:get_flat_owner" %}', value, update_owner_info);
+        });
+        updateMeterTable('{% url "rest_api:get_meters_list" %}');
+        $('#save_meter').on('click', function(){
+            saveMeter('{% url "rest_api:create_meter_api" %}', '{% url "rest_api:get_meters_list" %}');
+        });
     })
 </script>
 <script>
@@ -429,13 +439,5 @@
             }
         })
     })
-</script>
-<script>
-    $(document).ready(function(){
-        updateMeterTable('{% url "rest_api:get_meters_list" %}');
-    })
-    $('#save_meter').on('click', function(){
-        saveMeter('{% url "rest_api:create_meter_api" %}', '{% url "rest_api:get_meters_list" %}');
-    });
 </script>
 {% endblock %}
