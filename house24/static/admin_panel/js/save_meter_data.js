@@ -39,10 +39,11 @@ function saveMeter(url, callback_url){
 	})
 }
 
-function updateMeterTable(url){
+function updateMeterTable(url, flat_pk=undefined){
 	$.ajax({
 		method: 'GET',
 		url: url,
+		data: {'pk': flat_pk},
 		success: function(response){
 			renderNewMeter(response);
 		}

@@ -92,8 +92,12 @@ class GetMeterDataApiView(View):
     model = Meter
 
     def get(self, request):
-        meters = self.model.objects.all()[20::-1]
-        serialized = self.serialize(meters)
+        flat_pk = request.GET.get('pk')
+        if flat_pk:
+            queryset = self.model.objects.filter(flat__pk=flat_pk).order_by('-id')[:20]
+        else:
+            queryset = self.model.objects.all()[20::-1]
+        serialized = self.serialize(queryset)
         return JsonResponse(serialized)
 
     def serialize(self, queryset):
