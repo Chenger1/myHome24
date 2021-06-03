@@ -40,7 +40,7 @@ class UpdatePersonalAccountView(AdminPermissionMixin, View):
         else:
             form = self.form(instance=instance)
         context = {'form': form}
-        if instance.flat:
+        if instance.flat and instance.flat.owner:
             owner = instance.flat.owner.full_name
             phone = instance.flat.owner.phone_number
             context.update({'owner': owner, 'phone': phone})
