@@ -76,7 +76,7 @@
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'admin_panel:create_payment_ticket_admin' %}">Создать общую квитанцию</a>
-                        <a class="dropdown-item" href="#">Удалить</a>
+                        <button class="dropdown-item" type="button" id="delete_mass">Удалить</button>
                     </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
@@ -132,7 +132,7 @@
                                     <td style="padding: 10px;">
                                         <input type="checkbox" class="delete_checkbox">
                                     </td>
-                                    <td>{{ ticket.pk }}</td>
+                                    <td class="ticket_pk">{{ ticket.pk }}</td>
                                     <td class="text-center">
                                         {% if account.status == 0 %}
                                         <small class="label label-success">Оплачена</small>
@@ -200,6 +200,25 @@
     })
     $('#main_checkbox').on('change', function(){
         setCheckbox(this);
+    })
+</script>
+<script>
+    $('#delete_mass').on('click', function(){
+        let result = []
+        $('.delete_checkbox:checked').each(function(){
+            result.push($(this).closest('tr').find('.ticket_pk').text());
+        });
+        $.ajax({
+            url: '{% url "admin_panel:bulk_delete_payment_tickets" %}',
+            type: 'GET',
+            data: {'pk': JSON.stringify(result)},
+        })
+        .done(function(response) {
+            window.location.reload();
+        })
+        .fail(function(){
+            confirm('Неправильно выбранные данные.');
+        })
     })
 </script>
 {% endblock %}

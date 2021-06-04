@@ -1,12 +1,15 @@
 from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearch, CreatePaymentTicketForm, TicketServiceFormset
 
 from db.models.house import PaymentTicket, PaymentTicketService
+
+import json
 
 
 class ListPaymentTicketsView(ListInstancesMixin):
@@ -75,3 +78,13 @@ class UpdatePaymentTicketView(AdminPermissionMixin, View):
 
 class DeleteTicketService(DeleteInstanceWithoutReload):
     model = PaymentTicketService
+
+
+class BulkDeleteTicketService(AdminPermissionMixin, View):
+    model = PaymentTicket
+
+    def get(self, request):
+        pks = json.loads(request.GET.get('pk'))
+        for pk in pks:
+            get_object_or_404(self.model, pk=pk).delete()
+        return JsonResponse({'status': 200})
