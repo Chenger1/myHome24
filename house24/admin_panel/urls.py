@@ -145,4 +145,6 @@ urlpatterns = [
          name='delete_payment_ticket_service_admin'),
     path('payment_ticket/index/bulk_delete_tickets', payment_ticket_views.BulkDeleteTicketService.as_view(),
          name='bulk_delete_payment_tickets'),
+    path('payment_ticket/index/duplicate_ticket/<int:pk>/', payment_ticket_views.DuplicatePaymentTicket.as_view(),
+         name='duplicate_payment_ticket'),
 ]

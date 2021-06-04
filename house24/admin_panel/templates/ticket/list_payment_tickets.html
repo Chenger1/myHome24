@@ -132,7 +132,8 @@
                                     <td style="padding: 10px;">
                                         <input type="checkbox" class="delete_checkbox">
                                     </td>
-                                    <td class="ticket_pk">{{ ticket.pk }}</td>
+                                    <td>{{ ticket.number }}
+                                    <span class="ticket_pk" style="display:none;">{{ ticket.pk }}</span></td>
                                     <td class="text-center">
                                         {% if account.status == 0 %}
                                         <small class="label label-success">Оплачена</small>
@@ -162,7 +163,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="">
+                                               href="{% url 'admin_panel:duplicate_payment_ticket' ticket.pk %}">
                                                 <i class="fas fa-redo-alt"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"

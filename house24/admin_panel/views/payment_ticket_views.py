@@ -88,3 +88,40 @@ class BulkDeleteTicketService(AdminPermissionMixin, View):
         for pk in pks:
             get_object_or_404(self.model, pk=pk).delete()
         return JsonResponse({'status': 200})
+
+
+class DuplicatePaymentTicket(AdminPermissionMixin, View):
+    model = PaymentTicket
+    form_class = CreatePaymentTicketForm
+    formset_class = TicketServiceFormset
+    template_name = 'ticket/create_payment_ticket_admin.html'
+    redirect_url = 'admin_panel:list_payment_ticket_admin'
+
+    def get(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
+        form = self.form_class(instance=obj, **{'house_pk': obj.house.pk})
+        formset = self.formset_class(instance=obj)
+        return render(request, self.template_name, context={'form': form,
+                                                            'formset': formset})
+
+    def post(self, request, pk):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            old_obj = get_object_or_404(self.model, pk=pk)
+            form.instance.pk = None
+            obj = form.save()
+            formset = self.formset_class(request.POST, instance=old_obj)
+            if formset.is_valid():
+                for form in formset:
+                    if not form.cleaned_data['DELETE']:
+                        form.instance.pk = None
+                        new_form = form.save(commit=False)
+                        new_form.payment_ticket = obj
+                        new_form.save()
+                return redirect(self.redirect_url)
+            else:
+                obj.delete()
+                return render(request, self.template_name, context={'form': form,
+                                                                    'formset': formset})
+        else:
+            return render(request, self.template_name, context={'form': form})

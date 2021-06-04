@@ -114,7 +114,7 @@ class DuplicateTariff(AdminPermissionMixin, View):
     def post(self, request, pk):
         form = self.form_class(request.POST)
         if form.is_valid():
-            old_obj = get_object_or_404(Tariff, pk=pk)
+            old_obj = get_object_or_404(self.model, pk=pk)
             form.instance.pk = None
             obj = form.save()
             formset = self.formset_class(request.POST, instance=old_obj)
@@ -131,7 +131,8 @@ class DuplicateTariff(AdminPermissionMixin, View):
                 obj.delete()
                 return render(request, self.template_name, context={self.context_object_name: form,
                                                                     'formset': formset})
-        return render(request, self.template_name, context={self.context_object_name: form})
+        else:
+            return render(request, self.template_name, context={self.context_object_name: form})
 
 
 class DetailTariffView(AdminPermissionMixin, DetailView):
