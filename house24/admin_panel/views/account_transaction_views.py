@@ -1,4 +1,4 @@
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
 from django.urls import reverse_lazy
 from django.db.models import Sum
 
@@ -73,3 +73,9 @@ class UpdateOutcomeView(AdminPermissionMixin, UpdateView):
 class DeleteTransactionView(DeleteInstanceView):
     model = Transaction
     redirect_url = 'admin_panel:list_account_transaction_admin'
+
+
+class DetailTransactionView(AdminPermissionMixin, DetailView):
+    model = Transaction
+    template_name = 'account_transaction/detail_transaction_admin.html'
+    context_object_name = 'transaction'

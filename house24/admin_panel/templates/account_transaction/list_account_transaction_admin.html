@@ -127,32 +127,32 @@
 
                                 {% for transaction in instances %}
                                 <tr>
-                                    <td><a href="{{ transaction.get_update_url }}">{{ transaction.number }}</a></td>
-                                    <td><a href="{{ transaction.get_update_url }}">{{ transaction.transaction_date|filter_none }}</a></td>
-                                    <td><a href="{{ transaction.get_update_url }}">
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">{{ transaction.number }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">{{ transaction.transaction_date|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">
                                         {% if transaction.status %}
                                             Проведен
                                         {% else %}
                                             Не проведен
                                         {% endif %}
                                     </a></td>
-                                    <td><a href="{{ transaction.get_update_url }}">
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">
                                         {{ transaction.payment_item_type }}
                                     </a></td>
-                                    <td><a href="{{ transaction.get_update_url }}">
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">
                                         {{ transaction.owner|filter_none }}
                                     </a></td>
                                     <td>
-                                        <a href="{{ transaction.get_update_url }}">{{ transaction.personal_account|filter_none }}</a>
+                                        <a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">{{ transaction.personal_account|filter_none }}</a>
                                     </td>
-                                    <td><a href="{{ transaction.get_update_url }}">
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">
                                         {% if transaction.payment_item_type.type == 0 %}
                                             <span class="text-success">Приход</span>
                                         {% else %}
                                             <span class="text-danger">Расход</span>
                                         {% endif %}
                                     </a></td>
-                                    <td><a href="{{ transaction.get_update_url }}">
+                                    <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">
                                         {% if transaction.payment_item_type.type == 0 %}
                                             <span class="text-success">{{ transaction.amount }}</span>
                                         {% else %}

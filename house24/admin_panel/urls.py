@@ -164,4 +164,6 @@ urlpatterns = [
          name='update_outcome_admin'),
     path('account-transaction/index/delete_transaction/<int:pk>/',
          account_transaction_views.DeleteTransactionView.as_view(), name='delete_transaction_admin'),
+    path('account-transaction/index/transaction/<int:pk>/', account_transaction_views.DetailTransactionView.as_view(),
+         name='detail_transaction_admin')
 ]
