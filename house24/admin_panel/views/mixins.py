@@ -40,7 +40,7 @@ class ListInstancesMixin(AdminPermissionMixin, View):
     def get(self, request):
         if request.GET:
             self.form = self.search_form(request.GET)
-            if  self.form.is_valid():
+            if self.form.is_valid():
                 self.instances = self.get_filtered_query( self.form.cleaned_data)[::-1]
                 return render(request, self.template_name, context=self.get_context_data())
             else:
