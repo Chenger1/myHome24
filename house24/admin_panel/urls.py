@@ -165,5 +165,10 @@ urlpatterns = [
     path('account-transaction/index/delete_transaction/<int:pk>/',
          account_transaction_views.DeleteTransactionView.as_view(), name='delete_transaction_admin'),
     path('account-transaction/index/transaction/<int:pk>/', account_transaction_views.DetailTransactionView.as_view(),
-         name='detail_transaction_admin')
+         name='detail_transaction_admin'),
+    path('account-transaction/index/duplicate_income/<int:pk>/', account_transaction_views.DuplicateIncomeView.as_view(),
+         name='duplicate_income_admin'),
+    path('account-transaction/index/duplicate_outcome/<int:pk>/',
+         account_transaction_views.DuplicateOutcomeView.as_view(),
+         name='duplicate_outcome_admin'),
 ]
