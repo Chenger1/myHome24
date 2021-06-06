@@ -123,7 +123,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                     </li>
                     {% endif %}
-                    {% if request.user.role.cashbox %}
+                    {% if request.user.role.account_transaction %}
                     <li class="nav-item">
                         <a href="{% url 'admin_panel:list_account_transaction_admin' %}" class="nav-link
                         {% if 'account-transaction/index/' in request.path %}active{% endif %}">
