@@ -127,32 +127,32 @@
 
                                 {% for transaction in instances %}
                                 <tr>
-                                    <td><a href="">{{ transaction.number }}</a></td>
-                                    <td><a href="">{{ transaction.transaction_date|filter_none }}</a></td>
-                                    <td><a href="">
+                                    <td><a href="{{ transaction.get_update_url }}">{{ transaction.number }}</a></td>
+                                    <td><a href="{{ transaction.get_update_url }}">{{ transaction.transaction_date|filter_none }}</a></td>
+                                    <td><a href="{{ transaction.get_update_url }}">
                                         {% if transaction.status %}
                                             Проведен
                                         {% else %}
                                             Не проведен
                                         {% endif %}
                                     </a></td>
-                                    <td><a href="">
+                                    <td><a href="{{ transaction.get_update_url }}">
                                         {{ transaction.payment_item_type }}
                                     </a></td>
-                                    <td><a href="">
+                                    <td><a href="{{ transaction.get_update_url }}">
                                         {{ transaction.owner|filter_none }}
                                     </a></td>
                                     <td>
-                                        <a href="">{{ transaction.personal_account|filter_none }}</a>
+                                        <a href="{{ transaction.get_update_url }}">{{ transaction.personal_account|filter_none }}</a>
                                     </td>
-                                    <td><a href="">
+                                    <td><a href="{{ transaction.get_update_url }}">
                                         {% if transaction.payment_item_type.type == 0 %}
                                             <span class="text-success">Приход</span>
                                         {% else %}
                                             <span class="text-danger">Расход</span>
                                         {% endif %}
                                     </a></td>
-                                    <td><a href="">
+                                    <td><a href="{{ transaction.get_update_url }}">
                                         {% if transaction.payment_item_type.type == 0 %}
                                             <span class="text-success">{{ transaction.amount }}</span>
                                         {% else %}
@@ -162,7 +162,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="">
+                                               href="{{ transaction.get_update_url }}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"

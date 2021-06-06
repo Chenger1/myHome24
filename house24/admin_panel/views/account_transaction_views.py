@@ -1,4 +1,4 @@
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.db.models import Sum
 
@@ -51,3 +51,19 @@ class CreateOutcomeView(AdminPermissionMixin, CreateView):
         else:
             form = self.form_class(initial={'number': self.model.get_next_outcome_number()})
         return form
+
+
+class UpdateIncomeView(AdminPermissionMixin, UpdateView):
+    model = Transaction
+    form_class = CreateIncomeForm
+    template_name = 'account_transaction/create_income_admin.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
+
+
+class UpdateOutcomeView(AdminPermissionMixin, UpdateView):
+    model = Transaction
+    form_class = CreateOutcomeForm
+    template_name = 'account_transaction/create_outcome_admin.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_account_transaction_admin')

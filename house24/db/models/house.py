@@ -269,6 +269,12 @@ class Transaction(models.Model):
         else:
             return 1
 
+    def get_update_url(self):
+        if self.payment_item_type.type == 0:
+            return reverse('admin_panel:update_income_admin', args=[self.pk])
+        else:
+            return reverse('admin_panel:update_outcome_admin', args=[self.pk])
+
     @property
     def transaction_date(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
