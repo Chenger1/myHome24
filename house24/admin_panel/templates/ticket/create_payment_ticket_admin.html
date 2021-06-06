@@ -10,6 +10,11 @@
 {% endif %}
 {% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 {% block content %}
 {% if form.errors %}
 {% include 'errors.html' with errors=form.errors %}
@@ -386,6 +391,12 @@
         $('#save_meter').on('click', function(){
             saveMeter('{% url "rest_api:create_meter_api" %}', '{% url "rest_api:get_meters_list" %}');
         });
+
+        $('#account').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid'
+        })
     })
 </script>
 <script>
