@@ -237,35 +237,21 @@ class PaymentItem(models.Model):
     type = models.IntegerField(choices=type_choices)
 
 
-class Income(models.Model):
-    status_choices = [
-        (0, 'Непроведен'),
-        (1, 'Проведен')
+class Transfer(models.Model):
+    transfer_type = [
+        (0, 'Приход'),
+        (1, 'Расход')
     ]
-
     number = models.IntegerField()
     created = models.DateField()
-    owner = models.ForeignKey(User, related_name='owner_incomes', on_delete=models.CASCADE)
-    personal_account = models.ForeignKey(PersonalAccount, related_name='incomes', on_delete=models.CASCADE)
-    type = models.ForeignKey(PaymentItem, related_name='incomes', on_delete=models.CASCADE)
-    sum = models.IntegerField()
-    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
-    manager = models.ForeignKey(User, related_name='master_incomes', on_delete=models.SET_NULL, blank=True, null=True)
-    description = models.TextField()
-
-
-class Outcome(models.Model):
-    status_choices = [
-        (0, 'Непроведен'),
-        (1, 'Проведен')
-    ]
-
-    number = models.IntegerField()
-    created = models.DateField()
-    type = models.ForeignKey(PaymentItem, related_name='outcomes', on_delete=models.CASCADE)
-    sum = models.IntegerField()
-    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
-    manager = models.ForeignKey(User, related_name='outcomes', on_delete=models.SET_NULL, blank=True, null=True)
+    owner = models.ForeignKey(User, related_name='owner_transfer', on_delete=models.CASCADE, blank=True, null=True)
+    personal_account = models.ForeignKey(PersonalAccount, related_name='transfers', on_delete=models.CASCADE,
+                                         blank=True, null=True)
+    payment_item_type = models.ForeignKey(PaymentItem, related_name='transfers', on_delete=models.CASCADE,
+                                          blank=True, null=True)
+    amount = models.IntegerField()
+    status = models.BooleanField(default=True)
+    manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
 
 
