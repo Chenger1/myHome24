@@ -4,7 +4,7 @@
 
 {% block title %}
 {% if form.instance.pk %}
-Квитанция - {{ form.instance.number }}
+Квитанция - {{ form.number.initial }}
 {% else %}
 Новая квитанция
 {% endif %}
@@ -24,7 +24,7 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">
                         {% if form.instance.pk %}
-                        Квитанция - {{ form.instance.number }}
+                        Квитанция - {{ form.number.initial }}
                         {% else %}
                         Новая квитанция
                         {% endif %}
@@ -381,7 +381,8 @@
             send_request_to_api('{% url "admin_panel:get_flat_owner" %}', value, update_owner_info);
             updateMeterTable('{% url "rest_api:get_meters_list" %}', value);
         });
-        updateMeterTable('{% url "rest_api:get_meters_list" %}');
+        const flat_pk = $('select[name=flat]').find(':selected').val();
+        updateMeterTable('{% url "rest_api:get_meters_list" %}', flat_pk);
         $('#save_meter').on('click', function(){
             saveMeter('{% url "rest_api:create_meter_api" %}', '{% url "rest_api:get_meters_list" %}');
         });

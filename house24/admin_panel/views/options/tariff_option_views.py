@@ -105,34 +105,35 @@ class DuplicateTariff(AdminPermissionMixin, View):
     context_object_name = 'form'
 
     def get(self, request, pk):
-        base_inst = get_object_or_404(Tariff, pk=pk)
-        form = self.form_class(instance=base_inst)
-        formset = self.formset_class(instance=base_inst)
-        return render(request, self.template_name, context={self.context_object_name: form,
+        obj = get_object_or_404(self.model, pk=pk)
+        form = self.form_class(instance=obj)
+        formset = self.formset_class(instance=obj)
+        return render(request, self.template_name, context={'form': form,
                                                             'formset': formset})
 
     def post(self, request, pk):
         form = self.form_class(request.POST)
+        obj = get_object_or_404(self.model, pk=pk)
+        formset = self.formset_class(request.POST, instance=obj)
         if form.is_valid():
-            old_obj = get_object_or_404(self.model, pk=pk)
             form.instance.pk = None
-            obj = form.save()
-            formset = self.formset_class(request.POST, instance=old_obj)
+            new_obj = form.save()
             if formset.is_valid():
-                for form in formset:
-                    if not form.empty_permitted and form.has_changed():
-                        #  If form is empty - just pass
-                        form.instance.pk = None
-                        new_form = form.save(commit=False)
-                        new_form.tariff = obj
-                        new_form.save()
+                for inline_form in formset:
+                    if inline_form.cleaned_data and not inline_form.cleaned_data.get('DELETE'):
+                        #  If formset is not empty and not to DELETE - save new object
+                        inline_form.instance.pk = None
+                        new_inline_obj = inline_form.save(commit=False)
+                        new_inline_obj.tariff = new_obj  # set new tariff instance to new object
+                        new_inline_obj.save()
                 return redirect('admin_panel:list_tariff_admin')
             else:
-                obj.delete()
-                return render(request, self.template_name, context={self.context_object_name: form,
-                                                                    'formset': formset})
+                new_obj.delete()
+                return render(request, self.template_name, context={'form': form,
+                                                             'formset': formset})
         else:
-            return render(request, self.template_name, context={self.context_object_name: form})
+            return render(request, self.template_name, context={'form': form,
+                                                                'formset': formset})
 
 
 class DetailTariffView(AdminPermissionMixin, DetailView):
