@@ -1,4 +1,4 @@
-from django.views.generic import View
+from django.views.generic import View, DetailView
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
@@ -127,3 +127,9 @@ class DuplicatePaymentTicket(AdminPermissionMixin, View):
         else:
             return render(request, self.template_name, context={'form': form,
                                                                 'formset': formset})
+
+
+class DetailPaymentTicketView(AdminPermissionMixin, DetailView):
+    model = PaymentTicket
+    template_name = 'ticket/detail_payment_ticket.html'
+    context_object_name = 'ticket'

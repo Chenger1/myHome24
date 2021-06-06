@@ -148,6 +148,8 @@ urlpatterns = [
          name='bulk_delete_payment_tickets'),
     path('payment_ticket/index/duplicate_ticket/<int:pk>/', payment_ticket_views.DuplicatePaymentTicket.as_view(),
          name='duplicate_payment_ticket'),
+    path('payment_ticket/index/ticket/<int:pk>/', payment_ticket_views.DetailPaymentTicketView.as_view(),
+         name='detail_payment_ticket_admin'),
 
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),

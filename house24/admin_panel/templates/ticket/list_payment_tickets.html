@@ -132,19 +132,33 @@
                                     <td style="padding: 10px;">
                                         <input type="checkbox" class="delete_checkbox">
                                     </td>
-                                    <td>{{ ticket.number }}
+                                    <td><a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">{{ ticket.number }}</a>
                                     <span class="ticket_pk" style="display:none;">{{ ticket.pk }}</span></td>
                                     <td class="text-center">
                                         {% if account.status == 0 %}
-                                        <small class="label label-success">Оплачена</small>
+                                        <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
+                                            <small class="label label-success">Оплачена</small>
+                                        </a>
                                         {% elif account.status == 1 %}
-                                        <small class="label label-warning">Частично оплачена</small>
+                                        <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
+                                            <small class="label label-warning">Частично оплачена</small>
+                                        </a>
                                         {% else %}
-                                        <small class="label label-danger">Неоплачена</small>
+                                        <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
+                                            <small class="label label-danger">Неоплачена</small>
+                                        </a>
                                         {% endif %}
                                     </td>
-                                    <td>{{ ticket.ticket_date|filter_none }}</td>
-                                    <td>{{ ticket.ticket_month|filter_none }}</td>
+                                    <td>
+                                        <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
+                                        {{ ticket.ticket_date|filter_none }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
+                                        {{ ticket.ticket_month|filter_none }}
+                                        </a>
+                                    </td>
                                     <td>{% if ticket.flat %}
                                             {{ ticket.flat }}, {{ ticket.flat.house }}
                                         {% else %}
@@ -180,9 +194,6 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                        </div>
-                        <div class="card-footer">
-                            Количество счетов: <strong>{{ count }}</strong>
                         </div>
                     </div>
                 </div>
