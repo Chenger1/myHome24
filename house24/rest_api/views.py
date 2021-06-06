@@ -121,18 +121,6 @@ class GetMeterDataApiView(View):
         return result
 
 
-# class OwnerFlatList(generics.ListAPIView):
-#     model = Flat
-#     serializer_class = serializers.FlatSerializer
-#
-#     def get_queryset(self):
-#         house = self.request.query_params.get('pk')
-#         if house:
-#             queryset = self.model.objects.filter(owner__pk=house)
-#         else:
-#             queryset = []
-#         return queryset
-
 class OwnerFlatList(APIView):
     model = Flat
 
