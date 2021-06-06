@@ -7,7 +7,7 @@ from django.views.generic import View
 
 from rest_api import serializers
 
-from db.models.house import Section, Floor, Flat, TariffService, Meter
+from db.models.house import Section, Floor, Flat, TariffService, Meter, PersonalAccount
 
 from admin_panel.forms.meters_forms import CreateMeterForm
 
@@ -133,10 +133,41 @@ class OwnerFlatList(APIView):
         return Response(self.serialize(queryset))
 
     def serialize(self, queryset):
+        """
+        Serialize queryset in select2 widget format
+        :param queryset:
+        :return:
+        """
         result = {'results': []}
         for item in queryset:
             result['results'].append({
                 'id': item.pk,
                 'text': f'{item.number}, {item.house.name}'
+            })
+        return result
+
+
+class OwnerPersonalAccounts(APIView):
+    model = PersonalAccount
+
+    def get(self, request):
+        owner = request.GET.get('pk')
+        if owner:
+            queryset = self.model.objects.filter(flat__owner__pk=owner)
+        else:
+            queryset = self.model.objects.all()
+        return Response(self.serialize(queryset))
+
+    def serialize(self, queryset):
+        """
+        Serialize queryset in select2 widget format
+        :param queryset:
+        :return:
+        """
+        result = {'results': []}
+        for item in queryset:
+            result['results'].append({
+                'id': item.pk,
+                'text': item.number
             })
         return result

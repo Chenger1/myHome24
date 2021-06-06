@@ -13,4 +13,5 @@ urlpatterns = [
     path('create_meter_api/', views.CreateMeterApiView.as_view(), name='create_meter_api'),
     path('meters_list/', views.GetMeterDataApiView.as_view(), name='get_meters_list'),
     path('owner_flat_list/', views.OwnerFlatList.as_view(), name='owner_flat_list'),
+    path('owner_account_list/', views.OwnerPersonalAccounts.as_view(), name='owner_account_list'),
 ]
