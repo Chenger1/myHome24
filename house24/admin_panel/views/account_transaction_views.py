@@ -13,6 +13,14 @@ class ListAccountTransactionView(ListInstancesMixin):
     template_name = 'account_transaction/list_account_transaction_admin.html'
     search_form = AccountTransactionSearchForm
 
+    def get_context_data(self):
+        context = super().get_context_data()
+        incomes = Transaction.objects.filter(payment_item_type__exact=1).count()
+        outcomes = Transaction.objects.filter(payment_item_type__exact=0).count()
+        context.update({'incomes': incomes,
+                        'outcomes': outcomes})
+        return context
+
 
 class CreateIncomeView(AdminPermissionMixin, CreateView):
     model = Transaction

@@ -1,6 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load utils %}
 
 {% block title %}Касса{% endblock %}
 
@@ -127,7 +128,7 @@
                                 {% for transaction in instances %}
                                 <tr>
                                     <td><a href="">{{ transaction.number }}</a></td>
-                                    <td><a href="">{{ transaction.date|filter_none }}</a></td>
+                                    <td><a href="">{{ transaction.transaction_date|filter_none }}</a></td>
                                     <td><a href="">
                                         {% if transaction.status %}
                                             Проведен
@@ -136,7 +137,7 @@
                                         {% endif %}
                                     </a></td>
                                     <td><a href="">
-                                        {{ transaction.get_payment_item_type_display }}
+                                        {{ transaction.payment_item_type }}
                                     </a></td>
                                     <td><a href="">
                                         {{ transaction.owner|filter_none }}
@@ -145,9 +146,19 @@
                                         <a href="">{{ transaction.personal_account|filter_none }}</a>
                                     </td>
                                     <td><a href="">
-                                        {{ transaction.get_transaction_type_display }}
+                                        {% if transaction.payment_item_type.type == 0 %}
+                                            <span class="text-success">Приход</span>
+                                        {% else %}
+                                            <span class="text-danger">Расход</span>
+                                        {% endif %}
                                     </a></td>
-                                    <td><a href="">{{ transaction.amount }}</a></td>
+                                    <td><a href="">
+                                        {% if transaction.payment_item_type.type == 0 %}
+                                            <span class="text-success">{{ transaction.amount }}</span>
+                                        {% else %}
+                                            <span class="text-danger">{{ transaction.amount }}</span>
+                                        {% endif %}
+                                    </a></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
@@ -166,8 +177,8 @@
                             </table>
                         </div>
                         <div class="card-footer">
-                            <div>Проведен приход: <strong>{{ count }}</strong></div>
-                            <div>Проведен расход: <strong>{{ count }}</strong></div>
+                            <div>Проведен приход: <strong>{{ incomes }}</strong></div>
+                            <div>Проведен расход: <strong>{{ outcomes }}</strong></div>
                         </div>
                     </div>
                 </div>

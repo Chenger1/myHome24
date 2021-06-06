@@ -261,6 +261,10 @@ class Transaction(models.Model):
         else:
             return 1
 
+    @property
+    def transaction_date(self):
+        return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
+
 
 class MasterRequest(models.Model):
     type_choices = [
