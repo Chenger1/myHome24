@@ -1,4 +1,5 @@
 from rest_framework import generics
+
 from django.http import JsonResponse
 from django.views.generic import View
 
@@ -116,3 +117,16 @@ class GetMeterDataApiView(View):
                 'measure': inst.service.measure.measure_name
             }})
         return result
+
+
+class OwnerFlatList(generics.ListAPIView):
+    model = Flat
+    serializer_class = serializers.FlatSerializer
+
+    def get_queryset(self):
+        house = self.request.query_params.get('pk')
+        if house:
+            queryset = self.model.objects.filter(owner__pk=house)
+        else:
+            queryset = []
+        return queryset
