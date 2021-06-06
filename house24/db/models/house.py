@@ -237,7 +237,7 @@ class PaymentItem(models.Model):
     type = models.IntegerField(choices=type_choices)
 
 
-class Transfer(models.Model):
+class Transaction(models.Model):
     transfer_type = [
         (0, 'Приход'),
         (1, 'Расход')
