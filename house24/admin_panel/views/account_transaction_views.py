@@ -2,9 +2,10 @@ from django.views.generic import CreateView, UpdateView
 from django.urls import reverse_lazy
 from django.db.models import Sum
 
-from admin_panel.views.mixins import ListInstancesMixin
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.forms.account_transaction_forms import AccountTransactionSearchForm, CreateIncomeForm, CreateOutcomeForm
+from admin_panel.forms.account_transaction_forms import (AccountTransactionSearchForm, CreateIncomeForm,
+                                                         CreateOutcomeForm)
 
 from db.models.house import Transaction
 
@@ -67,3 +68,8 @@ class UpdateOutcomeView(AdminPermissionMixin, UpdateView):
     template_name = 'account_transaction/create_outcome_admin.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
+
+
+class DeleteTransactionView(DeleteInstanceView):
+    model = Transaction
+    redirect_url = 'admin_panel:list_account_transaction_admin'

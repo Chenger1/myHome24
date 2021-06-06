@@ -160,4 +160,6 @@ urlpatterns = [
          name='update_income_admin'),
     path('account-transaction/index/update_outcome/<int:pk>/', account_transaction_views.UpdateOutcomeView.as_view(),
          name='update_outcome_admin'),
+    path('account-transaction/index/delete_transaction/<int:pk>/',
+         account_transaction_views.DeleteTransactionView.as_view(), name='delete_transaction_admin'),
 ]
