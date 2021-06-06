@@ -94,16 +94,7 @@ class BaseCloner {
 
 	deleteRowWithoutReload(element){
 		let local_url = this.url; // we have to bind method locally because of specifi behaviour of "this" keyword
-		let local_deleteRow = this.hideRow.bind(this);// we have to bind method locally because of specifi behaviour of "this" keyword
-		let pk = $(element).attr('name');
-		$.ajax({
-			method: 'GET',
-			url: local_url,
-			data: {'pk': pk},
-			success: function(response){
-				local_deleteRow(element);
-			}
-		})
+		this.hideRow(element);
 	}
 
 	updateIndex(element){
