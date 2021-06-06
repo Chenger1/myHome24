@@ -45,7 +45,7 @@ class CreateIncomeForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form-control to_valid',
-                                               'id': 'number'}),
+                                               'id': 'number', 'min': '0'}),
             'created': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
                                                                    'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                                    'class': "form-control to_valid", 'id': 'created'}),
@@ -71,7 +71,7 @@ class CreateOutcomeForm(forms.ModelForm):
         exclude = ('owner', 'personal_account')
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form-control to_valid',
-                                               'id': 'number'}),
+                                               'id': 'number', 'min': '0'}),
             'created': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
                                                                    'value': datetime.datetime.now().strftime(
                                                                        '%Y-%m-%d'),

@@ -67,7 +67,7 @@ class CreateMeterForm(forms.ModelForm):
                 'class': "form-control to_valid",
             }),
             'status': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}),
-            'data': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'data'}),
+            'data': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'data', 'min': '0'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),

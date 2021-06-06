@@ -248,14 +248,14 @@ class Transaction(models.Model):
                                          blank=True, null=True)
     payment_item_type = models.ForeignKey(PaymentItem, related_name='transfers', on_delete=models.CASCADE,
                                           blank=True, null=True)
-    amount = models.IntegerField()
+    amount = models.FloatField()
     status = models.BooleanField(default=True)
     manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
 
     @classmethod
     def get_next_income_number(cls):
-        last = cls.objects.filter(payment_item_type__exact=1).last()
+        last = cls.objects.filter(payment_item_type__type=0).last()
         if last:
             return last.pk + 1
         else:
@@ -263,7 +263,7 @@ class Transaction(models.Model):
 
     @classmethod
     def get_next_outcome_number(cls):
-        last = cls.objects.filter(payment_item_type__exact=0).last()
+        last = cls.objects.filter(payment_item_type__type=1).last()
         if last:
             return last.pk + 1
         else:

@@ -1,5 +1,6 @@
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
+from django.db.models import Sum
 
 from admin_panel.views.mixins import ListInstancesMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -15,10 +16,10 @@ class ListAccountTransactionView(ListInstancesMixin):
 
     def get_context_data(self):
         context = super().get_context_data()
-        incomes = Transaction.objects.filter(payment_item_type__exact=1).count()
-        outcomes = Transaction.objects.filter(payment_item_type__exact=0).count()
-        context.update({'incomes': incomes,
-                        'outcomes': outcomes})
+        incomes = Transaction.objects.filter(payment_item_type__type=0).aggregate(Sum('amount'))
+        outcomes = Transaction.objects.filter(payment_item_type__type=1).aggregate(Sum('amount'))
+        context.update({'incomes': incomes['amount__sum'],
+                        'outcomes': outcomes['amount__sum']})
         return context
 
 
