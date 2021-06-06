@@ -12,7 +12,7 @@ class Role(models.Model):
 
     name = models.CharField(max_length=100)
     statistic = models.BooleanField(default=1)
-    cashbox = models.BooleanField(default=1)
+    account_transaction = models.BooleanField(default=1)
     ticket = models.BooleanField(default=1)
     personal_account = models.BooleanField(default=1)
     flats = models.BooleanField(default=1)
@@ -40,6 +40,8 @@ class Role(models.Model):
             return 'admin_panel:list_payment_ticket_admin'
         elif self.meters:
             return 'admin_panel:list_meters_admin'
+        elif self.account_transaction:
+            return 'admin_panel:list_account_transaction_admin'
         elif self.owners:
             return 'admin_panel:list_owners_admin'
         elif self.houses:

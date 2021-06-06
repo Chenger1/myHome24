@@ -12,6 +12,7 @@ from admin_panel.views.mixins import FlatOwner
 from admin_panel.views import meter_views
 from admin_panel.views import master_request_views
 from admin_panel.views import payment_ticket_views
+from admin_panel.views import account_transaction_views
 
 
 app_name = 'admin_panel'
@@ -147,4 +148,8 @@ urlpatterns = [
          name='bulk_delete_payment_tickets'),
     path('payment_ticket/index/duplicate_ticket/<int:pk>/', payment_ticket_views.DuplicatePaymentTicket.as_view(),
          name='duplicate_payment_ticket'),
+
+    # account-transaction
+    path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),
+         name='list_account_transaction_admin'),
 ]

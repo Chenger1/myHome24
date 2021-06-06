@@ -125,7 +125,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% endif %}
                     {% if request.user.role.cashbox %}
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'admin_panel:list_account_transaction_admin' %}" class="nav-link
+                        {% if 'account-transaction/index/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-dollar-sign" aria-hidden="true"></i>
                             <p>Касса</p>
                         </a>

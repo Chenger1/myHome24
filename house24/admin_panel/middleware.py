@@ -22,6 +22,8 @@ class AdminCheckMiddleware(MiddlewareMixin):
                     return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'payment_ticket/index/' in request.path and not request.user.role.ticket:
                     return redirect(request.path.role.get_available_url_pattern_by_role())
+                elif 'account-transaction/index/' in request.path and not request.user.role.cashbox:
+                    return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'houses/index/' in request.path and not request.user.role.houses:
                     return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'flats/index/' in request.path and not request.user.role.flats:
