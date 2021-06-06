@@ -3,7 +3,7 @@ from django.urls import reverse_lazy
 
 from admin_panel.views.mixins import ListInstancesMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.forms.account_transaction_forms import AccountTransactionSearchForm, CreateIncomeForm
+from admin_panel.forms.account_transaction_forms import AccountTransactionSearchForm, CreateIncomeForm, CreateOutcomeForm
 
 from db.models.house import Transaction
 
@@ -33,5 +33,20 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
         if self.request.POST:
             form = self.form_class(self.request.POST)
         else:
-            form = self.form_class(initial={'number': self.model.get_next_transaction_number()})
+            form = self.form_class(initial={'number': self.model.get_next_income_number()})
+        return form
+
+
+class CreateOutcomeView(AdminPermissionMixin, CreateView):
+    model = Transaction
+    form_class = CreateOutcomeForm
+    template_name = 'account_transaction/create_outcome_admin.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST)
+        else:
+            form = self.form_class(initial={'number': self.model.get_next_outcome_number()})
         return form

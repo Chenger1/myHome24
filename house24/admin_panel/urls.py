@@ -153,5 +153,7 @@ urlpatterns = [
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),
          name='list_account_transaction_admin'),
     path('account-transaction/index/create_income/', account_transaction_views.CreateIncomeView.as_view(),
-         name='create_income_admin')
+         name='create_income_admin'),
+    path('account-transaction/index/create_outcome/', account_transaction_views.CreateOutcomeView.as_view(),
+         name='create_outcome_admin'),
 ]

@@ -56,3 +56,29 @@ class CreateIncomeForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
                                                  'id': 'description', 'style': 'resize:none;'})
         }
+
+
+class CreateOutcomeForm(forms.ModelForm):
+    payment_item_type = forms.ModelChoiceField(queryset=PaymentItem.objects.filter(type=1),
+                                               widget=forms.Select(attrs={'id': 'payment_type',
+                                                                          'class': 'form-control to_valid'}))
+    manager = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
+                                     widget=forms.Select(attrs={'id': 'manager', 'class': 'form-control to_valid'}),
+                                     required=False)
+
+    class Meta:
+        model = Transaction
+        exclude = ('owner', 'personal_account')
+        widgets = {
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid',
+                                               'id': 'number'}),
+            'created': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
+                                                                   'value': datetime.datetime.now().strftime(
+                                                                       '%Y-%m-%d'),
+                                                                   'class': "form-control to_valid", 'id': 'created'}),
+            'amount': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'amount'}),
+            'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
+                                                 'id': 'status'}),
+            'description': forms.Textarea(attrs={'class': 'form-control to_valid',
+                                                 'id': 'description', 'style': 'resize:none;'})
+        }

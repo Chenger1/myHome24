@@ -254,8 +254,16 @@ class Transaction(models.Model):
     description = models.TextField()
 
     @classmethod
-    def get_next_transaction_number(cls):
-        last = cls.objects.last()
+    def get_next_income_number(cls):
+        last = cls.objects.filter(payment_item_type__exact=1).last()
+        if last:
+            return last.pk + 1
+        else:
+            return 1
+
+    @classmethod
+    def get_next_outcome_number(cls):
+        last = cls.objects.filter(payment_item_type__exact=0).last()
         if last:
             return last.pk + 1
         else:

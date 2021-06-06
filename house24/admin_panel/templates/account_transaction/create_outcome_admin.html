@@ -1,0 +1,198 @@
+{% extends "admin_base.html" %}
+{% load static %}
+{% load utils %}
+
+{% block title %}
+{% if form.instance.pk %}
+Ведомость - {{ form.number.initial }}
+{% else %}
+Новая расходная ведомость
+{% endif %}
+{% endblock %}
+
+{% block head %}
+<script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+{% include 'errors.html' with errors=form.errors %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">
+                        {% if form.instance.pk %}
+                        Ведомость - {{ form.number.initial }}
+                        {% else %}
+                        Новая расходная ведомость
+                        {% endif %}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'admin_panel:list_account_transaction_admin' %}"
+                                   style="color: black;">Платежи</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Новая расходная ведомость</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="row" style="margin-bottom:10px;">
+                            <div class="col-12 col-md-7 col-lg-6">
+                                <div class="page-header">
+                                    <div class="form-group" style="margin: 0; flex-basis: 45%;">
+                                        <div class="input-group">
+                                            <div class="input-group-addon to_valid">
+                                                №
+                                            </div>
+                                            {% if next_number %}
+                                            <input type="text" class="form-control to_valid"
+                                                   value="{{ next_number }}" name="number">
+                                            {% else %}
+                                            {{ form.number }}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <span style="margin: 0 15px;">от</span>
+                                    <div class="form-group" style="margin: 0; flex-basis: 45%;">
+                                        <div class="input-group">
+                                            {{ form.created }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card card-default">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 offset-sm-6">
+                                        <div class="form-group form-check">
+                                            {{ form.status }}
+                                            <label for="is_done" class="form-check-label">Проведена</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="payment_type">Статья</label>
+                                            {{ form.payment_item_type }}
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="amount">Сумма</label>
+                                            {{ form.amount }}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <div class="form-group">
+                                            <label for="status">Менеджер</label>
+                                            <select name="manager" id="manager" class="form-control to_valid">
+                                                <option value disabled>---------</option>
+                                                {% for choice in form.fields.manager.choices.queryset %}
+                                                    <option value="{{ choice.pk }}">{{ choice.role.name }} - {{ choice }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="description">Комментарии</label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
+                                <div class="col-12 text-right">
+                                    <a href="{% url 'admin_panel:list_payment_ticket_admin' %}"
+                                       class="btn btn-default">Отмена</a>
+                                    <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+<script>
+    $('.to_valid').each(function(){
+        $(this).on('change', function(){
+            if($(this).val() != ''){
+                colorize_input_valid(this);
+            }else{
+                colorize_input_invalid(this);
+            }
+        })
+    })
+</script>
+<script>
+    $('button[type=submit]').on('click', function(e){
+        $('.to_valid').each(function(){
+            if($(this).val() == '' && $(this).attr('required')){
+                e.preventDefault();
+                colorize_input_invalid(this);
+            }
+        })
+    })
+</script>
+<script>
+    $(document).ready(function(){
+        $('#owner').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid',
+        })
+        $('#account').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid',
+        })
+        $('#owner').on('change', function(){
+            colorize_input_valid(this);
+            const pk = $(this).find(':selected').val();
+            $('#account').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                containerCssClass: 'to_valid',
+                ajax: {
+                    url: '{% url "rest_api:owner_account_list" %}',
+                    data: {'pk': pk}
+                }
+            }).trigger('change.select2');
+        })
+        $('#account').on('change', function(){
+            colorize_input_valid(this);
+        })
+    })
+</script>   
+{% endblock %}
