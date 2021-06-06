@@ -169,6 +169,17 @@
         });
         $('#id_owner').on('change', function(e){
           colorize_input_valid(this);
+          let pk = $(this).find(':selected').val();
+          $('#id_flat').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid',
+            ajax: {
+                url: '{% url "rest_api:owner_flat_list" %}',
+                data: {'pk': pk}
+            }
+          }).trigger('change.select2');
+
         })
         $('#id_flat').on('change', function(e){
           colorize_input_valid(this);

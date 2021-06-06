@@ -42,6 +42,4 @@ function append_select_section_floor(selector, data){
 }
 function append_select_flat(selector, data){
     $(selector).append('<option value="'+ data['id'] +'">'+ data['number'] +'</options>');
-    // $('#owner').text(data['owner']['first_name']+ ' ' +data['owner']['last_name']);
-    // $('#phone').text(data['owner']['phone_number']);
 }
