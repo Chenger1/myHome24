@@ -236,12 +236,11 @@ class PaymentItem(models.Model):
     name = models.CharField(max_length=100)
     type = models.IntegerField(choices=type_choices)
 
+    def __str__(self):
+        return self.name
+
 
 class Transaction(models.Model):
-    transfer_type = [
-        (0, 'Приход'),
-        (1, 'Расход')
-    ]
     number = models.IntegerField()
     created = models.DateField()
     owner = models.ForeignKey(User, related_name='owner_transfer', on_delete=models.CASCADE, blank=True, null=True)
@@ -253,6 +252,14 @@ class Transaction(models.Model):
     status = models.BooleanField(default=True)
     manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
+
+    @classmethod
+    def get_next_transaction_number(cls):
+        last = cls.objects.last()
+        if last:
+            return last.pk + 1
+        else:
+            return 1
 
 
 class MasterRequest(models.Model):

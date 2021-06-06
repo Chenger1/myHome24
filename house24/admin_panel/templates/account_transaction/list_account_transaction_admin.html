@@ -75,7 +75,7 @@
                             aria-haspopup="true" aria-expanded="false">Выберите действие
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'admin_panel:create_account_admin' %}">Добавить приход</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_income_admin' %}">Добавить приход</a>
                         <a class="dropdown-item" href="{% url 'admin_panel:create_account_admin' %}">Добавить расход</a>
                         <a class="dropdown-item" href="#">Выгрузить в Excel</a>
                     </div>
@@ -151,11 +151,11 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:update_account_admin' account.pk %}">
+                                               href="">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:delete_account_admin' account.pk %}">
+                                               href="">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>

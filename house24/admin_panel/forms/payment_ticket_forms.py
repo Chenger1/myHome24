@@ -46,7 +46,7 @@ class CreatePaymentTicketForm(forms.ModelForm):
             'start': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
                                                                  'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                                  'class': "form-control to_valid", 'id': 'start'}),
-            'end':forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
+            'end': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
                                                               'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                               'class': "form-control to_valid", 'id': 'end'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
