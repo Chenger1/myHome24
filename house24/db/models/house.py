@@ -238,23 +238,33 @@ class PaymentItem(models.Model):
 
 
 class Income(models.Model):
+    status_choices = [
+        (0, 'Непроведен'),
+        (1, 'Проведен')
+    ]
+
     number = models.IntegerField()
     created = models.DateField()
     owner = models.ForeignKey(User, related_name='owner_incomes', on_delete=models.CASCADE)
     personal_account = models.ForeignKey(PersonalAccount, related_name='incomes', on_delete=models.CASCADE)
     type = models.ForeignKey(PaymentItem, related_name='incomes', on_delete=models.CASCADE)
     sum = models.IntegerField()
-    status = models.BooleanField(default=0)
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     manager = models.ForeignKey(User, related_name='master_incomes', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
 
 
 class Outcome(models.Model):
+    status_choices = [
+        (0, 'Непроведен'),
+        (1, 'Проведен')
+    ]
+
     number = models.IntegerField()
     created = models.DateField()
     type = models.ForeignKey(PaymentItem, related_name='outcomes', on_delete=models.CASCADE)
     sum = models.IntegerField()
-    status = models.BooleanField(default=0)
+    status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     manager = models.ForeignKey(User, related_name='outcomes', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
 
