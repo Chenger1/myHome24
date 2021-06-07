@@ -148,7 +148,13 @@
                                         <small class="label label-danger">{{ user.get_status_display }}</small>
                                         {% endif %}
                                     </td>
-                                    <td>{{ user.has_debt }}</td>
+                                    <td>
+                                        {% if user.has_debt %}
+                                            Да
+                                        {% else %}
+                                            Нет
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"

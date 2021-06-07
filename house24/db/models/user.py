@@ -145,5 +145,14 @@ class User(CustomAbstractUser):
             return last_pk + 1
         return 1
 
+    @property
+    def has_debt(self):
+        if self.flats:
+            for flat in self.flats.all():
+                if flat.tickets:
+                    return flat.tickets.filter(status__in=(1, 2)).exists()
+            return False
+        return False
+
     def __str__(self):
         return self.full_name
