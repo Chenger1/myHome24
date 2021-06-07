@@ -157,12 +157,30 @@
 </script>
 <script>
     $('button[type=submit]').on('click', function(e){
+        e.preventDefault();
         $('.to_valid').each(function(){
             if($(this).val() == '' && $(this).attr('required')){
-                e.preventDefault();
                 colorize_input_invalid(this);
             }
         })
+            const amount = parseFloat($('#amount').val());
+            let total_balance = 0;
+            $.ajax({
+                url: '{% url "rest_api:get_total_balance" %}',
+                type: 'GET',
+            })
+            .done(function(response){
+                total_balance = response['total_cash'];
+                if(amount > total_balance){
+                    confirm('Сумма расходной ведомости больше баланса кассы');
+                }else{
+                    $('form').submit();
+                }
+            })
+            .fail(function() {
+                confirm('Произошла ошибка при сохранении расходной ведомости');
+                e.preventDefault();
+            })
     })
 </script>
 <script>

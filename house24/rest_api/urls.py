@@ -16,4 +16,5 @@ urlpatterns = [
     path('owner_account_list/', views.OwnerPersonalAccounts.as_view(), name='owner_account_list'),
     path('personal_account_tickets_list/', views.PersonalAccountPaymentTicketList.as_view(),
          name='personal_account_tickets_list'),
+    path('total_balance/', views.TotalBalance.as_view(), name='get_total_balance'),
 ]
