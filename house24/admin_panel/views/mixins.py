@@ -78,9 +78,12 @@ class FlatOwner(View):
     model = Flat
 
     def get(self, request):
+        if not request.GET.get('pk'):
+            return JsonResponse({})
         flat = get_object_or_404(self.model, pk=request.GET.get('pk'))
-        owner = dict()
         if flat.owner:
             owner = {'full_name': flat.owner.full_name,
                      'phone': flat.owner.phone_number}
-        return JsonResponse(owner)
+            return JsonResponse(owner)
+        else:
+            return JsonResponse({})

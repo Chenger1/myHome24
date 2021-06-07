@@ -152,6 +152,8 @@ urlpatterns = [
          name='detail_payment_ticket_admin'),
     path('payment_ticket/index/account/<int:pk>/', payment_ticket_views.ListTicketsByAccount.as_view(),
          name='list_payment_tickets_by_account'),
+    path('payment_ticket/index/account/create/<int:account_pk>/', payment_ticket_views.CreatePaymentTicketView.as_view(),
+         name='create_ticket_with_account'),
 
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),

@@ -2,14 +2,13 @@ from django.views.generic import View, DetailView
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
-from django.db.models import Sum
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearch, CreatePaymentTicketForm, TicketServiceFormset
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PaymentTicket, PaymentTicketService
+from db.models.house import PaymentTicket, PaymentTicketService, PersonalAccount
 
 import json
 
@@ -30,15 +29,24 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
     template_name = 'ticket/create_payment_ticket_admin.html'
     redirect_url = 'admin_panel:list_payment_ticket_admin'
 
-    def get(self, request):
-        form = CreatePaymentTicketForm()
+    def get(self, request, account_pk=None):
+        if account_pk:
+            account = get_object_or_404(PersonalAccount, pk=account_pk)
+            form = CreatePaymentTicketForm(initial={'house': account.flat.house,
+                                                    'section': account.flat.section,
+                                                    'flat': account.flat,
+                                                    'personal_account': account,
+                                                    'tariff': account.flat.tariff,
+                                                    })
+        else:
+            form = CreatePaymentTicketForm()
         formset = TicketServiceFormset()
         next_number = self.model.get_next_ticket_number()
         return render(request, self.template_name, context={'form': form,
                                                             'formset': formset,
                                                             'next_number': next_number})
 
-    def post(self, request):
+    def post(self, request, account_pk=None):
         form = CreatePaymentTicketForm(request.POST)
         formset = TicketServiceFormset(request.POST)
         if form.is_valid() and formset.is_valid():
