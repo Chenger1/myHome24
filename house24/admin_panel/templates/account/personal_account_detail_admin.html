@@ -61,7 +61,7 @@
                                style="float:right; margin-left:5px;">
                                 <i class="far fa-copy"></i> Оформить квитанцию
                             </a>
-                            <a href="" class="btn btn-default btn-sm"
+                            <a href="{% url 'admin_panel:create_income_with_account' account.pk %}" class="btn btn-default btn-sm"
                                style="float:right; margin-left:5px;">
                                 <i class="fas fa-dollar-sign"></i> Принять платеж
                             </a>

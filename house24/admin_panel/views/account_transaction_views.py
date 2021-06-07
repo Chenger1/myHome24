@@ -9,7 +9,7 @@ from admin_panel.forms.account_transaction_forms import (AccountTransactionSearc
                                                          CreateOutcomeForm)
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import Transaction
+from db.models.house import Transaction, PersonalAccount
 
 
 class ListAccountTransactionView(ListInstancesMixin):
@@ -33,12 +33,22 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
     template_name = 'account_transaction/create_income_admin.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
+    parent_object = None
+
+    def get(self, request, *args, **kwargs):
+        self.parent_object = get_object_or_404(PersonalAccount, pk=kwargs.get('pk'))
+        return super().get(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
         if self.request.POST:
             form = self.form_class(self.request.POST)
         else:
-            form = self.form_class(initial={'number': self.model.get_next_income_number()})
+            if self.parent_object:
+                form = self.form_class(initial={'number': self.model.get_next_income_number(),
+                                                'owner': self.parent_object.flat.owner.pk,
+                                                'personal_account': self.parent_object.pk})
+            else:
+                form = self.form_class(initial={'number': self.model.get_next_income_number()})
         return form
 
 
@@ -142,4 +152,3 @@ class ListIncomeTransactionByAccount(ListInstancesMixin):
                         'outcomes': outcomes})
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
-

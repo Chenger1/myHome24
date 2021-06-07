@@ -175,4 +175,6 @@ urlpatterns = [
          name='duplicate_outcome_admin'),
     path('account-transaction/index/account/<int:pk>/', account_transaction_views.ListIncomeTransactionByAccount.as_view(),
          name='list_transactions_by_account'),
+    path('account-transaction/index/create_income/account/<int:pk>/', account_transaction_views.CreateIncomeView.as_view(),
+         name='create_income_with_account'),
 ]
