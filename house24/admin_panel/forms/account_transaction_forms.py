@@ -54,7 +54,8 @@ class CreateIncomeForm(forms.ModelForm):
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
                                                  'id': 'status'}),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
-                                                 'id': 'description', 'style': 'resize:none;'})
+                                                 'id': 'description', 'style': 'resize:none;'}),
+            'payment_ticket': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'payment_ticket'})
         }
 
 
@@ -68,7 +69,7 @@ class CreateOutcomeForm(forms.ModelForm):
 
     class Meta:
         model = Transaction
-        exclude = ('owner', 'personal_account')
+        exclude = ('owner', 'personal_account', 'transaction')
         widgets = {
             'number': forms.NumberInput(attrs={'class': 'form-control to_valid',
                                                'id': 'number', 'min': '0'}),

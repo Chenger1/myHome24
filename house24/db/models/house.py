@@ -184,6 +184,9 @@ class PaymentTicket(models.Model):
     def ticket_date(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
 
+    def __str__(self):
+        return f'Квитанция №{self.number}'
+
 
 class PaymentTicketService(models.Model):
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='services', on_delete=models.CASCADE)
@@ -252,6 +255,8 @@ class Transaction(models.Model):
     status = models.BooleanField(default=True)
     manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()
+    payment_ticket = models.ForeignKey(PaymentTicket, related_name='transactions', on_delete=models.SET_NULL,
+                                       blank=True, null=True)
 
     @classmethod
     def get_next_income_number(cls):

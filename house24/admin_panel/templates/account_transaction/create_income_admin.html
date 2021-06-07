@@ -121,6 +121,10 @@
                                                 {% endfor %}
                                             </select>
                                         </div>
+                                        <div class="form-group">
+                                            <label for="payment_ticket">Квитанция</label>
+                                            {{ form.payment_ticket }}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -178,12 +182,17 @@
             theme: 'bootstrap4',
             width: '100%',
             containerCssClass: 'to_valid',
-        })
+        });
         $('#account').select2({
             theme: 'bootstrap4',
             width: '100%',
             containerCssClass: 'to_valid',
-        })
+        });
+        $('#payment_ticket').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+            containerCssClass: 'to_valid',
+        });
         $('#owner').on('change', function(){
             colorize_input_valid(this);
             const pk = $(this).find(':selected').val();
@@ -199,6 +208,16 @@
         })
         $('#account').on('change', function(){
             colorize_input_valid(this);
+            const pk = $(this).find(':selected').val();
+            $('#payment_ticket').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                containerCssClass: 'to_valid',
+                ajax: {
+                    url: '{% url "rest_api:personal_account_tickets_list" %}',
+                    data: {'pk': pk}
+                }
+            })
         })
     })
 </script>   
