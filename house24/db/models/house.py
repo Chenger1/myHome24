@@ -184,6 +184,14 @@ class PaymentTicket(models.Model):
     def ticket_date(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
 
+    @classmethod
+    def total_debt(cls):
+        return cls.objects.filter(status=2).aggregate(models.Sum('sum'))['sum__sum'] or 0
+
+    @classmethod
+    def total_paid(cls):
+        return cls.objects.filter(status__in=(0, 1)).aggregate(models.Sum('sum'))['sum__sum'] or 0
+
     def __str__(self):
         return f'Квитанция №{self.number}'
 
@@ -289,6 +297,12 @@ class Transaction(models.Model):
     @property
     def transaction_date(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
+
+    @classmethod
+    def total_cash(cls):
+        income = cls.objects.filter(payment_item_type__type=0).aggregate(models.Sum('amount'))['amount__sum'] or 0
+        outcome = cls.objects.filter(payment_item_type__type=1).aggregate(models.Sum('amount'))['amount__sum'] or 0
+        return income - outcome
 
 
 class MasterRequest(models.Model):

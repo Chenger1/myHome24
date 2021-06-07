@@ -72,15 +72,11 @@ class StatisticController:
 
     @staticmethod
     def prepare_transaction():
-        income = Transaction.objects.filter(payment_item_type__type=0).aggregate(Sum('amount'))['amount__sum'] or 0
-        outcome = Transaction.objects.filter(payment_item_type__type=1).aggregate(Sum('amount'))['amount__sum'] or 0
-        total_cash = income - outcome
-
-        total_debt = PaymentTicket.objects.filter(status=2).aggregate(Sum('sum'))['sum__sum'] or 0
-        total_paid = PaymentTicket.objects.filter(status__in=(0, 1)).aggregate(Sum('sum'))['sum__sum'] or 0
+        total_debt = PaymentTicket.total_debt()
+        total_paid = PaymentTicket.total_paid()
         balance = total_paid - total_debt
 
-        return total_cash, total_debt, balance
+        return Transaction.total_cash(), total_debt, balance
 
     @staticmethod
     def prepare_income():
