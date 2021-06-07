@@ -143,7 +143,7 @@
                                         {% if user.status == 0 %}
                                         <small class="label label-success">{{ user.get_status_display }}</small>
                                         {% elif user.status == 1 %}
-                                        <small class="label label-blue">{{ user.get_status_display }}</small>
+                                        <small class="label label-warning">{{ user.get_status_display }}</small>
                                         {% else %}
                                         <small class="label label-danger">{{ user.get_status_display }}</small>
                                         {% endif %}
