@@ -7,7 +7,7 @@ from django.views.generic import View
 
 from rest_api import serializers
 
-from db.models.house import Section, Floor, Flat, TariffService, Meter, PersonalAccount, PaymentTicket
+from db.models.house import Section, Floor, Flat, TariffService, Meter, PersonalAccount, PaymentTicket, Transaction
 
 from admin_panel.forms.meters_forms import CreateMeterForm
 
@@ -197,3 +197,8 @@ class PersonalAccountPaymentTicketList(APIView):
                 'text': item.__str__()
             })
         return result
+
+
+class TotalBalance(APIView):
+    def get(self, request):
+        return Response({'total_cash': Transaction.total_cash()})
