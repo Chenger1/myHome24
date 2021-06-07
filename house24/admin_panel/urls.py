@@ -150,6 +150,8 @@ urlpatterns = [
          name='duplicate_payment_ticket'),
     path('payment_ticket/index/ticket/<int:pk>/', payment_ticket_views.DetailPaymentTicketView.as_view(),
          name='detail_payment_ticket_admin'),
+    path('payment_ticket/index/account/<int:pk>/', payment_ticket_views.ListTicketsByAccount.as_view(),
+         name='list_payment_tickets_by_account'),
 
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),

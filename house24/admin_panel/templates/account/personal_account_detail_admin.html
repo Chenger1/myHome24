@@ -139,7 +139,7 @@
                                                 <p><a href="{% url 'admin_panel:list_meter_history' account.flat.pk %}">Посмотреть показания счетчиков</a></p>
                                             {% endif %}
                                             <p><a href="{% url 'admin_panel:list_transactions_by_account' account.pk %}">Посмотреть приходы</a></p>
-                                            <p><a href="">Посмотреть квитанции</a></p>
+                                            <p><a href="{% url 'admin_panel:list_payment_tickets_by_account' account.pk %}">Посмотреть квитанции</a></p>
                                         </div>
                                     </div>
                                 </div>

@@ -2,6 +2,7 @@ from django.views.generic import View, DetailView
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.db.models import Sum
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -139,3 +140,22 @@ class DetailPaymentTicketView(AdminPermissionMixin, DetailView):
     model = PaymentTicket
     template_name = 'ticket/detail_payment_ticket.html'
     context_object_name = 'ticket'
+
+
+class ListTicketsByAccount(ListInstancesMixin):
+    model = PaymentTicket
+    template_name = 'ticket/list_payment_tickets.html'
+    search_form = PaymentTicketSearch
+    pk = None
+
+    def get(self, request, pk=None):
+        self.pk = pk
+        return super().get(request)
+
+    def get_queryset(self):
+        return self.model.objects.filter(personal_account__pk=self.pk)
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['statistic'] = MinimalStatisticCollector().prepare_statistic()
+        return context
