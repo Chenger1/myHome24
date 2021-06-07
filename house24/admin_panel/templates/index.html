@@ -31,14 +31,14 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>111</h3>
+                            <h3>{{ statistic.houses }}</h3>
 
                             <p>Домой</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-building"></i>
                         </div>
-                        <a href="#" class="small-box-footer">
+                        <a href="{% url 'admin_panel:list_houses_admin' %}" class="small-box-footer">
                             Перейти в дома <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -47,13 +47,13 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>111</h3>
+                            <h3>{{ statistic.users }}</h3>
                             <p>Активных владельцев</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-users"></i>
                         </div>
-                        <a href="/admin/user/index" class="small-box-footer">
+                        <a href="{% url 'admin_panel:list_owners_admin' %}" class="small-box-footer">
                             Перейти к владельцам <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -61,13 +61,13 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>111</h3>
+                            <h3>{{ statistic.requests_in_work }}</h3>
                             <p>Заявок мастера в работе</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-wrench"></i>
                         </div>
-                        <a href="/admin/master-request/index" class="small-box-footer">
+                        <a href="{% url 'admin_panel:list_master_requests_admin' %}" class="small-box-footer">
                             Перейти в заявки <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -75,13 +75,13 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>111</h3>
+                            <h3>{{ statistic.flats }}</h3>
                             <p>Квартир</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-key"></i>
                         </div>
-                        <a href="/admin/flat/index" class="small-box-footer">
+                        <a href="{% url 'admin_panel:list_flats_admin' %}" class="small-box-footer">
                             Перейти в квартиры <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -89,13 +89,13 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-green">
                         <div class="inner">
-                            <h3>111</h3>
+                            <h3>{{ statistic.accounts }}</h3>
                             <p>Лицевых счетов</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-child"></i>
                         </div>
-                        <a href="/admin/account/index" class="small-box-footer">
+                        <a href="{% url 'admin_panel:list_accounts_admin' %}" class="small-box-footer">
                             Перейти к счетам <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -103,13 +103,13 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-yellow">
                         <div class="inner">
-                            <h3>111</h3>
+                            <h3>{{ statistic.new_requests }}</h3>
                             <p>Новых заявок мастера</p>
                         </div>
                         <div class="icon">
                             <i class="fa fa-user-plus"></i>
                         </div>
-                        <a href="/admin/master-request/index" class="small-box-footer">
+                        <a href="{% url 'admin_panel:list_master_requests_admin' %}" class="small-box-footer">
                             Перейти в заявки <i class="fa fa-arrow-circle-right"></i>
                         </a>
                     </div>
@@ -147,7 +147,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Задолженность по счетам, грн</span>
-                            <span class="info-box-number">93,139</span>
+                            <span class="info-box-number">{{ statistic.total_debt }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -156,7 +156,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Баланс по счетам, грн</span>
-                            <span class="info-box-number">1,410</span>
+                            <span class="info-box-number">{{ statistic.total_account_balance }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -165,7 +165,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Состояние кассы, грн</span>
-                            <span class="info-box-number">410</span>
+                            <span class="info-box-number">{{ statistic.total_cash }}</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -207,8 +207,13 @@
 <script src="{% static 'admin_panel/plugins/chart.js/Chart.min.js' %}"></script>
 
 <script>
+    const current_year = new Date().getFullYear();
+    const month =   ['янв., '+current_year, 'февр., '+ current_year, 'март, '+current_year, 'апр., '+current_year,
+                     'май, '+current_year, 'июню, '+current_year, 'июль, '+ current_year, 'авг., '+current_year,
+                     'сент., '+current_year, 'окт., '+current_year, 'нояб., '+current_year, 'дек., '+current_year]
+
     var areaChartData = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels  : month,
       datasets: [
         {
           label               : 'Погашение задолженности',
@@ -219,7 +224,7 @@
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+          data                : [{% for value in statistic.paid_ticket.values %}{{ value }},{% endfor %}]
         },
         {
           label               : 'Задолженность',
@@ -230,7 +235,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, 80, 81, 56, 55, 40]
+          data                : [{% for value in statistic.unpaid_ticket.values %}{{ value }},{% endfor %}]
         },
       ]
     }
@@ -260,7 +265,7 @@
     //- BAR CHART - income outcome
     //-------------
     var areaChartData2 = {
-      labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+      labels  : month,
       datasets: [
         {
           label               : 'Приход',
@@ -271,7 +276,7 @@
           pointStrokeColor    : 'rgba(60,141,188,1)',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48,]
+          data                : [{% for value in statistic.transaction_chart_income.values %}{{ value }},{% endfor %}]
         },
         {
           label               : 'Расход',
@@ -282,7 +287,7 @@
           pointStrokeColor    : '#c1c7d1',
           pointHighlightFill  : '#fff',
           pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [65, 59, ]
+          data                : [{% for value in statistic.transaction_chart_outcome.values %}{{ value }},{% endfor %}]
         },
       ]
     }

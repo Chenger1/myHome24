@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.account_forms import AccountSearchForm, CreatePersonalAccountForm
+from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import PersonalAccount
 
@@ -13,6 +14,11 @@ class ListPersonalAccountsView(ListInstancesMixin):
     model = PersonalAccount
     search_form = AccountSearchForm
     template_name = 'account/list_accounts_admin.html'
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['statistic'] = MinimalStatisticCollector().prepare_statistic()
+        return context
 
 
 class CreatePersonalAccountView(AdminPermissionMixin, CreateView):

@@ -7,6 +7,7 @@ from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.account_transaction_forms import (AccountTransactionSearchForm, CreateIncomeForm,
                                                          CreateOutcomeForm)
+from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import Transaction
 
@@ -22,6 +23,7 @@ class ListAccountTransactionView(ListInstancesMixin):
         outcomes = Transaction.objects.filter(payment_item_type__type=1).aggregate(Sum('amount'))
         context.update({'incomes': incomes['amount__sum'],
                         'outcomes': outcomes['amount__sum']})
+        context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
 
 

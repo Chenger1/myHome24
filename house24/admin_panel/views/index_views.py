@@ -5,12 +5,15 @@ from django.shortcuts import redirect
 
 from admin_panel.permission_mixin import AdminPermissionMixin
 
+from admin_panel.utils.statistic import StatisticController
+
 
 class IndexView(AdminPermissionMixin, View):
     template_name = 'index.html'
 
     def get(self, request):
-        return render(request, self.template_name)
+        statistic = StatisticController().prepare_statistic()
+        return render(request, self.template_name, context={'statistic': statistic})
 
 
 class LogoutAdmin(AdminPermissionMixin, View):

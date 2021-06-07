@@ -35,7 +35,7 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-green overflow-hidden">
                         <div class="inner">
-                            <h3>000000 грн</h3>
+                            <h3>{{ statistic.total_cash }} грн</h3>
                             <p>Состояние кассы</p>
                         </div>
                         <div class="icon">
@@ -47,7 +47,7 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-blue overflow-hidden">
                         <div class="inner">
-                            <h3>000000 грн</h3>
+                            <h3>{{ statistic.total_account_balance }} грн</h3>
                             <p>Баланс по счетам</p>
                         </div>
                         <div class="icon">
@@ -59,7 +59,7 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-red overflow-hidden">
                         <div class="inner">
-                            <h3>0000000 грн</h3>
+                            <h3>{{ statistic.total_debt }} грн</h3>
                             <p>Задолженность по счетам</p>
                         </div>
                         <div class="icon">
@@ -135,11 +135,11 @@
                                     <td><a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">{{ ticket.number }}</a>
                                     <span class="ticket_pk" style="display:none;">{{ ticket.pk }}</span></td>
                                     <td class="text-center">
-                                        {% if account.status == 0 %}
+                                        {% if ticket.status == 0 %}
                                         <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
                                             <small class="label label-success">Оплачена</small>
                                         </a>
-                                        {% elif account.status == 1 %}
+                                        {% elif ticket.status == 1 %}
                                         <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
                                             <small class="label label-warning">Частично оплачена</small>
                                         </a>
