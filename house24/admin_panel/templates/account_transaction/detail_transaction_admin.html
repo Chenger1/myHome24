@@ -132,13 +132,19 @@
                                             <tr>
                                                 <td>Квитанция</td>
                                                 <td>
-                                                    Не указано
+                                                    {{ transaction.payment_ticket|filter_none }}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td>Услуга</td>
                                                 <td>
-                                                   Не указано
+                                                   {% if transaction.payment_ticket.services %}
+                                                        {% for service in transaction.payment_ticket.services.all %}
+                                                            {{ service.service }}{% if not forloop.last %},{% endif %}
+                                                        {% endfor %}
+                                                    {% else %}
+                                                        Не указано
+                                                    {% endif %}
                                                 </td>
                                             </tr>
                                             <tr>
