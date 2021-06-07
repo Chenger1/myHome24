@@ -155,7 +155,7 @@ class PaymentTicket(models.Model):
     ]
 
     number = models.IntegerField()
-    status = models.IntegerField(choices=status_choices, default=status_choices[0][1])
+    status = models.IntegerField(choices=status_choices, default=2)
     is_done = models.BooleanField(default=0)
     start = models.DateField()
     end = models.DateField()
