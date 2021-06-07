@@ -112,6 +112,15 @@ class Flat(models.Model):
     def search(cls, data):
         return cls.objects.all()
 
+    def get_flat_balance(self):
+        if not hasattr(self, 'account'):
+            return '(нет счета)'
+        if self.account.tickets:
+            incomes = self.account.tickets.filter(status=0).aggregate(models.Sum('sum'))['sum__sum'] or 0
+            outcomes = self.account.tickets.filter(status__in=(1, 2)).aggregate(models.Sum('sum'))['sum__sum'] or 0
+            return incomes - outcomes
+        return 0
+
     def __str__(self):
         return str(self.number)
 

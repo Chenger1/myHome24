@@ -104,7 +104,7 @@
                                             Не указано
                                         {% endif %}
                                     </td>
-                                    <td></td>
+                                    <td><span class="debt_integer">{{ flat.get_flat_balance }}</span></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
@@ -135,12 +135,22 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('.search_form').each(function(){
+            $(this).on('change', function(){
+                $(this).submit();
+            });
+        });
+
+        $('.debt_integer').each(function(){
+            const value = parseFloat($(this).text());
+            if(value >=0){
+                $(this).addClass('text-success');
+            }
+            if(value < 0){
+                $(this).addClass('text-danger');
+            }
         })
-    })
-
-
+    });
 </script>
 {% endblock %}
