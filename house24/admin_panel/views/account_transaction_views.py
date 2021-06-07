@@ -116,3 +116,30 @@ class DuplicateOutcomeView(DuplicateTransactionView):
     form_class = CreateOutcomeForm
     template_name = 'account_transaction/create_outcome_admin.html'
     get_text_number_callback = Transaction.get_next_outcome_number
+
+
+class ListIncomeTransactionByAccount(ListInstancesMixin):
+    model = Transaction
+    template_name = 'account_transaction/list_account_transaction_admin.html'
+    search_form = AccountTransactionSearchForm
+    pk = None
+
+    def get(self, request, pk=None):
+        self.pk = pk
+        return super().get(request)
+
+    def get_queryset(self):
+        return self.model.objects.filter(personal_account__pk=self.pk,
+                                         payment_item_type__type=0)
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        incomes = Transaction.objects.filter(personal_account__pk=self.pk,
+                                             payment_item_type__type=0).aggregate(Sum('amount'))['amount__sum'] or 0
+        outcomes = Transaction.objects.filter(personal_account__pk=self.pk,
+                                              payment_item_type__type=1).aggregate(Sum('amount'))['amount__sum'] or 0
+        context.update({'incomes': incomes,
+                        'outcomes': outcomes})
+        context['statistic'] = MinimalStatisticCollector().prepare_statistic()
+        return context
+

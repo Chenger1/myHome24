@@ -135,8 +135,10 @@
                                             </tbody>
                                         </table>
                                         <div>
-                                            <p><a href="">Посмотреть показания счетчиков</a></p>
-                                            <p><a href="">Посмотреть приходы</a></p>
+                                            {% if account.flat %}
+                                                <p><a href="{% url 'admin_panel:list_meter_history' account.flat.pk %}">Посмотреть показания счетчиков</a></p>
+                                            {% endif %}
+                                            <p><a href="{% url 'admin_panel:list_transactions_by_account' account.pk %}">Посмотреть приходы</a></p>
                                             <p><a href="">Посмотреть квитанции</a></p>
                                         </div>
                                     </div>

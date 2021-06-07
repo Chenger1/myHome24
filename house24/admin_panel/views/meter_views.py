@@ -61,8 +61,9 @@ class ListMeterHistory(ListInstancesMixin):
     model = Meter
     template_name = 'meters/list_meter_history.html'
     search_form = SearchMeasureHistoryForm
+    pk = None
 
-    def get(self, request, pk):
+    def get(self, request, pk=None):
         self.pk = pk
         return super().get(request)
 

@@ -171,4 +171,6 @@ urlpatterns = [
     path('account-transaction/index/duplicate_outcome/<int:pk>/',
          account_transaction_views.DuplicateOutcomeView.as_view(),
          name='duplicate_outcome_admin'),
+    path('account-transaction/index/account/<int:pk>/', account_transaction_views.ListIncomeTransactionByAccount.as_view(),
+         name='list_transactions_by_account'),
 ]

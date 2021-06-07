@@ -37,7 +37,7 @@ class ListInstancesMixin(AdminPermissionMixin, View):
         self.instances = None
         self.form = None
 
-    def get(self, request):
+    def get(self, request, pk=None):
         if request.GET:
             self.form = self.search_form(request.GET)
             if self.form.is_valid():
