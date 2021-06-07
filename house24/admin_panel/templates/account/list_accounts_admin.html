@@ -144,7 +144,9 @@
                                             Не указано
                                         {% endif %}
                                     </td>
-                                    <td><a href="">{{ account.is_debt|filter_none }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">
+                                        <span class="debt_integer">{{ account.get_account_balance }}</span>
+                                    </a></td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
@@ -174,9 +176,21 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('.search_form').each(function(){
+            $(this).on('change', function(){
+                $(this).submit();
+            })
+        })
+
+        $('.debt_integer').each(function(){
+            const value = parseFloat($(this).text());
+            if(value > 0){
+                $(this).addClass('text-success');
+            }
+            if(value < 0){
+                $(this).addClass('text-danger');
+            }
         })
     })
 

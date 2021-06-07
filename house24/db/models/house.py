@@ -137,6 +137,13 @@ class PersonalAccount(models.Model):
     section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
     flat = models.OneToOneField(Flat, related_name='account', on_delete=models.SET_NULL, blank=True, null=True)
 
+    def get_account_balance(self):
+        if not self.tickets:
+            return 0.00
+        incomes = self.tickets.filter(status=0).aggregate(models.Sum('sum'))['sum__sum'] or 0.00
+        outcomes = self.tickets.filter(status__in=(1, 2)).aggregate(models.Sum('sum'))['sum__sum'] or 0.00
+        return incomes - outcomes
+
     @classmethod
     def get_next_account_number(cls):
         last = cls.objects.last()
