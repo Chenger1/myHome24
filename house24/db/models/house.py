@@ -345,3 +345,13 @@ class MasterRequest(models.Model):
     flat = models.ForeignKey(Flat, related_name='requests', on_delete=models.CASCADE)
     master = models.ForeignKey(User, related_name='master_requests', on_delete=models.CASCADE,
                                blank=True, null=True)
+
+
+class Message(models.Model):
+    title = models.CharField(max_length=150)
+    text = models.TextField(blank=True, null=True)
+    house = models.ForeignKey(House, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
+    section = models.ForeignKey(Section, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
+    floor = models.ForeignKey(Floor, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
+    flat = models.ForeignKey(Flat, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
+    with_debt = models.BooleanField(default=False)
