@@ -4,6 +4,7 @@ from rest_framework.response import Response
 
 from django.http import JsonResponse
 from django.views.generic import View
+from django.shortcuts import get_object_or_404
 
 from rest_api import serializers
 
@@ -200,5 +201,18 @@ class PersonalAccountPaymentTicketList(APIView):
 
 
 class TotalBalance(APIView):
+    model = Transaction
+
     def get(self, request):
-        return Response({'total_cash': Transaction.total_cash()})
+        return Response({'total_cash': self.model.total_cash()})
+
+
+class PersonalAccountStatus(APIView):
+    model = PersonalAccount
+
+    def get(self, request):
+        account = get_object_or_404(self.model, pk=self.request.GET.get('pk'))
+        if account.status == 0 and account.flat:
+            return Response({'status': True})
+        else:
+            return Response({'status': False})
