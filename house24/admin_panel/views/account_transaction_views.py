@@ -36,7 +36,8 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
     parent_object = None
 
     def get(self, request, *args, **kwargs):
-        self.parent_object = get_object_or_404(PersonalAccount, pk=kwargs.get('pk'))
+        if kwargs.get('pk'):
+            self.parent_object = get_object_or_404(PersonalAccount, pk=kwargs.get('pk'))
         return super().get(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
