@@ -13,6 +13,7 @@ from admin_panel.views import meter_views
 from admin_panel.views import master_request_views
 from admin_panel.views import payment_ticket_views
 from admin_panel.views import account_transaction_views
+from admin_panel.views import message_views
 
 
 app_name = 'admin_panel'
@@ -179,4 +180,7 @@ urlpatterns = [
          name='list_transactions_by_account'),
     path('account-transaction/index/create_income/account/<int:pk>/', account_transaction_views.CreateIncomeView.as_view(),
          name='create_income_with_account'),
+
+    # MESSAGE
+    path('message/index/', message_views.ListMessages.as_view(), name='list_messages_admin'),
 ]

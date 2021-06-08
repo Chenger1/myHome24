@@ -52,6 +52,8 @@ class Role(models.Model):
             return 'admin_panel:list_master_requests_admin'
         elif self.site_control:
             return 'admin_panel:main_page'
+        elif self.messages:
+            return 'admin_panel:list_messages_admin'
         elif self.services:
             return 'admin_panel:service_measure_option'
         elif self.tariffs:

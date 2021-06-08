@@ -28,6 +28,8 @@ class AdminCheckMiddleware(MiddlewareMixin):
                     return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'flats/index/' in request.path and not request.user.role.flats:
                     return redirect(request.path.role.get_available_url_pattern_by_role())
+                elif 'message/index/' in request.path and not request.user.role.messages:
+                    return redirect(request.path.role.get_available_url_pattern_by_role())
                 elif 'services/index/' in request.path and not request.user.role.services:
                     return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'tariff/index/' in request.path and not request.user.role.tariffs:
