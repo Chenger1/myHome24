@@ -45,7 +45,7 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
         else:
             if self.parent_object:
                 form = self.form_class(initial={'number': self.model.get_next_income_number(),
-                                                'owner': self.parent_object.flat.owner.pk,
+                                                'owner': self.parent_object.flat.owner.pk if self.parent_object.flat.owner else None,
                                                 'personal_account': self.parent_object.pk})
             else:
                 form = self.form_class(initial={'number': self.model.get_next_income_number()})
