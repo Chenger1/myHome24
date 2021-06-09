@@ -356,6 +356,7 @@ class Message(models.Model):
     flat = models.ForeignKey(Flat, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
     with_debt = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+    sender = models.ForeignKey(User, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
 
     @property
     def message_recipient(self):
