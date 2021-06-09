@@ -68,18 +68,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for message in message %}
+                                        {% for message in messages %}
                                             <tr>
                                                 <td>
                                                     <div class="icheck-primary d-inline">
-                                                        <input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}" checked=""
+                                                        <input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
                                                         class="delete_checkbox">
                                                         <label for="checkboxPrimary-{{ forloop.counter }}">
                                                         </label>
                                                     </div>
                                                 </td>
                                                 <td>{{ message }}</td>
-                                                <td>{{ message.text }}</td>
+                                                <td>{{ message.text|safe|truncatewords_html:5 }}</td>
                                                 <td>{{ message.created }}</td>
                                             </tr>
                                         {% empty %}

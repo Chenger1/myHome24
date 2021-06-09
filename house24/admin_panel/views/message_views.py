@@ -1,4 +1,5 @@
 from django.views.generic import ListView, CreateView
+from django.urls import reverse_lazy
 
 from db.models.house import Message
 
@@ -24,3 +25,4 @@ class CreateMessageView(AdminPermissionMixin, CreateView):
     form_class = CreateMessageForm
     template_name = 'message/create_message_admin.html'
     context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_messages_admin')

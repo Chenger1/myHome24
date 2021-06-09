@@ -13,7 +13,8 @@ class CreateMessageForm(forms.ModelForm):
         model = Message
         fields = '__all__'
         widgets = {
-            'title': forms.TextInput(attrs={'class': 'form-control', 'id': 'title'}),
+            'title': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'title',
+                                            'placeholder': 'Тема сообщения:'}),
             'text': forms.Textarea(attrs={'id': 'text', 'class': 'form-control'}),
             'house': forms.Select(attrs={'class': 'form-control', 'id': 'house'}),
             'section': forms.Select(attrs={'class': 'form-control', 'id': 'section'}),
