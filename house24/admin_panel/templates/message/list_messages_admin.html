@@ -1,0 +1,145 @@
+{% extends "admin_base.html" %}
+{% load static %}
+
+{% block title %}Сообщения{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Сообщения</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Сообщения</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <a href="" class="btn btn-success" style="float:right;">Отправить сообщение</a>
+                </div>
+            </div>
+            <div class="card card-default" style="margin-top: 30px;">
+                <div class="card-header">
+                    <div style="float:right;">
+                        <div class="input-container">
+                                {{ form.text }}
+                                <span class="fas fa-search form-control-feedback"></span>
+                            </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive">
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="far fa-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-12">
+                            <div>
+                                <table class="table table-hover table-striped text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Получатели</th>
+                                            <th>Текст</th>
+                                            <th>Дата</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for message in message %}
+                                            <tr>
+                                                <td>
+                                                    <div class="icheck-primary d-inline">
+                                                        <input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}" checked=""
+                                                        class="delete_checkbox">
+                                                        <label for="checkboxPrimary-{{ forloop.counter }}">
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                                <td>{{ message }}</td>
+                                                <td>{{ message.text }}</td>
+                                                <td>{{ message.created }}</td>
+                                            </tr>
+                                        {% empty %}
+                                            <tr>
+                                                <td colspan="4">Ничего не найдено</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-12">
+                            <button type="button" class="btn btn-default btn-sm checkbox-toggle">
+                                <i class="far fa-square"></i>
+                            </button>
+                            <button type="button" class="btn btn-default btn-sm">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/checkbox_toggle.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        $('.checkbox-toggle').each(function(){
+            $(this).on('click', function(){
+                if($(this).hasClass('checked')){
+                    $('.delete_checkbox').each(function(){
+                        $(this).prop('checked', false);
+                    })
+                    setCheckboxesToggleIcon(false);
+                    $(this).removeClass('checked')
+                }else{
+                    $('.delete_checkbox').each(function(){
+                        $(this).prop('checked', true);
+                    })
+                    setCheckboxesToggleIcon(true);
+                    $(this).addClass('checked');
+                }
+            })
+        })
+    })
+
+    function setCheckboxesToggleIcon(status){
+        $('.checkbox-toggle').each(function(){
+            if(status){
+                $(this).find('i').removeClass('fa-square');
+                $(this).find('i').addClass('fa-check-square');
+            }else{
+                $(this).find('i').removeClass('fa-check-square');
+                $(this).find('i').addClass('fa-square');
+            }
+        })
+    }
+</script>
+{% endblock %}
