@@ -356,3 +356,14 @@ class Message(models.Model):
     flat = models.ForeignKey(Flat, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
     with_debt = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def message_recipient(self):
+        result = [str(model) for model in (self.house, self.section, self.floor, self.flat) if model]
+        if result:
+            return ', '.join(result)
+        else:
+            return 'Всем'
+
+    def __str__(self):
+        return self.title
