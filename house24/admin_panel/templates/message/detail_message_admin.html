@@ -47,7 +47,7 @@
                             {{ message.text|safe }}
                         </div>
                         <div class="card-footer" style="background-color: white; border-top: 1px solid rgba(0,0,0,.125);">
-                            <a href="" class="btn btn-default"><i class="far fa-trash-alt"></i> Удалить</a>
+                            <a href="{% url 'admin_panel:delete_message_admin' message.pk %}" class="btn btn-default"><i class="far fa-trash-alt"></i> Удалить</a>
                         </div>
                     </div>
                 </div>

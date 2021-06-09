@@ -7,6 +7,7 @@ from db.models.house import Message
 
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.message_forms import MessageSearchForm, CreateMessageForm
+from admin_panel.views.mixins import DeleteInstanceView
 
 import json
 
@@ -32,7 +33,7 @@ class CreateMessageView(AdminPermissionMixin, CreateView):
     success_url = reverse_lazy('admin_panel:list_messages_admin')
 
 
-class DeleteMessageView(View):
+class DeleteMessagesView(View):
     model = Message
 
     def get(self, request):
@@ -46,3 +47,8 @@ class DetailMessageView(AdminPermissionMixin, DetailView):
     model = Message
     template_name = 'message/detail_message_admin.html'
     context_object_name = 'message'
+
+
+class DeleteMessageView(DeleteInstanceView):
+    model = Message
+    redirect_url = 'admin_panel:list_messages_admin'

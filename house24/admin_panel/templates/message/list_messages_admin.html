@@ -142,7 +142,7 @@
                         result.push($(this).closest('tr').find('.message_pk').val());
                     })
                     $.ajax({
-                        url: '{% url "admin_panel:delete_message_admin" %}',
+                        url: '{% url "admin_panel:delete_messages_admin" %}',
                         type: 'GET',
                         data: {'pk': JSON.stringify(result)},
                     })
