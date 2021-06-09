@@ -79,9 +79,14 @@
                                                     </div>
                                                     <input type="hidden" value="{{ message.pk }}" class="message_pk">
                                                 </td>
-                                                <td><a href="">{{ message.message_recipient }}</a></td>
-                                                <td>{{ message.text|safe|truncatewords_html:5 }}</td>
-                                                <td>{{ message.created }}</td>
+                                                <td><a href="{% url 'admin_panel:detail_message_admin' message.pk %}">{{ message.message_recipient }}</a></td>
+                                                <td>
+                                                    <a href="{% url 'admin_panel:detail_message_admin' message.pk %}">
+                                                        <strong>{{ message.title }}</strong> -
+                                                        {{ message.text|safe|truncatewords_html:5 }}
+                                                    </a>
+                                                </td>
+                                                <td><a href="{% url 'admin_panel:detail_message_admin' message.pk %}">{{ message.created }}</a></td>
                                             </tr>
                                         {% empty %}
                                             <tr>

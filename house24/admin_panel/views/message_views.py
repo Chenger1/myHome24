@@ -1,4 +1,4 @@
-from django.views.generic import ListView, CreateView, View
+from django.views.generic import ListView, CreateView, View, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
@@ -40,3 +40,9 @@ class DeleteMessageView(View):
         for pk in pks:
             get_object_or_404(self.model, pk=pk).delete()
         return JsonResponse({'status': 200})
+
+
+class DetailMessageView(AdminPermissionMixin, DetailView):
+    model = Message
+    template_name = 'message/detail_message_admin.html'
+    context_object_name = 'message'
