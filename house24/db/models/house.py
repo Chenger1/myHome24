@@ -355,3 +355,4 @@ class Message(models.Model):
     floor = models.ForeignKey(Floor, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
     flat = models.ForeignKey(Flat, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
     with_debt = models.BooleanField(default=False)
+    created = models.DateTimeField(auto_now_add=True)
