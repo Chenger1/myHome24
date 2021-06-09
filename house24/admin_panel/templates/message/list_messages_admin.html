@@ -50,7 +50,7 @@
                             <button type="button" class="btn btn-default btn-sm checkbox-toggle">
                                 <i class="far fa-square"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm">
+                            <button type="button" class="btn btn-default btn-sm delete_toggle">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </div>
@@ -77,6 +77,7 @@
                                                         <label for="checkboxPrimary-{{ forloop.counter }}">
                                                         </label>
                                                     </div>
+                                                    <input type="hidden" value="{{ message.pk }}" class="message_pk">
                                                 </td>
                                                 <td>{{ message }}</td>
                                                 <td>{{ message.text|safe|truncatewords_html:5 }}</td>
@@ -97,7 +98,7 @@
                             <button type="button" class="btn btn-default btn-sm checkbox-toggle">
                                 <i class="far fa-square"></i>
                             </button>
-                            <button type="button" class="btn btn-default btn-sm">
+                            <button type="button" class="btn btn-default btn-sm delete_toggle">
                                 <i class="far fa-trash-alt"></i>
                             </button>
                         </div>
@@ -128,8 +129,25 @@
                 }
             })
         })
-    })
-
+        $('.delete_toggle').each(function(){
+            $(this).on('click', function(){
+                if(confirm('Вы уверены что хотите удалить эти сообщения?')){
+                    let result = [];
+                    $('input[type=checkbox]:checked').each(function(){
+                        result.push($(this).closest('tr').find('.message_pk').val());
+                    })
+                    $.ajax({
+                        url: '{% url "admin_panel:delete_message_admin" %}',
+                        type: 'GET',
+                        data: {'pk': JSON.stringify(result)},
+                    })
+                    .done(function() {
+                        window.location.reload();
+                    })
+                }
+            })
+        })
+})
     function setCheckboxesToggleIcon(status){
         $('.checkbox-toggle').each(function(){
             if(status){

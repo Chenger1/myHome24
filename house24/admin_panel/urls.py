@@ -184,4 +184,5 @@ urlpatterns = [
     # MESSAGE
     path('message/index/', message_views.ListMessages.as_view(), name='list_messages_admin'),
     path('message/index/create_message/', message_views.CreateMessageView.as_view(), name='create_message_admin'),
+    path('message/index/delete_messages/', message_views.DeleteMessageView.as_view(), name='delete_message_admin'),
 ]
