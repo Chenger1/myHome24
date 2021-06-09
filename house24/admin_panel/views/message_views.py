@@ -32,6 +32,11 @@ class CreateMessageView(AdminPermissionMixin, CreateView):
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_messages_admin')
 
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.sender = self.request.user
+        return super().form_valid(form)
+
 
 class DeleteMessagesView(View):
     model = Message

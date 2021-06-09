@@ -11,7 +11,7 @@ class MessageSearchForm(forms.Form):
 class CreateMessageForm(forms.ModelForm):
     class Meta:
         model = Message
-        fields = '__all__'
+        exclude = ('sender', )
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'title',
                                             'placeholder': 'Тема сообщения:'}),
