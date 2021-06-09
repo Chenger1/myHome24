@@ -1,0 +1,5 @@
+.idea
+my_home_env
+static/admin/
+house24/config.py
+db.sqlite3

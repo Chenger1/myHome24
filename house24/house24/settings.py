@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-3k^z-n3+fqlep10vubx(ylyfymghzg8-_98c89*q0x1%nf5^ua'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'changekey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get('DEBUG', 1))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', None)
+ALLOWED_HOSTS = ALLOWED_HOSTS.split(" ") if ALLOWED_HOSTS else ['*']
 
 
 # Application definition
@@ -125,14 +127,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
-STATICFILES_DIRS = (
-    ('bootstrap', Path(__file__).parent.parent.joinpath('static/bootstrap')),
-    ('website', Path(__file__).parent.parent.joinpath('static/website')),
-    ('img', Path(__file__).parent.parent.joinpath('static/img')),
-    ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
-    ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
-)
+if DEBUG:
+    STATICFILES_DIRS = (
+        ('bootstrap', Path(__file__).parent.parent.joinpath('static/bootstrap')),
+        ('website', Path(__file__).parent.parent.joinpath('static/website')),
+        ('img', Path(__file__).parent.parent.joinpath('static/img')),
+        ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
+        ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
+    )
+else:
+    STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
