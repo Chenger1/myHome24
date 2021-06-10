@@ -7,6 +7,10 @@ from django.core.validators import RegexValidator
 from db.models.manager import UserManager
 
 
+def get_dir_name(instance, filename):
+    return f'users/{instance.last_name}/{filename}'
+
+
 class Role(models.Model):
     reserved_names = ('Директор', 'Управляющий', 'Бухгалтер', 'Электрик', 'Сантехник')
 
@@ -102,13 +106,13 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 
 class User(CustomAbstractUser):
     role = models.ForeignKey(Role, related_name='admin_roles', on_delete=models.CASCADE, blank=True, null=True)
-    photo = models.ImageField(upload_to='users/', blank=True, null=True)
+    photo = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
     patronym = models.CharField(max_length=100, blank=True, null=True)
     viber = models.CharField(max_length=100, blank=True, null=True)
     telegram = models.CharField(max_length=100, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
 
-    def get_images(self):
+    def get_files(self):
         return [self.photo] if self.photo else None
 
     @classmethod

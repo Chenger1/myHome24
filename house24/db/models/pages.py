@@ -129,7 +129,7 @@ class ServiceBlock(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
-    def get_images(self):
+    def get_files(self):
         return [self.image] if self.image else None
 
 
@@ -149,5 +149,5 @@ class TariffBlock(models.Model):
     image = models.ImageField(upload_to='tariffs/', blank=True, null=True)
     title = models.CharField(max_length=100, blank=True, null=True)
 
-    def get_images(self):
+    def get_files(self):
         return [self.image] if self.image else None

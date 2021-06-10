@@ -7,14 +7,18 @@ from db.models.user import User
 import datetime
 
 
+def get_dir_name(instance, filename):
+    return f'houses/house_{instance.pk}/{filename}'
+
+
 class House(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    image1 = models.ImageField()
-    image2 = models.ImageField()
-    image3 = models.ImageField()
-    image4 = models.ImageField()
-    image5 = models.ImageField()
+    image1 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image2 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image3 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image4 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image5 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
 
     @classmethod
     def search(cls, data):
@@ -26,6 +30,9 @@ class House(models.Model):
         if address:
             houses = houses.filter(address__contains=address)
         return houses
+
+    def get_files(self):
+        return [self.image1, self.image2, self.image3, self.image4, self.image5]
 
     def __str__(self):
         return self.name

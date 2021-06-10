@@ -42,7 +42,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12" style="margin-top:15px;">
-                    <form action="" method="post">
+                    <form action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="card card-default">
 
@@ -51,8 +51,13 @@
                                     <div class="col-12 col-md-6 col-sm-6">
                                         <div class="row">
                                             <div class="col-12 col-md-6">
+                                                {% if form.instance.photo %}
+                                                <img src="{{ form.instance.photo.url }}" alt=""
+                                                     class="photo_image preview_img">
+                                                {% else %}
                                                 <img src="{% static 'img/default_form_image.png' %}" alt=""
                                                      class="photo_image preview_img">
+                                                {% endif %}
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="form-group">
