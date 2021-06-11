@@ -53,3 +53,18 @@ class OwnerSearch:
         if form_data.get('is_debt'):
             queryset = [instance for instance in queryset if instance.has_debt == bool(int(form_data.get('is_debt')))]
         return queryset
+
+
+class UserSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = User.objects.filter(is_staff=True)
+        queryset = queryset.annotate(fullname=Concat('first_name', Value(' '), 'last_name'))
+        queryset = queryset.filter(fullname__icontains=form_data.get('username'),
+                                   email__contains=form_data.get('email'),
+                                   phone_number__contains=form_data.get('phone'))
+        if form_data.get('role'):
+            queryset = queryset.filter(role=form_data.get('role'))
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
+        return queryset

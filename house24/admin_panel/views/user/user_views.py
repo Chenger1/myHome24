@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
 from db.models.user import Role
-from db.services.search import OwnerSearch
+from db.services.search import OwnerSearch, UserSearch
 
 from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm,
                                           UpdateOwnerUserForm, SearchForm)
@@ -37,13 +37,11 @@ class UpdateRolesView(AdminPermissionMixin, View):
 class ListUsersView(ListInstancesMixin):
     model = User
     template_name = 'user/list_users_admin.html'
+    search_form = SearchForm
+    search_obj = UserSearch
 
     def get_queryset(self):
         return self.model.objects.filter(is_staff=True)
-
-    def get_filtered_query(self, form_data):
-        instances = self.model.search(form_data, is_staff=True)
-        return instances
 
 
 class CreateAdminUser(AdminPermissionMixin, CreateView):
