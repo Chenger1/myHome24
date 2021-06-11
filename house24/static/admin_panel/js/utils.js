@@ -7,3 +7,19 @@
             $('#phone').text('Не выбран');
         }
     }
+
+    function submit_form_after_keypress(){
+        $('.form-control').each(function(){
+            $(this).keydown(function(event) {
+                if(event.which == 13){
+                    $('form').submit();
+                }
+            });
+       })
+
+        $('.select2-selection').on('keyup', function (e) {
+            if (e.keyCode === 13) {
+              $('form').submit();
+            }
+          });
+    }

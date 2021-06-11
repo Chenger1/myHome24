@@ -6,22 +6,29 @@ from db.models.user import User
 
 class FlatSearchForm(forms.Form):
     debt_choices = [
+        ('', ''),
         (0, 'Нет долга'),
         (1, 'Есть долг')
     ]
 
-    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),
+    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control',
+                                                                'id': 'number'}),
                                 required=False)
-    house = forms.ModelChoiceField(queryset=House.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
+    house = forms.ModelChoiceField(queryset=House.objects.all(), widget=forms.Select(attrs={'class': 'form-control',
+                                                                                            'id': 'house'}),
                                    required=False)
-    section = forms.ModelChoiceField(queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
+    section = forms.ModelChoiceField(queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control',
+                                                                                                'id': 'section'}),
                                      required=False)
-    floor = forms.ModelChoiceField(queryset=Floor.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
+    floor = forms.ModelChoiceField(queryset=Floor.objects.all(), widget=forms.Select(attrs={'class': 'form-control',
+                                                                                            'id': 'floor'}),
                                    required=False)
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
-                                  widget=forms.Select(attrs={'class': 'form-control'}),
+                                  widget=forms.Select(attrs={'class': 'form-control',
+                                                             'id': 'user'}),
                                   required=False)
-    debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control'}),
+    debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control',
+                                                                              'id': 'debt'}),
                              required=False)
 
 

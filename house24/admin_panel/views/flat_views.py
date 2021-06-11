@@ -7,12 +7,14 @@ from admin_panel.forms.flat_forms import FlatSearchForm, CreateFlatForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import Flat, House, PersonalAccount
+from db.services.search import FlatSearch
 
 
 class ListFlatsView(ListInstancesMixin):
     model = Flat
     template_name = 'flat/list_flats_admin.html'
     search_form = FlatSearchForm
+    search_obj = FlatSearch
 
 
 class PostInstanceMixin:
