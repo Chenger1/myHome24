@@ -1,7 +1,7 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat, PersonalAccount, PaymentTicket
+from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message
 from db.models.user import User
 
 
@@ -111,3 +111,9 @@ class PaymentTicketSearch:
         if form_data.get('is_done'):
             queryset = queryset.filter(is_done=bool(int(form_data.get('is_done'))))
         return queryset
+
+
+class MessageSearch:
+    @staticmethod
+    def search(form_data):
+        return Message.objects.filter(title__icontains=form_data.get('text'))

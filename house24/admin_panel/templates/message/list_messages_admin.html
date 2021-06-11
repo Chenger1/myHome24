@@ -37,12 +37,15 @@
             </div>
             <div class="card card-default" style="margin-top: 30px;">
                 <div class="card-header">
-                    <div style="float:right;">
-                        <div class="input-container">
-                                {{ form.text }}
-                                <span class="fas fa-search form-control-feedback"></span>
-                            </div>
-                    </div>
+                    <form action="" method="get">
+                        {% csrf_token %}
+                        <div style="float:right;">
+                            <div class="input-container">
+                                    {{ form.text }}
+                                    <span class="fas fa-search form-control-feedback"></span>
+                                </div>
+                        </div>
+                    </form>
                 </div>
                 <div class="card-body table-responsive">
                     <div class="row">
@@ -68,7 +71,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for message in messages %}
+                                        {% for message in instances %}
                                             <tr>
                                                 <td>
                                                     <div class="icheck-primary d-inline">
@@ -115,8 +118,11 @@
 </div>
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/checkbox_toggle.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
     $(document).ready(function(){
+        submit_form_after_keypress();
+
         $('.checkbox-toggle').each(function(){
             $(this).on('click', function(){
                 if($(this).hasClass('checked')){

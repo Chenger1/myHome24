@@ -5,7 +5,8 @@ from db.models.house import Message
 
 class MessageSearchForm(forms.Form):
     text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': 'Поиск'}))
+                                                         'placeholder': 'Поиск'}),
+                           required=False)
 
 
 class CreateMessageForm(forms.ModelForm):
