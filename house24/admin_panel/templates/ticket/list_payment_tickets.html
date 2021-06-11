@@ -4,6 +4,12 @@
 
 {% block title %}Квитанции на оплату{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -82,6 +88,8 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
@@ -109,7 +117,9 @@
                                         {{ form.status }}
                                     </td>
                                     <td>
-                                        {{ form.date }}
+                                        <input id="date_range" class="form-control">
+                                        {{ form.start }}
+                                        {{ form.end }}
                                     </td>
                                     <td>
                                         {{ form.month }}
@@ -200,6 +210,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -210,12 +221,29 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/checkbox_toggle.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('#date_range').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+        $('#id_owner').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+        submit_form_after_keypress();
+
+        $('.applyBtn').on('click', function(){
+            const res = $('#date_range').val().split(' - ');
+            $('#date_start').val(res[0]);
+            $('#date_end').val(res[1]);
+            $('form').submit();
         })
     })
+</script>
+<script>
     $('#main_checkbox').on('change', function(){
         setCheckbox(this);
     })

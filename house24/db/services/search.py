@@ -1,7 +1,7 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat, PersonalAccount
+from db.models.house import House, Flat, PersonalAccount, PaymentTicket
 from db.models.user import User
 
 
@@ -87,4 +87,27 @@ class PersonalAccountSearch:
         if form_data.get('debt'):
             queryset = queryset.filter(flat__owner__isnull=False)
             queryset = [instance for instance in queryset if instance.has_debt == bool(int(form_data.get('is_debt')))]
+        return queryset
+
+
+class PaymentTicketSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = PaymentTicket.objects.all()
+        queryset = queryset.filter(number__icontains=form_data.get('number'))
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
+        if form_data.get('start'):
+            queryset = queryset.filter(start=form_data.get('start'))
+        if form_data.get('end'):
+            queryset = queryset.filter(end=form_data.get('end'))
+        if form_data.get('month'):
+            month = int(form_data.get('month').split('-')[-1])
+            queryset = queryset.filter(created__month=month)
+        if form_data.get('flat'):
+            queryset = queryset.filter(flat__number__icontains=form_data.get('flat'))
+        if form_data.get('owner'):
+            queryset = queryset.filter(flat__owner=form_data.get('owner'))
+        if form_data.get('is_done'):
+            queryset = queryset.filter(is_done=bool(int(form_data.get('is_done'))))
         return queryset

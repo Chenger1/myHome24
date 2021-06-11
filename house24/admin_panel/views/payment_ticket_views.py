@@ -5,18 +5,20 @@ from django.http import JsonResponse
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.forms.payment_ticket_forms import PaymentTicketSearch, CreatePaymentTicketForm, TicketServiceFormset
+from admin_panel.forms.payment_ticket_forms import PaymentTicketSearchForm, CreatePaymentTicketForm, TicketServiceFormset
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import PaymentTicket, PaymentTicketService, PersonalAccount
+from db.services.search import PaymentTicketSearch
 
 import json
 
 
 class ListPaymentTicketsView(ListInstancesMixin):
     model = PaymentTicket
-    search_form = PaymentTicketSearch
+    search_form = PaymentTicketSearchForm
     template_name = 'ticket/list_payment_tickets.html'
+    search_obj = PaymentTicketSearch
 
     def get_context_data(self):
         context = super().get_context_data()

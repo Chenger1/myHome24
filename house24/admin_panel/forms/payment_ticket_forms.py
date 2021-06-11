@@ -6,25 +6,33 @@ from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat
 import datetime
 
 
-class PaymentTicketSearch(forms.Form):
+class PaymentTicketSearchForm(forms.Form):
     status_choices = [
+        ('', ' '),
         (0, 'Оплачена'),
         (1, 'Частично оплачена'),
         (2, 'Неоплачена')
     ]
     done_choices = [
-        (0, 'Проведена'),
-        (1, 'Не проведена')
+        ('', ' '),
+        (1, 'Проведена'),
+        (0, 'Не проведена')
     ]
 
-    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
-    status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}))
-    date = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control'}))
-    month = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control'}))
-    flat = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}))
+    number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                             required=False)
+    status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
+                               required=False)
+    start = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_start'}), required=False)
+    end = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_end'}), required=False)
+    month = forms.CharField(widget=forms.DateInput(attrs={'class': 'form-control', 'type': 'month'}),
+                            required=False)
+    flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           required=False)
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
-                                   widget=forms.Select(attrs={'class': 'form-control'}))
-    is_done = forms.ChoiceField(choices=done_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+                                   widget=forms.Select(attrs={'class': 'form-control'}), required=False)
+    is_done = forms.ChoiceField(choices=done_choices, widget=forms.Select(attrs={'class': 'form-control'}),
+                                required=False)
 
 
 class CreatePaymentTicketForm(forms.ModelForm):
