@@ -36,6 +36,8 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
@@ -49,16 +51,10 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
                                             {{ form.name }}
-                                        </form>
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
                                             {{ form.address }}
-                                        </form>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -88,6 +84,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                         <div class="card-footer">
                             Количество домов: <strong>{{ count }}</strong>
@@ -101,11 +98,12 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
-        })
+    $('.form-control').each(function(){
+        $(this).keypress(function(event) {
+            if(event.which == 13){
+                $('form').submit();
+            }
+        });
     })
-
 </script>
 {% endblock %}

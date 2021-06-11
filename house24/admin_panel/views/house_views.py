@@ -8,6 +8,7 @@ from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, Sect
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import House, Section, Floor, HouseUser
+from db.services.search import HouseSearch
 
 
 User = get_user_model()
@@ -17,6 +18,7 @@ class ListHousesView(ListInstancesMixin):
     model = House
     template_name = 'houses/list_houses_admin.html'
     search_form = HouseSearchForm
+    search_obj = HouseSearch
 
 
 class CreateHouseView(AdminPermissionMixin, View):
