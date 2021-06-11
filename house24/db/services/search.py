@@ -2,6 +2,7 @@ from django.db.models import Value
 from django.db.models.functions import Concat
 
 from db.models.house import House, Flat
+from db.models.user import User
 
 
 class HouseSearch:
@@ -10,12 +11,6 @@ class HouseSearch:
         return House.objects.filter(name__icontains=form_data.get('name'), address__icontains=form_data.get('address'))
 
 
-# class FlatSearch:
-#     @staticmethod
-#     def search(form_data):
-#         # queryset = Flat.objects.annotate(fullname=Concat('owner__first_name', Value(' '), 'owner__last_name'))
-#         # return queryset.filter(pk__contains=form_data.get('number'),
-#         #                        )
 class FlatSearch:
     @staticmethod
     def search(form_data):
@@ -34,4 +29,27 @@ class FlatSearch:
             queryset = queryset.filter(owner__isnull=False)
             queryset = [instance for instance in queryset if instance.owner.has_debt
                         and instance.owner.has_debt == bool(int(form_data.get('debt')))]
+        return queryset
+
+
+class OwnerSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = User.objects.filter(is_staff=False)
+        queryset = queryset.annotate(fullname=Concat('first_name', Value(' '), 'last_name'))
+        queryset = queryset.filter(fullname__icontains=form_data.get('username'),
+                                   email__contains=form_data.get('email'),
+                                   phone_number__contains=form_data.get('phone'))
+        if form_data.get('id_field'):
+            queryset = queryset.filter(pk=form_data.get('id_field'))
+        if form_data.get('house'):
+            queryset = queryset.filter(flats__house=form_data.get('house')).distinct()
+        if form_data.get('flat'):
+            queryset = queryset.filter(flats__number__icontains=form_data.get('flat')).distinct()
+        if form_data.get('date_joined'):
+            queryset = queryset.filter(date_joined=form_data.get('date_joined'))
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
+        if form_data.get('is_debt'):
+            queryset = [instance for instance in queryset if instance.has_debt == bool(int(form_data.get('is_debt')))]
         return queryset

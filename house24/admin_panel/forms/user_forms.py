@@ -55,12 +55,14 @@ RoleFormSet = forms.modelformset_factory(model=Role, form=RoleForm, extra=0, can
 
 class SearchForm(forms.Form):
     status_choices = [
+        ('', ''),
         (0, 'Активен'),
         (1, 'Новый'),
         (2, 'Отключен')
     ]
     debt_choices = [
-        (0, 'Да')
+        ('', ''),
+        (1, 'Да')
     ]
 
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
@@ -76,11 +78,11 @@ class SearchForm(forms.Form):
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'id': 'house',
                                                               'class': 'form-control'}), required=False)
-    flat = forms.ModelChoiceField(queryset=Flat.objects.all(),
-                                  widget=forms.Select(attrs={'id': 'flat',
-                                                             'class': 'form-control'}), required=False)
+    flat = forms.CharField(widget=forms.TextInput(attrs={'id': 'flat',
+                                                         'class': 'form-control'}), required=False)
     date_joined = forms.DateField(widget=forms.DateInput(attrs={'id': 'date',
-                                                                'class': 'form-control'}), required=False)
+                                                                'class': 'form-control', 'type': 'date'}),
+                                  required=False)
     is_debt = forms.ChoiceField(choices=debt_choices,
                                 widget=forms.Select(attrs={'id': 'is_debt',
                                                            'class': 'form-control'}), required=False)
