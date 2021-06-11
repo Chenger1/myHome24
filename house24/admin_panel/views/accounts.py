@@ -8,12 +8,14 @@ from admin_panel.forms.account_forms import AccountSearchForm, CreatePersonalAcc
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import PersonalAccount
+from db.services.search import PersonalAccountSearch
 
 
 class ListPersonalAccountsView(ListInstancesMixin):
     model = PersonalAccount
     search_form = AccountSearchForm
     template_name = 'account/list_accounts_admin.html'
+    search_obj = PersonalAccountSearch
 
     def get_context_data(self):
         context = super().get_context_data()

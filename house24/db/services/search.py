@@ -1,7 +1,7 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat
+from db.models.house import House, Flat, PersonalAccount
 from db.models.user import User
 
 
@@ -27,8 +27,7 @@ class FlatSearch:
             queryset = queryset.filter(owner=form_data.get('user'))
         if form_data.get('debt'):
             queryset = queryset.filter(owner__isnull=False)
-            queryset = [instance for instance in queryset if instance.owner.has_debt
-                        and instance.owner.has_debt == bool(int(form_data.get('debt')))]
+            queryset = [instance for instance in queryset if instance.owner.has_debt == bool(int(form_data.get('debt')))]
         return queryset
 
 
@@ -67,4 +66,25 @@ class UserSearch:
             queryset = queryset.filter(role=form_data.get('role'))
         if form_data.get('status'):
             queryset = queryset.filter(status=form_data.get('status'))
+        return queryset
+
+
+class PersonalAccountSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = PersonalAccount.objects.all()
+        queryset = queryset.filter(number__icontains=form_data.get('number'))
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
+        if form_data.get('flat'):
+            queryset = queryset.filter(flat__number__icontains=form_data.get('flat'))
+        if form_data.get('house'):
+            queryset = queryset.filter(house=form_data.get('house'))
+        if form_data.get('section'):
+            queryset = queryset.filter(section=form_data.get('section'))
+        if form_data.get('user'):
+            queryset = queryset.filter(flat__owner=form_data.get('user'))
+        if form_data.get('debt'):
+            queryset = queryset.filter(flat__owner__isnull=False)
+            queryset = [instance for instance in queryset if instance.has_debt == bool(int(form_data.get('is_debt')))]
         return queryset

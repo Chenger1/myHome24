@@ -12,28 +12,31 @@ class PersonalAccountForm(forms.ModelForm):
 
 class AccountSearchForm(forms.Form):
     debt_choices = [
+        ('', ' '),
         (0, 'Нет долга'),
         (1, 'Есть долг')
     ]
     status_choices = [
+        ('', ' '),
         (0, 'Активен'),
         (1, 'Неактивен')
     ]
 
-    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),
-                                required=False)
+    number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                             required=False)
     house = forms.ModelChoiceField(queryset=House.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
                                    required=False)
     section = forms.ModelChoiceField(queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
                                      required=False)
-    flat = forms.ModelChoiceField(queryset=Flat.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
-                                  required=False)
+    flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           required=False)
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                   widget=forms.Select(attrs={'class': 'form-control'}),
                                   required=False)
     debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                              required=False)
-    status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}))
+    status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
+                               required=False)
 
 
 class CreatePersonalAccountForm(forms.ModelForm):

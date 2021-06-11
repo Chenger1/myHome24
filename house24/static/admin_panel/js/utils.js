@@ -16,10 +16,11 @@
                 }
             });
        })
-
-        $('.select2-selection').on('keyup', function (e) {
-            if (e.keyCode === 13) {
-              $('form').submit();
-            }
-          });
+        $('.select2-selection').each(function(){
+            $(this).on('keyup', function(e){
+                if(e.keyCode === 13){
+                    $('form').submit();
+                }
+            })
+        })
     }
