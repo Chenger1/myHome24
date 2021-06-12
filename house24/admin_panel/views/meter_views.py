@@ -7,6 +7,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.meters_forms import SearchMeasureForm, CreateMeterForm, SearchMeasureHistoryForm
 
 from db.models.house import Meter, Flat
+from db.services.search import MeterSearch
 
 import datetime
 
@@ -15,6 +16,7 @@ class ListMetersView(ListInstancesMixin):
     model = Meter
     search_form = SearchMeasureForm
     template_name = 'meters/list_meters_admin.html'
+    search_obj = MeterSearch
 
 
 class CreateMeterView(AdminPermissionMixin, CreateView):

@@ -1,7 +1,7 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message
+from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message, Meter
 from db.models.user import User
 
 
@@ -117,3 +117,18 @@ class MessageSearch:
     @staticmethod
     def search(form_data):
         return Message.objects.filter(title__icontains=form_data.get('text'))
+
+
+class MeterSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = Meter.objects.all()
+        if form_data.get('house'):
+            queryset = queryset.filter(house=form_data.get('house'))
+        if form_data.get('section'):
+            queryset = queryset.filter(section=form_data.get('section'))
+        if form_data.get('flat'):
+            queryset = queryset.filter(flat__number__icontains=form_data.get('flat'))
+        if form_data.get('service'):
+            queryset = queryset.filter(service=form_data.get('service'))
+        return queryset

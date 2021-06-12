@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
 from db.models.house import House, Section, Service, Meter, Flat
 

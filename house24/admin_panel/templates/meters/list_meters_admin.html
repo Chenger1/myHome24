@@ -36,6 +36,8 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
@@ -89,6 +91,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -98,13 +101,21 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        submit_form_after_keypress();
+    
+        let value = $('select[name=house]').find(':selected').val();
+        update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                      constructor=append_select_section_floor);
+
+        $('select[name=house]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
         })
     })
-
-
 </script>
 {% endblock %}
