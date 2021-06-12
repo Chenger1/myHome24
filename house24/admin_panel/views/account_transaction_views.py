@@ -10,12 +10,14 @@ from admin_panel.forms.account_transaction_forms import (AccountTransactionSearc
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import Transaction, PersonalAccount
+from db.services.search import TransactionSearch
 
 
 class ListAccountTransactionView(ListInstancesMixin):
     model = Transaction
     template_name = 'account_transaction/list_account_transaction_admin.html'
     search_form = AccountTransactionSearchForm
+    search_obj = TransactionSearch
 
     def get_context_data(self):
         context = super().get_context_data()

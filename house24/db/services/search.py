@@ -1,7 +1,7 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message, Meter
+from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message, Meter, Transaction
 from db.models.user import User
 
 
@@ -148,4 +148,25 @@ class MeterHistorySearch:
             queryset = queryset.filter(section=form_data.get('section'))
         if form_data.get('service'):
             queryset = queryset.filter(service=form_data.get('service'))
+        return queryset
+
+
+class TransactionSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = Transaction.objects.all()
+        if form_data.get('number'):
+            queryset = queryset.filter(number__contains=form_data.get('number'))
+        if form_data.get('start') or form_data.get('end'):
+            queryset = queryset.filter(created__range=[form_data.get('start'), form_data.get('end')])
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
+        if form_data.get('payment_item_type'):
+            queryset = queryset.filter(payment_item_type=form_data.get('payment_item_type'))
+        if form_data.get('owner'):
+            queryset = queryset.filter(owner=form_data.get('owner'))
+        if form_data.get('personal_account'):
+            queryset = queryset.filter(personal_account__contains=form_data.get('personal_account'))
+        if form_data.get('income_outcome'):
+            queryset = queryset.filter(payment_item_type__type=form_data.get('income_outcome'))
         return queryset
