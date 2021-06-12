@@ -1,7 +1,7 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message, Meter, Transaction
+from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message, Meter, Transaction, MasterRequest
 from db.models.user import User
 
 
@@ -169,4 +169,29 @@ class TransactionSearch:
             queryset = queryset.filter(personal_account__contains=form_data.get('personal_account'))
         if form_data.get('income_outcome'):
             queryset = queryset.filter(payment_item_type__type=form_data.get('income_outcome'))
+        return queryset
+
+
+class MasterRequestSearch:
+    @staticmethod
+    def search(form_data):
+        queryset = MasterRequest.objects.all()
+        if form_data.get('number'):
+            queryset = queryset.filter(pk__contains=form_data.get('number'))
+        if form_data.get('start') or form_data.get('end'):
+            queryset = queryset.filter(date__range=[form_data.get('start'), form_data.get('end')])
+        if form_data.get('master_type'):
+            queryset = queryset.filter(type=form_data.get('master_type'))
+        if form_data.get('description'):
+            queryset = queryset.filter(comment__icontains=form_data.get('description'))
+        if form_data.get('flat'):
+            queryset = queryset.filter(flat__number__contains=form_data.get('flat'))
+        if form_data.get('owner'):
+            queryset = queryset.filter(owner=form_data.get('owner'))
+        if form_data.get('phone'):
+            queryset = queryset.filter(owner__phone_number__contains=form_data.get('phone'))
+        if form_data.get('master'):
+            queryset = queryset.filter(master=form_data.get('master'))
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
         return queryset

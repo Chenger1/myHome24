@@ -7,12 +7,14 @@ from admin_panel.forms.master_forms import MasterRequestSearchForm, CreateMaster
 
 from db.models.house import MasterRequest, Flat
 from db.models.user import User
+from db.services.search import MasterRequestSearch
 
 
 class ListMasterRequestsView(ListInstancesMixin):
     model = MasterRequest
     search_form = MasterRequestSearchForm
     template_name = 'master/list_master_requests.html'
+    search_obj = MasterRequestSearch
 
 
 class CreateMasterRequestView(AdminPermissionMixin, CreateView):

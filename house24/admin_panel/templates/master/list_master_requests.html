@@ -5,6 +5,13 @@
 {% block title %}Заявки вызова мастера{% endblock %}
 
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
+
 {% block content %}
 <div class="content-wrapper">
     <div class="content-header">
@@ -37,6 +44,8 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
@@ -55,8 +64,12 @@
                                 <tbody>
                                 <tr>
                                     <td>{{ form.number }}</td>
-                                    <td>{{ form.time }}</td>
-                                    <td>{{ form.type }}</td>
+                                    <td>
+                                        <input type="text" id="date_range" class="form-control">
+                                        {{ form.start }}
+                                        {{ form.end }}
+                                    </td>
+                                    <td>{{ form.master_type }}</td>
                                     <td>{{ form.description }}</td>
                                     <td>{{ form.flat }}</td>
                                     <td>{{ form.owner }}</td>
@@ -103,7 +116,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -113,13 +126,32 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('#date_range').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+        $('#id_owner').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+        $('#id_master').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        })
+
+        submit_form_after_keypress();
+
+        $('.applyBtn').on('click', function(){
+            const date_range = $('#date_range').data('daterangepicker');
+            $('#date_start').val(date_range.startDate.format('YYYY-MM-DD'));
+            $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
+            $('form').submit();
         })
     })
-
-
 </script>
 {% endblock %}
