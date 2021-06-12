@@ -3,6 +3,10 @@
 
 {% block title %}Показания счетчиков, кв.{{ flat.number }}{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -38,6 +42,8 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
@@ -58,11 +64,15 @@
                                 <tr>
                                     <td>{{ form.number }}</td>
                                     <td>{{ form.status }}</td>
-                                    <td>{{ form.date }}</td>
+                                    <td>
+                                        <input type="text" id="date_range" class="form-control">
+                                        {{ form.start }}
+                                        {{ form.end }}
+                                    </td>
                                     <td></td>
                                     <td>{{ form.house }}</td>
                                     <td>{{ form.section }}</td>
-                                    <td>{{ form.number }}</td>
+                                    <td><input type="hidden" name="flat" value="{{ flat.pk }}"></td>
                                     <td>{{ form.service }}</td>
                                     <td></td>
                                     <td></td>
@@ -107,6 +117,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -116,10 +127,32 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('#date_range').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+        submit_form_after_keypress();
+
+        $('.applyBtn').on('click', function(){
+            const date_range = $('#date_range').data('daterangepicker');
+            $('#date_start').val(date_range.startDate.format('YYYY-MM-DD'));
+            $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
+            $('form').submit();
+        })
+
+        let value = $('select[name=house]').find(':selected').val();
+        update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+
+        $('select[name=house]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
         })
     })
 </script>

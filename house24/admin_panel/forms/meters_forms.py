@@ -20,6 +20,7 @@ class SearchMeasureForm(forms.Form):
 
 class SearchMeasureHistoryForm(forms.Form):
     status_choices = [
+        ('', ' '),
         (0, 'Новое'),
         (1, 'Учтено'),
         (2, 'Учтено и оплачен'),
@@ -32,19 +33,15 @@ class SearchMeasureHistoryForm(forms.Form):
     section = forms.ModelChoiceField(queryset=Section.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
                                      required=False)
-    flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
                                      required=False)
-    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),
-                                required=False)
+    number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    flat = forms.CharField(widget=forms.HiddenInput())
     status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                                required=False)
-    date = forms.DateField(widget=forms.DateInput(format=('%Y-%m-%d'), attrs={
-                                                  'type': "date",
-                                                  'value': datetime.now().strftime('%Y-%m-%d'),
-                                                  'class': "form-control to_valid",
-                                                  }))
+    start = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_start'}), required=False)
+    end = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_end'}), required=False)
 
 
 class CreateMeterForm(forms.ModelForm):

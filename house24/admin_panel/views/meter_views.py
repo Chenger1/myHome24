@@ -7,7 +7,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.meters_forms import SearchMeasureForm, CreateMeterForm, SearchMeasureHistoryForm
 
 from db.models.house import Meter, Flat
-from db.services.search import MeterSearch
+from db.services.search import MeterSearch, MeterHistorySearch
 
 import datetime
 
@@ -63,6 +63,7 @@ class ListMeterHistory(ListInstancesMixin):
     model = Meter
     template_name = 'meters/list_meter_history.html'
     search_form = SearchMeasureHistoryForm
+    search_obj = MeterHistorySearch
     pk = None
 
     def get(self, request, pk=None):

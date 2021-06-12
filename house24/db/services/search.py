@@ -97,10 +97,9 @@ class PaymentTicketSearch:
         queryset = queryset.filter(number__icontains=form_data.get('number'))
         if form_data.get('status'):
             queryset = queryset.filter(status=form_data.get('status'))
-        if form_data.get('start'):
-            queryset = queryset.filter(start=form_data.get('start'))
-        if form_data.get('end'):
-            queryset = queryset.filter(end=form_data.get('end'))
+        if form_data.get('start') or form_data.get('end'):
+            queryset = queryset.filter(start__range=[form_data.get('start'), form_data.get('end')],
+                                       end__range=[form_data.get('start'), form_data.get('end')])
         if form_data.get('month'):
             month = int(form_data.get('month').split('-')[-1])
             queryset = queryset.filter(created__month=month)
@@ -129,6 +128,24 @@ class MeterSearch:
             queryset = queryset.filter(section=form_data.get('section'))
         if form_data.get('flat'):
             queryset = queryset.filter(flat__number__icontains=form_data.get('flat'))
+        if form_data.get('service'):
+            queryset = queryset.filter(service=form_data.get('service'))
+        return queryset
+
+
+class MeterHistorySearch:
+    @staticmethod
+    def search(form_data):
+        queryset = Meter.objects.filter(flat__pk=form_data['flat'])
+        queryset = queryset.filter(number__contains=form_data.get('number'))
+        if form_data.get('status'):
+            queryset = queryset.filter(status=form_data.get('status'))
+        if form_data.get('start') or form_data.get('end'):
+            queryset = queryset.filter(date__range=[form_data.get('start'), form_data.get('end')])
+        if form_data.get('house'):
+            queryset = queryset.filter(house=form_data.get('house'))
+        if form_data.get('section'):
+            queryset = queryset.filter(section=form_data.get('section'))
         if form_data.get('service'):
             queryset = queryset.filter(service=form_data.get('service'))
         return queryset
