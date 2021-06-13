@@ -54,8 +54,7 @@ class OwnerSearch:
 
 class UserSearch:
     @staticmethod
-    def search(form_data):
-        queryset = User.objects.filter(is_staff=True)
+    def search(form_data, queryset):
         queryset = queryset.annotate(fullname=Concat('first_name', Value(' '), 'last_name'))
         queryset = queryset.filter(fullname__icontains=form_data.get('username'),
                                    email__contains=form_data.get('email'),
@@ -69,8 +68,7 @@ class UserSearch:
 
 class PersonalAccountSearch:
     @staticmethod
-    def search(form_data):
-        queryset = PersonalAccount.objects.all()
+    def search(form_data, queryset):
         queryset = queryset.filter(number__icontains=form_data.get('number'))
         if form_data.get('status'):
             queryset = queryset.filter(status=form_data.get('status'))
@@ -111,8 +109,8 @@ class PaymentTicketSearch:
 
 class MessageSearch:
     @staticmethod
-    def search(form_data):
-        return Message.objects.filter(title__icontains=form_data.get('text'))
+    def search(form_data, queryset):
+        return queryset.filter(title__icontains=form_data.get('text'))
 
 
 class MeterSearch:
@@ -171,7 +169,6 @@ class TransactionSearch:
 class MasterRequestSearch:
     @staticmethod
     def search(form_data, queryset):
-        # queryset = MasterRequest.objects.all()
         if form_data.get('number'):
             queryset = queryset.filter(pk__contains=form_data.get('number'))
         if form_data.get('start') or form_data.get('end'):
