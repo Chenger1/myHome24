@@ -7,8 +7,8 @@ from db.models.user import User
 
 class HouseSearch:
     @staticmethod
-    def search(form_data):
-        return House.objects.filter(name__icontains=form_data.get('name'), address__icontains=form_data.get('address'))
+    def search(form_data, queryset):
+        return queryset.filter(name__icontains=form_data.get('name'), address__icontains=form_data.get('address'))
 
 
 class FlatSearch:
@@ -153,8 +153,7 @@ class MeterHistorySearch:
 
 class TransactionSearch:
     @staticmethod
-    def search(form_data):
-        queryset = Transaction.objects.all()
+    def search(form_data, queryset):
         if form_data.get('number'):
             queryset = queryset.filter(number__contains=form_data.get('number'))
         if form_data.get('start') or form_data.get('end'):

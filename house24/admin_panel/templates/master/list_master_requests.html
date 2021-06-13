@@ -218,6 +218,7 @@
         })
 
         submit_form_after_keypress();
+        submit_form_after_ordering();
 
         $('.applyBtn').on('click', function(){
             const date_range = $('#date_range').data('daterangepicker');
@@ -226,13 +227,6 @@
             $('form').submit();
         })
 
-        $('.submit_link').each(function(){
-            $(this).on('click', function(e){
-                e.preventDefault();
-                const link =$(this).closest('th').find('.next_link').val();
-                $('form').prop('action', link).submit();
-            })
-        })
     })
 </script>
 {% endblock %}

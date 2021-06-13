@@ -48,32 +48,50 @@
                                     <th>#</th>
                                     <th>
                                         {% if 'name_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_houses_name_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_houses_name_descending_admin' %}"
+                                            class="submit_link">
                                                Название <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_name_descending_admin' %}">
                                         {% elif 'name_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}"
+                                            class="submit_link">
                                                Название <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}"
+                                            class="submit_link">
                                                    Название
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>
                                         {% if 'address_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_houses_address_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_houses_address_descending_admin' %}"
+                                            class="submit_link">
                                                Адрес <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_address_descending_admin' %}">
                                         {% elif 'address_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}"
+                                            class="submit_link">
                                                Адрес <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}"
+                                            class="submit_link">
                                                    Адрес
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th></th>
@@ -133,6 +151,7 @@
 <script>
     $(document).ready(function(){
         submit_form_after_keypress();
+        submit_form_after_ordering();
     })
 </script>
 {% endblock %}

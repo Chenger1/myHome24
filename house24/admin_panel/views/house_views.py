@@ -26,18 +26,10 @@ class ListHouseNameAscendingView(ListHousesView):
         queryset = super().get_queryset().order_by('-name')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-name')
-        return queryset
-
 
 class ListHouseNameDescendingView(ListHousesView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('name')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('name')
         return queryset
 
 
@@ -46,18 +38,10 @@ class ListHouseAddressAscendingView(ListHousesView):
         queryset = super().get_queryset().order_by('-address')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-address')
-        return queryset
-
 
 class ListHouseAddressDescendingView(ListHousesView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('address')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('address')
         return queryset
 
 

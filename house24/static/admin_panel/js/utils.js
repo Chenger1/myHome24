@@ -24,3 +24,13 @@
             })
         })
     }
+
+function submit_form_after_ordering(){
+    $('.submit_link').each(function(){
+        $(this).on('click', function(e){
+            e.preventDefault();
+            const link =$(this).closest('th').find('.next_link').val();
+            $('form').prop('action', link).submit();
+        })
+    })
+}
