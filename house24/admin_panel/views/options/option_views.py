@@ -6,7 +6,7 @@ from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormse
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.views.mixins import DeleteInstanceView
 
-from db.models.house import Measure, Service, PaymentItem
+from db.models.house import PaymentItem
 from db.models.pages import Credentials
 
 
@@ -42,9 +42,7 @@ class SaveServiceForm(AdminPermissionMixin, View):
     def post(self, request):
         formset = ServiceFormset(request.POST, prefix='services')
         if formset.is_valid():
-            for form in formset:
-                if not form.cleaned_data.get('DELETE'):
-                    form.save()
+            formset.save()
         return redirect('admin_panel:service_measure_option')
 
 
@@ -52,9 +50,7 @@ class SaveMeasureForm(AdminPermissionMixin, View):
     def post(self, request):
         formset = MeasureFormset(request.POST, prefix='measure')
         if formset.is_valid():
-            for form in formset:
-                if not form.cleaned_data.get('DELETE'):
-                    form.save()
+            formset.save()
         return redirect('admin_panel:service_measure_option')
 
 
