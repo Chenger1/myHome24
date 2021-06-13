@@ -57,12 +57,40 @@
                                 <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>ФИО</th>
+                                    <th>
+                                        {% if 'name_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}">
+                                               ФИО <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'name_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                               ФИО <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                                   ФИО
+                                            </a>
+                                        {% endif %}
+                                    </th>
                                     <th>Телефон</th>
                                     <th>Email</th>
                                     <th>Дом</th>
                                     <th>Квартира</th>
-                                    <th>Добавлен</th>
+                                    <th>
+                                        {% if 'date_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}">
+                                               Добавлен <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'date_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
+                                               Добавлен <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
+                                                   Добавлен
+                                            </a>
+                                        {% endif %}
+                                    </th>
                                     <th>Статус</th>
                                     <th>Есть долг</th>
                                     <th></th>

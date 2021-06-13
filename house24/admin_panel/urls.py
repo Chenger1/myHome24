@@ -82,6 +82,14 @@ urlpatterns = [
     path('owners/index/update_owner/<int:pk>/', user_views.UpdateOwnerUser.as_view(), name='update_owner_admin'),
     path('owners/index/delete_owner/<int:pk>/', user_views.DeleteOwnerUser.as_view(), name='delete_owner_admin'),
     path('owners/index/detail_owner/<int:pk>/', user_views.DetailOwnerView.as_view(), name='detail_owner_admin'),
+    path('owners/index/name_ascending/', user_views.ListOwnerLastNameAscendingView.as_view(),
+         name='list_owners_name_ascending_admin'),
+    path('owners/index/name_descending/', user_views.ListOwnerLastNameDescendingView.as_view(),
+         name='list_owners_name_descending_admin'),
+    path('owners/index/date_ascending/', user_views.ListOwnerDateJoinedAscendingView.as_view(),
+         name='list_owners_date_joined_ascending'),
+    path('owners/index/date_descending/', user_views.ListOwnerDateJoinedDescendingView.as_view(),
+         name='list_owners_date_joined_descending_admin'),
 
     # HOUSES
     path('houses/index/', house_views.ListHousesView.as_view(), name='list_houses_admin'),

@@ -81,6 +81,46 @@ class ListOwnerView(ListInstancesMixin):
         return self.model.objects.filter(is_staff=False)
 
 
+class ListOwnerLastNameAscendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-last_name')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-last_name')
+        return queryset
+
+
+class ListOwnerLastNameDescendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('last_name')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('last_name')
+        return queryset
+
+
+class ListOwnerDateJoinedAscendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date_joined')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-date_joined')
+        return queryset
+
+
+class ListOwnerDateJoinedDescendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('date_joined')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('date_joined')
+        return queryset
+
+
 class CreateOwnerUser(AdminPermissionMixin, CreateView):
     model = User
     form_class = CreateOwnerForm
