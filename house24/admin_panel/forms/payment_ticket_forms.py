@@ -8,13 +8,13 @@ import datetime
 
 class PaymentTicketSearchForm(forms.Form):
     status_choices = [
-        ('', ' '),
+        ('', 'Выберите...'),
         (0, 'Оплачена'),
         (1, 'Частично оплачена'),
         (2, 'Неоплачена')
     ]
     done_choices = [
-        ('', ' '),
+        ('', 'Выберите...'),
         (1, 'Проведена'),
         (0, 'Не проведена')
     ]
@@ -30,7 +30,8 @@ class PaymentTicketSearchForm(forms.Form):
     flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                            required=False)
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
-                                   widget=forms.Select(attrs={'class': 'form-control'}), required=False)
+                                   widget=forms.Select(attrs={'class': 'form-control'}), required=False,
+                                   empty_label='Выберите...')
     is_done = forms.ChoiceField(choices=done_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                                 required=False)
 
@@ -42,6 +43,12 @@ class CreatePaymentTicketForm(forms.ModelForm):
         if house_pk:
             self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
             self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
+        self.fields['status'].empty_label = 'Выберите...'
+        self.fields['section'].empty_label = 'Выберите...'
+        self.fields['house'].empty_label = 'Выберите...'
+        self.fields['flat'].empty_label = 'Выберите...'
+        self.fields['personal_account'].empty_label = 'Выберите...'
+        self.fields['tariff'].empty_label = 'Выберите...'
 
     class Meta:
         model = PaymentTicket
@@ -70,6 +77,10 @@ class CreatePaymentTicketForm(forms.ModelForm):
 
 
 class TicketServiceForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['service'].empty_label = 'Выберите...'
+
     class Meta:
         model = PaymentTicketService
         exclude = ('payment_ticket', )

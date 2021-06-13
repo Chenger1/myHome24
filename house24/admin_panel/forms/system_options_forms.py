@@ -18,7 +18,7 @@ MeasureFormset = forms.modelformset_factory(model=Measure, form=MeasureForm, can
 
 class ServiceForm(forms.ModelForm):
     measure = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                                     queryset=Measure.objects.all(), required=True)
+                                     queryset=Measure.objects.all(), required=True, empty_label='Выберите...')
 
     class Meta:
         model = Service
@@ -50,7 +50,8 @@ class TariffForm(forms.ModelForm):
 
 class TariffServiceBlockForm(forms.ModelForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
-                                     widget=forms.Select(attrs={'class': 'form-control service_select'}))
+                                     widget=forms.Select(attrs={'class': 'form-control service_select'}),
+                                     empty_label='Выберите...')
     currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency', 'disabled': 'true'}),
                                required=False)
 
@@ -78,6 +79,10 @@ class CredentialsForm(forms.ModelForm):
 
 
 class PaymentItemForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['type'].empty_label = 'Выберите...'
+
     class Meta:
         model = PaymentItem
         fields = '__all__'

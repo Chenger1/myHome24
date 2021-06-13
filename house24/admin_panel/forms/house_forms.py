@@ -46,7 +46,8 @@ class FloorForm(forms.ModelForm):
 
 class HouseUserForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
-                                  widget=forms.Select(attrs={'class': 'form-control users_select'}))
+                                  widget=forms.Select(attrs={'class': 'form-control users_select'}),
+                                  empty_label='Выберите...')
 
     class Meta:
         model = HouseUser

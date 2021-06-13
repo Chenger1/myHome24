@@ -10,6 +10,13 @@ class MessageSearchForm(forms.Form):
 
 
 class CreateMessageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['house'].empty_label = 'Выберите...'
+        self.fields['section'].empty_label = 'Выберите...'
+        self.fields['floor'].empty_label = 'Выберите...'
+        self.fields['flat'].empty_label = 'Выберите...'
+
     class Meta:
         model = Message
         exclude = ('sender', )
