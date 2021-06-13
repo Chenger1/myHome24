@@ -236,14 +236,6 @@ class Meter(models.Model):
     house = models.ForeignKey(House, related_name='meters', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='meters', on_delete=models.CASCADE)
 
-    @classmethod
-    def get_next_meter_number(cls):
-        last = cls.objects.last()
-        if last:
-            return last.pk + 1
-        else:
-            return 1
-
     @property
     def meter_month(self):
         return datetime.date(month=self.date.month, year=self.date.year, day=self.date.day).strftime('%b %Y')

@@ -169,6 +169,8 @@ urlpatterns = [
          name='list_meter_history_month_ascending'),
     path('meters/index/list_history/<int:pk>/month_descending/', meter_views.ListMeterHistoryMonthDescending.as_view(),
          name='list_meter_history_month_descending'),
+    path('meters/index/create_meter_by_flat/<int:pk>/', meter_views.CreateMeterView.as_view(),
+         name='create_meter_by_flat_admin'),
 
     # MASTER REQUESTS
     path('master_request/index/', master_request_views.ListMasterRequestsView.as_view(),
