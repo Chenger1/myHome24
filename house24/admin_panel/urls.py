@@ -169,6 +169,18 @@ urlpatterns = [
          name='delete_master_request_admin'),
     path('master_request/index/detail_request/<int:pk>/', master_request_views.DetailMasterRequest.as_view(),
          name='detail_master_request_admin'),
+    path('master_request/index/number_ascending/', master_request_views.ListMasterRequestsNumberAscendingView.as_view(),
+         name='list_master_requests_number_ascending_admin'),
+    path('master_request/index/number_descending/', master_request_views.ListMasterRequestsNumberDescendingView.as_view(),
+         name='list_master_requests_number_descending_admin'),
+    path('master_request/index/date_ascending/', master_request_views.ListMasterRequestsDateAscendingView.as_view(),
+         name='list_master_requests_date_ascending_admin'),
+    path('master_request/index/date_descending/', master_request_views.ListMasterRequestsDateDescendingView.as_view(),
+         name='list_master_requests_date_descending_admin'),
+    path('master_request/index/type_ascending/', master_request_views.ListMasterRequestsTypeAscendingView.as_view(),
+         name='list_master_requests_type_ascending_admin'),
+    path('master_request/index/type_descending/', master_request_views.ListMasterRequestsTypeDescendingView.as_view(),
+         name='list_master_requests_type_descending_admin'),
 
     # PAYMENT TICKET
     path('payment_ticket/index/', payment_ticket_views.ListPaymentTicketsView.as_view(),

@@ -53,9 +53,51 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>№ заявки</th>
-                                    <th>Удобное время</th>
-                                    <th>Тип мастера</th>
+                                    <th>
+                                        {% if 'number_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_master_requests_number_descending_admin' %}">
+                                               № заявки <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'number_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
+                                               № заявки <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
+                                                   № заявки
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'date_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_master_requests_date_descending_admin' %}">
+                                               Удобное время <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'date_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
+                                               Удобное время <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
+                                                   Удобное время
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'type_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_master_requests_type_descending_admin' %}">
+                                               Тип мастера <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'type_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
+                                               Тип мастера <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
+                                                   Тип мастера
+                                            </a>
+                                        {% endif %}
+                                    </th>
                                     <th>Описание</th>
                                     <th>Квартира</th>
                                     <th>Владелец</th>

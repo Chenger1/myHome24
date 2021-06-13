@@ -17,6 +17,66 @@ class ListMasterRequestsView(ListInstancesMixin):
     search_obj = MasterRequestSearch
 
 
+class ListMasterRequestsNumberAscendingView(ListMasterRequestsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-pk')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-pk')
+        return queryset
+
+
+class ListMasterRequestsNumberDescendingView(ListMasterRequestsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('pk')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('pk')
+        return queryset
+
+
+class ListMasterRequestsDateAscendingView(ListMasterRequestsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-date')
+        return queryset
+
+
+class ListMasterRequestsDateDescendingView(ListMasterRequestsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('date')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('date')
+        return queryset
+
+
+class ListMasterRequestsTypeAscendingView(ListMasterRequestsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-type')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-type')
+        return queryset
+
+
+class ListMasterRequestsTypeDescendingView(ListMasterRequestsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('type')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('type')
+        return queryset
+
+
 class CreateMasterRequestView(AdminPermissionMixin, CreateView):
     model = MasterRequest
     form_class = CreateMasterRequestForm
