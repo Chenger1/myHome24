@@ -19,6 +19,18 @@ class ListMetersView(ListInstancesMixin):
     search_obj = MeterSearch
 
 
+class ListMetersNumberAscendingView(ListMetersView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-flat__number')
+        return queryset
+
+
+class ListMetersNumberDescendingView(ListMetersView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('flat__number')
+        return queryset
+
+
 class CreateMeterView(AdminPermissionMixin, CreateView):
     model = Meter
     form_class = CreateMeterForm

@@ -157,6 +157,10 @@ urlpatterns = [
     path('meters/index/delete_meter/<int:pk>/', meter_views.DeleteMeterView.as_view(), name='delete_meter_admin'),
     path('meters/index/duplicate_meter/<int:pk>/', meter_views.DuplicateMeterView.as_view(),
          name='duplicate_meter_admin'),
+    path('meters/index/number_ascending/', meter_views.ListMetersNumberAscendingView.as_view(),
+         name='list_meters_number_ascending_admin'),
+    path('meters/index/number_descending/', meter_views.ListMetersNumberDescendingView.as_view(),
+         name='list_meters_number_descending_admin'),
 
     # MASTER REQUESTS
     path('master_request/index/', master_request_views.ListMasterRequestsView.as_view(),

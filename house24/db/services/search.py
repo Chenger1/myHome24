@@ -115,8 +115,7 @@ class MessageSearch:
 
 class MeterSearch:
     @staticmethod
-    def search(form_data):
-        queryset = Meter.objects.all()
+    def search(form_data, queryset):
         if form_data.get('house'):
             queryset = queryset.filter(house=form_data.get('house'))
         if form_data.get('section'):
