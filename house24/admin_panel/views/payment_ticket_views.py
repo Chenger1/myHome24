@@ -31,18 +31,10 @@ class ListPaymentTicketDateAscendingView(ListPaymentTicketsView):
         queryset = super().get_queryset().order_by('-created')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-created')
-        return queryset
-
 
 class ListPaymentTicketDateDescendingView(ListPaymentTicketsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('created')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('created')
         return queryset
 
 
@@ -51,18 +43,10 @@ class ListPaymentTicketMonthAscendingView(ListPaymentTicketsView):
         queryset = super().get_queryset().order_by('-created__month')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-created__month')
-        return queryset
-
 
 class ListPaymentTicketMonthDescendingView(ListPaymentTicketsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('created__month')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('created__month')
         return queryset
 
 

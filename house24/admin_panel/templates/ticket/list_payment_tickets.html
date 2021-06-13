@@ -104,32 +104,50 @@
                                     <th>Статус</th>
                                     <th>
                                         {% if 'date_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}"
+                                            class="submit_link">
                                                Дата <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
                                         {% elif 'date_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}"
+                                            class="submit_link">
                                                Дата <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}"
+                                            class="submit_link">
                                                    Дата
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>
                                         {% if 'month_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}"
+                                            class="submit_link">
                                                Месяц <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
                                         {% elif 'month_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}"
+                                            class="submit_link">
                                                Месяц <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}"
+                                            class="submit_link">
                                                    Месяц
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>Квартира</th>
@@ -266,6 +284,7 @@
             width: '100%',
         });
         submit_form_after_keypress();
+        submit_form_after_ordering();
 
         $('.applyBtn').on('click', function(){
             const date_range = $('#date_range').data('daterangepicker');

@@ -90,8 +90,7 @@ class PersonalAccountSearch:
 
 class PaymentTicketSearch:
     @staticmethod
-    def search(form_data):
-        queryset = PaymentTicket.objects.all()
+    def search(form_data, queryset):
         queryset = queryset.filter(number__icontains=form_data.get('number'))
         if form_data.get('status'):
             queryset = queryset.filter(status=form_data.get('status'))
