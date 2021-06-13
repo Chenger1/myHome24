@@ -437,8 +437,7 @@
             $(this).find('input[type=checkbox][name*="-DELETE"]').prop('checked', true);
             $(this).hide();
         })
-        let tariff_formset_cloner = new FormsetClonerWithCallback('services', '.formset', 
-                                                    '{% url "admin_panel:delete_payment_ticket_service_admin" %}', setEvent, calculateTotalSum);
+        let tariff_formset_cloner = new FormsetClonerWithCallback('services', '.formset', setEvent, calculateTotalSum);
         for(key in response){
             tariff_formset_cloner.clone();
             let newElement = tariff_formset_cloner.newElement;

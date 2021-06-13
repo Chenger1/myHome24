@@ -55,6 +55,7 @@ class CreateMeterForm(forms.ModelForm):
         self.fields['section'].empty_label = 'Выберите...'
         self.fields['house'].empty_label = 'Выберите...'
         self.fields['service'].empty_label = 'Выберите...'
+        self.fields['service'].queryset = Service.objects.filter(status=True)
 
     class Meta:
         model = Meter
