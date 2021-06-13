@@ -161,6 +161,14 @@ urlpatterns = [
          name='list_meters_number_ascending_admin'),
     path('meters/index/number_descending/', meter_views.ListMetersNumberDescendingView.as_view(),
          name='list_meters_number_descending_admin'),
+    path('meters/index/list_history/<int:pk>/date_ascending/', meter_views.ListMeterHistoryDateAscending.as_view(),
+         name='list_meter_history_date_ascending'),
+    path('meters/index/list_history/<int:pk>/date_descending/', meter_views.ListMeterHistoryDateDescending.as_view(),
+         name='list_meter_history_date_descending'),
+    path('meters/index/list_history/<int:pk>/month_ascending/', meter_views.ListMeterHistoryMonthAscending.as_view(),
+         name='list_meter_history_month_ascending'),
+    path('meters/index/list_history/<int:pk>/month_descending/', meter_views.ListMeterHistoryMonthDescending.as_view(),
+         name='list_meter_history_month_descending'),
 
     # MASTER REQUESTS
     path('master_request/index/', master_request_views.ListMasterRequestsView.as_view(),

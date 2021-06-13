@@ -129,8 +129,7 @@ class MeterSearch:
 
 class MeterHistorySearch:
     @staticmethod
-    def search(form_data):
-        queryset = Meter.objects.filter(flat__pk=form_data['flat'])
+    def search(form_data, queryset):
         queryset = queryset.filter(number__contains=form_data.get('number'))
         if form_data.get('status'):
             queryset = queryset.filter(status=form_data.get('status'))

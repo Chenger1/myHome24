@@ -91,6 +91,30 @@ class ListMeterHistory(ListInstancesMixin):
         return context
 
 
+class ListMeterHistoryDateAscending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date')
+        return queryset
+
+
+class ListMeterHistoryDateDescending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('date')
+        return queryset
+
+
+class ListMeterHistoryMonthAscending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date__month')
+        return queryset
+
+
+class ListMeterHistoryMonthDescending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date__month')
+        return queryset
+
+
 class MeterDetailView(AdminPermissionMixin, DetailView):
     model = Meter
     template_name = 'meters/meter_detail_admin.html'
