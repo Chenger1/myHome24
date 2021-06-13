@@ -52,7 +52,7 @@ class ListInstancesMixin(AdminPermissionMixin, View):
             Redefine if you need more specific search arguments
         """
         instances = self.search_obj.search(form_data, self.get_queryset())
-        return instances[::-1]
+        return instances.order_by('-pk')
 
     def get_queryset(self):
         """

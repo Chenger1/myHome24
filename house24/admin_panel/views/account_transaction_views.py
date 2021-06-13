@@ -21,10 +21,10 @@ class ListAccountTransactionView(ListInstancesMixin):
 
     def get_context_data(self):
         context = super().get_context_data()
-        incomes = Transaction.objects.filter(payment_item_type__type=0).aggregate(Sum('amount'))
-        outcomes = Transaction.objects.filter(payment_item_type__type=1).aggregate(Sum('amount'))
-        context.update({'incomes': incomes['amount__sum'],
-                        'outcomes': outcomes['amount__sum']})
+        incomes = self.instances.filter(payment_item_type__type=0).aggregate(Sum('amount'))
+        outcomes = self.instances.filter(payment_item_type__type=1).aggregate(Sum('amount'))
+        context.update({'incomes': incomes['amount__sum'] or 0,
+                        'outcomes': outcomes['amount__sum'] or 0})
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
 

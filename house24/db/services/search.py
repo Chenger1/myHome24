@@ -1,9 +1,6 @@
 from django.db.models import Value
 from django.db.models.functions import Concat
 
-from db.models.house import House, Flat, PersonalAccount, PaymentTicket, Message, Meter, Transaction, MasterRequest
-from db.models.user import User
-
 
 class HouseSearch:
     @staticmethod
