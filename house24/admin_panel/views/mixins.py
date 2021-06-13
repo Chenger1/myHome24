@@ -41,7 +41,7 @@ class ListInstancesMixin(AdminPermissionMixin, View):
     def get(self, request, pk=None):
         self.form = self.search_form(request.GET)
         if self.form.is_valid():
-            self.instances = self.get_filtered_query(self.form.cleaned_data)[::-1]
+            self.instances = self.get_filtered_query(self.form.cleaned_data)
             return render(request, self.template_name, context=self.get_context_data())
         else:
             self.instances = self.get_queryset()[::-1]
@@ -51,8 +51,8 @@ class ListInstancesMixin(AdminPermissionMixin, View):
         """
             Redefine if you need more specific search arguments
         """
-        instances = self.search_obj.search(form_data)
-        return instances
+        instances = self.search_obj.search(form_data, self.get_queryset())
+        return instances[::-1]
 
     def get_queryset(self):
         """

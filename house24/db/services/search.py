@@ -174,8 +174,8 @@ class TransactionSearch:
 
 class MasterRequestSearch:
     @staticmethod
-    def search(form_data):
-        queryset = MasterRequest.objects.all()
+    def search(form_data, queryset):
+        # queryset = MasterRequest.objects.all()
         if form_data.get('number'):
             queryset = queryset.filter(pk__contains=form_data.get('number'))
         if form_data.get('start') or form_data.get('end'):

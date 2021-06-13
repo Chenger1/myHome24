@@ -48,54 +48,81 @@
                             style="float:right;">Очистить</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
-                            <form action="" method="get">
+                            <form  method="get">
                                 {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
                                     <th>
                                         {% if 'number_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_master_requests_number_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_number_descending_admin' %}"
+                                            class="submit_link">
                                                № заявки <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_number_descending_admin' %}">
                                         {% elif 'number_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}"
+                                            class="submit_link">
                                                № заявки <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}"
+                                            class="submit_link">
                                                    № заявки
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>
                                         {% if 'date_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_master_requests_date_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_date_descending_admin' %}"
+                                            class="submit_link">
                                                Удобное время <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_date_descending_admin' %}">
                                         {% elif 'date_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}"
+                                            class="submit_link">
                                                Удобное время <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}"
+                                            class="submit_link">
                                                    Удобное время
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>
                                         {% if 'type_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_master_requests_type_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_type_descending_admin' %}"
+                                            class="submit_link">
                                                Тип мастера <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_type_descending_admin' %}">
                                         {% elif 'type_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}"
+                                            class="submit_link">
                                                Тип мастера <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}"
+                                            class="submit_link">
                                                    Тип мастера
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>Описание</th>
@@ -197,6 +224,14 @@
             $('#date_start').val(date_range.startDate.format('YYYY-MM-DD'));
             $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
             $('form').submit();
+        })
+
+        $('.submit_link').each(function(){
+            $(this).on('click', function(e){
+                e.preventDefault();
+                const link =$(this).closest('th').find('.next_link').val();
+                $('form').prop('action', link).submit();
+            })
         })
     })
 </script>

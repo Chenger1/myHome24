@@ -22,18 +22,10 @@ class ListMasterRequestsNumberAscendingView(ListMasterRequestsView):
         queryset = super().get_queryset().order_by('-pk')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-pk')
-        return queryset
-
 
 class ListMasterRequestsNumberDescendingView(ListMasterRequestsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('pk')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('pk')
         return queryset
 
 
@@ -42,18 +34,10 @@ class ListMasterRequestsDateAscendingView(ListMasterRequestsView):
         queryset = super().get_queryset().order_by('-date')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-date')
-        return queryset
-
 
 class ListMasterRequestsDateDescendingView(ListMasterRequestsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('date')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('date')
         return queryset
 
 
@@ -62,18 +46,10 @@ class ListMasterRequestsTypeAscendingView(ListMasterRequestsView):
         queryset = super().get_queryset().order_by('-type')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-type')
-        return queryset
-
 
 class ListMasterRequestsTypeDescendingView(ListMasterRequestsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('type')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('type')
         return queryset
 
 
