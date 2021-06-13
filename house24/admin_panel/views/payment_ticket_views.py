@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
-from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearchForm, CreatePaymentTicketForm, TicketServiceFormset
 from admin_panel.utils.statistic import MinimalStatisticCollector
@@ -115,10 +115,6 @@ class UpdatePaymentTicketView(AdminPermissionMixin, View):
         else:
             return render(request, self.template_name, context={'form': form,
                                                                 'formset': formset})
-
-
-class DeleteTicketService(DeleteInstanceWithoutReload):
-    model = PaymentTicketService
 
 
 class BulkDeleteTicketService(AdminPermissionMixin, View):

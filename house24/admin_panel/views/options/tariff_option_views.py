@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from db.models.house import Tariff, Service, TariffService
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
-from admin_panel.views.mixins import DeleteInstanceView, DeleteInstanceWithoutReload
+from admin_panel.views.mixins import DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 
@@ -91,10 +91,6 @@ class GetServiceMeasure(AdminPermissionMixin, View):
 class DeleteTariff(DeleteInstanceView):
     model = Tariff
     redirect_url = 'admin_panel:list_tariff_admin'
-
-
-class DeleteTariffService(DeleteInstanceWithoutReload):
-    model = TariffService
 
 
 class DuplicateTariff(AdminPermissionMixin, View):

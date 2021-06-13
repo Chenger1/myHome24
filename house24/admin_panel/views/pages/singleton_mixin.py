@@ -38,12 +38,3 @@ class SingletonUpdateView(AdminPermissionMixin, UpdateView):
             return response
         else:
             return super().form_invalid(form)
-
-
-class DeleteGalleryImageMixin(AdminPermissionMixin, View):
-    model = None
-
-    def get(self, request):
-        inst = get_object_or_404(self.model, pk=request.GET.get('pk'))
-        inst.delete()
-        return JsonResponse({'status': 200})

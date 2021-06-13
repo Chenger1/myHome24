@@ -194,7 +194,7 @@
 </script>
 <script>
 // init formset cloner
-    let formset_cloner = new AdvancedFormsetClonerWithCounter('blocks', '.formset', "{% url 'admin_panel:delete_tariff_block' %}");
+    let formset_cloner = new AdvancedFormsetClonerWithCounter('blocks', '.formset');
     formset_cloner.init();
     $('#add_formset').on('click', function(){
         formset_cloner.clone();

@@ -204,8 +204,7 @@
     }
 </script>
 <script>
-    let service_cloner = new FormsetClonerWithCallback('services', '.formset', "{% url 'admin_panel:delete_tariff_service' %}",
-                                                       setEvent);
+    let service_cloner = new FormsetClonerWithCallback('services', '.formset', setEvent);
     service_cloner.init();
     $('#add_service').on('click', function(){
         service_cloner.clone();

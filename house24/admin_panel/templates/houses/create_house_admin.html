@@ -384,20 +384,19 @@
 </script>
 <script>
 // Section init
-    let section_cloner = new BaseCloner('sections', '.section_formset', "{% url 'admin_panel:delete_section_admin' %}");
+    let section_cloner = new BaseCloner('sections', '.section_formset');
     section_cloner.init();
     $('#add_sections').on('click', function(){
         section_cloner.clone();
     })
 // Floor init
-    let floor_cloner = new BaseCloner('floors', '.floor_formset', "{% url 'admin_panel:delete_floor_admin' %}");
+    let floor_cloner = new BaseCloner('floors', '.floor_formset');
     floor_cloner.init();
     $('#add_floors').on('click', function(){
         floor_cloner.clone();
     })
 // User init
-    let user_cloner = new FormsetClonerWithCallback('users', '.users_formset', "{% url 'admin_panel:delete_house_user_admin' %}",
-                                                    setEvent);
+    let user_cloner = new FormsetClonerWithCallback('users', '.users_formset', setEvent);
     user_cloner.init();
     $('#add_users').on('click', function(){
         user_cloner.clone();

@@ -337,8 +337,7 @@
     }
 </script>
 <script>
-    let formset_cloner = new FormsetClonerWithCallback('services', '.formset', 
-                                                     '{% url "admin_panel:delete_payment_ticket_service_admin" %}', setEvent, calculateTotalSum);
+    let formset_cloner = new FormsetClonerWithCallback('services', '.formset', setEvent, calculateTotalSum);
     formset_cloner.init();
     $('#add_services').on('click', function(){
         formset_cloner.clone();

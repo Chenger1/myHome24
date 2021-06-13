@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 
 from admin_panel.forms.system_options_forms import MeasureFormset, ServiceFormset, CredentialsForm, PaymentItemForm
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.views.mixins import DeleteInstanceView, DeleteInstanceWithoutReload
+from admin_panel.views.mixins import DeleteInstanceView
 
 from db.models.house import Measure, Service, PaymentItem
 from db.models.pages import Credentials
@@ -56,14 +56,6 @@ class SaveMeasureForm(AdminPermissionMixin, View):
                 if not form.cleaned_data.get('DELETE'):
                     form.save()
         return redirect('admin_panel:service_measure_option')
-
-
-class DeleteServiceBlock(DeleteInstanceWithoutReload):
-    model = Service
-
-
-class DeleteMeasureBlock(DeleteInstanceWithoutReload):
-    model = Measure
 
 
 class CredentialsView(AdminPermissionMixin, UpdateView):
