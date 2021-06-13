@@ -25,17 +25,17 @@ urlpatterns = [
     path('flat_owner/', FlatOwner.as_view(), name='get_flat_owner'),
 
     # PAGES
-    path('main_page/index', page_views.MainPageView.as_view(), name='main_page'),
-    path('about/index', page_views.AboutPageView.as_view(), name='about_page'),
+    path('main_page/index/', page_views.MainPageView.as_view(), name='main_page'),
+    path('about/index/', page_views.AboutPageView.as_view(), name='about_page'),
     path('about/delete_gallery_image/', page_views.DeleteAboutPageGallery.as_view(), name='delete_about_gallery_image'),
     path('about/delete_additional_gallery_image/', page_views.DeleteAdditionalGallery.as_view(),
          name='delete_about_additional_gallery_image'),
     path('about/delete_document/', page_views.DeleteDocument.as_view(), name='delete_document'),
-    path('services/index', page_views.ServicesPageView.as_view(), name='services_page'),
+    path('services/index/', page_views.ServicesPageView.as_view(), name='services_page'),
     path('services/delete_block/', page_views.ServicesDeleteBlockView.as_view(), name='delete_services_block'),
-    path('tariffs/index', page_views.TariffPageView.as_view(), name='tariff_page'),
+    path('tariffs/index/', page_views.TariffPageView.as_view(), name='tariff_page'),
     path('tariffs/delete_block/', page_views.TariffDeleteBlockView.as_view(), name='delete_tariff_block'),
-    path('contacts/index', page_views.ContactsPageView.as_view(), name='contacts_page'),
+    path('contacts/index/', page_views.ContactsPageView.as_view(), name='contacts_page'),
 
     # OPTIONS
     path('service/index/', option_views.ServiceOptionView.as_view(), name='service_measure_option'),

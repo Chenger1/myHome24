@@ -205,44 +205,56 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
                     {% endif %}
                     {% if request.user.role.site_control %}
-                    <li class="nav-item">
+                    <li class="nav-item
+                        {% if '/admin/main_page/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/about/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/services/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/tariffs/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/contacts/index/' in request.path %}menu-is-opening menu-open
+                        {% endif %}">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
                             <p>Управление сайтом</p>
                             <i class="fas fa-angle-left right"></i>
                         </a>
-                        <ul class="nav nav-treeview">
+                        <ul class="nav nav-treeview" style=
+                            "{% if '/admin/main_page/index/' in request.path %}display:block;
+                            {% elif '/admin/about/index/' in request.path %}display:block;
+                            {% elif '/admin/services/index/' in request.path %}display:block;
+                            {% elif '/admin/tariffs/index/' in request.path %}display:block;
+                            {% elif '/admin/contacts/index/' in request.path %}display:block;
+                            {% endif %}">
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:main_page' %}" class="nav-link
-                                {% if request.path == '/admin/main_page/index' %}active{% endif %}">
+                                {% if request.path == '/admin/main_page/index/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Главная страница</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:about_page' %}" class="nav-link
-                                   {% if request.path == '/admin/about/index' %}active{% endif %}">
+                                   {% if request.path == '/admin/about/index/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>О нас</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:services_page' %}" class="nav-link
-                                    {% if request.path == '/admin/services/index' %}active{% endif %}">
+                                    {% if request.path == '/admin/services/index/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Услуги</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:tariff_page' %}" class="nav-link
-                                    {% if request.path == '/admin/tariffs/index' %}active{% endif %}">
+                                    {% if request.path == '/admin/tariffs/index/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Тарифы</p>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:contacts_page' %}" class="nav-link
-                                    {% if request.path == '/admin/contacts/index' %}active{% endif %}">
+                                    {% if request.path == '/admin/contacts/index/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Контакты</p>
                                 </a>
@@ -250,13 +262,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </ul>
                     </li>
                     {% endif %}
-                    <li class="nav-item">
+                    <li class="nav-item
+                        {% if '/admin/service/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/tariff/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/roles/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/user-admin/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/credentials/index/' in request.path %}menu-is-opening menu-open
+                        {% elif '/admin/payment_items/index/' in request.path %}menu-is-opening menu-open
+                        {% endif %}">
                         <a href="" class="nav-link">
                             <i class="nav-icon fas fa-cogs" aria-hidden="true"></i>
                             <p>Настройки системы</p>
                             <i class="fas fa-angle-left right"></i>
                         </a>
-                        <ul class="nav nav-treeview">
+                        <ul class="nav nav-treeview" style=
+                            "{% if '/admin/service/index/' in request.path %}display:block;
+                            {% elif '/admin/tariff/index/' in request.path %}display:block;
+                            {% elif '/admin/roles/index/' in request.path %}display:block;
+                            {% elif '/admin/user-admin/index/' in request.path %}display:block;
+                            {% elif '/admin/credentials/index/' in request.path %}display:block;
+                            {% elif '/admin/payment_items/index/' in request.path %}display:block;
+                            {% endif %}">
                             {% if request.user.role.services %}
                             <li class="nav-item">
                                 <a href="{% url 'admin_panel:service_measure_option' %}" class="nav-link
