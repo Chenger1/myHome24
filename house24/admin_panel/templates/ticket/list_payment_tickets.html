@@ -105,11 +105,11 @@
                                     <th>
                                         {% if 'date_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
-                                               Дата <i class="fas fa-sort-amount-down"></i>
+                                               Дата <i class="fas fa-sort-amount-up"></i>
                                             </a>
                                         {% elif 'date_descending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
-                                               Дата <i class="fas fa-sort-amount-up"></i>
+                                               Дата <i class="fas fa-sort-amount-down"></i>
                                             </a>
                                         {% else %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
@@ -120,11 +120,11 @@
                                     <th>
                                         {% if 'month_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
-                                               Месяц <i class="fas fa-sort-amount-down"></i>
+                                               Месяц <i class="fas fa-sort-amount-up"></i>
                                             </a>
                                         {% elif 'month_descending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
-                                               Месяц <i class="fas fa-sort-amount-up"></i>
+                                               Месяц <i class="fas fa-sort-amount-down"></i>
                                             </a>
                                         {% else %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
