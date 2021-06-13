@@ -29,6 +29,26 @@ class ListAccountTransactionView(ListInstancesMixin):
         return context
 
 
+class ListAccountTransactionViewAscendingView(ListAccountTransactionView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-created')
+        return queryset
+
+
+class ListAccountTransactionViewDescendingView(ListAccountTransactionView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('created')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('created')
+        return queryset
+
+
 class CreateIncomeView(AdminPermissionMixin, CreateView):
     model = Transaction
     form_class = CreateIncomeForm

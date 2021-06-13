@@ -180,6 +180,12 @@ urlpatterns = [
          name='list_transactions_by_account'),
     path('account-transaction/index/create_income/account/<int:pk>/', account_transaction_views.CreateIncomeView.as_view(),
          name='create_income_with_account'),
+    path('account-transaction/index/date_ascending/',
+         account_transaction_views.ListAccountTransactionViewAscendingView.as_view(),
+         name='list_account_transaction_ascending_admin'),
+    path('account-transaction/index/date_descending/',
+         account_transaction_views.ListAccountTransactionViewDescendingView.as_view(),
+         name='list_account_transaction_descending_admin'),
 
     # MESSAGE
     path('message/index/', message_views.ListMessages.as_view(), name='list_messages_admin'),
