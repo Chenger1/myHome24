@@ -53,7 +53,7 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>
+                                    <th style="width: 100px; min-width: 100px">
                                         {% if 'number_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_master_requests_number_descending_admin' %}"
                                             class="submit_link">
@@ -77,7 +77,7 @@
                                             value="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th>
+                                    <th style="width: 135px; min-width: 135px">
                                         {% if 'date_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_master_requests_date_descending_admin' %}"
                                             class="submit_link">
@@ -101,7 +101,7 @@
                                             value="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th>
+                                    <th style="min-width: 125px">
                                         {% if 'type_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_master_requests_type_descending_admin' %}"
                                             class="submit_link">
@@ -125,13 +125,13 @@
                                             value="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th>Описание</th>
+                                    <th style="min-width: 350px">Описание</th>
                                     <th>Квартира</th>
-                                    <th>Владелец</th>
+                                    <th style="min-width: 200px">Владелец</th>
                                     <th>Телефон</th>
-                                    <th>Мастер</th>
-                                    <th>Статус</th>
-                                    <th></th>
+                                    <th style="min-width: 125px">Мастер</th>
+                                    <th style="width: 135px; min-width: 135px">Статус</th>
+                                    <th style="width: 80px; min-width: 80px"></th>
                                 </tr>
                                 </thead>
                                 <tbody>

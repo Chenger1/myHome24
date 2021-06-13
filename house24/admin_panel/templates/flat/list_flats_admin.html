@@ -51,7 +51,7 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>
+                                    <th style="width: 120px; min-width: 120px">
                                         {% if 'number_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_flats_number_descending_admin' %}"
                                             class="submit_link">
@@ -171,7 +171,7 @@
                                             value="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th>Остаток (грн)</th>
+                                    <th style="width: 120px; min-width: 120px">Остаток (грн)</th>
                                 </tr>
                                 </thead>
                                 <tbody>

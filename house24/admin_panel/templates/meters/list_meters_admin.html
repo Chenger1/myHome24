@@ -45,9 +45,9 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>Дом</th>
-                                    <th>Секция</th>
-                                    <th>
+                                    <th style="min-width: 200px">Дом</th>
+                                    <th style="min-width: 160px">Секция</th>
+                                    <th style="width: 110px; min-width: 110px">
                                         {% if 'number_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_meters_number_descending_admin' %}"
                                             class="submit_link">
@@ -72,9 +72,9 @@
                                         {% endif %}
                                     </th>
                                     <th>Счетчик</th>
-                                    <th>Текущее показание</th>
-                                    <th>Ед. изм.</th>
-                                    <th></th>
+                                    <th style="width: 90px; min-width: 90px">Текущее показание</th>
+                                    <th style="width: 90px; min-width: 90px">Ед. изм.</th>
+                                    <th style="width: 85px; min-width: 85px"></th>
                                 </tr>
                                 </thead>
                                 <tbody>

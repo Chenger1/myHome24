@@ -56,8 +56,8 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>
+                                    <th style="width: 110px; min-width: 110px">ID</th>
+                                    <th style="width: 140px; min-width: 140px">
                                         {% if 'name_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}"
                                             class="submit_link">
@@ -81,11 +81,11 @@
                                             value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th>Телефон</th>
-                                    <th>Email</th>
-                                    <th>Дом</th>
-                                    <th>Квартира</th>
-                                    <th>
+                                    <th style="width: 140px; min-width: 140px">Телефон</th>
+                                    <th style="width: 140px; min-width: 140px">Email</th>
+                                    <th style="min-width: 250px">Дом</th>
+                                    <th style="min-width: 150px">Квартира</th>
+                                    <th style="width: 110px; min-width: 110px">
                                         {% if 'date_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}"
                                             class="submit_link">
@@ -109,9 +109,9 @@
                                             value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
                                         {% endif %}
                                     </th>
-                                    <th>Статус</th>
-                                    <th>Есть долг</th>
-                                    <th></th>
+                                    <th style="min-width: 150px">Статус</th>
+                                    <th style="min-width: 150px">Есть долг</th>
+                                    <th style="width: 100px; min-width: 100px"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
