@@ -13,8 +13,7 @@ class HouseSearch:
 
 class FlatSearch:
     @staticmethod
-    def search(form_data):
-        queryset = Flat.objects.all()
+    def search(form_data, queryset):
         if form_data.get('number'):
             queryset = queryset.filter(number__icontains=form_data.get('number'))
         if form_data.get('house'):

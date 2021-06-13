@@ -22,18 +22,10 @@ class ListFlatsViewNumberAscendingView(ListFlatsView):
         queryset = super().get_queryset().order_by('-number')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-number')
-        return queryset
-
 
 class ListFlatsViewNumberDescendingView(ListFlatsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('number')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('number')
         return queryset
 
 
@@ -42,18 +34,10 @@ class ListFlatsViewHouseAscendingView(ListFlatsView):
         queryset = super().get_queryset().order_by('-house__name')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-house__name')
-        return queryset
-
 
 class ListFlatsViewHouseDescendingView(ListFlatsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('house__name')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('house__name')
         return queryset
 
 
@@ -62,18 +46,10 @@ class ListFlatsViewSectionAscendingView(ListFlatsView):
         queryset = super().get_queryset().order_by('-section__name')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-section__name')
-        return queryset
-
 
 class ListFlatsViewSectionDescendingView(ListFlatsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('section__name')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('section__name')
         return queryset
 
 
@@ -82,18 +58,10 @@ class ListFlatsViewFloorAscendingView(ListFlatsView):
         queryset = super().get_queryset().order_by('-floor__name')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-floor__name')
-        return queryset
-
 
 class ListFlatsViewFloorDescendingView(ListFlatsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('floor__name')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('floor__name')
         return queryset
 
 
@@ -102,18 +70,10 @@ class ListFlatsViewOwnerAscendingView(ListFlatsView):
         queryset = super().get_queryset().order_by('-owner__last_name')
         return queryset
 
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('-owner__last_name')
-        return queryset
-
 
 class ListFlatsViewOwnerDescendingView(ListFlatsView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('owner__last_name')
-        return queryset
-
-    def get_filtered_query(self, form_data):
-        queryset = super().get_filtered_query(form_data).order_by('owner__last_name')
         return queryset
 
 
