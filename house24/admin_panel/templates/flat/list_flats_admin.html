@@ -51,11 +51,81 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>№ квартиры</th>
-                                    <th>Дом</th>
-                                    <th>Секция</th>
-                                    <th>Этаж</th>
-                                    <th>Владелец</th>
+                                    <th>
+                                        {% if 'number_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_number_descending_admin' %}">
+                                               № квартиры <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'number_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_number_ascending_admin' %}">
+                                               № квартиры <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_number_ascending_admin' %}">
+                                                   № квартиры
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'house_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_house_descending_admin' %}">
+                                               Дом <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'house_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_house_ascending_admin' %}">
+                                               Дом <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_house_ascending_admin' %}">
+                                                   Дом
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'section_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_section_descending_admin' %}">
+                                               Секция <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'section_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_section_ascending_admin' %}">
+                                               Секция <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_section_ascending_admin' %}">
+                                                   Секция
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'floor_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_floor_descending_admin' %}">
+                                               Этаж <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'floor_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_floor_ascending_admin' %}">
+                                               Этаж <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_floor_ascending_admin' %}">
+                                                   Этаж
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'owner_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_owner_descending_admin' %}">
+                                               Владелец <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% elif 'owner_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
+                                               Владелец <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
+                                                   Владелец
+                                            </a>
+                                        {% endif %}
+                                    </th>
                                     <th>Остаток (грн)</th>
                                 </tr>
                                 </thead>
