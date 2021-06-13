@@ -32,8 +32,7 @@ class FlatSearch:
 
 class OwnerSearch:
     @staticmethod
-    def search(form_data):
-        queryset = User.objects.filter(is_staff=False)
+    def search(form_data, queryset):
         queryset = queryset.annotate(fullname=Concat('first_name', Value(' '), 'last_name'))
         queryset = queryset.filter(fullname__icontains=form_data.get('username'),
                                    email__contains=form_data.get('email'),

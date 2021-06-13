@@ -59,17 +59,26 @@
                                     <th>ID</th>
                                     <th>
                                         {% if 'name_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}"
+                                            class="submit_link">
                                                ФИО <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_name_descending_admin' %}">
                                         {% elif 'name_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}"
+                                            class="submit_link">
                                                ФИО <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}"
+                                            class="submit_link">
                                                    ФИО
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>Телефон</th>
@@ -78,17 +87,26 @@
                                     <th>Квартира</th>
                                     <th>
                                         {% if 'date_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}">
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}"
+                                            class="submit_link">
                                                Добавлен <i class="fas fa-sort-amount-up"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}">
                                         {% elif 'date_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}"
+                                            class="submit_link">
                                                Добавлен <i class="fas fa-sort-amount-down"></i>
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}"
+                                            class="submit_link">
                                                    Добавлен
                                             </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
                                         {% endif %}
                                     </th>
                                     <th>Статус</th>
@@ -209,6 +227,7 @@
         })
 
         submit_form_after_keypress();
+        submit_form_after_ordering();
     })
 </script>
 {% endblock %}
