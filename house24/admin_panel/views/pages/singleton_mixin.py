@@ -1,7 +1,4 @@
 from django.views.generic.edit import UpdateView
-from django.views.generic import View
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
 
 from admin_panel.permission_mixin import AdminPermissionMixin
 

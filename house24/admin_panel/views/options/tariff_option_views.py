@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import JsonResponse
 from django.urls import reverse_lazy
 
-from db.models.house import Tariff, Service, TariffService
+from db.models.house import Tariff, Service
 
 from admin_panel.forms.system_options_forms import TariffForm, TariffServiceBlockFormset
 from admin_panel.views.mixins import DeleteInstanceView

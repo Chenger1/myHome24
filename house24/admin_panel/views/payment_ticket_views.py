@@ -8,7 +8,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearchForm, CreatePaymentTicketForm, TicketServiceFormset
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PaymentTicket, PaymentTicketService, PersonalAccount
+from db.models.house import PaymentTicket, PersonalAccount
 from db.services.search import PaymentTicketSearch
 from db.services.utils import generate_next_instance_number
 
