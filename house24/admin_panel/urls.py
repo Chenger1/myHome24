@@ -155,6 +155,14 @@ urlpatterns = [
          name='list_payment_tickets_by_account'),
     path('payment_ticket/index/account/create/<int:account_pk>/', payment_ticket_views.CreatePaymentTicketView.as_view(),
          name='create_ticket_with_account'),
+    path('payment_ticket/index/date_ascending/', payment_ticket_views.ListPaymentTicketDateAscendingView.as_view(),
+         name='list_payment_ticket_date_ascending_admin'),
+    path('payment_ticket/index/date_descending/', payment_ticket_views.ListPaymentTicketDateDescendingView.as_view(),
+         name='list_payment_ticket_date_descending_admin'),
+    path('payment_ticket/index/month_ascending/', payment_ticket_views.ListPaymentTicketMonthAscendingView.as_view(),
+         name='list_payment_ticket_month_ascending_admin'),
+    path('payment_ticket/index/month_descending/', payment_ticket_views.ListPaymentTicketMonthDescendingView.as_view(),
+         name='list_payment_ticket_month_descending_admin'),
 
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),

@@ -26,6 +26,46 @@ class ListPaymentTicketsView(ListInstancesMixin):
         return context
 
 
+class ListPaymentTicketDateAscendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-created')
+        return queryset
+
+
+class ListPaymentTicketDateDescendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('created')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('created')
+        return queryset
+
+
+class ListPaymentTicketMonthAscendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created__month')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('-created__month')
+        return queryset
+
+
+class ListPaymentTicketMonthDescendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('created__month')
+        return queryset
+
+    def get_filtered_query(self, form_data):
+        queryset = super().get_filtered_query(form_data).order_by('created__month')
+        return queryset
+
+
 class CreatePaymentTicketView(AdminPermissionMixin, View):
     model = PaymentTicket
     template_name = 'ticket/create_payment_ticket_admin.html'

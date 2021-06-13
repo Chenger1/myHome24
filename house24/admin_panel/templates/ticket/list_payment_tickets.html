@@ -102,8 +102,36 @@
                                     </th>
                                     <th>№ квитанции</th>
                                     <th>Статус</th>
-                                    <th>Дата</th>
-                                    <th>Месяц</th>
+                                    <th>
+                                        {% if 'date_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
+                                               Дата <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% elif 'date_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                               Дата <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                                   Дата
+                                            </a>
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'month_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
+                                               Месяц <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                        {% elif 'month_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                               Месяц <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                                   Месяц
+                                            </a>
+                                        {% endif %}
+                                    </th>
                                     <th>Квартира</th>
                                     <th>Владелец</th>
                                     <th>Проведена</th>
