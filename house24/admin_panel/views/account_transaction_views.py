@@ -11,6 +11,7 @@ from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import Transaction, PersonalAccount
 from db.services.search import TransactionSearch
+from db.services.utils import generate_next_instance_number
 
 
 class ListAccountTransactionView(ListInstancesMixin):
@@ -59,11 +60,11 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
             form = self.form_class(self.request.POST)
         else:
             if self.parent_object:
-                form = self.form_class(initial={'number': self.model.get_next_income_number(),
+                form = self.form_class(initial={'number': generate_next_instance_number(self.model),
                                                 'owner': self.parent_object.flat.owner.pk if self.parent_object.flat.owner else None,
                                                 'personal_account': self.parent_object.pk})
             else:
-                form = self.form_class(initial={'number': self.model.get_next_income_number()})
+                form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
         return form
 
 
@@ -78,7 +79,7 @@ class CreateOutcomeView(AdminPermissionMixin, CreateView):
         if self.request.POST:
             form = self.form_class(self.request.POST)
         else:
-            form = self.form_class(initial={'number': self.model.get_next_outcome_number()})
+            form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
         return form
 
 
@@ -118,7 +119,7 @@ class DuplicateTransactionView(AdminPermissionMixin, View):
 
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
-        form = self.form_class(instance=obj, initial={'number': self.get_text_number_callback()})
+        form = self.form_class(instance=obj, initial={'number': generate_next_instance_number(self.model)})
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request, pk):

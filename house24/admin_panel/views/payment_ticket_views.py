@@ -10,6 +10,7 @@ from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import PaymentTicket, PaymentTicketService, PersonalAccount
 from db.services.search import PaymentTicketSearch
+from db.services.utils import generate_next_instance_number
 
 import json
 
@@ -67,10 +68,9 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
         else:
             form = CreatePaymentTicketForm()
         formset = TicketServiceFormset()
-        next_number = self.model.get_next_ticket_number()
         return render(request, self.template_name, context={'form': form,
                                                             'formset': formset,
-                                                            'next_number': next_number})
+                                                            'next_number': generate_next_instance_number(self.model)})
 
     def post(self, request, account_pk=None):
         form = CreatePaymentTicketForm(request.POST)
@@ -140,7 +140,7 @@ class DuplicatePaymentTicket(AdminPermissionMixin, View):
 
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
-        form = self.form_class(instance=obj, initial={'number': self.model.get_next_ticket_number()},
+        form = self.form_class(instance=obj, initial={'number':generate_next_instance_number(self.model)},
                                **{'house_pk': obj.house.pk})
         formset = self.formset_class(instance=obj)
         return render(request, self.template_name, context={'form': form,

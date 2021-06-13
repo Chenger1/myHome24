@@ -152,14 +152,6 @@ class PersonalAccount(models.Model):
         return incomes - outcomes
 
     @classmethod
-    def get_next_account_number(cls):
-        last = cls.objects.last()
-        if last:
-            return last.pk + 1
-        else:
-            return 1
-
-    @classmethod
     def find_inst(cls, number):
         try:
             return cls.objects.get(number=number)

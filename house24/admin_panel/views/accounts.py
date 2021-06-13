@@ -9,6 +9,7 @@ from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import PersonalAccount
 from db.services.search import PersonalAccountSearch
+from db.services.utils import generate_next_instance_number
 
 
 class ListPersonalAccountsView(ListInstancesMixin):
@@ -31,7 +32,7 @@ class CreatePersonalAccountView(AdminPermissionMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['next_number'] = self.model.get_next_account_number()
+        context['next_number'] = generate_next_instance_number(self.model)
         return context
 
 
