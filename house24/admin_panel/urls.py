@@ -101,6 +101,14 @@ urlpatterns = [
     path('houses/index/delete_floor/', house_views.DeleteFloor.as_view(), name='delete_floor_admin'),
     path('houses/index/delete_house_user/', house_views.DeleteHouseUser.as_view(), name='delete_house_user_admin'),
     path('houses/index/detail_house/<int:pk>/', house_views.DetailHouseView.as_view(), name='detail_house_admin'),
+    path('houses/index/name_ascending/', house_views.ListHouseNameAscendingView.as_view(),
+         name='list_houses_name_ascending_admin'),
+    path('houses/index/name_descending/', house_views.ListHouseNameDescendingView.as_view(),
+         name='list_houses_name_descending_admin'),
+    path('houses/index/address_ascending/', house_views.ListHouseAddressAscendingView.as_view(),
+         name='list_houses_address_ascending_admin'),
+    path('houses/index/address_descending/', house_views.ListHouseAddressDescendingView.as_view(),
+         name='list_houses_address_descending_admin'),
 
     # FLATS
     path('flats/index/', flat_views.ListFlatsView.as_view(), name='list_flats_admin'),
