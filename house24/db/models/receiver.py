@@ -25,7 +25,7 @@ def delete_old_image_after_model_update(sender, instance, **kwargs):
         new_images = instance.get_files()
         if new_images:
             for new, old in zip(new_images, old_images):
-                if old != new:
+                if old != new and old.path:
                     delete_image_path(old.path)
 
 
