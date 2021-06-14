@@ -15,13 +15,25 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
+                        {% if page.slide1 %}
                         <img class="d-block w-100" src="{{ page.slide1.url }}" alt="..." />
+                        {% else %}
+                        <img class="d-block w-100" src="{% static 'img/default_form_image.png' %}" alt="..." />
+                        {% endif %}
                     </div>
                     <div class="carousel-item">
+                        {% if page.slide2 %}
                         <img class="d-block w-100" src="{{ page.slide2.url }}" alt="..." />
+                        {% else %}
+                        <img class="d-block w-100" src="{% static 'img/default_form_image.png' %}" alt="..." />
+                        {% endif %}
                     </div>
                     <div class="carousel-item">
+                        {% if page.slide3 %}
                         <img class="d-block w-100" src="{{ page.slide3.url }}" alt="..." />
+                        {% else %}
+                        <img class="d-block w-100" src="{% static 'img/default_form_image.png' %}" alt="..." />
+                        {% endif %}
                     </div>
                 </div>
                 <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -68,7 +80,7 @@
                             </p>
                             <p>
                                 <i class="fas fa-compass"></i>
-                                    {{ additional_page.location }}
+                                    {{ additional_page.location}}
                             </p>
                             <p>
                                 <i class="fas fa-map-marker"></i>
