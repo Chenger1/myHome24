@@ -4,9 +4,9 @@ services:
   web:
     build:
       context: .
-    command: gunicorn project.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn house24.wsgi:application --bind 0.0.0.0:8000
     volumes:
-    - ./:/usr/src/project/
+    - ./:/usr/src/house24/
     - static_volume:/home/web/static
     - media_volume:/home/web/media
     expose:
