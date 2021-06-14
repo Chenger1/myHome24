@@ -34,3 +34,13 @@ function submit_form_after_ordering(){
         })
     })
 }
+
+function confirm_deleting(){
+    $('.delete_instances').each(function(){
+        $(this).on('click', function(e){
+            if(!confirm('Вы уверен что хотите удалить эту запись?')){
+                e.preventDefault();
+            }
+        })
+    })
+}

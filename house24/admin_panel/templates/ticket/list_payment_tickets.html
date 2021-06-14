@@ -244,7 +244,7 @@
                                                href="{% url 'admin_panel:update_payment_ticket_admin' ticket.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_payment_ticket_admin' ticket.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -292,6 +292,7 @@
             $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
             $('form').submit();
         })
+        confirm_deleting();
     })
 </script>
 <script>

@@ -195,7 +195,7 @@
                                                href="{% url 'admin_panel:update_owner_admin' user.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_owner_admin' user.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -234,6 +234,7 @@
 
         submit_form_after_keypress();
         submit_form_after_ordering();
+        confirm_deleting();
     })
 </script>
 {% endblock %}

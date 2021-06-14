@@ -157,7 +157,7 @@
                                                href="{% url 'admin_panel:update_meter_admin' meter.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_meter_admin' meter.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -209,6 +209,7 @@
             update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
                           constructor=append_select_section_floor);
         })
+        confirm_deleting();
     })
 </script>
 {% endblock %}

@@ -124,7 +124,7 @@
                                                href="{% url 'admin_panel:update_house_admin' house.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_house_admin' house.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -156,6 +156,7 @@
     $(document).ready(function(){
         submit_form_after_keypress();
         submit_form_after_ordering();
+        confirm_deleting();
     })
 </script>
 {% endblock %}

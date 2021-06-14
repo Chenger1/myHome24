@@ -61,7 +61,7 @@
                                                 <a class="btn btn-default btn-sm" href="{% url 'admin_panel:update_tariff' tariff.pk %}">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <a class="btn btn-default btn-sm" href="{% url 'admin_panel:delete_tariff' tariff.pk %}">
+                                                <a class="btn btn-default btn-sm delete_instances" href="{% url 'admin_panel:delete_tariff' tariff.pk %}">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </div>
@@ -83,4 +83,10 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% statis 'admin_panel/js/utils.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        confirm_deleting();
+    })
+</script>
 {% endblock %}
