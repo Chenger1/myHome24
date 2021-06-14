@@ -162,3 +162,8 @@ class User(CustomAbstractUser):
 
     def __str__(self):
         return self.full_name
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.role = Role.objects.get(name='Директор')
+        return super().save(*args, **kwargs)
