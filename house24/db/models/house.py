@@ -200,16 +200,12 @@ class PaymentTicket(models.Model):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
 
     @classmethod
-    def total_debt(cls):
-        return cls.objects.filter(status=2).aggregate(models.Sum('sum'))['sum__sum'] or 0
+    def total_balance(cls):
+        total_debt = cls.objects.filter(is_done=True, status__in=(2, 1)).aggregate(models.Sum('sum', distinct=True))
+        total_paid = cls.objects.filter(is_done=True, status__in=(0, 1)).aggregate(models.Sum('transactions__paid_sum'))
 
-    @classmethod
-    def total_paid(cls):
-        return cls.objects.filter(status=0).aggregate(models.Sum('sum'))['sum__sum'] or 0
-
-    @classmethod
-    def partially_paid(cls):
-        tickets = cls.objects.filter(status=1)
+        return total_debt['sum__sum'] or 0,\
+            (total_paid['transactions__paid_sum__sum'] or 0) - (total_debt['sum__sum'] or 0)
 
     def __str__(self):
         return f'Квитанция №{self.number}'
@@ -273,7 +269,7 @@ class Transaction(models.Model):
     paid_sum = models.FloatField()
     status = models.BooleanField(default=True)
     manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='transactions', on_delete=models.SET_NULL,
                                        blank=True, null=True)
 
@@ -311,9 +307,20 @@ class Transaction(models.Model):
 
     @classmethod
     def total_cash(cls):
-        income = cls.objects.filter(payment_item_type__type=0).aggregate(models.Sum('amount'))['amount__sum'] or 0
-        outcome = cls.objects.filter(payment_item_type__type=1).aggregate(models.Sum('amount'))['amount__sum'] or 0
+        income = cls.objects.filter(payment_item_type__type=0).aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0
+        outcome = cls.objects.filter(payment_item_type__type=1).aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0
         return income - outcome
+
+    def save(self, *args, **kwargs):
+        if self.payment_ticket:
+            total_paid = (self.payment_ticket.transactions.all().\
+                aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0) + self.paid_sum
+            if self.payment_ticket.sum <= total_paid:
+                self.payment_ticket.status = 0
+            elif self.payment_ticket.sum > total_paid:
+                self.payment_ticket.status = 1
+            self.payment_ticket.save()
+        return super().save(*args, **kwargs)
 
 
 class MasterRequest(models.Model):

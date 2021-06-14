@@ -48,11 +48,11 @@ class CreateIncomeForm(forms.ModelForm):
     personal_account = forms.ModelChoiceField(queryset=PersonalAccount.objects.all(),
                                               widget=forms.Select(attrs={'class': 'form-control to_valid',
                                                                          'id': 'account'}),
-                                              empty_label='Выберите...')
+                                              empty_label='Выберите...', required=False)
     payment_ticket = forms.ModelChoiceField(queryset=PaymentTicket.objects.all(),
                                             widget=forms.Select(attrs={'class': 'form-control to_valid',
                                                                        'id': 'payment_ticket'},),
-                                            empty_label='Выберите...')
+                                            empty_label='Выберите...', required=False)
 
     class Meta:
         model = Transaction
