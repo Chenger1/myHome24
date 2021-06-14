@@ -31,6 +31,7 @@ class ListInstancesMixin(AdminPermissionMixin, View):
     model = None
     template_name = None
     search_form = SearchForm
+    search_obj = None
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -38,25 +39,20 @@ class ListInstancesMixin(AdminPermissionMixin, View):
         self.form = None
 
     def get(self, request, pk=None):
-        if request.GET:
-            self.form = self.search_form(request.GET)
-            if self.form.is_valid():
-                self.instances = self.get_filtered_query( self.form.cleaned_data)[::-1]
-                return render(request, self.template_name, context=self.get_context_data())
-            else:
-                instances = self.get_queryset()[::-1]
-                return render(request, self.template_name, context=self.get_context_data())
+        self.form = self.search_form(request.GET)
+        if self.form.is_valid():
+            self.instances = self.get_filtered_query(self.form.cleaned_data)
+            return render(request, self.template_name, context=self.get_context_data())
         else:
-            self.form = self.search_form()
             self.instances = self.get_queryset()[::-1]
-        return render(request, self.template_name, context=self.get_context_data())
+            return render(request, self.template_name, context=self.get_context_data())
 
     def get_filtered_query(self, form_data):
         """
             Redefine if you need more specific search arguments
         """
-        instances = self.model.search(form_data)
-        return instances
+        instances = self.search_obj.search(form_data, self.get_queryset())
+        return instances.order_by('-pk')
 
     def get_queryset(self):
         """

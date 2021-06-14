@@ -7,12 +7,74 @@ from admin_panel.forms.flat_forms import FlatSearchForm, CreateFlatForm
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import Flat, House, PersonalAccount
+from db.services.search import FlatSearch
 
 
 class ListFlatsView(ListInstancesMixin):
     model = Flat
     template_name = 'flat/list_flats_admin.html'
     search_form = FlatSearchForm
+    search_obj = FlatSearch
+
+
+class ListFlatsViewNumberAscendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-number')
+        return queryset
+
+
+class ListFlatsViewNumberDescendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('number')
+        return queryset
+
+
+class ListFlatsViewHouseAscendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-house__name')
+        return queryset
+
+
+class ListFlatsViewHouseDescendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('house__name')
+        return queryset
+
+
+class ListFlatsViewSectionAscendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-section__name')
+        return queryset
+
+
+class ListFlatsViewSectionDescendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('section__name')
+        return queryset
+
+
+class ListFlatsViewFloorAscendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-floor__name')
+        return queryset
+
+
+class ListFlatsViewFloorDescendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('floor__name')
+        return queryset
+
+
+class ListFlatsViewOwnerAscendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-owner__last_name')
+        return queryset
+
+
+class ListFlatsViewOwnerDescendingView(ListFlatsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('owner__last_name')
+        return queryset
 
 
 class PostInstanceMixin:

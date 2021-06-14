@@ -4,9 +4,10 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 
 from db.models.user import Role
+from db.services.search import OwnerSearch, UserSearch
 
 from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm,
-                                          UpdateOwnerUserForm)
+                                          UpdateOwnerUserForm, SearchForm)
 from admin_panel.views.mixins import DeleteInstanceView, ListInstancesMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
 
@@ -36,13 +37,11 @@ class UpdateRolesView(AdminPermissionMixin, View):
 class ListUsersView(ListInstancesMixin):
     model = User
     template_name = 'user/list_users_admin.html'
+    search_form = SearchForm
+    search_obj = UserSearch
 
     def get_queryset(self):
         return self.model.objects.filter(is_staff=True)
-
-    def get_filtered_query(self, form_data):
-        instances = self.model.search(form_data, is_staff=True)
-        return instances
 
 
 class CreateAdminUser(AdminPermissionMixin, CreateView):
@@ -75,13 +74,35 @@ class DetailAdminUser(AdminPermissionMixin, DetailView):
 class ListOwnerView(ListInstancesMixin):
     model = User
     template_name = 'owner/list_owners.html'
+    search_form = SearchForm
+    search_obj = OwnerSearch
 
     def get_queryset(self):
         return self.model.objects.filter(is_staff=False)
 
-    def get_filtered_query(self, form_data):
-        instances = self.model.search(form_data, is_staff=False)
-        return instances
+
+class ListOwnerLastNameAscendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-last_name')
+        return queryset
+
+
+class ListOwnerLastNameDescendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('last_name')
+        return queryset
+
+
+class ListOwnerDateJoinedAscendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date_joined')
+        return queryset
+
+
+class ListOwnerDateJoinedDescendingView(ListOwnerView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('date_joined')
+        return queryset
 
 
 class CreateOwnerUser(AdminPermissionMixin, CreateView):

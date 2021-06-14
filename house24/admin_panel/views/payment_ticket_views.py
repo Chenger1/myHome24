@@ -3,25 +3,52 @@ from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
-from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.forms.payment_ticket_forms import PaymentTicketSearch, CreatePaymentTicketForm, TicketServiceFormset
+from admin_panel.forms.payment_ticket_forms import PaymentTicketSearchForm, CreatePaymentTicketForm, TicketServiceFormset
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PaymentTicket, PaymentTicketService, PersonalAccount
+from db.models.house import PaymentTicket, PersonalAccount
+from db.services.search import PaymentTicketSearch
+from db.services.utils import generate_next_instance_number
 
 import json
 
 
 class ListPaymentTicketsView(ListInstancesMixin):
     model = PaymentTicket
-    search_form = PaymentTicketSearch
+    search_form = PaymentTicketSearchForm
     template_name = 'ticket/list_payment_tickets.html'
+    search_obj = PaymentTicketSearch
 
     def get_context_data(self):
         context = super().get_context_data()
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
+
+
+class ListPaymentTicketDateAscendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created')
+        return queryset
+
+
+class ListPaymentTicketDateDescendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('created')
+        return queryset
+
+
+class ListPaymentTicketMonthAscendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created__month')
+        return queryset
+
+
+class ListPaymentTicketMonthDescendingView(ListPaymentTicketsView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('created__month')
+        return queryset
 
 
 class CreatePaymentTicketView(AdminPermissionMixin, View):
@@ -41,10 +68,9 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
         else:
             form = CreatePaymentTicketForm()
         formset = TicketServiceFormset()
-        next_number = self.model.get_next_ticket_number()
         return render(request, self.template_name, context={'form': form,
                                                             'formset': formset,
-                                                            'next_number': next_number})
+                                                            'next_number': generate_next_instance_number(self.model)})
 
     def post(self, request, account_pk=None):
         form = CreatePaymentTicketForm(request.POST)
@@ -91,10 +117,6 @@ class UpdatePaymentTicketView(AdminPermissionMixin, View):
                                                                 'formset': formset})
 
 
-class DeleteTicketService(DeleteInstanceWithoutReload):
-    model = PaymentTicketService
-
-
 class BulkDeleteTicketService(AdminPermissionMixin, View):
     model = PaymentTicket
 
@@ -114,7 +136,7 @@ class DuplicatePaymentTicket(AdminPermissionMixin, View):
 
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
-        form = self.form_class(instance=obj, initial={'number': self.model.get_next_ticket_number()},
+        form = self.form_class(instance=obj, initial={'number':generate_next_instance_number(self.model)},
                                **{'house_pk': obj.house.pk})
         formset = self.formset_class(instance=obj)
         return render(request, self.template_name, context={'form': form,

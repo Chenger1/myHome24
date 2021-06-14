@@ -3,6 +3,11 @@
 
 {% block title %}Владельцы квартир{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -41,77 +46,102 @@
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:list_owners_admin' %}" class="btn btn-default"
+                            style="float:right;">Очистить</a>
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>ФИО</th>
-                                    <th>Телефон</th>
-                                    <th>Email</th>
-                                    <th>Дом</th>
-                                    <th>Квартира</th>
-                                    <th>Добавлен</th>
-                                    <th>Статус</th>
-                                    <th>Есть долг</th>
-                                    <th></th>
+                                    <th style="width: 110px; min-width: 110px">ID</th>
+                                    <th style="width: 140px; min-width: 140px">
+                                        {% if 'name_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}"
+                                            class="submit_link">
+                                               ФИО <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_name_descending_admin' %}">
+                                        {% elif 'name_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}"
+                                            class="submit_link">
+                                               ФИО <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}"
+                                            class="submit_link">
+                                                   ФИО
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th style="width: 140px; min-width: 140px">Телефон</th>
+                                    <th style="width: 140px; min-width: 140px">Email</th>
+                                    <th style="min-width: 250px">Дом</th>
+                                    <th style="min-width: 150px">Квартира</th>
+                                    <th style="width: 110px; min-width: 110px">
+                                        {% if 'date_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}"
+                                            class="submit_link">
+                                               Добавлен <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}">
+                                        {% elif 'date_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}"
+                                            class="submit_link">
+                                               Добавлен <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}"
+                                            class="submit_link">
+                                                   Добавлен
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th style="min-width: 150px">Статус</th>
+                                    <th style="min-width: 150px">Есть долг</th>
+                                    <th style="width: 100px; min-width: 100px"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.id_field }}
-                                        </form>
+                                        {{ form.id_field }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.username }}
-                                        </form>
+                                        {{ form.username }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.phone }}
-                                        </form>
+                                        {{ form.phone }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.email }}
-                                        </form>
+                                        {{ form.email }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.house }}
-                                        </form>
+                                        {{ form.house }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.flat }}
-                                        </form>
+                                        {{ form.flat }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.date_joined }}
-                                        </form>
+                                        {{ form.date_joined }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.status }}
-                                        </form>
+                                        {{ form.status }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.is_debt }}
-                                        </form>
+                                        {{ form.is_debt }}
                                     </td>
                                     <td></td>
                                 </tr>
@@ -165,17 +195,23 @@
                                                href="{% url 'admin_panel:update_owner_admin' user.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_owner_admin' user.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="10">
+                                        Ничего не найдено
+                                    </td>
+                                </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
-
+                            </form>
                         </div>
                         <div class="card-footer">
                             Количество владельцев: <strong>{{ count }}</strong>
@@ -188,11 +224,17 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('#house').select2({
+             theme: 'bootstrap4',
+             width: '100%',
         })
+
+        submit_form_after_keypress();
+        submit_form_after_ordering();
+        confirm_deleting();
     })
 </script>
 {% endblock %}

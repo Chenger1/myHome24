@@ -1,5 +1,4 @@
 from django import forms
-from django.core.exceptions import ValidationError
 
 from db.models.house import House, Section, Service, Meter, Flat
 
@@ -9,18 +8,19 @@ from datetime import datetime
 class SearchMeasureForm(forms.Form):
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'class': 'form-control'}),
-                                   required=False)
+                                   required=False, empty_label='Выберите...')
     section = forms.ModelChoiceField(queryset=Section.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False)
+                                     required=False, empty_label='Выберите...')
     flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False)
+                                     required=False, empty_label='Выберите...')
 
 
 class SearchMeasureHistoryForm(forms.Form):
     status_choices = [
+        ('', 'Выберите...'),
         (0, 'Новое'),
         (1, 'Учтено'),
         (2, 'Учтено и оплачен'),
@@ -29,23 +29,19 @@ class SearchMeasureHistoryForm(forms.Form):
 
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'class': 'form-control'}),
-                                   required=False)
+                                   required=False, empty_label='Выберите...')
     section = forms.ModelChoiceField(queryset=Section.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False)
-    flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+                                     required=False, empty_label='Выберите...')
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False)
-    number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}),
-                                required=False)
+                                     required=False, empty_label='Выберите...')
+    number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
+    flat = forms.CharField(widget=forms.HiddenInput())
     status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                                required=False)
-    date = forms.DateField(widget=forms.DateInput(format=('%Y-%m-%d'), attrs={
-                                                  'type': "date",
-                                                  'value': datetime.now().strftime('%Y-%m-%d'),
-                                                  'class': "form-control to_valid",
-                                                  }))
+    start = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_start'}), required=False)
+    end = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_end'}), required=False)
 
 
 class CreateMeterForm(forms.ModelForm):
@@ -55,6 +51,11 @@ class CreateMeterForm(forms.ModelForm):
         if house_pk:
             self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
             self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
+        self.fields['flat'].empty_label = 'Выберите...'
+        self.fields['section'].empty_label = 'Выберите...'
+        self.fields['house'].empty_label = 'Выберите...'
+        self.fields['service'].empty_label = 'Выберите...'
+        self.fields['service'].queryset = Service.objects.filter(status=True)
 
     class Meta:
         model = Meter

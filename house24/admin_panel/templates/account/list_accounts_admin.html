@@ -4,6 +4,11 @@
 
 {% block title %}Лицевые счета{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -76,22 +81,28 @@
                     </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'admin_panel:create_account_admin' %}">Добавить лицевой счет</a>
-                        <a class="dropdown-item" href="#">Выгрузить в Excel</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:download_spreadsheet_account' %}">Выгрузить в Excel</a>
                     </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:list_accounts_admin' %}" class="btn btn-default"
+                            style="float:right;">Очистить</a>
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th style="width: 125px; min-width: 125px">#</th>
                                     <th>Статус</th>
                                     <th>Квартира</th>
                                     <th>Дом</th>
                                     <th>Секция</th>
                                     <th>Владелец</th>
-                                    <th>Остаток(грн)</th>
+                                    <th style="width: 125px; min-width: 125px">Остаток(грн)</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -153,16 +164,21 @@
                                                href="{% url 'admin_panel:update_account_admin' account.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_account_admin' account.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8">Ничего не найдено</td>
+                                </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                         <div class="card-footer">
                             Количество счетов: <strong>{{ count }}</strong>
@@ -175,13 +191,19 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
     $(document).ready(function(){
-        $('.search_form').each(function(){
-            $(this).on('change', function(){
-                $(this).submit();
-            })
-        })
+        $('#id_house').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+        $('#id_user').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+        submit_form_after_keypress();
 
         $('.debt_integer').each(function(){
             const value = parseFloat($(this).text());
@@ -192,7 +214,17 @@
                 $(this).addClass('text-danger');
             }
         })
-    })
 
+        let value = $('select[name=house]').find(':selected').val();
+        update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+
+        $('select[name=house]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+        })
+        confirm_deleting();
+    })
 </script>
 {% endblock %}

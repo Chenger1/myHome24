@@ -318,21 +318,21 @@
 </script>
 <script>
 // init images cloner
-    let images_cloner = new AdvancedFormsetCloner('images', '.formset_images', "{% url 'admin_panel:delete_about_gallery_image' %}");
+    let images_cloner = new AdvancedFormsetCloner('images', '.formset_images');
     images_cloner.init();
     $('#add_images').on('click', function(){
         images_cloner.clone();
     })
 
 // init additional images cloner
-    let additional_cloner = new AdvancedFormsetCloner('add_images', '.add_formset', "{% url 'admin_panel:delete_about_additional_gallery_image' %}");
+    let additional_cloner = new AdvancedFormsetCloner('add_images', '.add_formset');
     additional_cloner.init();
     $('#add_add_images').on('click', function(){
         additional_cloner.clone();
     })
 
 // init documents cloner
-    let documents_cloner = new BaseCloner('documents', '.documents_formset', "{% url 'admin_panel:delete_document' %}")
+    let documents_cloner = new BaseCloner('documents', '.documents_formset');
     documents_cloner.init();
     $('#add_documents').on('click', function(){
         documents_cloner.clone();

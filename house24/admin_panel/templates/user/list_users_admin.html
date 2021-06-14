@@ -3,6 +3,11 @@
 
 {% block title %}Пользователи{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -35,7 +40,13 @@
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:list_users_admin' %}" class="btn btn-default"
+                            style="float:right;">Очистить</a>
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
@@ -52,34 +63,19 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.username }}
-                                        </form>
+                                        {{ form.username }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.role }}
-                                        </form>
+                                        {{ form.role }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.phone }}
-                                        </form>
+                                        {{ form.phone }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.email }}
-                                        </form>
+                                        {{ form.email }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.status }}
-                                        </form>
+                                        {{ form.status }}
                                     </td>
                                     <td></td>
                                 </tr>
@@ -110,17 +106,21 @@
                                                href="{% url 'admin_panel:update_user_admin' user.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_user_admin' user.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+                                {% empty %}
+                                    <tr>
+                                        <td colspan="7">Ничего не найдено</td>
+                                    </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
-
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -130,12 +130,16 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
-        })
-    })
+    $(document).ready(function(){
+        $('#id_role').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
 
+        submit_form_after_keypress();
+        confirm_deleting();
+    })
 </script>
 {% endblock %}

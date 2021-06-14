@@ -72,10 +72,7 @@ class StatisticController:
 
     @staticmethod
     def prepare_transaction():
-        total_debt = PaymentTicket.total_debt()
-        total_paid = PaymentTicket.total_paid()
-        balance = total_paid - total_debt
-
+        total_debt, balance = PaymentTicket.total_balance()
         return Transaction.total_cash(), total_debt, balance
 
     @staticmethod
@@ -83,7 +80,7 @@ class StatisticController:
         result = {}
         for month in range(1, 13):
             result[month] = Transaction.objects.filter(created__month=month, payment_item_type__type=0).\
-                                aggregate(Sum('amount'))['amount__sum'] or 0
+                                aggregate(Sum('paid_sum'))['paid_sum__sum'] or 0
         return result
 
     @staticmethod
@@ -91,7 +88,7 @@ class StatisticController:
         result = {}
         for month in range(1, 13):
             result[month] = Transaction.objects.filter(created__month=month, payment_item_type__type=1).\
-                                aggregate(Sum('amount'))['amount__sum'] or 0
+                                aggregate(Sum('paid_sum'))['paid_sum__sum'] or 0
         return result
 
     @staticmethod

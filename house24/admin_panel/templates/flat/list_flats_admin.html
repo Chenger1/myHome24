@@ -4,6 +4,11 @@
 
 {% block title %}Квартиры{% endblock %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -36,55 +41,158 @@
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:list_flats_admin' %}" class="btn btn-default"
+                            style="float:right;">Очистить</a>
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>№ квартиры</th>
-                                    <th>Дом</th>
-                                    <th>Секция</th>
-                                    <th>Этаж</th>
-                                    <th>Владелец</th>
-                                    <th>Остаток (грн)</th>
+                                    <th style="width: 120px; min-width: 120px">
+                                        {% if 'number_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_number_descending_admin' %}"
+                                            class="submit_link">
+                                               № квартиры <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_number_descending_admin' %}">
+                                        {% elif 'number_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_number_ascending_admin' %}"
+                                            class="submit_link">
+                                               № квартиры <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_number_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_number_ascending_admin' %}"
+                                            class="submit_link">
+                                                   № квартиры
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_number_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'house_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_house_descending_admin' %}"
+                                            class="submit_link">
+                                               Дом <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_house_descending_admin' %}">
+                                        {% elif 'house_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_house_ascending_admin' %}"
+                                            class="submit_link">
+                                               Дом <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_house_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_house_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Дом
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_house_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'section_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_section_descending_admin' %}"
+                                            class="submit_link">
+                                               Секция <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_section_descending_admin' %}">
+                                        {% elif 'section_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_section_ascending_admin' %}"
+                                            class="submit_link">
+                                               Секция <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_section_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_section_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Секция
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_section_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'floor_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_floor_descending_admin' %}"
+                                            class="submit_link">
+                                               Этаж <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_floor_descending_admin' %}">
+                                        {% elif 'floor_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_floor_ascending_admin' %}"
+                                            class="submit_link">
+                                               Этаж <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_floor_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_floor_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Этаж
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_floor_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'owner_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_owner_descending_admin' %}"
+                                            class="submit_link">
+                                               Владелец <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_owner_descending_admin' %}">
+                                        {% elif 'owner_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_flats_owner_ascending_admin' %}"
+                                            class="submit_link">
+                                               Владелец <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_flats_owner_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Владелец
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th style="width: 120px; min-width: 120px">Остаток (грн)</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.number }}
-                                        </form>
+                                        {{ form.number }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.house }}
-                                        </form>
+                                        {{ form.house }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.section }}
-                                        </form>
+                                        {{ form.section }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.floor }}
-                                        </form>
+                                        {{ form.floor }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.user }}
-                                        </form>
+                                        {{ form.user }}
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
-                                            {{ form.debt }}
-                                        </form>
+                                        {{ form.debt }}
                                     </td>
                                     <td></td>
                                 </tr>
@@ -111,17 +219,21 @@
                                                href="{% url 'admin_panel:update_flat_admin' flat.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_flat_admin' flat.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7">Ничего не найдено</td>
+                                </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
-
+                            </form>
                         </div>
                         <div class="card-footer">
                             Количество квартир: <strong>{{ count }}</strong>
@@ -134,14 +246,10 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script src="{% static 'admin_panel/js/requests.js' %}"></script>
 <script>
     $(document).ready(function(){
-        $('.search_form').each(function(){
-            $(this).on('change', function(){
-                $(this).submit();
-            });
-        });
-
         $('.debt_integer').each(function(){
             const value = parseFloat($(this).text());
             if(value >=0){
@@ -151,6 +259,27 @@
                 $(this).addClass('text-danger');
             }
         })
+        let value = $('select[name=house]').find(':selected').val();
+        update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+
+        $('select[name=house]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+        })
+        $('#user').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+
+        submit_form_after_keypress();
+        submit_form_after_ordering();
+        confirm_deleting();
     });
 </script>
 {% endblock %}

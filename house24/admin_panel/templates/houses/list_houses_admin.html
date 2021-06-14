@@ -35,13 +35,65 @@
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:list_houses_admin' %}" class="btn btn-default"
+                            style="float:right;">Очистить</a>
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Название</th>
-                                    <th>Адрес</th>
+                                    <th>
+                                        {% if 'name_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_houses_name_descending_admin' %}"
+                                            class="submit_link">
+                                               Название <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_name_descending_admin' %}">
+                                        {% elif 'name_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}"
+                                            class="submit_link">
+                                               Название <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Название
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'address_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_houses_address_descending_admin' %}"
+                                            class="submit_link">
+                                               Адрес <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_address_descending_admin' %}">
+                                        {% elif 'address_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}"
+                                            class="submit_link">
+                                               Адрес <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Адрес
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -49,16 +101,10 @@
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
                                             {{ form.name }}
-                                        </form>
                                     </td>
                                     <td>
-                                        <form action="" method="get" class="search_form">
-                                            {% csrf_token %}
                                             {{ form.address }}
-                                        </form>
                                     </td>
                                     <td></td>
                                 </tr>
@@ -78,16 +124,21 @@
                                                href="{% url 'admin_panel:update_house_admin' house.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_house_admin' house.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
                                     </td>
                                 </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4">Ничего не найдено</td>
+                                </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                         <div class="card-footer">
                             Количество домов: <strong>{{ count }}</strong>
@@ -100,12 +151,12 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
-        })
+    $(document).ready(function(){
+        submit_form_after_keypress();
+        submit_form_after_ordering();
+        confirm_deleting();
     })
-
 </script>
 {% endblock %}

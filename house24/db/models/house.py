@@ -7,14 +7,18 @@ from db.models.user import User
 import datetime
 
 
+def get_dir_name(instance, filename):
+    return f'houses/house_{instance.pk}/{filename}'
+
+
 class House(models.Model):
     name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
-    image1 = models.ImageField()
-    image2 = models.ImageField()
-    image3 = models.ImageField()
-    image4 = models.ImageField()
-    image5 = models.ImageField()
+    image1 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image2 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image3 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image4 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
+    image5 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
 
     @classmethod
     def search(cls, data):
@@ -26,6 +30,9 @@ class House(models.Model):
         if address:
             houses = houses.filter(address__contains=address)
         return houses
+
+    def get_files(self):
+        return [self.image1, self.image2, self.image3, self.image4, self.image5]
 
     def __str__(self):
         return self.name
@@ -145,14 +152,6 @@ class PersonalAccount(models.Model):
         return incomes - outcomes
 
     @classmethod
-    def get_next_account_number(cls):
-        last = cls.objects.last()
-        if last:
-            return last.pk + 1
-        else:
-            return 1
-
-    @classmethod
     def find_inst(cls, number):
         try:
             return cls.objects.get(number=number)
@@ -201,12 +200,12 @@ class PaymentTicket(models.Model):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
 
     @classmethod
-    def total_debt(cls):
-        return cls.objects.filter(status=2).aggregate(models.Sum('sum'))['sum__sum'] or 0
+    def total_balance(cls):
+        total_debt = cls.objects.filter(is_done=True, status__in=(2, 1)).aggregate(models.Sum('sum', distinct=True))
+        total_paid = cls.objects.filter(is_done=True, status__in=(0, 1)).aggregate(models.Sum('transactions__paid_sum'))
 
-    @classmethod
-    def total_paid(cls):
-        return cls.objects.filter(status__in=(0, 1)).aggregate(models.Sum('sum'))['sum__sum'] or 0
+        return total_debt['sum__sum'] or 0,\
+            (total_paid['transactions__paid_sum__sum'] or 0) - (total_debt['sum__sum'] or 0)
 
     def __str__(self):
         return f'Квитанция №{self.number}'
@@ -236,14 +235,6 @@ class Meter(models.Model):
     section = models.ForeignKey(Section, related_name='meters', on_delete=models.CASCADE)
     house = models.ForeignKey(House, related_name='meters', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='meters', on_delete=models.CASCADE)
-
-    @classmethod
-    def get_next_meter_number(cls):
-        last = cls.objects.last()
-        if last:
-            return last.pk + 1
-        else:
-            return 1
 
     @property
     def meter_month(self):
@@ -275,12 +266,18 @@ class Transaction(models.Model):
                                          blank=True, null=True)
     payment_item_type = models.ForeignKey(PaymentItem, related_name='transfers', on_delete=models.CASCADE,
                                           blank=True, null=True)
-    amount = models.FloatField()
+    paid_sum = models.FloatField()
     status = models.BooleanField(default=True)
     manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='transactions', on_delete=models.SET_NULL,
                                        blank=True, null=True)
+
+    @property
+    def status_display(self):
+        if self.status:
+            return 'Проведена'
+        return 'Непроведена'
 
     @classmethod
     def get_next_income_number(cls):
@@ -316,9 +313,22 @@ class Transaction(models.Model):
 
     @classmethod
     def total_cash(cls):
-        income = cls.objects.filter(payment_item_type__type=0).aggregate(models.Sum('amount'))['amount__sum'] or 0
-        outcome = cls.objects.filter(payment_item_type__type=1).aggregate(models.Sum('amount'))['amount__sum'] or 0
+        income = cls.objects.filter(payment_item_type__type=0,
+                                    status=True).aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0
+        outcome = cls.objects.filter(payment_item_type__type=1,
+                                     status=True).aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0
         return income - outcome
+
+    def save(self, *args, **kwargs):
+        if self.payment_ticket:
+            total_paid = (self.payment_ticket.transactions.all()
+                          .aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0) + self.paid_sum
+            if self.payment_ticket.sum <= total_paid:
+                self.payment_ticket.status = 0
+            elif self.payment_ticket.sum > total_paid:
+                self.payment_ticket.status = 1
+            self.payment_ticket.save()
+        return super().save(*args, **kwargs)
 
 
 class MasterRequest(models.Model):

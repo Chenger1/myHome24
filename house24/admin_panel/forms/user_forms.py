@@ -55,17 +55,19 @@ RoleFormSet = forms.modelformset_factory(model=Role, form=RoleForm, extra=0, can
 
 class SearchForm(forms.Form):
     status_choices = [
+        ('', 'Выберите...'),
         (0, 'Активен'),
         (1, 'Новый'),
         (2, 'Отключен')
     ]
     debt_choices = [
-        (0, 'Да')
+        ('', 'Выберите...'),
+        (1, 'Да')
     ]
 
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     role = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                                  queryset=Role.objects.all(), required=False)
+                                  queryset=Role.objects.all(), required=False, empty_label='Выберите...')
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
@@ -75,18 +77,24 @@ class SearchForm(forms.Form):
                                                                   'class': 'form-control'}), required=False)
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'id': 'house',
-                                                              'class': 'form-control'}), required=False)
-    flat = forms.ModelChoiceField(queryset=Flat.objects.all(),
-                                  widget=forms.Select(attrs={'id': 'flat',
-                                                             'class': 'form-control'}), required=False)
+                                                              'class': 'form-control'}), required=False,
+                                   empty_label='Выберите...')
+    flat = forms.CharField(widget=forms.TextInput(attrs={'id': 'flat',
+                                                         'class': 'form-control'}), required=False)
     date_joined = forms.DateField(widget=forms.DateInput(attrs={'id': 'date',
-                                                                'class': 'form-control'}), required=False)
+                                                                'class': 'form-control', 'type': 'date'}),
+                                  required=False)
     is_debt = forms.ChoiceField(choices=debt_choices,
                                 widget=forms.Select(attrs={'id': 'is_debt',
                                                            'class': 'form-control'}), required=False)
 
 
 class AdminUserForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].empty_label = 'Выберите...'
+        self.fields['role'].empty_label = 'Выберите...'
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'phone_number', 'role', 'status',
@@ -147,6 +155,10 @@ class UpdateAdminUserForm(AdminUserForm):
 
 
 class OwnerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['status'].empty_label = 'Выберите...'
+
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'patronym', 'birthday', 'phone_number',

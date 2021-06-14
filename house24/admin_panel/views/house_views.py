@@ -3,11 +3,12 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
 
-from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView, DeleteInstanceWithoutReload
+from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.forms.house_forms import HouseSearchForm, CreateHouseForm, SectionFormset, FloorFormset, UserFormset
 from admin_panel.permission_mixin import AdminPermissionMixin
 
-from db.models.house import House, Section, Floor, HouseUser
+from db.models.house import House
+from db.services.search import HouseSearch
 
 
 User = get_user_model()
@@ -17,6 +18,31 @@ class ListHousesView(ListInstancesMixin):
     model = House
     template_name = 'houses/list_houses_admin.html'
     search_form = HouseSearchForm
+    search_obj = HouseSearch
+
+
+class ListHouseNameAscendingView(ListHousesView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-name')
+        return queryset
+
+
+class ListHouseNameDescendingView(ListHousesView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('name')
+        return queryset
+
+
+class ListHouseAddressAscendingView(ListHousesView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-address')
+        return queryset
+
+
+class ListHouseAddressDescendingView(ListHousesView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('address')
+        return queryset
 
 
 class CreateHouseView(AdminPermissionMixin, View):
@@ -110,15 +136,3 @@ class DetailHouseView(DetailView):
 class DeleteHouseInstance(DeleteInstanceView):
     model = House
     redirect_url = 'admin_panel:list_houses_admin'
-
-
-class DeleteSection(DeleteInstanceWithoutReload):
-    model = Section
-
-
-class DeleteFloor(DeleteInstanceWithoutReload):
-    model = Floor
-
-
-class DeleteHouseUser(DeleteInstanceWithoutReload):
-    model = HouseUser

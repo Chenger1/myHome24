@@ -7,6 +7,8 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.meters_forms import SearchMeasureForm, CreateMeterForm, SearchMeasureHistoryForm
 
 from db.models.house import Meter, Flat
+from db.services.search import MeterSearch, MeterHistorySearch
+from db.services.utils import generate_next_instance_number
 
 import datetime
 
@@ -15,23 +17,54 @@ class ListMetersView(ListInstancesMixin):
     model = Meter
     search_form = SearchMeasureForm
     template_name = 'meters/list_meters_admin.html'
+    search_obj = MeterSearch
+
+
+class ListMetersNumberAscendingView(ListMetersView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-flat__number')
+        return queryset
+
+
+class ListMetersNumberDescendingView(ListMetersView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('flat__number')
+        return queryset
 
 
 class CreateMeterView(AdminPermissionMixin, CreateView):
     model = Meter
     form_class = CreateMeterForm
     template_name = 'meters/create_meter_admin.html'
+    flat = None
+
+    def get(self, request, *args, **kwargs):
+        self.flat = kwargs.get('pk')
+        return super().get(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST)
+        else:
+            if self.flat:
+                flat = get_object_or_404(Flat, pk=self.flat)
+                form = self.form_class(initial={'house': flat.house,
+                                                'section': flat.section,
+                                                'flat': flat})
+            else:
+                form = self.form_class()
+        return form
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['next_number'] = self.model.get_next_meter_number()
+        context['next_number'] = generate_next_instance_number(self.model)
         return context
 
     def get_success_url(self):
         trigger = int(self.request.POST.get('multiple'))
         if trigger:
             return reverse_lazy('admin_panel:create_meter_admin')
-        return reverse_lazy('admin_panel:list_meters_admin')
+        return reverse_lazy('admin_panel:list_meter_history', args=[self.object.flat.pk])
 
 
 class UpdateMeterView(AdminPermissionMixin, View):
@@ -61,6 +94,7 @@ class ListMeterHistory(ListInstancesMixin):
     model = Meter
     template_name = 'meters/list_meter_history.html'
     search_form = SearchMeasureHistoryForm
+    search_obj = MeterHistorySearch
     pk = None
 
     def get(self, request, pk=None):
@@ -74,6 +108,30 @@ class ListMeterHistory(ListInstancesMixin):
         context = super().get_context_data()
         context['flat'] = get_object_or_404(Flat, pk=self.pk)
         return context
+
+
+class ListMeterHistoryDateAscending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date')
+        return queryset
+
+
+class ListMeterHistoryDateDescending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('date')
+        return queryset
+
+
+class ListMeterHistoryMonthAscending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date__month')
+        return queryset
+
+
+class ListMeterHistoryMonthDescending(ListMeterHistory):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-date__month')
+        return queryset
 
 
 class MeterDetailView(AdminPermissionMixin, DetailView):

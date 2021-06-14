@@ -96,7 +96,7 @@
                                         <div class="form-group">
                                             <label for="flat">Квартира</label>
                                             <select name="flat" id="id_flat" class="to_valid">
-                                                <option value>---------</option>
+                                                <option value>Выберите...</option>
                                                 {% for flat in flats %}
                                                         <option value="{{ flat.pk }}"
                                                         {% if flat.pk == form.instance.flat.pk %}selected{% endif %}>{{ flat.number }}, {{ flat.house }}</option>
@@ -114,7 +114,7 @@
                                         <div class="form-group">
                                             <label for="master">Мастер</label>
                                             <select name="master" id="id_master" class="form-control to_valid">
-                                                <option value>---------</option>
+                                                <option value>Выберите...</option>
                                                 {% for master in masters %}
                                                         <option value="{{ master.pk }}"
                                                         {% if master.pk == form.instance.master.pk %}selected{% endif %}>{{ master.role }} - {{ master.full_name }}</option>

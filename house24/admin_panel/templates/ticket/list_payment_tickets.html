@@ -4,6 +4,12 @@
 
 {% block title %}Квитанции на оплату{% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper">
@@ -81,17 +87,69 @@
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            <a href="{% url 'admin_panel:list_payment_ticket_admin' %}" class="btn btn-default"
+                            style="float:right;">Очистить</a>
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
+                            <form action="" method="get">
+                                {% csrf_token %}
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th style="padding: 10px;">
+                                    <th style="padding: 10px; width: 40px; min-width: 40px">
                                         <input type="checkbox" id="main_checkbox">
                                     </th>
                                     <th>№ квитанции</th>
                                     <th>Статус</th>
-                                    <th>Дата</th>
-                                    <th>Месяц</th>
+                                    <th>
+                                        {% if 'date_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}"
+                                            class="submit_link">
+                                               Дата <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
+                                        {% elif 'date_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}"
+                                            class="submit_link">
+                                               Дата <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Дата
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
+                                    <th>
+                                        {% if 'month_ascending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}"
+                                            class="submit_link">
+                                               Месяц <i class="fas fa-sort-amount-up"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
+                                        {% elif 'month_descending' in request.path %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}"
+                                            class="submit_link">
+                                               Месяц <i class="fas fa-sort-amount-down"></i>
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                        {% else %}
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}"
+                                            class="submit_link">
+                                                   Месяц
+                                            </a>
+                                            <input type="hidden" class="next_link" 
+                                            value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                        {% endif %}
+                                    </th>
                                     <th>Квартира</th>
                                     <th>Владелец</th>
                                     <th>Проведена</th>
@@ -109,7 +167,9 @@
                                         {{ form.status }}
                                     </td>
                                     <td>
-                                        {{ form.date }}
+                                        <input id="date_range" class="form-control">
+                                        {{ form.start }}
+                                        {{ form.end }}
                                     </td>
                                     <td>
                                         {{ form.month }}
@@ -184,7 +244,7 @@
                                                href="{% url 'admin_panel:update_payment_ticket_admin' ticket.pk %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
-                                            <a class="btn btn-default btn-sm"
+                                            <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_payment_ticket_admin' ticket.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
@@ -194,12 +254,13 @@
                                 {% empty %}
                                 <tr>
                                     <td colspan="9">
-                                        Ничего не найдер
+                                        Ничего не найдено
                                     </td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -210,12 +271,31 @@
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'admin_panel/js/checkbox_toggle.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
-    $('.search_form').each(function(){
-        $(this).on('change', function(){
-            $(this).submit();
+    $(document).ready(function(){
+        $('#date_range').daterangepicker({
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+        $('#id_owner').select2({
+            theme: 'bootstrap4',
+            width: '100%',
+        });
+        submit_form_after_keypress();
+        submit_form_after_ordering();
+
+        $('.applyBtn').on('click', function(){
+            const date_range = $('#date_range').data('daterangepicker');
+            $('#date_start').val(date_range.startDate.format('YYYY-MM-DD'));
+            $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
+            $('form').submit();
         })
+        confirm_deleting();
     })
+</script>
+<script>
     $('#main_checkbox').on('change', function(){
         setCheckbox(this);
     })

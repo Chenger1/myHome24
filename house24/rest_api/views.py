@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
+from django.db.models import Sum
 
 from rest_api import serializers
 
@@ -216,3 +217,12 @@ class PersonalAccountStatus(APIView):
             return Response({'status': True})
         else:
             return Response({'status': False})
+
+
+class PaymentTicketSum(APIView):
+    model = PaymentTicket
+
+    def get(self, request):
+        ticket = get_object_or_404(self.model, pk=request.GET.get('pk'))
+        total_paid = ticket.transactions.all().aggregate(Sum('paid_sum'))['paid_sum__sum'] or 0
+        return Response({'sum': (ticket.sum - total_paid)})

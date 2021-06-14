@@ -1,8 +1,7 @@
 class BaseCloner {
-	constructor(prefix, selector, url){
+	constructor(prefix, selector){
 		this.prefix = prefix;
 		this.selector = selector;
-		this.url = url;
 		this.newElement;
 	}
 
@@ -93,7 +92,6 @@ class BaseCloner {
 	}
 
 	deleteRowWithoutReload(element){
-		let local_url = this.url; // we have to bind method locally because of specifi behaviour of "this" keyword
 		this.hideRow(element);
 	}
 
@@ -156,8 +154,8 @@ class AdvancedFormsetCloner extends BaseCloner{
 
 
 class AdvancedFormsetClonerWithCounter extends AdvancedFormsetCloner{
-	constructor(prefix, selector, url){
-		super(prefix, selector, url);
+	constructor(prefix, selector){
+		super(prefix, selector);
 	}
 
 	updateCounter(element, value){
@@ -168,8 +166,8 @@ class AdvancedFormsetClonerWithCounter extends AdvancedFormsetCloner{
 
 
 class FormsetClonerWithCallback extends BaseCloner{
-	constructor(prefix, selector, url, event, delete_event){
-		super(prefix, selector, url);
+	constructor(prefix, selector, event, delete_event){
+		super(prefix, selector);
 		this.event = event;
 		this.delete_event = delete_event;
 	}

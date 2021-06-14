@@ -91,26 +91,51 @@
                                 <div class="col-12 col-md-12 col-lg-8">
                                     <div class="row">
                                         <div class="col-12 col-md-6">
+                                            {% if house.image1 %}
                                             <img src="{{ house.image1.url }}" alt
                                                  class="house_large_img img_responsive margin-auto-bottom-30">
+                                            {% else %}
+                                            <img src="{% static 'img/default_form_image.png' %}" alt
+                                                 class="house_large_img img_responsive margin-auto-bottom-30">
+                                            {% endif %}
                                         </div>
                                         <div class="col-12 col-md-6">
                                             <div class="row">
                                                 <div class="col-6 col-md-6">
+                                                    {% if house.image2 %}
                                                     <img src="{{ house.image2.url }}" alt
                                                          class="house_small_image img_responsive margin-auto-bottom-30">
+                                                    {% else %}
+                                                    <img src="{% static 'img/default_form_image.png' %}" alt
+                                                        class="house_large_img img_responsive margin-auto-bottom-30">
+                                                    {% endif %}
                                                 </div>
                                                 <div class="col-6 col-md-6">
+                                                    {% if house.image3  %}
                                                     <img src="{{ house.image3.url }}" alt
                                                          class="house_small_image img_responsive margin-auto-bottom-30">
+                                                    {% else %}
+                                                    <img src="{% static 'img/default_form_image.png' %}" alt
+                                                        class="house_large_img img_responsive margin-auto-bottom-30">
+                                                    {% endif %}
                                                 </div>
                                                 <div class="col-6 col-md-6">
+                                                    {% if house.image4 %}
                                                     <img src="{{ house.image4.url }}" alt
                                                          class="house_small_image img_responsive margin-auto-bottom-30">
+                                                    {% else %}
+                                                    <img src="{% static 'img/default_form_image.png' %}" alt
+                                                        class="house_large_img img_responsive margin-auto-bottom-30">
+                                                    {% endif %}
                                                 </div>
                                                 <div class="col-6 col-md-6">
+                                                    {% if house.image5 %}
                                                     <img src="{{ house.image5.url }}" alt
                                                          class="house_small_image img_responsive margin-auto-bottom-30">
+                                                    {% else %}
+                                                    <img src="{% static 'img/default_form_image.png' %}" alt
+                                                        class="house_large_img img_responsive margin-auto-bottom-30">
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>

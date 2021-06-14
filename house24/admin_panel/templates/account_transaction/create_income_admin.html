@@ -107,8 +107,8 @@
                                             {{ form.payment_item_type }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="amount">Сумма</label>
-                                            {{ form.amount }}
+                                            <label for="paid_sum">Сумма</label>
+                                            {{ form.paid_sum }}
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
@@ -124,6 +124,9 @@
                                         <div class="form-group">
                                             <label for="payment_ticket">Квитанция</label>
                                             {{ form.payment_ticket }}
+                                        </div>
+                                        <div class="form-group">
+                                            <h5>К оплате по квитанции: <strong id="sum"></strong> грн.</h5>
                                         </div>
                                     </div>
                                 </div>
@@ -218,6 +221,18 @@
                     data: {'pk': pk}
                 }
             })
+        })
+
+        $('#payment_ticket').on('change', function(){
+            const pk = $(this).find(':selected').val();
+            $.ajax({
+                url: '{% url "rest_api:payment_ticket_sum" %}',
+                type: 'GET',
+                data: {'pk': pk},
+            })
+            .done(function(response) {
+                $('#sum').text(response['sum']);
+            }) 
         })
     })
 </script>   

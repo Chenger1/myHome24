@@ -2,6 +2,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, View
 from django.urls import reverse_lazy
 from django.db.models import Sum
 from django.shortcuts import redirect, get_object_or_404, render
+from django.http import HttpResponse
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -10,21 +11,39 @@ from admin_panel.forms.account_transaction_forms import (AccountTransactionSearc
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import Transaction, PersonalAccount
+from db.services.search import TransactionSearch
+from db.services.utils import generate_next_instance_number
+from db.services.spreadsheet import TransactionSpreadSheet
+
+import datetime
 
 
 class ListAccountTransactionView(ListInstancesMixin):
     model = Transaction
     template_name = 'account_transaction/list_account_transaction_admin.html'
     search_form = AccountTransactionSearchForm
+    search_obj = TransactionSearch
 
     def get_context_data(self):
         context = super().get_context_data()
-        incomes = Transaction.objects.filter(payment_item_type__type=0).aggregate(Sum('amount'))
-        outcomes = Transaction.objects.filter(payment_item_type__type=1).aggregate(Sum('amount'))
-        context.update({'incomes': incomes['amount__sum'],
-                        'outcomes': outcomes['amount__sum']})
+        incomes = self.instances.filter(payment_item_type__type=0).aggregate(Sum('paid_sum'))
+        outcomes = self.instances.filter(payment_item_type__type=1).aggregate(Sum('paid_sum'))
+        context.update({'incomes': incomes['paid_sum__sum'] or 0,
+                        'outcomes': outcomes['paid_sum__sum'] or 0})
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
+
+
+class ListAccountTransactionViewAscendingView(ListAccountTransactionView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('-created')
+        return queryset
+
+
+class ListAccountTransactionViewDescendingView(ListAccountTransactionView):
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('created')
+        return queryset
 
 
 class CreateIncomeView(AdminPermissionMixin, CreateView):
@@ -45,11 +64,11 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
             form = self.form_class(self.request.POST)
         else:
             if self.parent_object:
-                form = self.form_class(initial={'number': self.model.get_next_income_number(),
+                form = self.form_class(initial={'number': generate_next_instance_number(self.model),
                                                 'owner': self.parent_object.flat.owner.pk if self.parent_object.flat.owner else None,
                                                 'personal_account': self.parent_object.pk})
             else:
-                form = self.form_class(initial={'number': self.model.get_next_income_number()})
+                form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
         return form
 
 
@@ -64,7 +83,7 @@ class CreateOutcomeView(AdminPermissionMixin, CreateView):
         if self.request.POST:
             form = self.form_class(self.request.POST)
         else:
-            form = self.form_class(initial={'number': self.model.get_next_outcome_number()})
+            form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
         return form
 
 
@@ -104,7 +123,7 @@ class DuplicateTransactionView(AdminPermissionMixin, View):
 
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
-        form = self.form_class(instance=obj, initial={'number': self.get_text_number_callback()})
+        form = self.form_class(instance=obj, initial={'number': generate_next_instance_number(self.model)})
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request, pk):
@@ -153,3 +172,22 @@ class ListIncomeTransactionByAccount(ListInstancesMixin):
                         'outcomes': outcomes})
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
+
+
+class DownloadSpreadSheet(View):
+    search_form = AccountTransactionSearchForm
+    search_obj = TransactionSearch
+    model = Transaction
+
+    def get(self, request):
+        form = self.search_form(request.GET)
+        if form.is_valid():
+            instances = self.search_obj.search(form.cleaned_data, self.model.objects.all())
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = f'attachment; filename="{self.model.__name__}{datetime.date.today().strftime("%Y%m%d")}.xls"'
+            constructor = TransactionSpreadSheet(self.model)
+            file = constructor.create_spreadsheet(instances)
+            file.save(response)
+            return response
+        else:
+            HttpResponse()

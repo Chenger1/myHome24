@@ -232,7 +232,7 @@
 <script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script>
     // init service formset cloner
-    let service_cloner = new BaseCloner('services', '.service_formset', "{% url 'admin_panel:delete_service_option' %}");
+    let service_cloner = new BaseCloner('services', '.service_formset');
     service_cloner.init(); // init base events for server-side rendered forms 
     $('#add_service_formset').on('click', function(){
         service_cloner.clone();
@@ -245,7 +245,7 @@
     })
 
     // init measure formset cloner
-    let measure_cloner = new BaseCloner('measure', '.measure_formset', "{% url 'admin_panel:delete_measure_option' %}");
+    let measure_cloner = new BaseCloner('measure', '.measure_formset');
     measure_cloner.init(); // init base events for server-side rendered forms 
     $('#add_measure_formset').on('click', function(){
         measure_cloner.clone();

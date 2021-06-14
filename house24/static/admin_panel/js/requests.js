@@ -29,7 +29,7 @@ function update_select(element, url, parent_pk, constructor){
     })
     .done(function(response){
         $(element).children().remove();
-        $(element).append('<option value>---------</option>')
+        $(element).append('<option value>Выберите...</option>')
         for(key of response){
             constructor(element, key);
         }

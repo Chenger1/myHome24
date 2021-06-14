@@ -5,10 +5,18 @@ from db.models.house import Message
 
 class MessageSearchForm(forms.Form):
     text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control',
-                                                         'placeholder': 'Поиск'}))
+                                                         'placeholder': 'Поиск'}),
+                           required=False)
 
 
 class CreateMessageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['house'].empty_label = 'Выберите...'
+        self.fields['section'].empty_label = 'Выберите...'
+        self.fields['floor'].empty_label = 'Выберите...'
+        self.fields['flat'].empty_label = 'Выберите...'
+
     class Meta:
         model = Message
         exclude = ('sender', )

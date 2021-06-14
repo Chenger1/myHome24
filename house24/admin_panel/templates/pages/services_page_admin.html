@@ -188,7 +188,7 @@
 </script>
 <script>
 // init formset block cloner
-    let formset_cloner = new AdvancedFormsetClonerWithCounter('blocks', '.formset', "{% url 'admin_panel:delete_services_block' %}");
+    let formset_cloner = new AdvancedFormsetClonerWithCounter('blocks', '.formset');
     formset_cloner.init();
     $('#add_formset').on('click', function(){
         tinymce.remove();
