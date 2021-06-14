@@ -135,6 +135,8 @@ urlpatterns = [
          name='update_account_admin'),
     path('accounts/index/detail_account/<int:pk>/', accounts.PersonalAccountDetailView.as_view(),
          name='detail_account_admin'),
+    path('accounts/index/download_spreadsheet/', accounts.DownloadSpreadSheet.as_view(),
+         name='download_spreadsheet_account'),
 
     # METERS
     path('meters/index/', meter_views.ListMetersView.as_view(), name='list_meters_admin'),
