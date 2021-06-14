@@ -2,6 +2,7 @@ from django.views.generic import CreateView, UpdateView, DetailView, View
 from django.urls import reverse_lazy
 from django.db.models import Sum
 from django.shortcuts import redirect, get_object_or_404, render
+from django.http import HttpResponse
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -12,6 +13,9 @@ from admin_panel.utils.statistic import MinimalStatisticCollector
 from db.models.house import Transaction, PersonalAccount
 from db.services.search import TransactionSearch
 from db.services.utils import generate_next_instance_number
+from db.services.spreadsheet import TransactionSpreadSheet
+
+import datetime
 
 
 class ListAccountTransactionView(ListInstancesMixin):
@@ -168,3 +172,22 @@ class ListIncomeTransactionByAccount(ListInstancesMixin):
                         'outcomes': outcomes})
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
+
+
+class DownloadSpreadSheet(View):
+    search_form = AccountTransactionSearchForm
+    search_obj = TransactionSearch
+    model = Transaction
+
+    def get(self, request):
+        form = self.search_form(request.GET)
+        if form.is_valid():
+            instances = self.search_obj.search(form.cleaned_data, self.model.objects.all())
+            response = HttpResponse(content_type='application/ms-excel')
+            response['Content-Disposition'] = f'attachment; filename="{self.model.__name__}{datetime.date.today().strftime("%Y%m%d")}.xls"'
+            constructor = TransactionSpreadSheet(self.model)
+            file = constructor.create_spreadsheet(instances)
+            file.save(response)
+            return response
+        else:
+            HttpResponse()

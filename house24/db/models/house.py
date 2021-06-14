@@ -273,6 +273,12 @@ class Transaction(models.Model):
     payment_ticket = models.ForeignKey(PaymentTicket, related_name='transactions', on_delete=models.SET_NULL,
                                        blank=True, null=True)
 
+    @property
+    def status_display(self):
+        if self.status:
+            return 'Проведена'
+        return 'Непроведена'
+
     @classmethod
     def get_next_income_number(cls):
         last = cls.objects.filter(payment_item_type__type=0).last()

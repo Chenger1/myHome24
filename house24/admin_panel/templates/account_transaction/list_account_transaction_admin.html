@@ -84,7 +84,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{% url 'admin_panel:create_income_admin' %}">Добавить приход</a>
                         <a class="dropdown-item" href="{% url 'admin_panel:create_outcome_admin' %}">Добавить расход</a>
-                        <a class="dropdown-item" href="#">Выгрузить в Excel</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:download_spreadsheet_transactions' %}">Выгрузить в Excel</a>
                     </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
