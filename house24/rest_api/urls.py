@@ -18,4 +18,5 @@ urlpatterns = [
          name='personal_account_tickets_list'),
     path('total_balance/', views.TotalBalance.as_view(), name='get_total_balance'),
     path('personal_account_status/', views.PersonalAccountStatus.as_view(), name='get_account_status'),
+    path('payment_ticket_sum/', views.PaymentTicketSum.as_view(), name='payment_ticket_sum')
 ]
