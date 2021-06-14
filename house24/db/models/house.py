@@ -205,7 +205,11 @@ class PaymentTicket(models.Model):
 
     @classmethod
     def total_paid(cls):
-        return cls.objects.filter(status__in=(0, 1)).aggregate(models.Sum('sum'))['sum__sum'] or 0
+        return cls.objects.filter(status=0).aggregate(models.Sum('sum'))['sum__sum'] or 0
+
+    @classmethod
+    def partially_paid(cls):
+        tickets = cls.objects.filter(status=1)
 
     def __str__(self):
         return f'Квитанция №{self.number}'
@@ -266,7 +270,7 @@ class Transaction(models.Model):
                                          blank=True, null=True)
     payment_item_type = models.ForeignKey(PaymentItem, related_name='transfers', on_delete=models.CASCADE,
                                           blank=True, null=True)
-    amount = models.FloatField()
+    paid_sum = models.FloatField()
     status = models.BooleanField(default=True)
     manager = models.ForeignKey(User, related_name='master', on_delete=models.SET_NULL, blank=True, null=True)
     description = models.TextField()

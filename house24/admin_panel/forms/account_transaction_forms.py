@@ -63,7 +63,7 @@ class CreateIncomeForm(forms.ModelForm):
             'created': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
                                                                    'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                                    'class': "form-control to_valid", 'id': 'created'}),
-            'amount': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'amount'}),
+            'paid_sum': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'paid_sum'}),
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
                                                  'id': 'status'}),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
@@ -90,7 +90,7 @@ class CreateOutcomeForm(forms.ModelForm):
                                                                    'value': datetime.datetime.now().strftime(
                                                                        '%Y-%m-%d'),
                                                                    'class': "form-control to_valid", 'id': 'created'}),
-            'amount': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'amount'}),
+            'paid_sum': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'paid_sum'}),
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
                                                  'id': 'status'}),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
