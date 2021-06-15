@@ -227,3 +227,28 @@ class PaymentTicketSum(APIView):
         ticket = get_object_or_404(self.model, pk=request.GET.get('pk'))
         total_paid = ticket.transactions.all().aggregate(Sum('paid_sum'))['paid_sum__sum'] or 0
         return Response({'sum': (ticket.sum - total_paid)})
+
+
+class FlatPersonalAccount(APIView):
+    model = PersonalAccount
+
+    def get(self, request):
+        if request.GET.get('pk'):
+            queryset = PersonalAccount.objects.filter(flat__pk=request.GET.get('pk'))
+        else:
+            queryset = PersonalAccount.objects.all()
+        return Response(self.serialize(queryset))
+
+    def serialize(self, queryset):
+        """
+        Serialize queryset in select2 widget format
+        :param queryset:
+        :return:
+        """
+        result = {'results': []}
+        for item in queryset:
+            result['results'].append({
+                'id': item.pk,
+                'text': item.number
+            })
+        return result

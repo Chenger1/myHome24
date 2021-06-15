@@ -399,7 +399,24 @@
         $('#account').select2({
             theme: 'bootstrap4',
             width: '100%',
-            containerCssClass: 'to_valid'
+            containerCssClass: 'to_valid',
+            ajax: {
+                url: '{% url "rest_api:get_flat_account" %}',
+                data: {'pk': flat_pk}
+            }
+        }).trigger('change.select2');
+
+        $('select[name=flat]').on('change', function(){
+            const selected_pk = $('select[name=flat]').find(':selected').val();
+            $('#account').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                containerCssClass: 'to_valid',
+                ajax: {
+                    url: '{% url "rest_api:get_flat_account" %}',
+                    data: {'pk': selected_pk}
+                }
+            }).trigger('change.select2');
         })
     })
 </script>
