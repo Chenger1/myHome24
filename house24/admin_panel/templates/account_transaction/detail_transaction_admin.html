@@ -87,7 +87,7 @@
                                               Расходная
                                               {% endif %}
                                               Ведомость</h3>
-                          <a href="" class="btn btn-default    btn-sm"
+                          <a href="{% url 'admin_panel:download_spreadsheet_concrete_transactions' transaction.pk %}" class="btn btn-default btn-sm"
                                style="float:right; margin-left:5px;">
                                 Выгрузить в Excel
                             </a>

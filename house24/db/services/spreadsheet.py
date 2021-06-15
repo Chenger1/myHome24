@@ -53,6 +53,38 @@ class TransactionSpreadSheet(SpreadSheerCreator):
         return self.wb
 
 
+class ConcreteTransactionSpreadSheer(SpreadSheerCreator):
+    def create_spreadsheet(self, queryset):
+        font_style = xlwt.XFStyle()
+        # init info row
+        self.ws.write(0, 0, 'Платеж', font_style)
+        self.ws.write(1, 0, 'Дата', font_style)
+        self.ws.write(2, 0, 'Владелец квартиры', font_style)
+        self.ws.write(3, 0, 'Лицевой счет', font_style)
+        self.ws.write(4, 0, 'Приход/расход', font_style)
+        self.ws.write(5, 0, 'Статус', font_style)
+        self.ws.write(6, 0, 'Статья', font_style)
+        self.ws.write(7, 0, 'Квитанция', font_style)
+        self.ws.write(8, 0, 'Сумма', font_style)
+        self.ws.write(9, 0, 'Валюта', font_style)
+        self.ws.write(10, 0, 'Комментарий', font_style)
+        self.ws.write(11, 0, 'Менеджер', font_style)
+        # init data rows
+        self.ws.write(0, 4, queryset.number, font_style)
+        self.ws.write(1, 4, queryset.created.strftime('%d.%m.%Y'), font_style)
+        self.ws.write(2, 4, self.check_for_none(str(queryset.owner)), font_style)
+        self.ws.write(3, 4, self.check_for_none(str(queryset.personal_account)), font_style)
+        self.ws.write(4, 4, queryset.payment_item_type.get_type_display(), font_style)
+        self.ws.write(5, 4, queryset.status_display, font_style)
+        self.ws.write(6, 4, queryset.payment_item_type.name, font_style)
+        self.ws.write(7, 4, self.check_for_none(str(queryset.payment_ticket)), font_style)
+        self.ws.write(8, 4, queryset.paid_sum, font_style)
+        self.ws.write(9, 4, 'грн.', font_style)
+        self.ws.write(10, 4, queryset.description, font_style)
+        self.ws.write(11, 4, self.check_for_none(str(queryset.manager)), font_style)
+        return self.wb
+
+
 class AccountSpreadSheet(SpreadSheerCreator):
     def create_spreadsheet(self, queryset):
         font_style = xlwt.XFStyle()

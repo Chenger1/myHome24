@@ -246,6 +246,9 @@ urlpatterns = [
          name='list_account_transaction_descending_admin'),
     path('account-transaction/index/download_spreadsheet/', account_transaction_views.DownloadSpreadSheet.as_view(),
          name='download_spreadsheet_transactions'),
+    path('account-transaction/index/download_spreadsheet/<int:pk>/',
+         account_transaction_views.DownloadConcreteTransactionSpreadSheet.as_view(),
+         name='download_spreadsheet_concrete_transactions'),
 
     # MESSAGE
     path('message/index/', message_views.ListMessages.as_view(), name='list_messages_admin'),

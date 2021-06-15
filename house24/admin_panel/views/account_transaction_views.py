@@ -13,7 +13,7 @@ from admin_panel.utils.statistic import MinimalStatisticCollector
 from db.models.house import Transaction, PersonalAccount
 from db.services.search import TransactionSearch
 from db.services.utils import generate_next_instance_number
-from db.services.spreadsheet import TransactionSpreadSheet
+from db.services.spreadsheet import TransactionSpreadSheet, ConcreteTransactionSpreadSheer
 
 import datetime
 
@@ -191,3 +191,16 @@ class DownloadSpreadSheet(View):
             return response
         else:
             HttpResponse()
+
+
+class DownloadConcreteTransactionSpreadSheet(View):
+    model = Transaction
+
+    def get(self, request, pk):
+        instance = get_object_or_404(self.model, pk=pk)
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = f'attachment; filename="{self.model.__name__}{datetime.date.today().strftime("%Y%m%d")}.xls"'
+        constructor = ConcreteTransactionSpreadSheer(self.model)
+        file = constructor.create_spreadsheet(instance)
+        file.save(response)
+        return response
