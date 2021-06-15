@@ -54,11 +54,14 @@ class CreatePersonalAccountForm(forms.ModelForm):
     status = forms.ChoiceField(choices=status_choices,
                                widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}))
     house = forms.ModelChoiceField(queryset=House.objects.all(), empty_label='Выберите...',
-                                   widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}))
+                                   widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
+                                   required=False)
     section = forms.ModelChoiceField(queryset=Section.objects.all(), empty_label='Выберите...',
-                                     widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}))
+                                     widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+                                     required=False)
     flat = forms.ModelChoiceField(queryset=Flat.objects.all(), empty_label='Выберите...',
-                                  widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}))
+                                  widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
+                                  required=False)
 
     class Meta:
         model = PersonalAccount

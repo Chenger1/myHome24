@@ -8,6 +8,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import Flat, House, PersonalAccount
 from db.services.search import FlatSearch
+from db.services.utils import generate_next_instance_number
 
 
 class ListFlatsView(ListInstancesMixin):
@@ -111,7 +112,7 @@ class CreateFlatView(AdminPermissionMixin, View, PostInstanceMixin):
     redirect_url = 'admin_panel:list_flats_admin'
 
     def get(self, request, pk=None):
-        form = self.form_class()
+        form = self.form_class(**{'account_number': generate_next_instance_number(PersonalAccount)})
         personal_accounts = PersonalAccount.objects.filter(flat__isnull=True)
         return render(request, self.template_name, context={'form': form,
                                                             'personal_accounts': personal_accounts})
