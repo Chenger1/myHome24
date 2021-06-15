@@ -1,4 +1,4 @@
-function saveMeter(url, callback_url){
+function saveMeter(url, callback_url, flat_pk){
 	let context = {};
 	context['date'] = $('#created').val();
 	context['house'] = $('#house').find(':selected').val();
@@ -33,7 +33,7 @@ function saveMeter(url, callback_url){
 		data: {'data':JSON.stringify(context)},
 		success: function(response){
 			if(response['status'] == 200){
-				updateMeterTable(callback_url);
+				updateMeterTable(callback_url, flat_pk);
 			}
 		}
 	})

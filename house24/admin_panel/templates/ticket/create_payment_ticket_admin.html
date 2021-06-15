@@ -387,6 +387,15 @@
             let value = $(this).find(':selected').val();
             send_request_to_api('{% url "admin_panel:get_flat_owner" %}', value, update_owner_info);
             updateMeterTable('{% url "rest_api:get_meters_list" %}', value);
+            $('#account').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                containerCssClass: 'to_valid',
+                ajax: {
+                    url: '{% url "rest_api:get_flat_account" %}',
+                    data: {'pk': value}
+                }
+            }).trigger('change.select2');
         });
         const flat_pk = $('select[name=flat]').find(':selected').val();
         updateMeterTable('{% url "rest_api:get_meters_list" %}', flat_pk);
@@ -405,19 +414,6 @@
                 data: {'pk': flat_pk}
             }
         }).trigger('change.select2');
-
-        $('select[name=flat]').on('change', function(){
-            const selected_pk = $('select[name=flat]').find(':selected').val();
-            $('#account').select2({
-                theme: 'bootstrap4',
-                width: '100%',
-                containerCssClass: 'to_valid',
-                ajax: {
-                    url: '{% url "rest_api:get_flat_account" %}',
-                    data: {'pk': selected_pk}
-                }
-            }).trigger('change.select2');
-        })
     })
 </script>
 <script>
