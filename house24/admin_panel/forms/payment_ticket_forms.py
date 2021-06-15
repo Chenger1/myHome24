@@ -1,7 +1,7 @@
 from django import forms
 
 from db.models.user import User
-from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat
+from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat, Service
 
 import datetime
 
@@ -80,6 +80,7 @@ class TicketServiceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['service'].empty_label = 'Выберите...'
+        self.fields['service'].queryset = Service.objects.filter(status=True)
 
     class Meta:
         model = PaymentTicketService

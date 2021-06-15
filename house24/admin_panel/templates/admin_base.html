@@ -262,6 +262,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </ul>
                     </li>
                     {% endif %}
+                    {% if request.user.role.site_options %}
                     <li class="nav-item
                         {% if '/admin/service/index/' in request.path %}menu-is-opening menu-open
                         {% elif '/admin/tariff/index/' in request.path %}menu-is-opening menu-open
@@ -337,6 +338,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% endif %}
                         </ul>
                     </li>
+                    {% endif %}
                 </ul>
             </nav>
             <!-- /.sidebar-menu -->

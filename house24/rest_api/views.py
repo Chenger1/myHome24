@@ -10,6 +10,7 @@ from django.db.models import Sum
 from rest_api import serializers
 
 from db.models.house import Section, Floor, Flat, TariffService, Meter, PersonalAccount, PaymentTicket, Transaction
+from db.services.utils import generate_next_instance_number
 
 from admin_panel.forms.meters_forms import CreateMeterForm
 
@@ -84,7 +85,7 @@ class CreateMeterApiView(View):
             form = CreateMeterForm({'date': data['date'], 'house': data['house'],
                                    'section': data['section'], 'flat': data['flat'],
                                     'service': service, 'data': value,
-                                    'number': self.model.get_next_meter_number(),
+                                    'number': generate_next_instance_number(self.model),
                                     'status': 0})
             if form.is_valid():
                 form.save()
@@ -101,7 +102,7 @@ class GetMeterDataApiView(View):
         if flat_pk:
             queryset = self.model.objects.filter(flat__pk=flat_pk).order_by('-id')[:20]
         else:
-            queryset = self.model.objects.all()[20::-1]
+            queryset = self.model.objects.all()[:20:-1]
         serialized = self.serialize(queryset)
         return JsonResponse(serialized)
 

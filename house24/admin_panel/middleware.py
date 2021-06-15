@@ -13,23 +13,23 @@ class AdminCheckMiddleware(MiddlewareMixin):
                 if request.path == '/admin/' and not request.user.role.statistic:
                     return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'accounts/index/' in request.path and not request.user.role.personal_account:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'meters/index/' in request.path and not request.user.role.meters:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'owners/index/' in request.path and not request.user.role.owners:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'master_request/index/' in request.path and not request.user.role.master_request:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'payment_ticket/index/' in request.path and not request.user.role.ticket:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'account-transaction/index/' in request.path and not request.user.role.account_transaction:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'houses/index/' in request.path and not request.user.role.houses:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'flats/index/' in request.path and not request.user.role.flats:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'message/index/' in request.path and not request.user.role.messages:
-                    return redirect(request.path.role.get_available_url_pattern_by_role())
+                    return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'services/index/' in request.path and not request.user.role.services:
                     return redirect(request.user.role.get_available_url_pattern_by_role())
                 elif 'tariff/index/' in request.path and not request.user.role.tariffs:

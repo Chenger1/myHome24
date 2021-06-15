@@ -71,6 +71,12 @@ class Role(models.Model):
         else:
             return 'website:main_page_view'
 
+    @property
+    def site_options(self):
+        if self.services or self.tariffs or self.users or self.credentials or self.roles:
+            return True
+        return False
+
 
 class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     status_choices = [
