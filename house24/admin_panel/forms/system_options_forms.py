@@ -9,7 +9,7 @@ class MeasureForm(forms.ModelForm):
         model = Measure
         fields = '__all__'
         widgets = {
-            'measure_name': forms.TextInput(attrs={'class': 'form-control'})
+            'measure_name': forms.TextInput(attrs={'class': 'form-control to_valid'})
         }
 
 
@@ -17,14 +17,14 @@ MeasureFormset = forms.modelformset_factory(model=Measure, form=MeasureForm, can
 
 
 class ServiceForm(forms.ModelForm):
-    measure = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+    measure = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control to_valid'}),
                                      queryset=Measure.objects.all(), required=True, empty_label='Выберите...')
 
     class Meta:
         model = Service
         fields = '__all__'
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'name': forms.TextInput(attrs={'class': 'form-control to_valid'}),
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input'})
         }
 
