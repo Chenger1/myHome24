@@ -115,18 +115,10 @@ class Flat(models.Model):
     floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.CASCADE, blank=True, null=True)
     tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.CASCADE, blank=True, null=True)
 
-    @classmethod
-    def search(cls, data):
-        return cls.objects.all()
-
     def get_flat_balance(self):
         if not hasattr(self, 'account'):
             return '(нет счета)'
-        if self.account.tickets:
-            incomes = self.account.tickets.filter(status=0).aggregate(models.Sum('sum'))['sum__sum'] or 0
-            outcomes = self.account.tickets.filter(status__in=(1, 2)).aggregate(models.Sum('sum'))['sum__sum'] or 0
-            return incomes - outcomes
-        return 0
+        return self.account.get_account_balance()
 
     def __str__(self):
         return str(self.number)
@@ -147,9 +139,11 @@ class PersonalAccount(models.Model):
     def get_account_balance(self):
         if not self.tickets:
             return 0.00
-        incomes = self.tickets.filter(status=0).aggregate(models.Sum('sum'))['sum__sum'] or 0.00
-        outcomes = self.tickets.filter(status__in=(1, 2)).aggregate(models.Sum('sum'))['sum__sum'] or 0.00
-        return incomes - outcomes
+        total_debt = self.tickets.filter(is_done=True, status__in=(1, 2)).aggregate(models.Sum('sum', distinct=True))
+        total_paid = 0
+        for ticket in self.tickets.all():
+            total_paid += ticket.get_ticket_transactions()
+        return total_paid - (total_debt['sum__sum'] or 0)
 
     @classmethod
     def find_inst(cls, number):
@@ -190,6 +184,9 @@ class PaymentTicket(models.Model):
             return last.pk + 1
         else:
             return 1
+
+    def get_ticket_transactions(self):
+        return self.transactions.all().aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0
 
     @property
     def ticket_month(self):
