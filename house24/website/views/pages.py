@@ -10,6 +10,8 @@ from website.views.singleton_page_mixin import SingletonView
 
 import mimetypes
 
+mimetypes.types_map['.docx'] = 'application/msword'  # mimetypes library doesnt contain '.docx' extension
+
 
 class MainPageView(SingletonView):
     model = MainPage
