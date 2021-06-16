@@ -60,7 +60,7 @@ class StatisticController:
 
     @staticmethod
     def prepare_users():
-        return User.objects.filter(is_staff=False, status=1).count()
+        return User.objects.filter(is_staff=False, status=0).count()
 
     @staticmethod
     def prepare_new_requests():
