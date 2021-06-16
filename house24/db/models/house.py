@@ -367,11 +367,10 @@ class Message(models.Model):
 
     @property
     def message_recipient(self):
-        result = [str(model) for model in (self.house, self.section, self.floor, self.flat) if model]
-        if result:
-            return ', '.join(result)
+        if self.house:
+            return True
         else:
-            return 'Всем'
+            return False
 
     def __str__(self):
         return self.title
