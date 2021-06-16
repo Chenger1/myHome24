@@ -107,10 +107,10 @@
                                             </a>
                                         </div>
                                     {% for inline_form in formset %}
-                                        {% for hidden in inline_form.hidden_fields %}
-                                            {{ hidden }}
-                                        {% endfor %}
                                         <div class="col-xs-4 col-sm-3 text-center formset_images formset_block">
+                                            {% for hidden in inline_form.hidden_fields %}
+                                                {{ hidden }}
+                                            {% endfor %}
                                             {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                             {% if inline_form.instance.image %}
                                                 <img src="{{ inline_form.instance.image.url }}" alt

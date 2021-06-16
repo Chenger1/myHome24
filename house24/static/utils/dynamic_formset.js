@@ -87,7 +87,7 @@ class BaseCloner {
 		let parent_div = $(element).closest(this.selector);
 		parent_div.find('input[type=checkbox][name*="-DELETE"]').prop('checked', true);
 		parent_div.hide();
-		this.updateIndex(element);
+		// this.updateIndex(element);
 		this.deleteEvent();
 	}
 
