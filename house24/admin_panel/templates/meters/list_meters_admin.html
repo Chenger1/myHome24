@@ -63,12 +63,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_meters_number_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_meters_number_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_meters_number_descending_admin' %}"
                                             class="submit_link">
                                                    № квартиры
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meters_number_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_meters_number_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>Счетчик</th>

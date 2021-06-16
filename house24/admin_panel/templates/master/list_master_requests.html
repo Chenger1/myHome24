@@ -69,12 +69,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_master_requests_number_descending_admin' %}"
                                             class="submit_link">
                                                    № заявки
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_master_requests_number_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_master_requests_number_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th style="width: 135px; min-width: 135px">
@@ -93,12 +93,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_master_requests_date_descending_admin' %}"
                                             class="submit_link">
                                                    Удобное время
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_master_requests_date_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_master_requests_date_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th style="min-width: 125px">
@@ -117,12 +117,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_master_requests_type_descending_admin' %}"
                                             class="submit_link">
                                                    Тип мастера
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_master_requests_type_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_master_requests_type_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th style="min-width: 350px">Описание</th>

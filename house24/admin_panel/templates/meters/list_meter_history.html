@@ -69,12 +69,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}"
+                                            <a href="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}"
                                             class="submit_link">
                                                    Дата
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}">
+                                            value="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}">
                                         {% endif %}
                                     </th>
                                     <th style="width: 125px; min-width: 125px">
@@ -93,12 +93,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}"
+                                            <a href="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}"
                                             class="submit_link">
                                                    Месяц
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}">
+                                            value="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}">
                                         {% endif %}
                                     </th>
                                     <th style="min-width: 200px">Дом</th>

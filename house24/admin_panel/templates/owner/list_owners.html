@@ -73,12 +73,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}"
                                             class="submit_link">
                                                    ФИО
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_owners_name_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th style="width: 140px; min-width: 140px">Телефон</th>

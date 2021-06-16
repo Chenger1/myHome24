@@ -62,12 +62,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_houses_name_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_houses_name_descending_admin' %}"
                                             class="submit_link">
                                                    Название
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_houses_name_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_houses_name_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>
@@ -86,12 +86,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_houses_address_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_houses_address_descending_admin' %}"
                                             class="submit_link">
                                                    Адрес
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_houses_address_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_houses_address_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th></th>

@@ -118,12 +118,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}"
                                             class="submit_link">
                                                    Дата
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>
@@ -142,12 +142,12 @@
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
                                         {% else %}
-                                            <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}"
+                                            <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}"
                                             class="submit_link">
                                                    Месяц
                                             </a>
                                             <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
+                                            value="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
                                         {% endif %}
                                     </th>
                                     <th>Квартира</th>
