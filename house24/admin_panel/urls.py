@@ -28,7 +28,6 @@ urlpatterns = [
     path('main_page/index/', page_views.MainPageView.as_view(), name='main_page'),
     path('about/index/', page_views.AboutPageView.as_view(), name='about_page'),
     path('services/index/', page_views.ServicesPageView.as_view(), name='services_page'),
-    path('tariffs/index/', page_views.TariffPageView.as_view(), name='tariff_page'),
     path('contacts/index/', page_views.ContactsPageView.as_view(), name='contacts_page'),
 
     # OPTIONS

@@ -131,23 +131,3 @@ class ServiceBlock(models.Model):
 
     def get_files(self):
         return [self.image] if self.image else None
-
-
-class TariffPage(SingletonModel):
-    title = models.CharField(max_length=100, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    seo_title = models.CharField(max_length=150, blank=True, null=True)
-    seo_description = models.TextField(blank=True, null=True)
-    seo_keywords = models.CharField(max_length=150, blank=True, null=True)
-
-    def get_absolute_url(self):
-        return reverse('admin_panel:tariff_page')
-
-
-class TariffBlock(models.Model):
-    entity = models.ForeignKey(TariffPage, related_name='blocks', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='tariffs/', blank=True, null=True)
-    title = models.CharField(max_length=100, blank=True, null=True)
-
-    def get_files(self):
-        return [self.image] if self.image else None

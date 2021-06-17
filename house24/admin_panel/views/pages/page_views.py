@@ -1,11 +1,10 @@
 from django.views.generic.edit import UpdateView
 
-from db.models.pages import (MainPage, AboutPage, ServicesPage, TariffPage, ContactsPage)
+from db.models.pages import (MainPage, AboutPage, ServicesPage, ContactsPage)
 
 from admin_panel.forms.page_forms import (MainPageForm, MainPageFormSet, AboutPageForm, AboutPageGalleryInlineFormset,
                                           AboutPageAdditionalGalleryInlineFormset, DocumentsFormset,
-                                          ServicesForm, ServicesBlockFormset, TariffForm, TariffBlockFormset,
-                                          ContactsPageForm)
+                                          ServicesForm, ServicesBlockFormset, ContactsPageForm)
 
 from admin_panel.views.pages.singleton_mixin import SingletonUpdateView
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -63,14 +62,6 @@ class ServicesPageView(SingletonUpdateView):
     form_class = ServicesForm
     inline_form_set = ServicesBlockFormset
     template_name = 'pages/services_page_admin.html'
-    context_object_name = 'form'
-
-
-class TariffPageView(SingletonUpdateView):
-    model = TariffPage
-    form_class = TariffForm
-    inline_form_set = TariffBlockFormset
-    template_name = 'pages/tariff_page_admin.html'
     context_object_name = 'form'
 
 

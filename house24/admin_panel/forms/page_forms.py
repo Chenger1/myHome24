@@ -1,7 +1,7 @@
 from django import forms
 
 from db.models.pages import (MainPage, InfoBlock, AboutPage, AboutGallery, AdditionalGallery, Document,
-                             ServicesPage, ServiceBlock, TariffPage, TariffBlock, ContactsPage)
+                             ServicesPage, ServiceBlock, ContactsPage)
 
 
 class MainPageForm(forms.ModelForm):
@@ -128,35 +128,6 @@ class ServicesBlockForm(forms.ModelForm):
 
 ServicesBlockFormset = forms.inlineformset_factory(ServicesPage, ServiceBlock,
                                                    form=ServicesBlockForm, extra=0, can_delete=True)
-
-
-class TariffForm(forms.ModelForm):
-    class Meta:
-        model = TariffPage
-        fields = '__all__'
-        widgets = {
-            'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'id': 'description', 'class': 'form-control',
-                                                 'style': 'resize:none;'}),
-            'seo_title': forms.TextInput(attrs={'id': 'seo_title', 'class': 'form-control'}),
-            'seo_description': forms.Textarea(attrs={'id': 'seo_description', 'class': 'form-control'}),
-            'seo_keywords': forms.TextInput(attrs={'id': 'seo_keywords', 'class': 'form-control'}),
-        }
-
-
-class TariffBlockForm(forms.ModelForm):
-    class Meta:
-        model = TariffBlock
-        exclude = ('entity', )
-        widgets = {
-            'image': forms.FileInput(attrs={'id': 'image', 'class': 'upload',
-                                            'accept': '.png, .jpeg, .jpg'}),
-            'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
-        }
-
-
-TariffBlockFormset = forms.inlineformset_factory(TariffPage, TariffBlock,
-                                                 form=TariffBlockForm, extra=0, can_delete=True)
 
 
 class ContactsPageForm(forms.ModelForm):

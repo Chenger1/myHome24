@@ -246,13 +246,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{% url 'admin_panel:tariff_page' %}" class="nav-link
-                                    {% if request.path == '/admin/tariffs/index/' %}active{% endif %}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Тарифы</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a href="{% url 'admin_panel:contacts_page' %}" class="nav-link
                                     {% if request.path == '/admin/contacts/index/' %}active{% endif %}">
                                     <i class="far fa-circle nav-icon"></i>
