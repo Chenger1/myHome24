@@ -67,7 +67,7 @@ class CreateHouseView(AdminPermissionMixin, View):
         user_formset = UserFormset(request.POST, prefix='users')
         if form.is_valid() and section_formset.is_valid() and floor_formset.is_valid() and user_formset.is_valid():
             obj = form.save()
-            section_formset.instance = floor_formset.instance = user_formset.instance = obj
+            section_formset.instance = user_formset.instance = obj
             section_formset.save()
             floor_formset.save()
             user_formset.save()

@@ -52,7 +52,7 @@ class Section(models.Model):
 
 
 class Floor(models.Model):
-    house = models.ForeignKey(House, related_name='floors', on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, related_name='floors', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
 
     def __str__(self):

@@ -36,12 +36,15 @@ class SectionForm(forms.ModelForm):
 
 
 class FloorForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control to_valid'}),
                            required=False)
+    section = forms.ModelChoiceField(queryset=Section.objects.all(),
+                                     widget=forms.Select(attrs={'class': 'form-control to_valid'}),
+                                     required=False)
 
     class Meta:
         model = Floor
-        fields = ('name', )
+        fields = '__all__'
 
 
 class HouseUserForm(forms.ModelForm):

@@ -97,59 +97,59 @@
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 {% if form.instance.image1 %}
-                                                    <img src="{{ form.instance.image1.url }}" alt
+                                                <img src="{{ form.instance.image1.url }}" alt
                                                      class="house_large_img img_responsive margin-auto-bottom-30"
-                                                    id="preview_image1">
+                                                     id="preview_image1">
                                                 {% else %}
-                                                    <img src="{% static 'img/default_form_image.png' %}" alt
-                                                        class="house_large_img img_responsive margin-auto-bottom-30"
-                                                    id="preview_image1">
+                                                <img src="{% static 'img/default_form_image.png' %}" alt
+                                                     class="house_large_img img_responsive margin-auto-bottom-30"
+                                                     id="preview_image1">
                                                 {% endif %}
                                             </div>
                                             <div class="col-12 col-md-6">
                                                 <div class="row">
                                                     <div class="col-6 col-md-6">
                                                         {% if form.instance.image2 %}
-                                                            <img src="{{ form.instance.image2.url }}" alt
+                                                        <img src="{{ form.instance.image2.url }}" alt
                                                              class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image2">
+                                                             id="preview_image2">
                                                         {% else %}
-                                                            <img src="{% static 'img/default_form_image.png' %}" alt
+                                                        <img src="{% static 'img/default_form_image.png' %}" alt
                                                              class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image2">
+                                                             id="preview_image2">
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-6 col-md-6">
                                                         {% if form.instance.image3 %}
-                                                            <img src="{{ form.instance.image3.url }}" alt
+                                                        <img src="{{ form.instance.image3.url }}" alt
                                                              class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image3">
+                                                             id="preview_image3">
                                                         {% else %}
-                                                            <img src="{% static 'img/default_form_image.png' %}" alt
+                                                        <img src="{% static 'img/default_form_image.png' %}" alt
                                                              class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image3">
+                                                             id="preview_image3">
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-6 col-md-6">
                                                         {% if form.instance.image4 %}
-                                                            <img src="{{ form.instance.image4.url }}" alt
+                                                        <img src="{{ form.instance.image4.url }}" alt
                                                              class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image4">
+                                                             id="preview_image4">
                                                         {% else %}
-                                                            <img src="{% static 'img/default_form_image.png' %}" alt
-                                                                 class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image4">
+                                                        <img src="{% static 'img/default_form_image.png' %}" alt
+                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
+                                                             id="preview_image4">
                                                         {% endif %}
                                                     </div>
                                                     <div class="col-6 col-md-6">
                                                         {% if form.instance.image5 %}
-                                                            <img src="{{ form.instance.image5.url }}" alt
+                                                        <img src="{{ form.instance.image5.url }}" alt
                                                              class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image5">
+                                                             id="preview_image5">
                                                         {% else %}
-                                                            <img src="{% static 'img/default_form_image.png' %}" alt
-                                                                 class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                            id="preview_image5">
+                                                        <img src="{% static 'img/default_form_image.png' %}" alt
+                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
+                                                             id="preview_image5">
                                                         {% endif %}
                                                     </div>
                                                 </div>
@@ -158,7 +158,8 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-12 col-lg-8" style="box-shadow: 0 1px 1px rgb(0 0 0 / 10%); padding:10px;">
+                                    <div class="col-12 col-lg-8"
+                                         style="box-shadow: 0 1px 1px rgb(0 0 0 / 10%); padding:10px;">
                                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link active" id="section-tab" data-toggle="tab"
@@ -180,7 +181,8 @@
                                                 <div class="col-12">
                                                     {{ section_formset.management_form }}
 
-                                                    <div class="form-group section_formset" style="display: none;" id="hidden_sections">
+                                                    <div class="form-group section_formset" style="display: none;"
+                                                         id="hidden_sections">
                                                         <label for="">Название</label>
                                                         <div class="input-group">
                                                             {{ section_formset.empty_form.name }}
@@ -196,7 +198,7 @@
 
                                                     {% for inline_form in section_formset %}
                                                     {% for hidden in inline_form.hidden_fields %}
-                                                        {{ hidden }}
+                                                    {{ hidden }}
                                                     {% endfor %}
                                                     <div class="form-group section_formset">
                                                         {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
@@ -215,15 +217,18 @@
                                                     {% endfor %}
                                                 </div>
                                                 <div class="col-12">
-                                                    <button class="btn btn-success" style="float:right;" id="add_sections"
-                                                    type="button">Добавить</button>
+                                                    <button class="btn btn-success" style="float:right;"
+                                                            id="add_sections"
+                                                            type="button">Добавить
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="floor">
                                                 <div class="col-12">
                                                     {{ floor_formset.management_form }}
 
-                                                    <div class="form-group floor_formset" style="display: none;" id="hidden_floors">
+                                                    <div class="form-group floor_formset" style="display: none;"
+                                                         id="hidden_floors">
                                                         <label for="">Название</label>
                                                         <div class="input-group">
                                                             {{ floor_formset.empty_form.name }}
@@ -236,11 +241,11 @@
                                                         </div>
                                                     </div>
 
-
+                                                    {% if form.instance %}
                                                     {% for inline_form in floor_formset %}
-                                                    {% for hidden in inline_form.hidden_fields %}
+                                                        {% for hidden in inline_form.hidden_fields %}
                                                         {{ hidden }}
-                                                    {% endfor %}
+                                                        {% endfor %}
                                                     <div class="form-group floor_formset">
                                                         {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                         <label for="">Название</label>
@@ -259,14 +264,16 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <button class="btn btn-success" style="float:right;" id="add_floors"
-                                                    type="button">Добавить</button>
+                                                            type="button">Добавить
+                                                    </button>
                                                 </div>
                                             </div>
                                             <div class="tab-pane" id="user">
                                                 <div class="col-12">
                                                     {{ user_formset.management_form }}
 
-                                                    <div class="row users_formset" style="display: none;" id="hidden_users">
+                                                    <div class="row users_formset" style="display: none;"
+                                                         id="hidden_users">
                                                         <div class="col-12 col-sm-7">
                                                             <div class="form-group">
                                                                 <label for="">Пользователь</label>
@@ -276,12 +283,14 @@
                                                         <div class="col-12 col-sm-5">
                                                             <label for="">Роль</label>
                                                             <div class="input-group">
-                                                                <input type="text" disabled class="form-control user_role" name='__prefix__'>
+                                                                <input type="text" disabled
+                                                                       class="form-control user_role" name='__prefix__'>
                                                                 <div class="delete_input"> 
                                                             <span class="input-group-btn">
                                                                 <button type="button"
                                                                         class="btn btn-danger delete_icon_users"
-                                                                        ><i class="fa fa-trash" style="color: white;"></i></button>
+                                                                ><i class="fa fa-trash"
+                                                                    style="color: white;"></i></button>
                                                             </span>
                                                                 </div>
                                                             </div>
@@ -291,7 +300,7 @@
 
                                                     {% for inline_form in user_formset %}
                                                     {% for hidden in inline_form.hidden_fields %}
-                                                        {{ hidden }}
+                                                    {{ hidden }}
                                                     {% endfor %}
                                                     <div class="row users_formset">
                                                         {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
@@ -304,12 +313,15 @@
                                                         <div class="col-12 col-sm-5">
                                                             <label for="">Роль</label>
                                                             <div class="input-group">
-                                                                <input type="text" disabled class="form-control user_role">
+                                                                <input type="text" disabled
+                                                                       class="form-control user_role">
                                                                 <div class="delete_input">
                                                             <span class="input-group-btn">
                                                                 <button type="button"
                                                                         class="btn btn-danger delete_icon_users has_pk"
-                                                                        name="{{ inline_form.instance.pk }}"><i class="fa fa-trash" style="color: white;"></i></button>
+                                                                        name="{{ inline_form.instance.pk }}"><i
+                                                                        class="fa fa-trash"
+                                                                        style="color: white;"></i></button>
                                                             </span>
                                                                 </div>
                                                             </div>
@@ -319,9 +331,11 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <button class="btn btn-success" style="float:right;" id="add_users"
-                                                    type="button">Добавить</button>
+                                                            type="button">Добавить
+                                                    </button>
                                                 </div>
                                             </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -362,6 +376,7 @@
     $('#image5').on('change', function(){
         setPreview(this, '.row', '#preview_image5');
     })
+
 </script>
 <script>
     function setEvent(element, selector){
@@ -381,6 +396,7 @@
             })
         })
     }
+
 </script>
 <script>
 // Section init
@@ -415,5 +431,6 @@
          })
         setEvent(this, '.users_formset');
     })
+
 </script>
 {% endblock %}
