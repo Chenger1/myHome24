@@ -56,7 +56,8 @@
                                     <div class="col-12">
                                         {% for inst in instances %}
                                             <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" name="html_template">
+                                                <input type="radio" class="form-check-input" name="html_template"
+                                                {% if inst.is_default %}checked{% endif %}>
                                                 <label for="" class="form-check-label">{{ inst.name }}</label>
                                             </div>
                                         {% empty %}
