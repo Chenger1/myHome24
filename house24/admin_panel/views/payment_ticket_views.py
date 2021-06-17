@@ -223,3 +223,8 @@ class TemplateSettings(AdminPermissionMixin, View):
             instances = self.model.objects.all()
             return render(request, self.template_name, context={'instances': instances,
                                                                 'form': form})
+
+
+class DeleteTemplateView(DeleteInstanceView):
+    model = TicketTemplate
+    redirect_url = 'admin_panel:payment_ticket_template_settings'
