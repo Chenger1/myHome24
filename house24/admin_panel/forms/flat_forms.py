@@ -47,7 +47,7 @@ class CreateFlatForm(forms.ModelForm):
         if account_number:
             self.fields['account'].initial = account_number
             self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
-            self.fields['floor'].queryset = Floor.objects.filter(house__pk=house_pk)
+            self.fields['floor'].queryset = Floor.objects.filter(section__house__pk=house_pk)
         self.fields['tariff'].empty_label = 'Выберите...'
         self.fields['house'].empty_label = 'Выберите...'
         self.fields['section'].empty_label = 'Выберите...'

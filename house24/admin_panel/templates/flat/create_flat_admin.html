@@ -188,6 +188,11 @@
             let value = $(this).find(':selected').val();
             update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
                           constructor=append_select_section_floor);
+            $('select[name=floor]').children().remove();
+            $('select[name=floor]').append('<option>Выберите...</option>');
+        })
+        $('select[name=section]').on('change', function(){
+            let value = $(this).find(':selected').val();
             update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
                           constructor=append_select_section_floor);
         })

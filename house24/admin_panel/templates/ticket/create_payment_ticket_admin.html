@@ -109,6 +109,10 @@
                                             {{ form.section }}
                                         </div>
                                         <div class="form-group">
+                                            <label for="floor">Этаж</label>
+                                            {{ form.floor }}
+                                        </div>
+                                        <div class="form-group">
                                             <label for="flat">Квартира</label>
                                             {{ form.flat }}
                                         </div>
@@ -368,16 +372,27 @@
     $(document).ready(function(){
         if(!$('#section').find(':selected').val() && !$('#flat').find(':selected').val()){
             update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
+            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");            
             update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}");
         }
 
         $('select[name=house]').on('change', function(){
             let value = $(this).find(':selected').val();
             update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
-                            constructor=append_select_section_floor);
+                          constructor=append_select_section_floor);
+            $('select[name=floor]').children().remove();
+            $('select[name=floor]').append('<option>Выберите...</option>');
+        })
+        $('select[name=section]').on('change', function(){
+            let value = $(this).find(':selected').val();
+            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
+                          constructor=append_select_section_floor);
+        })
+        $('select[name=floor]').on('change', function(){
+            let value = $(this).find(':selected').val();
             update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}", parent_pk=value,
-                            constructor=append_select_flat);
-        });
+                          constructor=append_select_flat);
+        })
         calculateTotalSum();
 
         send_request_to_api('{% url "admin_panel:get_flat_owner" %}', $('select[name=flat]').find(':selected').val(), update_owner_info);

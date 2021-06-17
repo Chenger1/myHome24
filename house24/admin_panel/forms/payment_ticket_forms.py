@@ -46,6 +46,7 @@ class CreatePaymentTicketForm(forms.ModelForm):
         self.fields['status'].empty_label = 'Выберите...'
         self.fields['section'].empty_label = 'Выберите...'
         self.fields['house'].empty_label = 'Выберите...'
+        self.fields['floor'].empty_label = 'Выберите...'
         self.fields['flat'].empty_label = 'Выберите...'
         self.fields['personal_account'].empty_label = 'Выберите...'
         self.fields['tariff'].empty_label = 'Выберите...'
@@ -65,6 +66,7 @@ class CreatePaymentTicketForm(forms.ModelForm):
                                                                'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                                'class': "form-control to_valid", 'id': 'end'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+            'floor': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
             'personal_account': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'account'}),

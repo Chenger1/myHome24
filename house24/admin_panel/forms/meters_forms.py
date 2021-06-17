@@ -53,6 +53,7 @@ class CreateMeterForm(forms.ModelForm):
             self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
         self.fields['flat'].empty_label = 'Выберите...'
         self.fields['section'].empty_label = 'Выберите...'
+        self.fields['floor'].empty_label = 'Выберите...'
         self.fields['house'].empty_label = 'Выберите...'
         self.fields['service'].empty_label = 'Выберите...'
         self.fields['service'].queryset = Service.objects.filter(status=True)
@@ -71,6 +72,7 @@ class CreateMeterForm(forms.ModelForm):
             'data': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'data', 'min': '0'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+            'floor': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
             'service': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'service'})
         }

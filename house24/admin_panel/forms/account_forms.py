@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.house import PersonalAccount, House, Section, Flat
+from db.models.house import PersonalAccount, House, Section, Flat, Floor
 from db.models.user import User
 
 
@@ -59,6 +59,9 @@ class CreatePersonalAccountForm(forms.ModelForm):
     section = forms.ModelChoiceField(queryset=Section.objects.all(), empty_label='Выберите...',
                                      widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
                                      required=False)
+    floor = forms.ModelChoiceField(queryset=Floor.objects.all(), empty_label='Выберите...',
+                                   widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
+                                   required=False)
     flat = forms.ModelChoiceField(queryset=Flat.objects.all(), empty_label='Выберите...',
                                   widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
                                   required=False)

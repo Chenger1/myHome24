@@ -138,6 +138,7 @@ class PersonalAccount(models.Model):
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     house = models.ForeignKey(House, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
     section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
+    floor = models.ForeignKey(Floor, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
     flat = models.OneToOneField(Flat, related_name='account', on_delete=models.SET_NULL, blank=True, null=True)
 
     def get_account_balance(self):
@@ -173,6 +174,7 @@ class PaymentTicket(models.Model):
     start = models.DateField()
     end = models.DateField()
     section = models.ForeignKey(Section, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
+    floor = models.ForeignKey(Floor, related_name='tickets', on_delete=models.CASCADE, blank=True, null=True)
     flat = models.ForeignKey(Flat, related_name='tickets', on_delete=models.CASCADE)
     personal_account = models.ForeignKey(PersonalAccount, related_name='tickets', on_delete=models.CASCADE,
                                          blank=True, null=True)
@@ -234,6 +236,7 @@ class Meter(models.Model):
     data = models.IntegerField()
     flat = models.ForeignKey(Flat, related_name='meters', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='meters', on_delete=models.CASCADE)
+    floor = models.ForeignKey(Floor, related_name='meters', on_delete=models.CASCADE)
     house = models.ForeignKey(House, related_name='meters', on_delete=models.CASCADE)
     service = models.ForeignKey(Service, related_name='meters', on_delete=models.CASCADE)
 
