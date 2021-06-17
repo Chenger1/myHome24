@@ -213,6 +213,10 @@ urlpatterns = [
     path('payment_ticket/index/month_descending/', payment_ticket_views.ListPaymentTicketMonthDescendingView.as_view(),
          name='list_payment_ticket_month_descending_admin'),
 
+    # # HTML TEMPLATES
+    path('payment_ticket/index/print/<int:pk>/', payment_ticket_views.ListTemplates.as_view(),
+         name='list_payment_ticket_html_templates'),
+
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),
          name='list_account_transaction_admin'),

@@ -1,6 +1,5 @@
 from django.views.generic import View, DetailView
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
@@ -8,7 +7,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.payment_ticket_forms import PaymentTicketSearchForm, CreatePaymentTicketForm, TicketServiceFormset
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PaymentTicket, PersonalAccount
+from db.models.house import PaymentTicket, PersonalAccount, TicketTemplate
 from db.services.search import PaymentTicketSearch
 from db.services.utils import generate_next_instance_number
 
@@ -189,3 +188,14 @@ class ListTicketsByAccount(ListInstancesMixin):
         context = super().get_context_data()
         context['statistic'] = MinimalStatisticCollector().prepare_statistic()
         return context
+
+
+class ListTemplates(AdminPermissionMixin, View):
+    model = TicketTemplate
+    template = 'ticket/list_templates.html'
+
+    def get(self, request, pk):
+        instances = self.model.objects.all()
+        inst = get_object_or_404(PaymentTicket, pk=pk)
+        return render(request, self.template, context={'instances': instances,
+                                                       'ticket': inst})

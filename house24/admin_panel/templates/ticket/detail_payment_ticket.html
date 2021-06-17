@@ -68,11 +68,11 @@
                                style="float:right; margin-left:5px;">
                                 Редактировать квитанцию
                             </a>
-                            <a href="" class="btn btn-default    btn-sm"
+                            <a href="{% url 'admin_panel:list_payment_ticket_html_templates' ticket.pk %}" class="btn btn-default    btn-sm"
                                style="float:right; margin-left:5px;">
                                 Отправить на e-mail
                             </a>
-                            <a href="" class="btn btn-default btn-sm"
+                            <a href="{% url 'admin_panel:list_payment_ticket_html_templates' ticket.pk %}" class="btn btn-default btn-sm"
                                style="float:right; margin-left:5px;">
                                 Печать
                             </a>
