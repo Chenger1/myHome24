@@ -381,3 +381,9 @@ class Message(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class TicketTemplate(models.Model):
+    name = models.CharField(max_length=150)
+    file = models.FileField(upload_to='file_templates/')
+    is_default = models.BooleanField(default=False)
