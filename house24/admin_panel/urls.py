@@ -220,6 +220,8 @@ urlpatterns = [
          name='payment_ticket_template_settings'),
     path('payment_ticket/index/print/template/delete_template/<int:pk>/',
          payment_ticket_views.DeleteTemplateView.as_view(), name='payment_ticket_template_delete'),
+    path('payment_ticket/index/print/template/set_default/<int:pk>/',
+         payment_ticket_views.SetTemplateAsDefaultView.as_view(), name='payment_ticket_template_set_default'),
 
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),

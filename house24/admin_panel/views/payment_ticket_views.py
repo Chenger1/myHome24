@@ -228,3 +228,18 @@ class TemplateSettings(AdminPermissionMixin, View):
 class DeleteTemplateView(DeleteInstanceView):
     model = TicketTemplate
     redirect_url = 'admin_panel:payment_ticket_template_settings'
+
+
+class SetTemplateAsDefaultView(AdminPermissionMixin, View):
+    model = TicketTemplate
+    redirect_url = 'admin_panel:payment_ticket_template_settings'
+
+    def get(self, request, pk):
+        temp = get_object_or_404(self.model, pk=pk)
+        old = self.model.objects.filter(is_default=True).first()
+        if old:
+            old.is_default = False
+            old.save()
+        temp.is_default = True
+        temp.save()
+        return redirect(self.redirect_url)
