@@ -4,7 +4,8 @@ from django.http import JsonResponse
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.forms.payment_ticket_forms import PaymentTicketSearchForm, CreatePaymentTicketForm, TicketServiceFormset
+from admin_panel.forms.payment_ticket_forms import (PaymentTicketSearchForm, CreatePaymentTicketForm,
+                                                    TicketServiceFormset, AddHtmlTemplate)
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
 from db.models.house import PaymentTicket, PersonalAccount, TicketTemplate
@@ -192,10 +193,33 @@ class ListTicketsByAccount(ListInstancesMixin):
 
 class ListTemplates(AdminPermissionMixin, View):
     model = TicketTemplate
-    template = 'ticket/list_templates.html'
+    template_name = 'ticket/list_templates.html'
 
     def get(self, request, pk):
         instances = self.model.objects.all()
         inst = get_object_or_404(PaymentTicket, pk=pk)
-        return render(request, self.template, context={'instances': instances,
-                                                       'ticket': inst})
+        return render(request, self.template_name, context={'instances': instances,
+                                                            'ticket': inst})
+
+
+class TemplateSettings(AdminPermissionMixin, View):
+    model = TicketTemplate
+    template_name = 'ticket/template_settings.html'
+    form_class = AddHtmlTemplate
+    redirect_url = 'admin_panel:payment_ticket_template_settings'
+
+    def get(self, request):
+        instances = self.model.objects.all()
+        form = self.form_class()
+        return render(request, self.template_name, context={'instances': instances,
+                                                            'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(self.redirect_url)
+        else:
+            instances = self.model.objects.all()
+            return render(request, self.template_name, context={'instances': instances,
+                                                                'form': form})

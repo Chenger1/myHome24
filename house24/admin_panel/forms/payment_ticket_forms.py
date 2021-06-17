@@ -1,7 +1,7 @@
 from django import forms
 
 from db.models.user import User
-from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat, Service
+from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat, Service, TicketTemplate
 
 import datetime
 
@@ -99,3 +99,14 @@ class TicketServiceForm(forms.ModelForm):
 
 TicketServiceFormset = forms.inlineformset_factory(PaymentTicket, PaymentTicketService,
                                                    form=TicketServiceForm, extra=0, can_delete=True)
+
+
+class AddHtmlTemplate(forms.ModelForm):
+    class Meta:
+        model = TicketTemplate
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'name'}),
+            'file': forms.FileInput(attrs={'class': 'form-control-file to_valid', 'id': 'file',
+                                           'accept': '.pdf'})
+        }

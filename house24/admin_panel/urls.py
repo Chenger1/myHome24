@@ -216,6 +216,8 @@ urlpatterns = [
     # # HTML TEMPLATES
     path('payment_ticket/index/print/<int:pk>/', payment_ticket_views.ListTemplates.as_view(),
          name='list_payment_ticket_html_templates'),
+    path('payment_ticket/index/print/template/', payment_ticket_views.TemplateSettings.as_view(),
+         name='payment_ticket_template_settings'),
 
     # account-transaction
     path('account-transaction/index/', account_transaction_views.ListAccountTransactionView.as_view(),

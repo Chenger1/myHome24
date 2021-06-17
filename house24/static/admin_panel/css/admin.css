@@ -228,6 +228,19 @@ select{
     color: #777;
 }
 
+.template > a{
+    font-size: 14px!important;
+    margin-right: 15px;
+}
+
+.template > a:nth-child(4){
+    color: #a94442!important;
+}
+
+.template > a:nth-child(3){
+    color: #3c763d!important;
+}
+
 @media screen and (max-width: 766px){
     .profile_img{
         margin: 0 auto 15px;
