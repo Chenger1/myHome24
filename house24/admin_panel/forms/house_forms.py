@@ -61,7 +61,7 @@ SectionFormset = forms.inlineformset_factory(House, Section,
                                              form=SectionForm, can_delete=True, extra=0)
 
 
-FloorFormset = forms.inlineformset_factory(House, Floor,
+FloorFormset = forms.inlineformset_factory(Section, Floor,
                                            form=FloorForm, can_delete=True, extra=0)
 
 UserFormset = forms.inlineformset_factory(parent_model=House, model=HouseUser, form=HouseUserForm,
