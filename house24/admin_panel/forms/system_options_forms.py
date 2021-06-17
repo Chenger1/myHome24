@@ -42,24 +42,24 @@ class TariffForm(forms.ModelForm):
         model = Tariff
         fields = '__all__'
         widgets = {
-            'name': forms.TextInput(attrs={'id': 'name', 'class': 'form-control'}),
-            'description': forms.Textarea(attrs={'id': 'description', 'class': 'form-control',
+            'name': forms.TextInput(attrs={'id': 'name', 'class': 'form-control to_valid'}),
+            'description': forms.Textarea(attrs={'id': 'description', 'class': 'form-control to_valid',
                                                  'style': 'resize:none;'})
         }
 
 
 class TariffServiceBlockForm(forms.ModelForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
-                                     widget=forms.Select(attrs={'class': 'form-control service_select'}),
+                                     widget=forms.Select(attrs={'class': 'form-control service_select to_valid'}),
                                      empty_label='Выберите...')
-    currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency', 'disabled': 'true'}),
+    currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency to_valid', 'disabled': 'true'}),
                                required=False)
 
     class Meta:
         model = TariffService
         exclude = ('tariff', )
         widgets = {
-            'price': forms.NumberInput(attrs={'class': 'form-control'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control to_valid'}),
         }
 
 

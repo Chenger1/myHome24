@@ -183,6 +183,7 @@
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'utils/dynamic_formset.js' %}"></script>
 <script src="{% static 'admin_panel/js/requests.js' %}"></script>
+<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
 <script>
     function setEvent(element, selector){
         let select = $(element).closest(selector).find('.service_select');
@@ -217,6 +218,15 @@
         $(this).closest('.formset').find('.currency').val('грн.');
         send_request('{% url "admin_panel:get_service_measure" %}', selected, select_measure);
         setEvent(this, '.formset');
+    })
+    $('.to_valid').each(function(){
+        $(this).on('change', function(){
+            if($(this).val() != ''){
+                colorize_input_valid(this);
+            }else{
+                colorize_input_invalid(this);
+            }
+        })
     })
 </script>
 {% endblock %}
