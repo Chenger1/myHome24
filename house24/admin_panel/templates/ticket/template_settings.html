@@ -47,7 +47,7 @@
                                         {% for inst in instances %}
                                         <div class="template">
                                               <p>{{ inst.name }}  {% if inst.is_default %}<strong>(по-умолчанию)</strong>{% endif %}</p>
-                                              <a href=""><i class="fas fa-download"></i> Скачать шаблон</a>
+                                              <a href="{% url 'admin_panel:payment_ticket_template_download' inst.pk %}"><i class="fas fa-download"></i> Скачать шаблон</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_set_default' inst.pk %}">• Назначить шаблоном по умоланию</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_delete' inst.pk %}"><i class="fas fa-trash-alt"></i> Удалить шаблон</a>
                                         </div>

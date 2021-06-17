@@ -1,6 +1,7 @@
 from django.views.generic import View, DetailView
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from django.utils.encoding import escape_uri_path
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.permission_mixin import AdminPermissionMixin
@@ -243,3 +244,23 @@ class SetTemplateAsDefaultView(AdminPermissionMixin, View):
         temp.is_default = True
         temp.save()
         return redirect(self.redirect_url)
+
+
+class DownloadTemplate(AdminPermissionMixin, View):
+    model = TicketTemplate
+
+    def get(self, request, pk):
+        """
+        We have to user 'escape_uri_path' because of Cyrillic encoding.
+        :param request:
+        :param pk:
+        :return:
+        """
+        temp = get_object_or_404(self.model, pk=pk)
+        path = open(temp.file.path, 'rb')
+        response = HttpResponse(path, content_type='application/pdf')
+        response['Content-Disposition'] = f'attachment; filename="{escape_uri_path(self.file_name(temp.file.name))}"'
+        return response
+
+    def file_name(self, file):
+        return file.split('/')[-1].encode('utf-8')
