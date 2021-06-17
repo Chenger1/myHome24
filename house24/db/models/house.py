@@ -387,3 +387,6 @@ class TicketTemplate(models.Model):
     name = models.CharField(max_length=150)
     file = models.FileField(upload_to='file_templates/')
     is_default = models.BooleanField(default=False)
+
+    def get_files(self):
+        return [self.file] if self.file else None
