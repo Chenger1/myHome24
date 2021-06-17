@@ -166,10 +166,12 @@
                                                    href="#section"
                                                    role="tab" aria-controls="section" aria-selected="true">Секции</a>
                                             </li>
+                                            {% if floor_formset %}
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link" id="floor-tab" data-toggle="tab" href="#floor"
                                                    role="tab" aria-controls="floor" aria-selected="false">Этажи</a>
                                             </li>
+                                            {% endif %}
                                             <li class="nav-item" role="presentation">
                                                 <a class="nav-link" id="user-tab" data-toggle="tab" href="#user"
                                                    role="tab" aria-controls="user"
@@ -223,51 +225,64 @@
                                                     </button>
                                                 </div>
                                             </div>
+                                            {% if floor_formset %}
                                             <div class="tab-pane" id="floor">
                                                 <div class="col-12">
                                                     {{ floor_formset.management_form }}
 
-                                                    <div class="form-group floor_formset" style="display: none;"
+                                                    <div class="row floor_formset" style="display: none;"
                                                          id="hidden_floors">
-                                                        <label for="">Название</label>
-                                                        <div class="input-group">
+                                                        <div class="col-12 col-sm-6">
+                                                            <label for="">Название</label>
                                                             {{ floor_formset.empty_form.name }}
-                                                            <span class="input-group-btn">
-                                                                <button type="button"
-                                                                        class="btn btn-danger delete_icon_floors"><i
-                                                                        class="fa fa-trash"
-                                                                        style="color: white;"></i></button>
-                                                                        </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-6">
+                                                            <label for="">Секция</label>
+                                                            <div class="input-group">
+                                                                {{ floor_formset.empty_form.section }}
+                                                                <span class="input-group-btn">
+                                                                    <button type="button"
+                                                                            class="btn btn-danger delete_icon_floors"><i
+                                                                            class="fa fa-trash"
+                                                                            style="color: white;"></i></button>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    {% if form.instance %}
                                                     {% for inline_form in floor_formset %}
                                                         {% for hidden in inline_form.hidden_fields %}
                                                         {{ hidden }}
                                                         {% endfor %}
-                                                    <div class="form-group floor_formset">
+                                                    <div class="row floor_formset">
                                                         {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
-                                                        <label for="">Название</label>
-                                                        <div class="input-group">
+                                                        <div class="col-12 col-sm-6">
+                                                            <label for="">Название</label>
                                                             {{ inline_form.name }}
-                                                            <span class="input-group-btn">
-                                                                <button type="button"
-                                                                        class="btn btn-danger delete_icon_floors has_pk"
-                                                                        name="{{ inline_form.instance.pk }}"><i
-                                                                        class="fa fa-trash"
-                                                                        style="color: white;"></i></button>
-                                                                        </span>
+                                                        </div>
+                                                        <div class="col-12 col-sm-6">
+                                                            <label for="">Секция</label>
+                                                            <div class="input-group">
+                                                                {{ inline_form.section }}
+                                                                <span class="input-group-btn">
+                                                                    <button type="button"
+                                                                            class="btn btn-danger delete_icon_floors has_pk"
+                                                                            name="{{ inline_form.instance.pk }}"><i
+                                                                            class="fa fa-trash"
+                                                                            style="color: white;"></i></button>
+                                                                            </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     {% endfor %}
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="col-12" style="margin-top:15px;">
                                                     <button class="btn btn-success" style="float:right;" id="add_floors"
                                                             type="button">Добавить
                                                     </button>
                                                 </div>
                                             </div>
+                                            {% endif %}
                                             <div class="tab-pane" id="user">
                                                 <div class="col-12">
                                                     {{ user_formset.management_form }}
@@ -335,7 +350,6 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
