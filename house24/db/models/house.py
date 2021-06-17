@@ -20,6 +20,10 @@ class House(models.Model):
     image4 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
     image5 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
 
+    @property
+    def floors_count(self):
+        return self.sections.all().aggregate(models.Count('floors'))['floors__count']
+
     @classmethod
     def search(cls, data):
         houses = cls.objects.all()
