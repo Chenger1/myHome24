@@ -1,6 +1,7 @@
 from django.views.generic import View
 from django.shortcuts import redirect, get_object_or_404, render
 from django.http import JsonResponse
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.user_forms import SearchForm
@@ -37,9 +38,11 @@ class ListInstancesMixin(AdminPermissionMixin, View):
         super().__init__(*args, **kwargs)
         self.instances = None
         self.form = None
+        self.page = None
 
     def get(self, request, pk=None):
         self.form = self.search_form(request.GET)
+        self.page = request.GET.get('page')
         if self.form.is_valid():
             self.instances = self.get_filtered_query(self.form.cleaned_data)
             return render(request, self.template_name, context=self.get_context_data())
@@ -65,9 +68,23 @@ class ListInstancesMixin(AdminPermissionMixin, View):
             Redefine if you need to add additional context variables
         """
         context = {'form': self.form,
-                   'instances': self.instances,
-                   'count': len(self.instances)}
+                   'instances': self.get_paginated_query(self.instances, self.page),
+                   'count': len(self.instances),
+                   'page': self.page}
         return context
+
+    def get_paginated_query(self, query, current_page):
+        paginator = Paginator(query, 20)
+        page = current_page
+
+        try:
+            queryset = paginator.page(page)
+        except PageNotAnInteger:
+            queryset = paginator.page(1)
+        except EmptyPage:
+            queryset = paginator.page(paginator.num_pages)
+
+        return queryset
 
 
 class FlatOwner(View):

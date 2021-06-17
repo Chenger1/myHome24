@@ -1,0 +1,24 @@
+<ul class="pagination pagination-sm m-0 float-right">
+  {% if page.has_previous %}
+  <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}">«</a></li>
+  {% else %}
+  <li class="page-item"><a class="page-link disabled_button" href="javascript:void(0)">«</a></li>
+  {% endif %}
+
+  {% if page.has_previous %}
+  <li class="page-item"><a class="page-link" href="?page={{ page.previous_page_number }}">{{page.previous_page_number}}</a></li>
+  {% endif %}
+
+  <li class="page-item"><a class="page-link" href="?page={{ page.number }}"
+                           style="background-color:#007bff; color: white;">{{ page.number }}</a></li>
+
+  {% if page.has_next %}
+  <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}">{{ page.next_page_number }}</a></li>
+  {% endif %}
+
+  {% if page.has_next %}
+  <li class="page-item"><a class="page-link" href="?page={{ page.next_page_number }}">»</a></li>
+  {% else %}
+  <li class="page-item"><a class="page-link disabled_button" href="javascript:void(0)">»</a></li>
+  {% endif %}
+</ul>

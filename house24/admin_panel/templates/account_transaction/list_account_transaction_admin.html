@@ -219,8 +219,15 @@
                             </form>
                         </div>
                         <div class="card-footer">
-                            <div>Проведен приход: <strong>{{ incomes }} грн</strong></div>
-                            <div>Проведен расход: <strong>{{ outcomes }} грн</strong></div>
+                            <div class="row" style="align-items:center;">
+                                <div class="col-6">
+                                    <div>Проведен приход: <strong>{{ incomes }} грн</strong></div>
+                                    <div>Проведен расход: <strong>{{ outcomes }} грн</strong></div>
+                                </div>
+                                <div class="col-6">
+                                    {% include "pagination.html" with page=instances %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

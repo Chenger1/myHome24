@@ -15,6 +15,7 @@ class ListTariff(AdminPermissionMixin, ListView):
     model = Tariff
     template_name = 'options/tariff/tariff_list.html'
     context_object_name = 'tariffs'
+    paginate_by = 20
 
     def get_queryset(self):
         return self.model.objects.all()[::-1]

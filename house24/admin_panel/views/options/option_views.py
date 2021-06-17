@@ -68,6 +68,7 @@ class PaymentItemsListView(ListView):
     model = PaymentItem
     context_object_name = 'items'
     template_name = 'options/payment_items/payment_items_list.html'
+    paginate_by = 20
 
 
 class CreatePaymentItemView(CreateView):

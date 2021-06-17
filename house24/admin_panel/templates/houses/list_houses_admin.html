@@ -141,7 +141,14 @@
                             </form>
                         </div>
                         <div class="card-footer">
-                            Количество домов: <strong>{{ count }}</strong>
+                            <div class="row" style="align-items:center;">
+                                <div class="col-6">
+                                    Количество домов: <strong>{{ count }}</strong>
+                                </div>
+                                <div class="col-6">
+                                    {% include "pagination.html" with page=instances %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
