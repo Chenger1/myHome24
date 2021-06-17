@@ -39,6 +39,10 @@ def delete_image_with_deleting_instance(sender, instance, **kwargs):
         images = instance.get_files()
         if images:
             for image in images:
-                delete_image_path(image.path)
+                try:
+                    delete_image_path(image.path)
+                except ValueError:
+                    """ To fix 'The 'instance' attribute has no file associated with it.' """
+                    continue
     except AttributeError:
         return False
