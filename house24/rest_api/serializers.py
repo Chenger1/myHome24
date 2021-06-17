@@ -13,7 +13,7 @@ class SectionSerializer(serializers.ModelSerializer):
 class FloorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Floor
-        fields = ('id', 'house', 'name', )
+        fields = ('id', 'section', 'name', )
 
 
 class UserSerializer(serializers.ModelSerializer):

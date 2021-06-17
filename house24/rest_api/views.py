@@ -35,9 +35,9 @@ class FloorList(generics.ListAPIView):
     serializer_class = serializers.FloorSerializer
 
     def get_queryset(self):
-        house = self.request.query_params.get('pk')
-        if house:
-            queryset = self.model.objects.filter(house__pk=house)
+        section = self.request.query_params.get('pk')
+        if section:
+            queryset = self.model.objects.filter(section__pk=section)
         else:
             queryset = []
         return queryset
