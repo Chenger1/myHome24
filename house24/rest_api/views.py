@@ -103,7 +103,7 @@ class GetMeterDataApiView(View):
         if flat_pk:
             queryset = self.model.objects.filter(flat__pk=flat_pk).order_by('-id')[:20]
         else:
-            queryset = self.model.objects.all()[:20:-1]
+            queryset = self.model.objects.all().order_by('-id')[:20]
         serialized = self.serialize(queryset)
         return JsonResponse(serialized)
 
