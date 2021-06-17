@@ -86,6 +86,7 @@ class UpdateHouseView(AdminPermissionMixin, View):
         section_formset = SectionFormset(instance=inst)
         house_floors = Floor.objects.filter(section__house=inst)
         floor_formset = FloorFormset(prefix='floors', queryset=house_floors)
+        floor_formset.form.base_fields['section'].queryset = inst.sections.all()
         user_formset = UserFormset(instance=inst, prefix='users')
 
         return render(request, self.template_name, context={'form': form,
