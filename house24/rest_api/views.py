@@ -84,6 +84,7 @@ class CreateMeterApiView(View):
         for service, value in data['data'].items():
             form = CreateMeterForm({'date': data['date'], 'house': data['house'],
                                    'section': data['section'], 'flat': data['flat'],
+                                    'floor': data['floor'],
                                     'service': service, 'data': value,
                                     'number': generate_next_instance_number(self.model),
                                     'status': 0})

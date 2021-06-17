@@ -4,6 +4,7 @@ function saveMeter(url, callback_url, flat_pk){
 	context['house'] = $('#house').find(':selected').val();
 	context['section'] = $('#section').find(':selected').val();
 	context['flat'] = $('#flat').find(':selected').val();
+	context['floor'] = $('#floor').find(':selected').val();
 	if(!context['flat']){
 		confirm('Выберите квартиру чтобы сохранить новые показания!');
 		return false;
