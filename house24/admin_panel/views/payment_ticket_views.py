@@ -264,3 +264,7 @@ class DownloadTemplate(AdminPermissionMixin, View):
 
     def file_name(self, file):
         return file.split('/')[-1].encode('utf-8')
+
+
+class SendEmail(AdminPermissionMixin, View):
+    pass

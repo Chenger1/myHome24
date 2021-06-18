@@ -68,6 +68,7 @@
                                style="float:right; margin-left:5px;">
                                 Редактировать квитанцию
                             </a>
+                            {% if ticket.has_owner %}
                             <a href="{% url 'admin_panel:list_payment_ticket_html_templates' ticket.pk %}" class="btn btn-default    btn-sm"
                                style="float:right; margin-left:5px;">
                                 Отправить на e-mail
@@ -76,6 +77,7 @@
                                style="float:right; margin-left:5px;">
                                 Печать
                             </a>
+                            {% endif %}
                         </div>
                         <div class="card-body">
                             <div class="row">

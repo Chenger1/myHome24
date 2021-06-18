@@ -147,3 +147,10 @@ MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'db.User'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'djangokinoteatrmail@gmail.com'  # This is a test account without any important data
+EMAIL_HOST_PASSWORD = 'Do24hfjzbe23h'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

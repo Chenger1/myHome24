@@ -194,6 +194,9 @@ class PaymentTicket(models.Model):
     def get_ticket_transactions(self):
         return self.transactions.all().aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0
 
+    def get_owner(self):
+        return self.flat.owner
+
     @property
     def ticket_month(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%b %Y')
@@ -201,6 +204,13 @@ class PaymentTicket(models.Model):
     @property
     def ticket_date(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
+
+    @property
+    def has_owner(self):
+        if self.flat and self.flat.owner:
+            return True
+        else:
+            return False
 
     @classmethod
     def total_balance(cls):
