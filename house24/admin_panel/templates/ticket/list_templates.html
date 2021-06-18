@@ -49,15 +49,16 @@
                                 Настройка шаблона
                             </a>
                         </div>
-                        <form action="">
+                        <form action="{% url 'admin_panel:payment_ticket_render_pdf' %}" method="get">
                             {% csrf_token %}
                             <div class="card-body">
                                 <div class="row">
+                                    <input type="hidden" name="ticket_pk" value="{{ ticket.pk }}">
                                     <div class="col-12">
                                         {% for inst in instances %}
                                             <div class="form-group form-check">
                                                 <input type="radio" class="form-check-input" name="html_template"
-                                                {% if inst.is_default %}checked{% endif %}>
+                                                {% if inst.is_default %}checked{% endif %} value="{{ inst.pk }}">
                                                 <label for="" class="form-check-label">{{ inst.name }}</label>
                                             </div>
                                         {% empty %}
@@ -68,8 +69,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group" style="float:right;">
-                                            <a href="" class="btn btn-success">Скачать</a>
-                                            <button class="btn btn-default" name="send">Отправить на e-mail</button>
+                                             <button class="btn btn-success" name="download" type="submit">Скачать</button>
+                                            <button class="btn btn-default" name="send" type="submit">Отправить на e-mail</button>
                                         </div>
                                     </div>
                                  </div>

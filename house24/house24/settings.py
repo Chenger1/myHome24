@@ -62,7 +62,7 @@ ROOT_URLCONF = 'house24.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['media/file_templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
