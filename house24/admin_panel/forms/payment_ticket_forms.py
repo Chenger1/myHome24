@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from db.models.user import User
 from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat, Service, TicketTemplate
@@ -108,5 +109,14 @@ class AddHtmlTemplate(forms.ModelForm):
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'name'}),
             'file': forms.FileInput(attrs={'class': 'form-control-file to_valid', 'id': 'file',
-                                           'accept': '.pdf'})
+                                           'accept': '.html', 'placeholder': 'pdf_*.html'})
         }
+
+    def clean(self):
+        file = self.cleaned_data.get('file')
+        if not file:
+            # Because the file is required, the only way to have empty file field is wrong type
+            raise ValidationError(f'Неверный формат файла. Требуемый формат - .html')
+
+        if not file.name.startswith('pdf_'):
+            raise ValidationError('Имя файла не соответствует стандарту. Оно должно начинаться с "pdf_"')

@@ -6,6 +6,9 @@
 {% block title %}Настройка шаблонов{% endblock %}
 
 {% block content %}
+{% if form.errors %}
+{% include 'errors.html' with errors=form.errors %}
+{% endif %}
 <div class="content-wrapper">
     <div class="content-header">
         <div class="container-fluid">
@@ -45,8 +48,8 @@
                                 <div class="row">
                                     <div class="col-12">
                                         {% for inst in instances %}
-                                        <div class="template">
-                                              <p>{{ inst.name }}  {% if inst.is_default %}<strong>(по-умолчанию)</strong>{% endif %}</p>
+                                        <div class="template" style="margin-top: 10px;">
+                                              <div>{{ inst.name }}  {% if inst.is_default %}<strong>(по-умолчанию)</strong>{% endif %}</div>
                                               <a href="{% url 'admin_panel:payment_ticket_template_download' inst.pk %}"><i class="fas fa-download"></i> Скачать шаблон</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_set_default' inst.pk %}">• Назначить шаблоном по умоланию</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_delete' inst.pk %}"
@@ -62,7 +65,7 @@
                                     <div class="row" style="margin-top:20px;">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label for="file">Загрузить пользовательский шаблон</label>
+                                                <label for="file">Загрузить пользовательский шаблон (pdf_*.html)</label>
                                                 {{ form.file }}
                                             </div>
                                             <div class="form-group">
