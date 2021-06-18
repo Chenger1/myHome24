@@ -125,7 +125,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-my_home_env
+venv
 .idea
 house24/db/migrations
 house24/static/admin
