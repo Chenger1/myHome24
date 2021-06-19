@@ -144,6 +144,11 @@ class DeleteMeterView(DeleteInstanceView):
     model = Meter
     redirect_url = 'admin_panel:list_meters_admin'
 
+    def get(self, request, pk, flat_pk=None):
+        if flat_pk:
+            self.redirect_url = reverse_lazy('admin_panel:list_meter_history', args=[flat_pk])
+        return super().get(request, pk)
+
 
 class DuplicateMeterView(AdminPermissionMixin, View):
     model = Meter
@@ -152,10 +157,10 @@ class DuplicateMeterView(AdminPermissionMixin, View):
 
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
-        form = self.form(instance=obj, initial={'number': self.model.get_next_meter_number(),
+        form = self.form(instance=obj, initial={'number': generate_next_instance_number(self.model),
                                                 'date': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                 'status': 0, 'data': ''})
-        form.instance.number = self.model.get_next_meter_number()
+        form.instance.number = generate_next_instance_number(self.model)
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request, pk):

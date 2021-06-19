@@ -145,7 +145,7 @@ urlpatterns = [
     path('meters/index/update_meter/<int:pk>/', meter_views.UpdateMeterView.as_view(), name='update_meter_admin'),
     path('meters/index/list_history/<int:pk>/', meter_views.ListMeterHistory.as_view(), name='list_meter_history'),
     path('meters/index/detail_meter/<int:pk>/', meter_views.MeterDetailView.as_view(), name='detail_meter_admin'),
-    path('meters/index/delete_meter/<int:pk>/', meter_views.DeleteMeterView.as_view(), name='delete_meter_admin'),
+    path('meters/index/delete_meter/<int:pk>/<int:flat_pk>/', meter_views.DeleteMeterView.as_view(), name='delete_meter_admin'),
     path('meters/index/duplicate_meter/<int:pk>/', meter_views.DuplicateMeterView.as_view(),
          name='duplicate_meter_admin'),
     path('meters/index/number_ascending/', meter_views.ListMetersNumberAscendingView.as_view(),
