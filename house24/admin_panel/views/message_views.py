@@ -3,11 +3,11 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 
-from db.models.house import Message
+from db.models.house import Message, InviteMessage
 from db.services.search import MessageSearch
 
 from admin_panel.permission_mixin import AdminPermissionMixin
-from admin_panel.forms.message_forms import MessageSearchForm, CreateMessageForm
+from admin_panel.forms.message_forms import MessageSearchForm, CreateMessageForm, CreateInviteMessageForm
 from admin_panel.views.mixins import DeleteInstanceView, ListInstancesMixin
 
 import json
@@ -52,3 +52,10 @@ class DetailMessageView(AdminPermissionMixin, DetailView):
 class DeleteMessageView(DeleteInstanceView):
     model = Message
     redirect_url = 'admin_panel:list_messages_admin'
+
+
+class CreateInviteMessageView(AdminPermissionMixin, CreateView):
+    model = InviteMessage
+    form_class = CreateInviteMessageForm
+    success_url = reverse_lazy('admin_panel:list_owners_admin')
+    template_name = 'message/create_invite_message.html'

@@ -1,6 +1,10 @@
 from django import forms
+from django.core.exceptions import ValidationError
+from django.contrib.auth import get_user_model
 
-from db.models.house import Message
+from db.models.house import Message, InviteMessage
+
+User = get_user_model()
 
 
 class MessageSearchForm(forms.Form):
@@ -30,3 +34,20 @@ class CreateMessageForm(forms.ModelForm):
             'flat': forms.Select(attrs={'class': 'form-control', 'id': 'flat'}),
             'with_debt': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'with_debt'})
         }
+
+
+class CreateInviteMessageForm(forms.ModelForm):
+    class Meta:
+        model = InviteMessage
+        exclude = ('user', )
+        widgets = {
+            'phone': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'phone',
+                                            'placeholder': '+380638271139'}),
+            'text': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'text',
+                                           'placeholder': 'Сообщение для клиента'})
+        }
+
+    def clean(self):
+        phone = self.cleaned_data.get('phone')
+        if not User.objects.filter(phone_number=phone).exists():
+            raise ValidationError('Пользователя с таким номером телефона нет в системе')

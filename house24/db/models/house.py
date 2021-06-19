@@ -407,6 +407,5 @@ class TicketTemplate(models.Model):
 
 
 class InviteMessage(models.Model):
-    user = models.ForeignKey(User, related_name='invites', on_delete=models.CASCADE)
     phone = models.CharField(max_length=100)
     text = models.CharField(max_length=150)
