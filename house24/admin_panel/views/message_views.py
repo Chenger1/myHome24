@@ -2,6 +2,7 @@ from django.views.generic import CreateView, View, DetailView
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.db.models import ObjectDoesNotExist
 
 from db.models.house import Message, InviteMessage
 from db.services.search import MessageSearch
@@ -39,12 +40,13 @@ class CreateMessageView(AdminPermissionMixin, CreateView):
 
 
 class DeleteMessagesView(View):
-    model = Message
-
     def get(self, request):
         pks = json.loads(request.GET.get('pk'))
         for pk in pks:
-            get_object_or_404(self.model, pk=pk).delete()
+            try:
+                Message.objects.get(pk=pk).delete()
+            except ObjectDoesNotExist:
+                get_object_or_404(InviteMessage, pk=pk).delete()
         return JsonResponse({'status': 200})
 
 
