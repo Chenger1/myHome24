@@ -39,6 +39,15 @@ class CreateMessageView(AdminPermissionMixin, CreateView):
         return super().form_valid(form)
 
 
+class CreateMessageWithDebtView(CreateMessageView):
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(request.POST)
+        else:
+            form = self.form_class(initial={'with_debt': True})
+        return form
+
+
 class DeleteMessagesView(View):
     def get(self, request):
         pks = json.loads(request.GET.get('pk'))
