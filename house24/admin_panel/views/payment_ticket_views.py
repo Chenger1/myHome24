@@ -202,7 +202,8 @@ class DetailPaymentTicketView(AdminPermissionMixin, DetailView):
 class ListTicketsByAccount(ListInstancesMixin):
     model = PaymentTicket
     template_name = 'ticket/list_payment_tickets.html'
-    search_form = PaymentTicketSearch
+    search_form = PaymentTicketSearchForm
+    search_obj = PaymentTicketSearch
     pk = None
 
     def get(self, request, pk=None):
