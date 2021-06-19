@@ -43,14 +43,16 @@
                                style="float:right; margin-left:5px;">
                                 Редактировать квартиру
                             </a>
+                            {% if flat.account %}
                             <a href="" class="btn btn-default    btn-sm"
                                style="float:right; margin-left:5px;">
                                 <i class="far fa-copy"></i> Оформить квитанцию
                             </a>
-                            <a href="" class="btn btn-default btn-sm"
+                            <a href="{% url 'admin_panel:create_income_with_flat' flat.pk %}" class="btn btn-default btn-sm"
                                style="float:right; margin-left:5px;">
                                 <i class="fas fa-dollar-sign"></i> Принять платеж
                             </a>
+                            {% endif %}
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -101,9 +103,11 @@
                                             </tbody>
                                         </table>
                                         <div>
-                                            <p><a href="">Посмотреть показания счетчиков</a></p>
-                                            <p><a href="">Посмотреть приходы</a></p>
-                                            <p><a href="">Посмотреть квитанции</a></p>
+                                            <p><a href="{% url 'admin_panel:list_meter_history' flat.pk %}">Посмотреть показания счетчиков</a></p>
+                                            {% if flat.account %}
+                                            <p><a href="{% url 'admin_panel:list_transactions_by_account' flat.account.pk %}">Посмотреть приходы</a></p>
+                                            <p><a href="{% url 'admin_panel:list_payment_tickets_by_account' flat.account.pk %}">Посмотреть квитанции</a></p>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

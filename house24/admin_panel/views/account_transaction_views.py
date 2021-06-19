@@ -10,7 +10,7 @@ from admin_panel.forms.account_transaction_forms import (AccountTransactionSearc
                                                          CreateOutcomeForm)
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import Transaction, PersonalAccount
+from db.models.house import Transaction, PersonalAccount, Flat
 from db.services.search import TransactionSearch
 from db.services.utils import generate_next_instance_number
 from db.services.spreadsheet import TransactionSpreadSheet, ConcreteTransactionSpreadSheer
@@ -53,10 +53,11 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
     parent_object = None
+    parent_model = None
 
     def get(self, request, *args, **kwargs):
         if kwargs.get('pk'):
-            self.parent_object = get_object_or_404(PersonalAccount, pk=kwargs.get('pk'))
+            self.parent_object = self.get_parent_object(kwargs.get('pk'))
         return super().get(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
@@ -64,12 +65,34 @@ class CreateIncomeView(AdminPermissionMixin, CreateView):
             form = self.form_class(self.request.POST)
         else:
             if self.parent_object:
-                form = self.form_class(initial={'number': generate_next_instance_number(self.model),
-                                                'owner': self.parent_object.flat.owner.pk if self.parent_object.flat.owner else None,
-                                                'personal_account': self.parent_object.pk})
+                form = self.form_class(initial=self.get_initial_dict())
             else:
                 form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
         return form
+
+    def get_parent_object(self, pk):
+        return get_object_or_404(self.parent_model, pk=pk)
+
+    def get_initial_dict(self):
+        return {}
+
+
+class CreateIncomeByAccountView(CreateIncomeView):
+    parent_model = PersonalAccount
+
+    def get_initial_dict(self):
+        return {'number': generate_next_instance_number(self.model),
+                'owner': self.parent_object.flat.owner.pk if self.parent_object.flat.owner else None,
+                'personal_account': self.parent_object.pk}
+
+
+class CreateIncomeByFlatView(CreateIncomeView):
+    parent_model = Flat
+
+    def get_initial_dict(self):
+        return {'number': generate_next_instance_number(self.model),
+                'owner': self.parent_object.owner.pk if self.parent_object.owner else None,
+                'personal_account': self.parent_object.account.pk}
 
 
 class CreateOutcomeView(AdminPermissionMixin, CreateView):
