@@ -8,8 +8,13 @@ ENV PYTHONUNBUFFERED 1
 
 RUN apk add --update --no-cache tiff-dev jpeg-dev openjpeg-dev zlib-dev freetype-dev lcms2-dev \
 libwebp-dev tcl-dev tk-dev harfbuzz-dev fribidi-dev libimagequant-dev libxcb-dev libpng-dev \
-gcc build-base freetype-dev libpng-dev openblas-dev \
-postgresql-dev gcc python3-dev musl-dev
+gcc build-base freetype-dev libpng-dev openblas-dev cairo-dev cairo cairo-tools \
+postgresql-dev gcc python3-dev musl-dev pango fontconfig
+
+# Without fonts pdf wont be rendered correctly
+RUN apk --upgrade --no-cache add fontconfig ttf-freefont font-noto terminus-font \
+    && fc-cache -f \
+    && fc-list | sort
 
 RUN mkdir -p /home/house24
 
