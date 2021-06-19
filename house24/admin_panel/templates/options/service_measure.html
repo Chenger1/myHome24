@@ -252,7 +252,8 @@
     $('#add_service_formset').on('click', function(){
         service_cloner.clone();
         setNewColorizeEvent();
-        $('.service_formset').last().find('input[type=checkbox]').prop('checked', true)
+        $('.service_formset').last().find('input[type=checkbox]').prop('checked', true);
+        $('.service_formset').last().find('input[type=checkbox]').removeAttr('value');
         this.blur();
     })
     $('.service_formset').find('.disabled_button').each(function(){
