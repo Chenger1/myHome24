@@ -5,6 +5,7 @@ from django_renderpdf.views import PDFView
 from django_renderpdf.helpers import render_pdf, select_template
 
 from db.models.house import TicketTemplate, PaymentTicket
+from db.models.pages import ContactsPage
 
 from admin_panel.utils.send_mail import MailSender
 
@@ -29,8 +30,8 @@ class RenderPdfTemplate(PDFView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['ticket_number'] = self.ticket.number
-        context['ticket_sum'] = self.ticket.sum
+        context['ticket'] = self.ticket
+        context['contacts'] = ContactsPage.load()
         return context
 
     def render(self, request, template, context) -> HttpResponse:

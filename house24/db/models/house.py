@@ -198,6 +198,10 @@ class PaymentTicket(models.Model):
         return self.flat.owner
 
     @property
+    def total_cost(self):
+        return self.services.all().aggregate(models.Sum('cost'))['cost__sum'] or 0
+
+    @property
     def ticket_month(self):
         return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%b %Y')
 
