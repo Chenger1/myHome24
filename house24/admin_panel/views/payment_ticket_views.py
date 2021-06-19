@@ -9,7 +9,7 @@ from admin_panel.forms.payment_ticket_forms import (PaymentTicketSearchForm, Cre
                                                     TicketServiceFormset, AddHtmlTemplate)
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PaymentTicket, PersonalAccount, TicketTemplate
+from db.models.house import PaymentTicket, PersonalAccount, TicketTemplate, Flat
 from db.services.search import PaymentTicketSearch
 from db.services.utils import generate_next_instance_number
 
@@ -56,16 +56,12 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
     model = PaymentTicket
     template_name = 'ticket/create_payment_ticket_admin.html'
     redirect_url = 'admin_panel:list_payment_ticket_admin'
+    parent_model = None
 
-    def get(self, request, account_pk=None):
-        if account_pk:
-            account = get_object_or_404(PersonalAccount, pk=account_pk)
-            form = CreatePaymentTicketForm(initial={'house': account.flat.house,
-                                                    'section': account.flat.section,
-                                                    'flat': account.flat,
-                                                    'personal_account': account,
-                                                    'tariff': account.flat.tariff,
-                                                    })
+    def get(self, request, pk=None):
+        if pk:
+            parent_obj = self.get_parent_object(pk)
+            form = CreatePaymentTicketForm(initial=self.get_initial_dict(parent_obj))
         else:
             form = CreatePaymentTicketForm()
         formset = TicketServiceFormset()
@@ -84,6 +80,36 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
         else:
             return render(request, self.template_name, context={'form': form,
                                                                 'formset': formset})
+
+    def get_parent_object(self, pk):
+        return get_object_or_404(self.parent_model, pk=pk)
+
+    def get_initial_dict(self, parent_obj):
+        return {}
+
+
+class CreatePaymentTicketWithAccount(CreatePaymentTicketView):
+    parent_model = PersonalAccount
+
+    def get_initial_dict(self, parent_obj):
+        return {'house': parent_obj.flat.house,
+                'section': parent_obj.flat.section,
+                'floor': parent_obj.flat.floor,
+                'flat': parent_obj.flat,
+                'personal_account': parent_obj,
+                'tariff': parent_obj.flat.tariff}
+
+
+class CreatePaymentTicketWithFlat(CreatePaymentTicketView):
+    parent_model = Flat
+
+    def get_initial_dict(self, parent_obj):
+        return {'house': parent_obj.house,
+                'section': parent_obj.section,
+                'floor': parent_obj.floor,
+                'flat': parent_obj.pk,
+                'personal_account': parent_obj.account if parent_obj.account else None,
+                'tariff': parent_obj.tariff}
 
 
 class DeletePaymentTicketView(DeleteInstanceView):

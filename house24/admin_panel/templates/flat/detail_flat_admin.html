@@ -44,7 +44,7 @@
                                 Редактировать квартиру
                             </a>
                             {% if flat.account %}
-                            <a href="" class="btn btn-default    btn-sm"
+                            <a href="{% url 'admin_panel:create_ticket_with_flat' flat.pk %}" class="btn btn-default    btn-sm"
                                style="float:right; margin-left:5px;">
                                 <i class="far fa-copy"></i> Оформить квитанцию
                             </a>
