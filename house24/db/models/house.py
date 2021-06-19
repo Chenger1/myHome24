@@ -404,3 +404,9 @@ class TicketTemplate(models.Model):
 
     def get_files(self):
         return [self.file] if self.file else None
+
+
+class InviteMessage(models.Model):
+    user = models.ForeignKey(User, related_name='invites', on_delete=models.CASCADE)
+    phone = models.CharField(max_length=100)
+    text = models.CharField(max_length=150)
