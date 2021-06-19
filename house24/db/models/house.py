@@ -409,3 +409,4 @@ class TicketTemplate(models.Model):
 class InviteMessage(models.Model):
     phone = models.CharField(max_length=100)
     text = models.CharField(max_length=150)
+    created = models.DateTimeField(auto_now_add=True)

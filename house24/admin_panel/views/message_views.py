@@ -19,6 +19,11 @@ class ListMessages(ListInstancesMixin):
     search_form = MessageSearchForm
     search_obj = MessageSearch
 
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['invites'] = InviteMessage.objects.all()
+        return context
+
 
 class CreateMessageView(AdminPermissionMixin, CreateView):
     model = Message

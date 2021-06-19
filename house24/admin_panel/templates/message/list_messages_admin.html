@@ -71,51 +71,71 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for message in instances %}
-                                            <tr>
-                                                <td>
-                                                    <div class="icheck-primary d-inline">
-                                                        <input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
-                                                        class="delete_checkbox">
-                                                        <label for="checkboxPrimary-{{ forloop.counter }}">
-                                                        </label>
-                                                    </div>
-                                                    <input type="hidden" value="{{ message.pk }}" class="message_pk">
-                                                </td>
-                                                <td>
-                                                     {% if message.message_recipient %}
-                                                        {% if message.house %}
-                                                        <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.house }}</a>
-                                                        {% endif %}
-                                                        {% if message.section %},
-                                                        <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.section }}</a>
-                                                        {% endif %}
-                                                        {% if message.floor %},
-                                                        <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.floor }}</a>
-                                                        {% endif %}
-                                                        {% if message.flat %},
-                                                        <a href="{% url 'admin_panel:detail_flat_admin' message.flat.pk %}">Квартира №{{ message.flat }}</a>
-                                                        {% endif %}
-                                                    {% else %}
-                                                        Всем
-                                                    {% endif %}
-                                                </td>
-                                                <td>
-                                                    {{ message.text|safe }}
-                                                </td>
-                                                <td>
-                                                    <a href="{% url 'admin_panel:detail_message_admin' message.pk %}">
-                                                        <strong>{{ message.title }}</strong> -
-                                                        {{ message.text|safe|truncatewords_html:5 }}
-                                                    </a>
-                                                </td>
-                                                <td><a href="{% url 'admin_panel:detail_message_admin' message.pk %}">{{ message.created }}</a></td>
-                                            </tr>
-                                        {% empty %}
+                                        {% if not instances and not invites %}
                                             <tr>
                                                 <td colspan="4">Ничего не найдено</td>
                                             </tr>
-                                        {% endfor %}
+                                        {% else %}
+                                            {% for message in instances %}
+                                                    <tr>
+                                                        <td>
+                                                            <div class="icheck-primary d-inline">
+                                                                <input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
+                                                                class="delete_checkbox">
+                                                                <label for="checkboxPrimary-{{ forloop.counter }}">
+                                                                </label>
+                                                            </div>
+                                                            <input type="hidden" value="{{ message.pk }}" class="message_pk">
+                                                        </td>
+                                                        <td>
+                                                             {% if message.message_recipient %}
+                                                                {% if message.house %}
+                                                                <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.house }}</a>
+                                                                {% endif %}
+                                                                {% if message.section %},
+                                                                <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.section }}</a>
+                                                                {% endif %}
+                                                                {% if message.floor %},
+                                                                <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.floor }}</a>
+                                                                {% endif %}
+                                                                {% if message.flat %},
+                                                                <a href="{% url 'admin_panel:detail_flat_admin' message.flat.pk %}">Квартира №{{ message.flat }}</a>
+                                                                {% endif %}
+                                                            {% else %}
+                                                                Всем
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            {{ message.text|safe }}
+                                                        </td>
+                                                        <td>
+                                                            <a href="{% url 'admin_panel:detail_message_admin' message.pk %}">
+                                                                <strong>{{ message.title }}</strong> -
+                                                                {{ message.text|safe|truncatewords_html:5 }}
+                                                            </a>
+                                                        </td>
+                                                        <td><a href="{% url 'admin_panel:detail_message_admin' message.pk %}">{{ message.created }}</a></td>
+                                                    </tr>
+                                            {% endfor %}
+                                            {% for invite in invites %}
+                                                <tr>
+                                                    <td>
+                                                        <div class="icheck-primary d-inline">
+                                                                <input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
+                                                                class="delete_checkbox">
+                                                                <label for="checkboxPrimary-{{ forloop.counter }}">
+                                                                </label>
+                                                        </div>
+                                                        <input type="hidden" value="{{ invite.pk }}" class="message_pk">
+                                                    </td>
+                                                    <td>
+                                                        {{ invite.phone }}
+                                                    </td>
+                                                    <td>{{ invite.text }}</td>
+                                                    <td>{{ invite.created }}</td>
+                                                </tr>
+                                            {% endfor %}
+                                        {% endif %}
                                     </tbody>
                                 </table>
                             </div>
