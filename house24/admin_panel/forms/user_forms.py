@@ -188,6 +188,21 @@ class CreateOwnerForm(OwnerForm):
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password2', 'class': 'form-control to_valid',
                                                                   'type': 'password'}))
 
+    def clean(self):
+        super().clean()
+        password1 = self.cleaned_data['password1']
+        password2 = self.cleaned_data['password2']
+        if password2 != password1:
+            raise ValidationError('Пароли не совпадают')
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password2'])
+        if commit:
+            user.save()
+        update_last_login(None, user)
+        return user
+
 
 class UpdateOwnerUserForm(OwnerForm):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password1', 'class': 'form-control to_valid',
