@@ -47,9 +47,12 @@ class ClientLoginView(LoginViewMixin):
     def post(self, request):
         form = self.form(request.POST)
         if form.is_valid():
-            user = authenticate(request, email=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user:
-                login(request, user)
-                return redirect('')
+            try:
+                user = form.authenticate_client(request)
+            except ValidationError as e:
+                form.add_error('login_data', e.args[0])
+                return render(request, self.template_name, context={'form': form})
+            login(request, user)
+            return redirect('website:main_page_view')
         else:
             return render(request, self.template_name, context={'form': form})
