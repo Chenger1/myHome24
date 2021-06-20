@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model, authenticate
 User = get_user_model()
 
 
-class LoginForm(forms.Form):
+class AdminLoginForm(forms.Form):
     error_messages = {
         'invalid_login': 'Неправильный логин или пароль',
         'not_allowed': 'Войдите через профиль администрации'
@@ -27,3 +27,10 @@ class LoginForm(forms.Form):
             raise forms.ValidationError(self.error_messages['not_allowed'])
         else:
             return user
+
+
+class ClientLoginForm(forms.Form):
+    login_data = forms.CharField(widget=forms.TextInput(attrs={'id': 'login_data', 'class': 'form-control',
+                                                               'placeholder': 'E-mail или ID'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password', 'class': 'form-control',
+                                                                 'type': 'password', 'placeholder': 'Пароль'}))

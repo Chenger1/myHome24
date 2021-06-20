@@ -6,15 +6,16 @@
 <div class="login_box" style="background-color:white;">
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-            <li>
-                <a href="{% url 'website:client_site_login_view' %}" style="display:block;">Для жильца</a>
-            </li>
             <li class="active">
+                <a href="#for_clients" data-toggle="tab" class="active" id="client_link"
+                style="display:block;">Для жильца</a>
+            </li>
+            <li>
                 {% if request.user.is_staff and request.user.is_authenticated %}
                 <a href="{% url 'admin_panel:index' %}"
                 style="display:block;">Для администрации</a>
                 {% else %}
-                <a href="#admin"
+                <a href="{% url 'website:admin_site_login_view' %}"
                 style="display:block;">Для администрации</a>
                 {% endif %}
             </li>
@@ -22,16 +23,16 @@
     </div>
 
     <div class="tab-content">
-        <div class="tab-pane active" id="admin">
-            <form action="{% url 'website:admin_site_login_view' %}" method="post">
+        <div class="tab-pane active" id="for_clients">
+            <form action="">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col">
                         <div class="login-content">
-                            <p class="login-msg">Вход в панель управления</p>
+                            <p class="login-msg">Вход в личный кабинет</p>
 
                             <div class="input-container">
-                                {{ form.email }}
+                                {{ form.login_data }}
                                 <span class="fa fa-envelope form-control-feedback"></span>
                             </div>
                             <div class="input-container">
@@ -42,11 +43,11 @@
                     </div>
                 </div>
 
-                <div class="row" style="padding: 0 25px 25px 25px;;">
+                <div class="row" style="padding: 0 25px 25px 25px;">
                     <div class="col-xl-12">
-                        <div class="custom-control custom-checkbox" style="float:left;">
-                            <input class="custom-control-input" type="checkbox" id="customCheckbox2" value="option1">
-                            <label for="customCheckbox2" class="custom-control-label">Запомнить меня</label>
+                        <div class="custom-control custom-checkbox" style="float: left;">
+                            <input class="custom-control-input" type="checkbox" id="customCheckbox1" value="option1">
+                            <label for="customCheckbox1" class="custom-control-label">Запомнить меня</label>
                         </div>
                     </div>
                     <div class="col-xl-12" style="margin-top:15px;">

@@ -3,14 +3,15 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.core.exceptions import ValidationError
 
-from website.forms.auth_forms import LoginForm
+from website.forms.auth_forms import AdminLoginForm, ClientLoginForm
 
 
 class LoginViewMixin(View):
     template_name = 'auth/admin_login.html'
+    form = None
 
     def get(self, request):
-        form = LoginForm()
+        form = self.form()
         return render(request, self.template_name, context={'form': form})
 
     def authenticate_user(self, request, form):
@@ -21,8 +22,11 @@ class LoginViewMixin(View):
 
 
 class AdminLoginView(LoginViewMixin):
+    template_name = 'auth/admin_login.html'
+    form = AdminLoginForm
+
     def post(self, request):
-        form = LoginForm(request.POST)
+        form = self.form(request.POST)
         if form.is_valid():
             try:
                 user = form.authenticate_admin(request)
@@ -35,3 +39,17 @@ class AdminLoginView(LoginViewMixin):
         else:
             return render(request, self.template_name, context={'form': form})
 
+
+class ClientLoginView(LoginViewMixin):
+    template_name = 'auth/client_login.html'
+    form = ClientLoginForm
+
+    def post(self, request):
+        form = self.form(request.POST)
+        if form.is_valid():
+            user = authenticate(request, email=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user:
+                login(request, user)
+                return redirect('')
+        else:
+            return render(request, self.template_name, context={'form': form})
