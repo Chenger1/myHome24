@@ -31,7 +31,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button" id="push"><i class="fas fa-bars"></i></a>
             </li>
             <li class="nav-item d-none d-sm-inline-block">
-                <span class="nav-link">Панель администратора</span>
+                <span class="nav-link">Личный кабинет</span>
             </li>
         </ul>
 
@@ -39,15 +39,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                    <i class="fa fa-child fa-lg"></i>
-                    <span class="badge badge-warning navbar-badge" style="top: 0px;">{{ new_users_count }}</span>
+                    <i class="fas fa-bell fa-lg"></i>
+                    <span class="badge badge-warning navbar-badge" style="top: 0px;">0</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                    <span class="dropdown-item dropdown-header">Новых пользователей - {{ new_users_count }}</span>
+                    <span class="dropdown-item dropdown-header">Новых сообщений - 0</span>
                     <div class="dropdown-divider"></div>
                     <a href="#" class="dropdown-item">
                     </a>
-                    <a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">Посмотреть всех пользователей</a>
+                    <a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">Посмотреть все сообщения</a>
                 </div>
             </li>
 
@@ -113,21 +113,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a href="{% url 'admin_panel:index' %}" class="nav-link {% if request.path == '/admin/' %}active{% endif %}">
-                            <i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
-                            <p>Статистика</p>
-                        </a>
-                    </li>
-                    <li class="nav-item
-                        {% if '/admin/main_page/index/' in request.path %}menu-is-opening menu-open
-                        {% elif '/admin/about/index/' in request.path %}menu-is-opening menu-open
-                        {% elif '/admin/services/index/' in request.path %}menu-is-opening menu-open
-                        {% elif '/admin/tariffs/index/' in request.path %}menu-is-opening menu-open
-                        {% elif '/admin/contacts/index/' in request.path %}menu-is-opening menu-open
-                        {% endif %}">
                         <a href="" class="nav-link">
-                            <i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
-                            <p>Управление сайтом</p>
+                            <i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
+                            <p>Сводка</p>
                             <i class="fas fa-angle-left right"></i>
                         </a>
                         <ul class="nav nav-treeview" style=
@@ -138,34 +126,72 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% elif '/admin/contacts/index/' in request.path %}display:block;
                             {% endif %}">
                             <li class="nav-item">
-                                <a href="{% url 'admin_panel:main_page' %}" class="nav-link
-                                {% if request.path == '/admin/main_page/index/' %}active{% endif %}">
+                                <a href="" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
                                     <p>Главная страница</p>
                                 </a>
                             </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon far fa-copy" aria-hidden="true"></i>
+                            <p>Квитанции</p>
+                            <i class="fas fa-angle-left right"></i>
+                        </a>
+                        <ul class="nav nav-treeview" style=
+                            "{% if '/admin/main_page/index/' in request.path %}display:block;
+                            {% elif '/admin/about/index/' in request.path %}display:block;
+                            {% elif '/admin/services/index/' in request.path %}display:block;
+                            {% elif '/admin/tariffs/index/' in request.path %}display:block;
+                            {% elif '/admin/contacts/index/' in request.path %}display:block;
+                            {% endif %}">
                             <li class="nav-item">
-                                <a href="{% url 'admin_panel:about_page' %}" class="nav-link
-                                   {% if request.path == '/admin/about/index/' %}active{% endif %}">
+                                <a href="" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>О нас</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'admin_panel:services_page' %}" class="nav-link
-                                    {% if request.path == '/admin/services/index/' %}active{% endif %}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Услуги</p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{% url 'admin_panel:contacts_page' %}" class="nav-link
-                                    {% if request.path == '/admin/contacts/index/' %}active{% endif %}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Контакты</p>
+                                    <p>Главная страница</p>
                                 </a>
                             </li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon far fa-money-bill-alt" aria-hidden="true"></i>
+                            <p>Тарифы</p>
+                            <i class="fas fa-angle-left right"></i>
+                        </a>
+                        <ul class="nav nav-treeview" style=
+                            "{% if '/admin/main_page/index/' in request.path %}display:block;
+                            {% elif '/admin/about/index/' in request.path %}display:block;
+                            {% elif '/admin/services/index/' in request.path %}display:block;
+                            {% elif '/admin/tariffs/index/' in request.path %}display:block;
+                            {% elif '/admin/contacts/index/' in request.path %}display:block;
+                            {% endif %}">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Главная страница</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon far fa-envelope" aria-hidden="true"></i>
+                            <p>Сообщения</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
+                            <p>Вызов мастера</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="" class="nav-link">
+                            <i class="nav-icon fas fa-user-circle" aria-hidden="true"></i>
+                            <p>Профиль</p>
+                        </a>
                     </li>
                 </ul>
             </nav>
