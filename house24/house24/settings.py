@@ -38,11 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'rest_framework',
     'db',
     'website',
     'rest_api',
     'admin_panel',
+    'robots',
 ]
 
 MIDDLEWARE = [
@@ -159,3 +162,8 @@ EMAIL_HOST_USER = 'djangokinoteatrmail@gmail.com'  # This is a test account with
 EMAIL_HOST_PASSWORD = 'Do24hfjzbe23h'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
+
+SITE_ID = 1
+ROBOTS_SITEMAP_URLS = [
+    'http://188.225.43.69/sitemap.xml',
+]
