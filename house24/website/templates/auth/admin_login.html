@@ -23,7 +23,7 @@
 
     <div class="tab-content">
         <div class="tab-pane active" id="admin">
-            <form action="{% url 'website:admin_site_login_view' %}" method="post">
+            <form action="{% url 'admin_panel:admin_login' %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col">

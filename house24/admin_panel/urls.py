@@ -23,6 +23,7 @@ app_name = 'admin_panel'
 
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
+    path('login/', user_views.AdminLoginView.as_view(), name='admin_login'),
     path('logout/', LogoutAdmin.as_view(), name='logout_admin'),
     path('flat_owner/', FlatOwner.as_view(), name='get_flat_owner'),
 

@@ -48,13 +48,14 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'admin_panel.middleware.AdminSessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    'admin_panel.middleware.AdminCheckMiddleware'
+    'admin_panel.middleware.AdminCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'house24.urls'

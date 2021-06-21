@@ -2,14 +2,18 @@ from django.views.generic import View, CreateView, UpdateView, DetailView
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
+from django.contrib.auth import login
 
 from db.models.user import Role
 from db.services.search import OwnerSearch, UserSearch
 
 from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm,
-                                          UpdateOwnerUserForm, SearchForm)
+                                          UpdateOwnerUserForm, SearchForm, AdminLoginForm)
 from admin_panel.views.mixins import DeleteInstanceView, ListInstancesMixin
 from admin_panel.permission_mixin import AdminPermissionMixin
+
+from common.mixin import LoginViewMixin
 
 
 User = get_user_model()
@@ -130,3 +134,23 @@ class DetailOwnerView(AdminPermissionMixin, DetailView):
     model = User
     template_name = 'owner/detail_owner_admin.html'
     context_object_name = 'user'
+
+
+class AdminLoginView(LoginViewMixin):
+    template_name = 'auth/admin_login.html'
+    form = AdminLoginForm
+    redirect_url = 'admin_panel:index'
+
+    def post(self, request):
+        form = self.form(request.POST)
+        if form.is_valid():
+            try:
+                user = form.authenticate_admin(request)
+            except ValidationError as e:
+                form.add_error('email', e.args[0])
+                return render(request, self.template_name, context={'form': form})
+            login(request, user)
+            path = user.role.get_available_url_pattern_by_role()
+            return redirect(path)
+        else:
+            return render(request, self.template_name, context={'form': form})

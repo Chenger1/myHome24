@@ -15,7 +15,7 @@
                 <a href="{% url 'admin_panel:index' %}"
                 style="display:block;">Для администрации</a>
                 {% else %}
-                <a href="{% url 'website:admin_site_login_view' %}"
+                <a href="{% url 'admin_panel:admin_login' %}"
                 style="display:block;">Для администрации</a>
                 {% endif %}
             </li>
