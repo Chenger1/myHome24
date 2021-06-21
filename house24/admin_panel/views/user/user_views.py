@@ -7,6 +7,7 @@ from django.contrib.auth import login
 
 from db.models.user import Role
 from db.services.search import OwnerSearch, UserSearch
+from db.services.utils import generate_next_user_number
 
 from admin_panel.forms.user_forms import (RoleFormSet, CreateAdminUserForm, UpdateAdminUserForm, CreateOwnerForm,
                                           UpdateOwnerUserForm, SearchForm, AdminLoginForm)
@@ -115,6 +116,13 @@ class CreateOwnerUser(AdminPermissionMixin, CreateView):
     template_name = 'owner/create_owner_user.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_owners_admin')
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST, self.request.FILES)
+        else:
+            form = self.form_class(initial={'number': generate_next_user_number(self.model)})
+        return form
 
 
 class UpdateOwnerUser(AdminPermissionMixin, UpdateView):

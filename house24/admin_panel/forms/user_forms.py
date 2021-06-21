@@ -98,8 +98,8 @@ class SearchForm(forms.Form):
     status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
                                choices=status_choices, required=False)
 
-    id_field = forms.IntegerField(widget=forms.NumberInput(attrs={'id': 'id_field',
-                                                                  'class': 'form-control'}), required=False)
+    id_field = forms.CharField(widget=forms.NumberInput(attrs={'id': 'id_field',
+                                                               'class': 'form-control'}), required=False)
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'id': 'house',
                                                               'class': 'form-control'}), required=False,
@@ -187,7 +187,7 @@ class OwnerForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'patronym', 'birthday', 'phone_number',
-                  'viber', 'telegram', 'email', 'status', 'about', 'photo')
+                  'viber', 'telegram', 'email', 'status', 'about', 'photo', 'number')
         widgets = {
             'first_name': forms.TextInput(attrs={'id': 'first_name', 'class': 'form-control to_valid'}),
             'last_name': forms.TextInput(attrs={'id': 'last_name', 'class': 'form-control to_valid'}),
@@ -203,7 +203,8 @@ class OwnerForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'id': 'email', 'class': 'form-control to_valid'}),
             'about': forms.Textarea(attrs={'id': 'about', 'class': 'form-control to_valid',
                                            'style': 'height: 299px;'}),
-            'photo': forms.FileInput(attrs={'id': 'photo', 'class': 'form-control-file to_valid'})
+            'photo': forms.FileInput(attrs={'id': 'photo', 'class': 'form-control-file to_valid'}),
+            'number': forms.NumberInput(attrs={'id': 'number', 'class': 'form-control to_valid'})
         }
 
 

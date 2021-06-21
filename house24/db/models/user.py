@@ -117,6 +117,7 @@ class User(CustomAbstractUser):
     viber = models.CharField(max_length=100, blank=True, null=True)
     telegram = models.CharField(max_length=100, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
+    number = models.CharField(max_length=100, blank=True, null=True)
 
     def get_files(self):
         return [self.photo] if self.photo else None

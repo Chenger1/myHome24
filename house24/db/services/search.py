@@ -35,7 +35,7 @@ class OwnerSearch:
                                    email__contains=form_data.get('email'),
                                    phone_number__contains=form_data.get('phone'))
         if form_data.get('id_field'):
-            queryset = queryset.filter(pk=form_data.get('id_field'))
+            queryset = queryset.filter(number=form_data.get('id_field'))
         if form_data.get('house'):
             queryset = queryset.filter(flats__house=form_data.get('house')).distinct()
         if form_data.get('flat'):

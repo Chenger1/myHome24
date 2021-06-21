@@ -148,7 +148,7 @@
 
                                 {% for user in instances %}
                                 <tr>
-                                    <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.pk }}</a></td>
+                                    <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.number }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.full_name }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.phone_number }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.email }}</a></td>
