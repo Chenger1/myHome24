@@ -18,3 +18,5 @@ def add_client_info_to_template(request):
             'messages': messages,
             'messages_count': messages.count()
         }
+    else:
+        return {}
