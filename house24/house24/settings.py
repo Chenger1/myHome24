@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'website',
     'rest_api',
     'admin_panel',
+    'user_profile',
     'robots',
 ]
 
