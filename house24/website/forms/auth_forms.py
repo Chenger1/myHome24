@@ -14,6 +14,7 @@ class ClientLoginForm(forms.Form):
                                                                'placeholder': 'E-mail или ID'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password', 'class': 'form-control',
                                                                  'type': 'password', 'placeholder': 'Пароль'}))
+    remember_me = forms.BooleanField(widget=forms.CheckboxInput(attrs={'id': 'remember_me'}))
 
     def authenticate_client(self, request):
         login_data = self.cleaned_data['login_data']
