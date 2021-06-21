@@ -51,9 +51,10 @@
                                         <div class="template" style="margin-top: 10px;">
                                               <div>{{ inst.name }}  {% if inst.is_default %}<strong>(по-умолчанию)</strong>{% endif %}</div>
                                               <a href="{% url 'admin_panel:payment_ticket_template_download' inst.pk %}"><i class="fas fa-download"></i> Скачать шаблон</a>
-                                              <a href="{% url 'admin_panel:payment_ticket_template_set_default' inst.pk %}">• Назначить шаблоном по умоланию</a>
+                                              <a href="{% url 'admin_panel:payment_ticket_template_set_default' inst.pk %}"
+                                              id="template_by_default">• Назначить шаблоном по умоланию</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_delete' inst.pk %}"
-                                              class="delete_template"><i class="fas fa-trash-alt"></i> Удалить шаблон</a>
+                                              class="delete_template" id="delete_pdf_template"><i class="fas fa-trash-alt"></i> Удалить шаблон</a>
                                         </div>
                                         {% empty %}
                                         <h5>Нет шаблонов</h5>

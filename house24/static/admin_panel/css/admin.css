@@ -233,12 +233,17 @@ select{
     margin-right: 15px;
 }
 
-.template > a:nth-child(4){
-    color: #a94442!important;
+#template_by_default{
+    color: #3C7644!important;
 }
-
-.template > a:nth-child(3){
-    color: #3c763d!important;
+#template_by_default:hover{
+    color: #2b542c!important;
+}
+#delete_pdf_template{
+    color:#a94442!important;
+}
+#delete_pdf_template:hover{
+    color:#843534!important;
 }
 
 @media screen and (max-width: 766px){
