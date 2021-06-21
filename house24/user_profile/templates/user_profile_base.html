@@ -18,6 +18,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     <link rel="stylesheet" href="{% static 'admin_panel/dist/css/adminlte.min.css' %}">
     <link rel="stylesheet" href="{% static 'admin_panel/css/admin.css' %}">
+    <link rel="stylesheet" href="{% static 'user_profile/css/user_profile.css' %}">
     {% block head %}{% endblock %}
 </head>
 <body class="hold-transition sidebar-mini">
@@ -40,13 +41,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fas fa-bell fa-lg"></i>
-                    <span class="badge badge-warning navbar-badge" style="top: 0px;">0</span>
+                    <span class="badge badge-warning navbar-badge" style="top: 0px;">{{ messages_count }}</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-                    <span class="dropdown-item dropdown-header">Новых сообщений - 0</span>
+                    <span class="dropdown-item dropdown-header">Новых сообщений - {{ messages_count }}</span>
                     <div class="dropdown-divider"></div>
+                    {% for message in message %}
                     <a href="#" class="dropdown-item">
+                        {{ message.title }}
                     </a>
+                    {% empty %}
+                    <a href="" class="dropdown-item">
+                        У вас сейчас нет сообщений
+                    </a>
+                    {% endfor %}
                     <a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">Посмотреть все сообщения</a>
                 </div>
             </li>

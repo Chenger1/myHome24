@@ -76,6 +76,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'admin_panel.context_processors.add_new_users_to_template',
+                'user_profile.context_processors.add_client_info_to_template'
             ],
         },
     },
@@ -143,6 +144,7 @@ if DEBUG:
         ('img', Path(__file__).parent.parent.joinpath('static/img')),
         ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
         ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
+        ('user_profile', Path(__file__).parent.parent.joinpath('static/user_profile'))
     )
 else:
     STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')

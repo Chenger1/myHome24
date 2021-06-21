@@ -7,5 +7,5 @@ app_name = 'user_profile'
 
 
 urlpatterns = [
-    path('<int:pk>/', index.IndexView.as_view(), name='index')
+    path('view/<int:pk>/', index.IndexView.as_view(), name='index')
 ]
