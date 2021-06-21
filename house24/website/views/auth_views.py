@@ -10,7 +10,14 @@ from common.mixin import LoginViewMixin
 class ClientLoginView(LoginViewMixin):
     template_name = 'auth/client_login.html'
     form = ClientLoginForm
-    redirect_url = 'website:main_page_view'
+    redirect_url = 'user_profile:index'
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            return redirect(self.redirect_url, pk=request.user.pk)
+        else:
+            form = self.form()
+            return render(request, self.template_name, context={'form': form})
 
     def post(self, request):
         form = self.form(request.POST)
