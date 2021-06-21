@@ -57,8 +57,8 @@ class CreateFlatForm(forms.ModelForm):
         model = Flat
         fields = '__all__'
         widgets = {
-            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
-            'square': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'square'}),
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number', 'min': '0'}),
+            'square': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'square', 'min': '0'}),
             'tariff': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'tariff'}),
             'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
             'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),

@@ -62,7 +62,7 @@ class CreateMeterForm(forms.ModelForm):
         model = Meter
         fields = '__all__'
         widgets = {
-            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number'}),
+            'number': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'number', 'min': '0'}),
             'date': forms.DateInput(format=('%Y-%m-%d'), attrs={
                 'type': "date",
                 'value': datetime.now().strftime('%Y-%m-%d'),

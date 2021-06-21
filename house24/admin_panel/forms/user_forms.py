@@ -204,7 +204,7 @@ class OwnerForm(forms.ModelForm):
             'about': forms.Textarea(attrs={'id': 'about', 'class': 'form-control to_valid',
                                            'style': 'height: 299px;'}),
             'photo': forms.FileInput(attrs={'id': 'photo', 'class': 'form-control-file to_valid'}),
-            'number': forms.NumberInput(attrs={'id': 'number', 'class': 'form-control to_valid'})
+            'number': forms.NumberInput(attrs={'id': 'number', 'class': 'form-control to_valid', 'min': '0'})
         }
 
 

@@ -27,7 +27,7 @@ class AccountTransactionSearchForm(forms.Form):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
                                    empty_label='Выберите...')
-    personal_account = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control'}), required=False)
+    personal_account = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}), required=False)
     income_outcome = forms.ChoiceField(choices=income_outcome_choices,
                                        widget=forms.Select(attrs={'class': 'form-control'}), required=False)
     start = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_start'}), required=False)
@@ -63,7 +63,7 @@ class CreateIncomeForm(forms.ModelForm):
             'created': forms.DateInput(format=('%Y-%m-%d'), attrs={'type': "date",
                                                                    'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                                                                    'class': "form-control to_valid", 'id': 'created'}),
-            'paid_sum': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'paid_sum'}),
+            'paid_sum': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'paid_sum', 'min': '0'}),
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
                                                  'id': 'status'}),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
@@ -90,7 +90,7 @@ class CreateOutcomeForm(forms.ModelForm):
                                                                    'value': datetime.datetime.now().strftime(
                                                                        '%Y-%m-%d'),
                                                                    'class': "form-control to_valid", 'id': 'created'}),
-            'paid_sum': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'paid_sum'}),
+            'paid_sum': forms.NumberInput(attrs={'class': 'form-control to_valid', 'id': 'paid_sum', 'min': '0'}),
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
                                                  'id': 'status'}),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',

@@ -59,7 +59,7 @@ class TariffServiceBlockForm(forms.ModelForm):
         model = TariffService
         exclude = ('tariff', )
         widgets = {
-            'price': forms.NumberInput(attrs={'class': 'form-control to_valid'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control to_valid', 'min': '0'}),
         }
 
 
