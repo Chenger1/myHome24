@@ -60,7 +60,7 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 50px;"></th>
-                                            <th style="min-width: 75px;">От кого</th>
+                                            <th style="width: 200px; min-width: 200px;">От кого</th>
                                             <th>Текст</th>
                                             <th style="width: 135px; min-width: 135px;">Дата</th>
                                         </tr>
@@ -83,15 +83,16 @@
                                                             <input type="hidden" value="{{ message.pk }}" class="message_pk">
                                                         </td>
                                                         <td>
+                                                            <a href="{% url 'user_profile:client_detail_message' message.pk %}">
                                                             {{ message.sender }}
+                                                            </a>
+
                                                         </td>
                                                         <td>
-                                                            <a href="{% url 'admin_panel:detail_message_admin' message.pk %}">
-                                                                <strong style="color: black!important;">{{ message.title }}</strong> -
+                                                            <strong style="color: black!important;">{{ message.title }}</strong> -
                                                                 {{ message.text|safe|striptags|truncatewords:10 }}
-                                                            </a>
                                                         </td>
-                                                        <td><a href="{% url 'admin_panel:detail_message_admin' message.pk %}">{{ message.created }}</a></td>
+                                                        <td>{{ message.created }}</td>
                                                     </tr>
                                             {% endfor %}
                                             {% for invite in invites %}
