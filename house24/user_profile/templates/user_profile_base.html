@@ -191,7 +191,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'user_profile:list_master_requests_client' request.user.pk %}"
-                           class="nav-link {% if '/client/master_request/' in request.path %}active{% endif %}">
+                           class="nav-link {% if '/user_profile/master_request/' in request.path %}active{% endif %}">
                             <i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
                             <p>Вызов мастера</p>
                         </a>
