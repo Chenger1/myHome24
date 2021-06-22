@@ -27,4 +27,8 @@ urlpatterns = [
          name='list_client_messages_view'),
     path('message/client/delete_messages/', message_views.ExcludeUserFromReceivingMessage.as_view(),
          name='delete_messages_client'),
+    path('message/client/detail_message/<int:pk>/', message_views.ClientMessageDetailView.as_view(),
+         name='client_detail_message'),
+    path('message/client/delete_message/<int:pk>/', message_views.ExcludeMessage.as_view(),
+         name='delete_message_client'),
 ]

@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.views.generic import View
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import View, DetailView
 from django.http import HttpResponse
 
 from user_profile.views.mixin import ListPaginatedQuery
@@ -21,13 +21,13 @@ class ListClientMessagesView(ListPaginatedQuery):
         sections = Section.objects.filter(flats__in=flats)
         floors = Floor.objects.filter(flats__in=flats)
         messages = Message.objects.exclude(excluded_receivers=request.user).filter(house__in=houses,
-                                                                                             section__in=sections,
-                                                                                             floor__in=floors,
-                                                                                             flat__in=flats)
-        message_for_all = Message.objects.filter(house__isnull=True,
-                                                 section__isnull=True,
-                                                 floor__isnull=True,
-                                                 flat__isnull=True)
+                                                                                   section__in=sections,
+                                                                                   floor__in=floors,
+                                                                                   flat__in=flats)
+        message_for_all = Message.objects.exclude(excluded_receivers=request.user).filter(house__isnull=True,
+                                                                                          section__isnull=True,
+                                                                                          floor__isnull=True,
+                                                                                          flat__isnull=True)
         instances = messages | message_for_all
         if not request.user.has_debt:
             instances = instances.exclude(with_debt=True)
@@ -47,4 +47,21 @@ class ExcludeUserFromReceivingMessage(View):
         messages = Message.objects.filter(pk__in=pks)
         for message in messages:
             message.excluded_receivers.add(request.user)
+            message.save()
         return HttpResponse()
+
+
+class ExcludeMessage(View):
+    model = Message
+
+    def get(self, request, pk):
+        message = get_object_or_404(self.model, pk=pk)
+        message.excluded_receivers.add(request.user)
+        message.save()
+        return redirect('user_profile:list_client_messages_view', pk=request.user.pk)
+
+
+class ClientMessageDetailView(DetailView):
+    model = Message
+    template_name = 'messages/detail_message_client.html'
+    context_object_name = 'message'
