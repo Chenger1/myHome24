@@ -7,5 +7,6 @@ app_name = 'user_profile'
 
 
 urlpatterns = [
-    path('view/<int:pk>/', user_views.UserProfileView.as_view(), name='user_profile')
+    path('view/<int:pk>/', user_views.UserProfileView.as_view(), name='user_profile'),
+    path('view/edit/<int:pk>/', user_views.UpdateClientView.as_view(), name='edit_user_client'),
 ]

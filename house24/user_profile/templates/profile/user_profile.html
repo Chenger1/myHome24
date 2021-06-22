@@ -70,7 +70,7 @@
                                         <td style="float:right;" class="table_td font-14">{{ request.user.email }}</td>
                                     </tr>
                                 </table>
-                                <a href="" class="btn btn-primary btn-block" style="margin-top:10px;">Изменить</a>
+                                <a href="{% url 'user_profile:edit_user_client' pk %}" class="btn btn-primary btn-block" style="margin-top:10px;">Изменить</a>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-12">
