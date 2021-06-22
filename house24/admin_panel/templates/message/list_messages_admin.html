@@ -108,7 +108,7 @@
                                                         <td>
                                                             <a href="{% url 'admin_panel:detail_message_admin' message.pk %}">
                                                                 <strong style="color: black!important;">{{ message.title }}</strong> -
-                                                                {{ message.text|safe|truncatewords_html:5 }}
+                                                                {{ message.text|safe|striptags|truncatewords:10 }}
                                                             </a>
                                                         </td>
                                                         <td><a href="{% url 'admin_panel:detail_message_admin' message.pk %}">{{ message.created }}</a></td>
