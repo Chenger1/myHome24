@@ -1,6 +1,9 @@
 from django import forms
 
 from db.models.user import User
+from db.models.house import MasterRequest
+
+import datetime
 
 
 class OwnerForm(forms.ModelForm):
@@ -44,3 +47,33 @@ class OwnerForm(forms.ModelForm):
         if commit:
             user.save()
         return user
+
+
+class CreateMasterRequest(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['type'].empty_label = 'Выберите...'
+        self.fields['flat'].empty_label = 'Выберите...'
+
+    class Meta:
+        model = MasterRequest
+        fields = ('type', 'flat', 'date', 'time', 'description')
+        widgets = {
+            'date': forms.DateInput(format=('%Y-%m-%d'), attrs={
+                'type': "date",
+                'value': datetime.datetime.now().strftime('%Y-%m-%d'),
+                'class': "form-control to_valid",
+                'id': 'type'
+            }),
+            'time':  forms.TimeInput(format=('%H:%M'), attrs={
+                'type': "time",
+                'value': datetime.datetime.now().strftime('%H:%M'),
+                'class': "form-control to_valid",
+                'id': 'time'
+            }),
+            'description': forms.Textarea(attrs={'class': 'form-control to_valid',
+                                                 'style': 'resize:none;', 'id': 'description'}),
+            'type': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'type'}),
+            'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat',
+                                        'required': 'true'}),
+        }

@@ -70,7 +70,7 @@ class CreateMasterRequestForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
                                                  'style': 'resize:none;'}),
             'comment': forms.Textarea(attrs={'id': 'comment'}),
-            'type': forms.Select(attrs={'class': 'form-control'}),
-            'status': forms.Select(attrs={'class': 'form-control'}),
-            'flat': forms.Select(attrs={'class': 'form-control'}),
+            'type': forms.Select(attrs={'class': 'form-control to_valid'}),
+            'status': forms.Select(attrs={'class': 'form-control to_valid'}),
+            'flat': forms.Select(attrs={'class': 'form-control to_valid'}),
         }

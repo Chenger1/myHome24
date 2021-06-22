@@ -30,7 +30,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="" class="btn btn-success" style="float: right;">Добавить
+                    <a href="{% url 'user_profile:create_master_request_client' request.user.pk %}" class="btn btn-success" style="float: right;">Добавить
                         заявку</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">

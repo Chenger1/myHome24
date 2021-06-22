@@ -1,0 +1,106 @@
+{% extends "user_profile_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}Новая заявка{% endblock %}
+
+{% block content %}
+{% if form.errors %}
+{% include 'errors.html' with errors=form.errors %}
+{% endif %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Новая заявка</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                          <li class="breadcrumb-item"><a href="{% url 'user_profile:list_master_requests_client' request.user.pk %}" style="color: black;">
+                                Вызов мастера</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Новая заявка</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="card card-default">
+                <div class="card-body">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="type">Тип мастера</label>
+                            {{ form.type }}
+                        </div>
+                        <div class="form-group">
+                            <label for="flat">Квартира</label>
+                            <select name="flat" id="flat" class="form-control to_valid" required>
+                                <option selected disabled value>Выберите...</option>
+                                {% for flat in form.fields.flat.queryset %}
+                                <option value="{{ flat.pk }}">{{ flat.house }}, кв.{{ flat.pk }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="date">Дата работ</label>
+                                    {{ form.date }}
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label for="time">Время работ</label>
+                                    {{ form.time }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Описание</label>
+                            {{ form.description }}
+                        </div>
+                        <button class="btn btn-success" type="submit" style="float:right;">Отправить заявку</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+<script>
+    $('.to_valid').each(function(){
+        $(this).on('change', function(){
+            if($(this).val() != ''){
+                colorize_input_valid(this);
+            }else{
+                colorize_input_invalid(this);
+            }
+        })
+    })
+</script>
+<script>
+    $('button[type=submit]').on('click', function(e){
+        $('.to_valid').each(function(){
+            if($(this).val() == '' && $(this).attr('required')){
+                e.preventDefault();
+                colorize_input_invalid(this);
+            }
+            if($('#flat').find(':selected').val() == ''){
+                e.preventDefault();
+                colorize_input_invalid($('#flat'));
+            }
+        })
+    })
+</script>
+{% endblock %}

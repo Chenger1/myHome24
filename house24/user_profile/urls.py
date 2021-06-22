@@ -14,6 +14,8 @@ urlpatterns = [
     path('logout/', user_views.LogoutClient.as_view(), name='logout_client'),
 
     #MASTER REQUESTS
-    path('master_request/<int:pk>/', master_views.ListClientMasterRequestView.as_view(),
+    path('master_request/client/<int:pk>/', master_views.ListClientMasterRequestView.as_view(),
          name='list_master_requests_client'),
+    path('master_request/client/create_request/<int:pk>/', master_views.CreateClientMasterRequestView.as_view(),
+         name='create_master_request_client'),
 ]
