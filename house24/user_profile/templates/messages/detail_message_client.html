@@ -1,0 +1,58 @@
+{% extends "user_profile_base.html" %}
+{% load static %}
+
+{% block title %}
+Сообщение
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">
+                        Сообщение
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i>Главная</a></li>
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'user_profile:list_client_messages_view' request.user.pk %}"
+                                   style="color: black;">Сообщения</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">Сообщение</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3>{{ message.title }}</h3>
+                            <h5>От: {{ message.sender }}
+                            <span style="float:right; font-size: 13px; color: #999;">{{ message.created }}</span></h5>
+                        </div>
+                        <div class="card-body">
+                            {{ message.text|safe }}
+                        </div>
+                        <div class="card-footer" style="background-color: white; border-top: 1px solid rgba(0,0,0,.125);">
+                            <a href="{% url 'user_profile:delete_message_client' message.pk %}" class="btn btn-default"><i class="far fa-trash-alt"></i> Удалить</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

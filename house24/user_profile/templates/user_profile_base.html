@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                     <span class="dropdown-item dropdown-header">Новых сообщений - {{ messages_count }}</span>
                     <div class="dropdown-divider"></div>
-                    {% for message in message %}
+                    {% for message in messages %}
                     <a href="#" class="dropdown-item">
                         {{ message.title }}
                     </a>
@@ -55,7 +55,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         У вас сейчас нет сообщений
                     </a>
                     {% endfor %}
-                    <a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">Посмотреть все сообщения</a>
+                    <a href="{% url 'user_profile:list_client_messages_view' request.user.pk %}" class="dropdown-item dropdown-footer">Посмотреть все сообщения</a>
                 </div>
             </li>
 
