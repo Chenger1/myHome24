@@ -1,7 +1,6 @@
-from django.views.generic import View, CreateView
-from django.shortcuts import render, redirect
+from django.views.generic import View
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.urls import reverse_lazy
 
 from db.models.house import MasterRequest
 
@@ -51,3 +50,12 @@ class CreateClientMasterRequestView(View):
             return redirect('user_profile:list_master_requests_client', pk=self.request.user.pk)
         else:
             return render(request, self.template_name, context={'form': form})
+
+
+class DeleteMasterRequest(View):
+    model = MasterRequest
+
+    def get(self, request, pk):
+        obj = get_object_or_404(self.model, pk=pk)
+        obj.delete()
+        return redirect('user_profile:list_master_requests_client', pk=self.request.user.pk)

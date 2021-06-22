@@ -73,7 +73,7 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm delete_instances"
-                                               href="">
+                                               href="{% url 'user_profile:delete_master_request_client' req.pk %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -102,4 +102,10 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script>
+    $(document).ready(function(){
+         confirm_deleting();
+    })
+</script>
 {% endblock %}
