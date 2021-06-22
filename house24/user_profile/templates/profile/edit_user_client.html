@@ -26,10 +26,10 @@
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
                                 <i class="fa fa-home"></i>Главная</a></li>
                             <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_owners_admin' %}"
-                                   style="color: black;">Владельцы квартир</a>
+                                <a href="{% url 'user_profile:user_profile' request.user.pk %}"
+                                   style="color: black;">Профиль</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Новый владелец</li>
+                            <li class="breadcrumb-item active" aria-current="page">Редактирование</li>
                         </ol>
                     </nav>
                 </div>
