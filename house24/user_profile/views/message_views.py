@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, DetailView
 from django.http import HttpResponse
+from django.db.models import Q
 
 from user_profile.views.mixin import ListPaginatedQuery
 from user_profile.forms.client_forms import SearchMessageForm
@@ -20,10 +21,9 @@ class ListClientMessagesView(ListPaginatedQuery):
         houses = House.objects.filter(flats__in=flats)
         sections = Section.objects.filter(flats__in=flats)
         floors = Floor.objects.filter(flats__in=flats)
-        messages = Message.objects.exclude(excluded_receivers=request.user).filter(house__in=houses,
-                                                                                   section__in=sections,
-                                                                                   floor__in=floors,
-                                                                                   flat__in=flats)
+        messages = Message.objects.exclude(excluded_receivers=request.user).filter(
+            (Q(house__in=houses) | Q(section__in=sections) | Q(floor__in=floors) | Q(flat__in=flats))
+        )
         message_for_all = Message.objects.exclude(excluded_receivers=request.user).filter(house__isnull=True,
                                                                                           section__isnull=True,
                                                                                           floor__isnull=True,
