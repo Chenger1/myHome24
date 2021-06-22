@@ -1,11 +1,11 @@
 from django.urls import path
 
-from user_profile.views import index
+from user_profile.views import user_views
 
 
 app_name = 'user_profile'
 
 
 urlpatterns = [
-    path('view/<int:pk>/', index.IndexView.as_view(), name='index')
+    path('view/<int:pk>/', user_views.UserProfileView.as_view(), name='user_profile')
 ]
