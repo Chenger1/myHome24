@@ -28,7 +28,7 @@ class ClientLoginView(LoginViewMixin):
                 form.add_error('login_data', e.args[0])
                 return render(request, self.template_name, context={'form': form})
             login(request, user)
-            if not form.cleaned_data['remember_be']:
+            if not form.cleaned_data.get('remember_be'):
                 request.session.set_expiry(0)
             return redirect('website:main_page_view')
         else:

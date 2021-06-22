@@ -2,7 +2,7 @@ from db.models.house import Message, Section, Floor, House
 
 
 def add_client_info_to_template(request):
-    if not request.user.is_staff:
+    if request.user.is_authenticated and not request.user.is_staff:
         flats = request.user.flats.all()
         houses = House.objects.filter(flats__in=flats)
         sections = Section.objects.filter(flats__in=flats)

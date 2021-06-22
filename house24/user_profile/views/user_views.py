@@ -1,6 +1,7 @@
 from django.views.generic import View, UpdateView
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib.auth import logout
 
 from db.models.user import User
 
@@ -21,3 +22,9 @@ class UpdateClientView(UpdateView):
 
     def get_success_url(self):
         return reverse_lazy('user_profile:user_profile', args=[self.request.user.pk])
+
+
+class LogoutClient(View):
+    def get(self, request):
+        logout(request)
+        return redirect('website:main_page_view')
