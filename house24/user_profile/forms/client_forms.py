@@ -77,3 +77,7 @@ class CreateMasterRequest(forms.ModelForm):
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat',
                                         'required': 'true'}),
         }
+
+
+class SearchMessageForm(forms.Form):
+    text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'text'}), required=False)

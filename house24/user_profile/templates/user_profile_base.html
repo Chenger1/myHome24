@@ -184,7 +184,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{% url 'user_profile:list_client_messages_view' request.user.pk %}"
+                           class="nav-link {% if '/user_profile/message/' in request.path %}active{% endif %}">
                             <i class="nav-icon far fa-envelope" aria-hidden="true"></i>
                             <p>Сообщения</p>
                         </a>

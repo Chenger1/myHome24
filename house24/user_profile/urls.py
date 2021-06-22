@@ -2,6 +2,7 @@ from django.urls import path
 
 from user_profile.views import user_views
 from user_profile.views import master_views
+from user_profile.views import message_views
 
 
 app_name = 'user_profile'
@@ -20,4 +21,10 @@ urlpatterns = [
          name='create_master_request_client'),
     path('master_request/client/delete_request/<int:pk>/', master_views.DeleteMasterRequest.as_view(),
          name='delete_master_request_client'),
+
+    # MESSAGE
+    path('message/client/<int:pk>/', message_views.ListClientMessagesView.as_view(),
+         name='list_client_messages_view'),
+    path('message/client/delete_messages/', message_views.ExcludeUserFromReceivingMessage.as_view(),
+         name='delete_messages_client'),
 ]
