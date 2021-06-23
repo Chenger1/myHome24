@@ -1,11 +1,12 @@
 from django.views.generic import View, UpdateView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.contrib.auth import logout
-
-from db.models.user import User
+from django.contrib.auth import logout, get_user_model
 
 from user_profile.forms.client_forms import OwnerForm
+
+
+User = get_user_model()
 
 
 class UserProfileView(View):
