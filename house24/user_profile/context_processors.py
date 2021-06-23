@@ -1,3 +1,5 @@
+from django.db.models import Q
+
 from db.models.house import Message, Section, Floor, House
 
 
@@ -7,16 +9,21 @@ def add_client_info_to_template(request):
         houses = House.objects.filter(flats__in=flats)
         sections = Section.objects.filter(flats__in=flats)
         floors = Floor.objects.filter(flats__in=flats)
-        messages = Message.objects.filter(house__in=houses,
-                                          section__in=sections,
-                                          floor__in=floors,
-                                          flat__in=flats,
-                                          with_debt=request.user.has_debt)
+        messages = Message.objects.exclude(excluded_receivers=request.user).filter(
+            (Q(house__in=houses) | Q(section__in=sections) | Q(floor__in=floors) | Q(flat__in=flats))
+        )
+        message_for_all = Message.objects.exclude(excluded_receivers=request.user).filter(house__isnull=True,
+                                                                                          section__isnull=True,
+                                                                                          floor__isnull=True,
+                                                                                          flat__isnull=True)
+        instances = messages | message_for_all
+        if not request.user.has_debt:
+            instances = instances.exclude(with_debt=True)
         return {
             'houses': houses,
             'flats': flats,
-            'messages': messages,
-            'messages_count': messages.count()
+            'messages': instances[:10],
+            'messages_count': instances.count()
         }
     else:
         return {}
