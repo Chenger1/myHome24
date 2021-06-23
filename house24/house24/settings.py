@@ -60,6 +60,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'admin_panel.middleware.AdminCheckMiddleware',
+    'user_profile.middleware.CheckUserProfileAccess'
 ]
 
 ROOT_URLCONF = 'house24.urls'
