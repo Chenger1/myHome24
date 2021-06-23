@@ -42,7 +42,7 @@ class CreateMessageView(AdminPermissionMixin, CreateView):
 class CreateMessageWithDebtView(CreateMessageView):
     def get_form(self, form_class=None):
         if self.request.POST:
-            form = self.form_class(request.POST)
+            form = self.form_class(self.request.POST)
         else:
             form = self.form_class(initial={'with_debt': True})
         return form
