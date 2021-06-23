@@ -14,7 +14,7 @@ class ClientLoginView(LoginViewMixin):
 
     def get(self, request):
         if request.user.is_authenticated:
-            return redirect(self.redirect_url, pk=request.user.pk)
+            return redirect('user_profile:user_profile', pk=request.user.pk)
         else:
             form = self.form()
             return render(request, self.template_name, context={'form': form})
