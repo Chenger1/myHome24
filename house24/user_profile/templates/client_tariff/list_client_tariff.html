@@ -1,0 +1,72 @@
+{% extends "user_profile_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}Тарифы - {{ flat.house }}, кв.{{ flat }}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Тарифы - {{ flat.house }}, кв.{{ flat }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Тарифы - {{ flat.house }}, кв.{{ flat }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-striped linkedRow">
+                                <thead>
+                                <tr>
+                                    <th style="min-width: 250px;">
+                                        Услуга
+                                    </th>
+                                    <th style="min-width: 150px;">
+                                        Ед. изм.
+                                    </th>
+                                    <th style="min-width: 150px;">
+                                        Цена за ед., грн.
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for service in tariff.services.all %}
+                                <tr>
+                                    <td>{{ service.service }}</td>
+                                    <td>{{ service.service.measure.measure_name }}</td>
+                                    <td>{{ service.price }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="10">Ничего не найдено</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

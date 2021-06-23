@@ -185,12 +185,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% elif '/admin/tariffs/index/' in request.path %}display:block;
                             {% elif '/admin/contacts/index/' in request.path %}display:block;
                             {% endif %}">
+                            {% for flat in flats %}
                             <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Главная страница</p>
+                                <a href="{% url 'user_profile:list_tariffs_client' flat.pk %}" class="nav-link">
+                                    <i class="far fa-file-alt"></i>
+                                    <p>{{ flat.house }}, кв.{{ flat }} </p>
                                 </a>
                             </li>
+                            {% endfor %}
                         </ul>
                     </li>
                     <li class="nav-item">

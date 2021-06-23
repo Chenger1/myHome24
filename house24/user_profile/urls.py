@@ -3,6 +3,7 @@ from django.urls import path
 from user_profile.views import user_views
 from user_profile.views import master_views
 from user_profile.views import message_views
+from user_profile.views import tariff_views
 
 
 app_name = 'user_profile'
@@ -31,4 +32,7 @@ urlpatterns = [
          name='client_detail_message'),
     path('message/client/delete_message/<int:pk>/', message_views.ExcludeMessage.as_view(),
          name='delete_message_client'),
+
+    # TARIFFS
+    path('tariffs/client/<int:pk>/', tariff_views.ListTariffView.as_view(), name='list_tariffs_client'),
 ]
