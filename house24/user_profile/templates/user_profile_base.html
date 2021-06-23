@@ -61,7 +61,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                    {% if request.user.photo %}
+                    <img src="{{ request.user.photo.url }}" alt="" style="width: 20px; height: 20px; border-radius: 50%;">
+                    {% else %}
                     <i class="fa fa-user-circle text-purple"></i>
+                    {% endif %}
                     <span>
                         {% if request.user.last_name %}
                             {{ request.user.first_name }} {{ request.user.last_name }}
@@ -73,8 +77,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="dropdown-menu dropdown-menu-lg" style="left: inherit; right: 0px;">
                     <div class="menu-header"
                          style="padding-bottom: 50px; background-color: #f39c12; color:white; padding-top:15px;">
-                <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"
-                         style="font-size: 78px;"></i></span>
+                <span>
+                    {% if request.user.photo %}
+                    <img src="{{ request.user.photo.url }}" alt="" class="photo_image" style="width: 120px; height: 120px; float:none;">
+                    {% else %}
+                    <i class="fa fa-user-circle text-purple bg-gray-light img-circle"
+                         style="font-size: 78px;"></i>
+                    {% endif %}
+                </span>
                         <p>{% if request.user.last_name %}
                             {{ request.user.first_name }} {{ request.user.last_name }}
                         {% else %}

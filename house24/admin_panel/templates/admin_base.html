@@ -75,6 +75,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         {% else %}
                             {{ request.user }}
                         {% endif %}</p>
+                        <p>{{ request.user.role }}</p>
                     </div>
                     <div class="menu-footer" style="padding: 10px;">
                         <div class="row text-center" style="background-color: #F9F9F9">

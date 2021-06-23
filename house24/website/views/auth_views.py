@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.core.exceptions import ValidationError
+from django.urls import reverse_lazy
 
 from website.forms.auth_forms import ClientLoginForm
 
@@ -10,7 +11,6 @@ from common.mixin import LoginViewMixin
 class ClientLoginView(LoginViewMixin):
     template_name = 'auth/client_login.html'
     form = ClientLoginForm
-    redirect_url = 'user_profile:user_profile'
 
     def get(self, request):
         if request.user.is_authenticated:
@@ -30,6 +30,6 @@ class ClientLoginView(LoginViewMixin):
             login(request, user)
             if not form.cleaned_data.get('remember_be'):
                 request.session.set_expiry(0)
-            return redirect('website:main_page_view')
+            return redirect('user_profile:user_profile', pk=user.pk)
         else:
             return render(request, self.template_name, context={'form': form})
