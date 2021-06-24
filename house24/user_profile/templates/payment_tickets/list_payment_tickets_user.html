@@ -2,7 +2,13 @@
 {% load static %}
 {% load beautify_line %}
 
-{% block title %}Квитанции - {{ flat.house }}, кв.{{ flat }}{% endblock %}
+{% block title %}
+{% if flat %}
+Квитанции - {{ flat.house }}, кв.{{ flat }}
+{% else %}
+Квитанции на оплату
+{% endif %}
+{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -10,14 +16,26 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Квитанции - {{ flat.house }}, кв.{{ flat }}</h1>
+                    <h1 class="m-0">
+                        {% if flat %}
+                        Квитанции - {{ flat.house }}, кв.{{ flat }}
+                        {% else %}
+                        Квитанции на оплату
+                        {% endif %}
+                    </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
                                 <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Квитанции - {{ flat.house }}, кв.{{ flat }}</li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                {% if flat %}
+                                Квитанции - {{ flat.house }}, кв.{{ flat }}
+                                {% else %}
+                                Квитанции на оплату
+                                {% endif %}
+                            </li>
                         </ol>
                     </nav>
                 </div>
@@ -31,8 +49,19 @@
             <div class="row">
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
+                        <div class="card-header">
+                            {% if flat %}
+                                <a href="{% url 'user_profile:list_payment_tickets_client_by_flat' flat.pk %}" class="btn btn-default"
+                                style="float:right;">Очистить</a>
+                            {% else %}
+                                <a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="btn btn-default"
+                                style="float:right;">Очистить</a>
+                            {% endif %}
+                        </div>
                         <div class="card-body card-body table-responsive p-0">
-                            <table class="table table-striped linkedRow">
+                            <form action="" method="get">
+                                {% csrf_token %}
+                                <table class="table table-striped linkedRow">
                                 <thead>
                                 <tr>
                                     <th>№ квитанции</th>
@@ -40,12 +69,18 @@
                                     <th class="text-center">Статус</th>
                                     <th>Сумма</th>
                                 </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>{{ form.start }}</th>
+                                    <td>{{ form.status }}</td>
+                                    <td></td>
+                                </tr>
                                 </thead>
                                 <tbody>
                                 {% for ticket in instances %}
                                 <tr>
                                     <td>{{ ticket.number }}</td>
-                                    <td>{{ ticket.created }}</td>
+                                    <td>{{ ticket.start }}</td>
                                     <td class="text-center">
                                         {% if ticket.status == 0 %}
                                         <a href="">
@@ -70,6 +105,7 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -82,4 +118,10 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        submit_form_after_keypress()
+    })
+</script>
 {% endblock %}

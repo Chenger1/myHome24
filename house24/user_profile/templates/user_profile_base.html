@@ -158,10 +158,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <i class="fas fa-angle-left right"></i>
                         </a>
                         <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                    <a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="nav-link">
+                                        <i class="far fa-copy"></i>
+                                        <p>Все квитанции</p>
+                                    </a>
+                                </li>
                             {% for flat in flats %}
                                 <li class="nav-item">
-                                    <a href="{% url 'user_profile:list_payment_tickets_client' flat.pk %}" class="nav-link">
-                                        <i class="far fa-circle nav-icon"></i>
+                                    <a href="{% url 'user_profile:list_payment_tickets_client_by_flat' flat.pk %}" class="nav-link">
+                                        <i class="far fa-file-alt"></i>
                                         <p>{{ flat.house }}, кв.{{ flat }}</p>
                                     </a>
                                 </li>

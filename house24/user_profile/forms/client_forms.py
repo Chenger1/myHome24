@@ -81,3 +81,17 @@ class CreateMasterRequest(forms.ModelForm):
 
 class SearchMessageForm(forms.Form):
     text = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'text'}), required=False)
+
+
+class SearchTicketsForm(forms.Form):
+    status_choices = [
+        ('', 'Выберите'),
+        (0, 'Оплачена'),
+        (1, 'Частично оплачена'),
+        (2, 'Неоплачена')
+    ]
+
+    start = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'id': 'date', 'type': 'date'}),
+                            required=False)
+    status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control', 'id': 'status'}),
+                               required=False, choices=status_choices)

@@ -38,6 +38,8 @@ urlpatterns = [
     path('tariffs/client/<int:pk>/', tariff_views.ListTariffView.as_view(), name='list_tariffs_client'),
 
     # PAYMENT TICKETS
+    path('payment_tickets/client/by_flat/<int:pk>/', payment_ticket_views.ListPaymentTicketsByFlatView.as_view(),
+         name='list_payment_tickets_client_by_flat'),
     path('payment_tickets/client/<int:pk>/', payment_ticket_views.ListPaymentTicketsView.as_view(),
          name='list_payment_tickets_client')
 ]
