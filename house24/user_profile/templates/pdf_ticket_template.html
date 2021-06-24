@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Квитанция</title>
+</head>
+<body>
+	<div class="container">
+		<h1 style="text-align: center;">Система управления "Мой дом24"</h1>
+		<div>
+			<strong>Квитанция на оплату</strong>
+			<strong style="float: right;">Номер квитанции: {{ ticket.number }} </strong>
+		</div>
+		<div style="float:right;">
+			<strong>Дата: {{ ticket.created }}</strong>
+		</div>
+		<div style="margin-top: 15px;">
+			<h4>Квартира: {{ ticket.house }}, {{ ticket.section }},
+			{{ ticket.floor }}, квартира №{{ ticket.flat }}</h4>
+			<h4>Получатель: {{ ticket.flat.owner }}</h4>
+		</div>
+		<div>
+			{% if ticket.services %}
+						<h3 style="text-align: center;">Услуги</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Услуга</th>
+						<th>Тариф</th>
+						<th>Ед. изм</th>
+						<th>Расход</th>
+						<th>Сумма, грн.</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for service in ticket.services.all %}
+						<tr>
+							<td>{{ service.service.name }}</td>
+							<td>{{ service.service.tariff }}</td>
+							<td>{{ service.service.measure.measure_name }}</td>
+							<td>{{ service.outcome }}</td>
+							<td>{{ service.cost }}</td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td colspan="4"
+						style="text-align: right;">
+							<strong>Всего к оплате:</strong>
+						</td>
+						<td>
+							<strong>{{ ticket.total_cost }}</strong>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			{% endif %}
+		</div>
+		<div>
+			<strong>Номер лицевого счета: {{ ticket.flat.account }}</strong>
+			<strong style="float:right;">Оплатить до: {{ ticket.end }}</strong>
+		</div>
+	</div>
+</body>
+</html>

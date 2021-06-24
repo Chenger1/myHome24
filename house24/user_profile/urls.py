@@ -6,6 +6,8 @@ from user_profile.views import message_views
 from user_profile.views import tariff_views
 from user_profile.views import payment_ticket_views
 
+from common.render_pdf import RenderPdfTemplate
+
 
 app_name = 'user_profile'
 
@@ -44,4 +46,6 @@ urlpatterns = [
          name='list_payment_tickets_client'),
     path('payment_tickets/client/ticket/<int:pk>/', payment_ticket_views.PaymentTicketDetailClintView.as_view(),
          name='payment_ticket_detail_client'),
+    path('payment_tickets/client/ticket/download/', RenderPdfTemplate.as_view(),
+         name='render_pdf_template_client'),
 ]

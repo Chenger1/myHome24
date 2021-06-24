@@ -78,8 +78,13 @@
                         </div>
                         <div class="card-footer">
                             <div style="float:right;">
-                                <a href="" class="btn btn-warning" style="color: white;"><i class="far fa-file-pdf"></i> Скачать в PDF</a>
-                                <a href="" class="btn btn-success"><i class="far fa-credit-card"></i> Оплатить</a>
+                                <form action="{% url 'user_profile:render_pdf_template_client' %}" method="get">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="ticket_pk" value="{{ ticket.pk }}">
+                                    <button class="btn btn-warning" style="color: white;"
+                                    type="submit"><i class="far fa-file-pdf"></i> Скачать в PDF</button>
+                                    <a href="" class="btn btn-success"><i class="far fa-credit-card"></i> Оплатить</a>
+                                </form>
                             </div>
                         </div>
                     </div>

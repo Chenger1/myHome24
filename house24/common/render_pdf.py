@@ -22,8 +22,11 @@ class RenderPdfTemplate(PDFView):
 
     def get(self, request, *args, **kwargs):
         self.ticket = get_object_or_404(PaymentTicket, pk=request.GET.get('ticket_pk'))
-        self.template = get_object_or_404(TicketTemplate, pk=request.GET.get('html_template'))
-        self.template_name = self.template.file.name.split('/')[-1]
+        if request.GET.get('html_template'):
+            self.template = get_object_or_404(TicketTemplate, pk=request.GET.get('html_template'))
+            self.template_name = self.template.file.name.split('/')[-1]
+        else:
+            self.template_name = 'pdf_ticket_template.html'
         if request.GET.get('send'):
             self.to_response = False
         return super().get(request, *args, *kwargs)
