@@ -1,0 +1,93 @@
+{% extends "user_profile_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}
+Просмотр квитанции: #{{ ticket.number }}
+{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">
+                        Просмотр квитанции: #{{ ticket.number }}
+                    </h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" style="color: black;">
+                                Квитанции</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Просмотр квитанции: #{{ ticket.number }}
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <a href="" class="btn btn-primary" style="float:right;"><i class="fas fa-print"></i> Распечатать</a>
+                        </div>
+                        <div class="card-body card-body table-responsive p-0">
+                                <table class="table table-striped linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Услуга</th>
+                                    <th>Количество потребления (расход)</th>
+                                    <th>Ед. изм.</th>
+                                    <th>Цена за ед., грн</th>
+                                    <th>Стоимость, грн</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for service in ticket.services.all %}
+                                <tr>
+                                    <td>{{ service.pk }}</td>
+                                    <td>{{ service.service }}</td>
+                                    <td>{{ service.outcome }}</td>
+                                    <td>{{ service.service.measure.measure_name }}</td>
+                                    <td>{{ service.unit_price }}</td>
+                                    <td>{{ service.cost }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="10">Ничего не найдено</td>
+                                </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td colspan="5"></td>
+                                    <td><strong>Итого: {{ ticket.sum }} грн.</strong></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <div style="float:right;">
+                                <a href="" class="btn btn-warning" style="color: white;"><i class="far fa-file-pdf"></i> Скачать в PDF</a>
+                                <a href="" class="btn btn-success"><i class="far fa-credit-card"></i> Оплатить</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}

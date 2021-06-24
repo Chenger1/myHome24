@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic import DetailView
 
 from user_profile.views.mixin import ListPaginatedQuery
 from user_profile.forms.client_forms import SearchTicketsForm
@@ -46,3 +47,9 @@ class ListPaymentTicketsView(ListPaginatedQuery):
             instances = instances.order_by('-pk')
         return render(request, self.template_name, context={'instances': self.get_paginated_query(instances, page),
                                                             'form': form})
+
+
+class PaymentTicketDetailClintView(DetailView):
+    model = PaymentTicket
+    template_name = 'payment_tickets/detail_payment_ticket_client.html'
+    context_object_name = 'ticket'
