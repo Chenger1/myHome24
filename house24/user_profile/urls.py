@@ -4,6 +4,7 @@ from user_profile.views import user_views
 from user_profile.views import master_views
 from user_profile.views import message_views
 from user_profile.views import tariff_views
+from user_profile.views import payment_ticket_views
 
 
 app_name = 'user_profile'
@@ -35,4 +36,8 @@ urlpatterns = [
 
     # TARIFFS
     path('tariffs/client/<int:pk>/', tariff_views.ListTariffView.as_view(), name='list_tariffs_client'),
+
+    # PAYMENT TICKETS
+    path('payment_tickets/client/<int:pk>/', payment_ticket_views.ListPaymentTicketsView.as_view(),
+         name='list_payment_tickets_client')
 ]

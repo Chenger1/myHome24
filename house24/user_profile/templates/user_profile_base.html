@@ -152,24 +152,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="" class="nav-link">
+                        <a href="{}" class="nav-link">
                             <i class="nav-icon far fa-copy" aria-hidden="true"></i>
                             <p>Квитанции</p>
                             <i class="fas fa-angle-left right"></i>
                         </a>
-                        <ul class="nav nav-treeview" style=
-                            "{% if '/admin/main_page/index/' in request.path %}display:block;
-                            {% elif '/admin/about/index/' in request.path %}display:block;
-                            {% elif '/admin/services/index/' in request.path %}display:block;
-                            {% elif '/admin/tariffs/index/' in request.path %}display:block;
-                            {% elif '/admin/contacts/index/' in request.path %}display:block;
-                            {% endif %}">
-                            <li class="nav-item">
-                                <a href="" class="nav-link">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p>Главная страница</p>
-                                </a>
-                            </li>
+                        <ul class="nav nav-treeview">
+                            {% for flat in flats %}
+                                <li class="nav-item">
+                                    <a href="{% url 'user_profile:list_payment_tickets_client' flat.pk %}" class="nav-link">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>{{ flat.house }}, кв.{{ flat }}</p>
+                                    </a>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </li>
                     <li class="nav-item">

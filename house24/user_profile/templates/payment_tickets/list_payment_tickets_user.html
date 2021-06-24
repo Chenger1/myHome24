@@ -1,0 +1,85 @@
+{% extends "user_profile_base.html" %}
+{% load static %}
+{% load beautify_line %}
+
+{% block title %}Квитанции - {{ flat.house }}, кв.{{ flat }}{% endblock %}
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2 border_bottom" style="align-items: center;">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Квитанции - {{ flat.house }}, кв.{{ flat }}</h1>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                                <i class="fa fa-home"></i> Главная</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Квитанции - {{ flat.house }}, кв.{{ flat }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+
+
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12" style="margin-top:15px;">
+                    <div class="card card-default">
+                        <div class="card-body card-body table-responsive p-0">
+                            <table class="table table-striped linkedRow">
+                                <thead>
+                                <tr>
+                                    <th>№ квитанции</th>
+                                    <th>Дата</th>
+                                    <th class="text-center">Статус</th>
+                                    <th>Сумма</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for ticket in instances %}
+                                <tr>
+                                    <td>{{ ticket.number }}</td>
+                                    <td>{{ ticket.created }}</td>
+                                    <td class="text-center">
+                                        {% if ticket.status == 0 %}
+                                        <a href="">
+                                            <small class="label label-success">Оплачена</small>
+                                        </a>
+                                        {% elif ticket.status == 1 %}
+                                        <a href="">
+                                            <small class="label label-warning">Частично оплачена</small>
+                                        </a>
+                                        {% else %}
+                                        <a href="">
+                                            <small class="label label-danger">Неоплачена</small>
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ ticket.sum }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="10">Ничего не найдено</td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin: auto;">
+                    {% include 'pagination.html' with page=instances %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% endblock %}
