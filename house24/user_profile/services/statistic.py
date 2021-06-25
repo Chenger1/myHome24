@@ -4,7 +4,6 @@ from db.models.house import PaymentTicket
 
 import datetime
 import calendar
-import json
 
 
 class StatisticController:
@@ -22,7 +21,7 @@ class StatisticController:
             'year_outcome': self.prepare_year_outcome(),
             'outcome_by_month': self.prepare_outcome_by_month()
         }
-        return json.dumps(result)
+        return result
 
     def prepare_flat_balance(self):
         total_debt = self.tickets.filter(is_done=True, status__in=(2, 1)).aggregate(Sum('sum'))
@@ -51,14 +50,15 @@ class StatisticController:
         return self.calculate_outcome(current_year_tickets)
 
     def prepare_outcome_by_month(self):
-        result = {}
-        # for month in range(1, 13):
-        #     result[month] = self.tickets.filter(created__month=month).values('services__service__name')\
-        #         .annotate(service_sum=Sum('services__outcome'))
+        result = []
         for month in range(1, 13):
-            data = self.tickets.filter(created__month=month).values('services__service__name')\
-                .annotate(service_sum=Sum('services__outcome'))
-            result[month] = self.serializer_value_queryset(data)
+            # data = self.tickets.filter(created__month=month).values('services__service__name')\
+            #     .annotate(service_sum=Sum('services__outcome'))
+            data = self.tickets.filter(created__month=month).aggregate(service_sum=Sum('services__outcome'))
+            if data.get('service_sum'):
+                result.append(data.get('service_sum', 0))
+            else:
+                result.append(0)
         return result
 
     def calculate_outcome(self, queryset):
