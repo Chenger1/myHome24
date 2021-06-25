@@ -1,9 +1,14 @@
 from django.views.generic import View
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+
+from db.models.house import Flat
 
 
 class IndexView(View):
-    template_name = 'user_profile.html'
+    model = Flat
+    template_name = 'client_index.html'
 
     def get(self, request, pk):
-        return render(request, self.template_name, context={'pk': pk})
+        flat = get_object_or_404(self.model, pk=pk)
+
+        return render(request, self.template_name, context={'flat': flat})

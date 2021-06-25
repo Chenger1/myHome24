@@ -5,6 +5,7 @@ from user_profile.views import master_views
 from user_profile.views import message_views
 from user_profile.views import tariff_views
 from user_profile.views import payment_ticket_views
+from user_profile.views import index
 
 from common.render_pdf import RenderPdfTemplate
 
@@ -13,6 +14,8 @@ app_name = 'user_profile'
 
 
 urlpatterns = [
+    path('cabinet/flat/<int:pk>/', index.IndexView.as_view(), name='client_statistic'),
+
     # PROFILE
     path('view/<int:pk>/', user_views.UserProfileView.as_view(), name='user_profile'),
     path('view/edit/<int:pk>/', user_views.UpdateClientView.as_view(), name='edit_user_client'),
