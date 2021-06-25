@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
                     <span class="dropdown-item dropdown-header">Новых сообщений - {{ messages_count }}</span>
                     <div class="dropdown-divider"></div>
-                    {% for message in messages %}
+                    {% for message in client_messages %}
                     <a href="{% url 'user_profile:client_detail_message' message.pk %}" class="dropdown-item">
                         {{ message.title }}
                     </a>

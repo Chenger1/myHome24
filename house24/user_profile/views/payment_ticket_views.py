@@ -88,7 +88,7 @@ class CreateTransactionByTicket(View):
         form = self.form(request.POST)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.INFO, 'Ваша оплата отправлена на подтверждение')
+            messages.info(request, 'Ваша оплата отправлена на обработку')
             return redirect('user_profile:list_payment_tickets_client', pk=request.user.pk)
         else:
             ticket = get_object_or_404(PaymentTicket, pk=pk)

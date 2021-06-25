@@ -96,11 +96,4 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-{% if message %}
-    <script>
-        $(document).ready(function(){
-            alert('{{ message }}');
-        })
-    </script>
-{% endif %}
 {% endblock %}

@@ -22,7 +22,7 @@ def add_client_info_to_template(request):
         return {
             'houses': houses,
             'flats': flats,
-            'messages': instances[:10],
+            'client_messages': instances[:10],
             'messages_count': instances.count()
         }
     else:
