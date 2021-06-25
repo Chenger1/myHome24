@@ -48,4 +48,6 @@ urlpatterns = [
          name='payment_ticket_detail_client'),
     path('payment_tickets/client/ticket/download/', RenderPdfTemplate.as_view(),
          name='render_pdf_template_client'),
+    path('payment_tickets/client/ticket/<int:pk>/print/', payment_ticket_views.PrintPaymentTicketView.as_view(),
+         name='payment_ticket_print'),
 ]

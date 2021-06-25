@@ -40,7 +40,7 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
-                            <a href="" class="btn btn-primary" style="float:right;"><i class="fas fa-print"></i> Распечатать</a>
+                            <a href="{% url 'user_profile:payment_ticket_print' ticket.pk %}" class="btn btn-primary" style="float:right;"><i class="fas fa-print"></i> Распечатать</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
                                 <table class="table table-striped linkedRow">
