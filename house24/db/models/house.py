@@ -349,6 +349,17 @@ class Transaction(models.Model):
             self.payment_ticket.save()
         return super().save(*args, **kwargs)
 
+    def delete(self, using=None, keep_parents=False):
+        if self.payment_ticket:
+            total_paid = (self.payment_ticket.transactions.all()
+                          .aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0) - self.paid_sum
+            if total_paid == 0:
+                self.payment_ticket.status = 2
+            elif self.payment_ticket.sum > total_paid:
+                self.payment_ticket.status = 1
+            self.payment_ticket.save()
+        return super().delete(using, keep_parents)
+
 
 class MasterRequest(models.Model):
     type_choices = [
