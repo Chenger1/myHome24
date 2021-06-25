@@ -111,7 +111,7 @@ class CreateTransaction(forms.ModelForm):
                 'id': 'created',
             }),
             'personal_account': forms.HiddenInput(),
-            'paid_sum': forms.NumberInput(attrs={'class': 'form-control', 'id': 'sum',
+            'paid_sum': forms.NumberInput(attrs={'class': 'form-control', 'id': 'paid_sum',
                                                  'min': '0'}),
             'payment_ticket': forms.HiddenInput(),
             'payment_item_type': forms.HiddenInput(),

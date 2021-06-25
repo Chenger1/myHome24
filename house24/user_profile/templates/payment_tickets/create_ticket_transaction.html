@@ -117,4 +117,17 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+<script>
+    $(document).ready(function(){
+        const pk = $('#id_payment_ticket').val();
+        $.ajax({
+            url: '{% url "rest_api:payment_ticket_sum" %}',
+            type: 'GET',
+            data: {'pk': pk},
+        })
+        .done(function(response) {
+                $('#sum').text(response['sum'].toFixed(2));
+        })
+    })
+</script>
 {% endblock %}
