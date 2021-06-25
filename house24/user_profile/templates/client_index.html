@@ -19,11 +19,12 @@
 
     <div class="content">
         <div class="container-fluid">
+            <input type="hidden" id="flat_pk" value="{{ flat.pk }}">
             <div class="row">
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-red">
                         <div class="inner">
-                            <h3>12</h3>
+                            <h3></h3>
 
                             <p>Баланс по квартире</p>
                         </div>
@@ -39,7 +40,7 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-primary">
                         <div class="inner">
-                            <h3>12</h3>
+                            <h3></h3>
                             <p>Лицевой счет</p>
                         </div>
                         <div class="icon">
@@ -53,7 +54,7 @@
                 <div class="col-lg-4 col-sm-6 col-xs-12">
                     <div class="small-box bg-yellow">
                         <div class="inner" style="color: white;">
-                            <h3>12</h3>
+                            <h3></h3>
                             <p>Средний расход за месяц</p>
                         </div>
                         <div class="icon">
@@ -75,12 +76,14 @@
                       <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6 col-12">
+                                <h5 class="text-center">за предыдущий месяц</h5>
                                 <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                          <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 603px;" width="725" height="300" class="chartjs-render-monitor"></canvas>
+                                <canvas id="pieChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 603px;" width="725" height="300" class="chartjs-render-monitor"></canvas>
                             </div>
                             <div class="col-sm-6 col-12">
+                                <h5 class="text-center">за текущий год</h5>
                                 <div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-                          <canvas id="pieChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 603px;" width="725" height="300" class="chartjs-render-monitor"></canvas>
+                                <canvas id="pieChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 603px;" width="725" height="300" class="chartjs-render-monitor"></canvas>
                             </div>
                         </div>
                       </div>
@@ -122,6 +125,18 @@
 <script src="{% static 'admin_panel/plugins/chart.js/Chart.min.js' %}"></script>
 <script>
     $(document).ready(function(){
+        const flat_pk = $('#flat_pk').val();
+        $.ajax({
+            method: 'GET',
+            url: '{% url "user_profile:get_statistic" %}',
+            data: {'pk': flat_pk} 
+        })
+        .done(response){
+            
+        }
+
+
+
         var donutData        = {
           labels: [
               'Chrome',
@@ -134,7 +149,7 @@
           datasets: [
             {
               data: [700,500,400,600,300,100],
-              backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de'],
+              backgroundColor : ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de',],
             }
           ]
         }

@@ -15,6 +15,7 @@ app_name = 'user_profile'
 
 urlpatterns = [
     path('cabinet/flat/<int:pk>/', index.IndexView.as_view(), name='client_statistic'),
+    path('cabinet/flat/statistic/', index.GetStatistic.as_view(), name='get_statistic'),
 
     # PROFILE
     path('view/<int:pk>/', user_views.UserProfileView.as_view(), name='user_profile'),
