@@ -223,6 +223,18 @@
             })
         })
 
+        const pk = $('#payment_ticket').find(':selected').val();
+        if(pk){
+            $.ajax({
+                url: '{% url "rest_api:payment_ticket_sum" %}',
+                type: 'GET',
+                data: {'pk': pk}, 
+            })
+            .done(function(response){
+                $('#sum').text(response['sum'].toFixed(2));
+            })
+        }
+
         $('#payment_ticket').on('change', function(){
             const pk = $(this).find(':selected').val();
             $.ajax({
@@ -231,7 +243,7 @@
                 data: {'pk': pk},
             })
             .done(function(response) {
-                $('#sum').text(response['sum']);
+                $('#sum').text(response['sum'].toFixed(2));
             }) 
         })
     })
