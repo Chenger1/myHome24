@@ -68,6 +68,7 @@
                                     <th>Дата</th>
                                     <th class="text-center">Статус</th>
                                     <th>Сумма</th>
+                                    <th>Остаток</th>
                                 </tr>
                                 <tr>
                                     <th></th>
@@ -97,6 +98,12 @@
                                         {% endif %}
                                     </td>
                                     <td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.sum }}</a></td>
+                                    <td class="ticket_sum_td">
+                                        <input type="hidden" value="{{ ticket.pk }}" class="ticket_pk">
+                                        <a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">
+                                            <strong class="sum"></strong>
+                                        </a>
+                                    </td>
                                 </tr>
                                 {% empty %}
                                 <tr>
@@ -121,7 +128,20 @@
 <script src="{% static 'admin_panel/js/utils.js' %}"></script>
 <script>
     $(document).ready(function(){
-        submit_form_after_keypress()
+        submit_form_after_keypress();
+
+        $('.ticket_pk').each(function(){
+            const pk = $(this).val();
+            const closest = $(this).closest('.ticket_sum_td');
+            $.ajax({
+                url: '{% url "rest_api:payment_ticket_sum" %}',
+                type: 'GET',
+                data: {'pk': pk},
+            })
+            .done(function(response) {
+                    $(closest).find('.sum').text(response['sum'].toFixed(2));
+            })
+        })
     })
 </script>
 {% endblock %}
