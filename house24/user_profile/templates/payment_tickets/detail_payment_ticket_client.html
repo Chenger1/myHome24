@@ -19,7 +19,7 @@
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+                            <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
                                 <i class="fa fa-home"></i> Главная</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" style="color: black;">
                                 Квитанции</a></li>
