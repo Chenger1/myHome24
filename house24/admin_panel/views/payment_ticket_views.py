@@ -163,7 +163,8 @@ class DuplicatePaymentTicket(AdminPermissionMixin, View):
 
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
-        form = self.form_class(instance=obj, initial={'number':generate_next_instance_number(self.model)},
+        form = self.form_class(instance=obj, initial={'number': generate_next_instance_number(self.model),
+                                                      'status': 2},
                                **{'house_pk': obj.house.pk})
         formset = self.formset_class(instance=obj)
         return render(request, self.template_name, context={'form': form,
