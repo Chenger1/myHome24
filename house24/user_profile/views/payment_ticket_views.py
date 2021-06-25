@@ -1,10 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, View
+from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 from user_profile.views.mixin import ListPaginatedQuery
-from user_profile.forms.client_forms import SearchTicketsForm
+from user_profile.forms.client_forms import SearchTicketsForm, CreateTransaction
 
-from db.models.house import Flat, PaymentTicket
+from db.models.house import Flat, PaymentTicket, Transaction, PaymentItem
+from db.services.utils import generate_next_instance_number
 
 
 class ListPaymentTicketsByFlatView(ListPaginatedQuery):
@@ -62,3 +65,30 @@ class PrintPaymentTicketView(View):
     def get(self, request, pk):
         ticket = get_object_or_404(self.model, pk=pk)
         return render(request, self.template_name, context={'ticket': ticket})
+
+
+class CreateTransactionByTicket(View):
+    model = Transaction
+    template_name = 'payment_tickets/create_ticket_transaction.html'
+    form = CreateTransaction
+
+    def get(self, request, pk):
+        ticket = get_object_or_404(PaymentTicket, pk=pk)
+        form = self.form(initial={'number': generate_next_instance_number(self.model),
+                                  'owner': request.user,
+                                  'personal_account': ticket.personal_account,
+                                  'payment_ticket': ticket,
+                                  'payment_item_type': PaymentItem.objects.get(default_income_type=True)})
+        return render(request, self.template_name, context={'form': form,
+                                                            'ticket': ticket})
+
+    def post(self, request, pk):
+        form = self.form(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.INFO, 'Ваша оплата отправлена на подтверждение')
+            return redirect('user_profile:list_payment_tickets_client', pk=request.user.pk)
+        else:
+            ticket = get_object_or_404(PaymentTicket, pk=pk)
+            return render(request, self.template_name, context={'form': form,
+                                                                'ticket': ticket})

@@ -271,6 +271,7 @@ class PaymentItem(models.Model):
 
     name = models.CharField(max_length=100)
     type = models.IntegerField(choices=type_choices)
+    default_income_type = models.BooleanField(default=False)
 
     def __str__(self):
         return self.name

@@ -50,4 +50,6 @@ urlpatterns = [
          name='render_pdf_template_client'),
     path('payment_tickets/client/ticket/<int:pk>/print/', payment_ticket_views.PrintPaymentTicketView.as_view(),
          name='payment_ticket_print'),
+    path('payment_tickets/client/ticket/<int:pk>/payment/',
+         payment_ticket_views.CreateTransactionByTicket.as_view(), name='create_client_transaction_by_ticket'),
 ]

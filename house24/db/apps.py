@@ -10,9 +10,15 @@ def create_role_instances(sender, **kwargs):
             Role.objects.create(name=name)
 
 
+def create_payment_item_instance(sender, **kwargs):
+    from db.models.house import PaymentItem
+    PaymentItem.objects.create(name='Основной приход', type=0, default_income_type=True)
+
+
 class DbConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'db'
 
     def ready(self):
         post_migrate.connect(create_role_instances, sender=self)
+        post_migrate.connect(create_payment_item_instance, sender=self)

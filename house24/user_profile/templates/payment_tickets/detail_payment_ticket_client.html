@@ -83,7 +83,8 @@
                                     <input type="hidden" name="ticket_pk" value="{{ ticket.pk }}">
                                     <button class="btn btn-warning" style="color: white;"
                                     type="submit"><i class="far fa-file-pdf"></i> Скачать в PDF</button>
-                                    <a href="" class="btn btn-success"><i class="far fa-credit-card"></i> Оплатить</a>
+                                    <a href="{% url 'user_profile:create_client_transaction_by_ticket' ticket.pk %}"
+                                       class="btn btn-success"><i class="far fa-credit-card"></i> Оплатить</a>
                                 </form>
                             </div>
                         </div>
@@ -95,4 +96,11 @@
 </div>
 
 <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+{% if message %}
+    <script>
+        $(document).ready(function(){
+            alert('{{ message }}');
+        })
+    </script>
+{% endif %}
 {% endblock %}

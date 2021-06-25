@@ -1,7 +1,7 @@
 from django import forms
 
 from db.models.user import User
-from db.models.house import MasterRequest
+from db.models.house import MasterRequest, Transaction
 
 import datetime
 
@@ -63,7 +63,7 @@ class CreateMasterRequest(forms.ModelForm):
                 'type': "date",
                 'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                 'class': "form-control to_valid",
-                'id': 'type'
+                'id': 'created'
             }),
             'time':  forms.TimeInput(format=('%H:%M'), attrs={
                 'type': "time",
@@ -95,3 +95,25 @@ class SearchTicketsForm(forms.Form):
                             required=False)
     status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control', 'id': 'status'}),
                                required=False, choices=status_choices)
+
+
+class CreateTransaction(forms.ModelForm):
+    class Meta:
+        model = Transaction
+        fields = ('number', 'created', 'owner', 'personal_account', 'paid_sum', 'payment_ticket',
+                  'payment_item_type')
+        widgets = {
+            'number': forms.HiddenInput(),
+            'created': forms.DateInput(format=('%Y-%m-%d'), attrs={
+                'type': "date",
+                'value': datetime.datetime.now().strftime('%Y-%m-%d'),
+                'class': "form-control to_valid",
+                'id': 'created',
+            }),
+            'personal_account': forms.HiddenInput(),
+            'paid_sum': forms.NumberInput(attrs={'class': 'form-control', 'id': 'sum',
+                                                 'min': '0'}),
+            'payment_ticket': forms.HiddenInput(),
+            'payment_item_type': forms.HiddenInput(),
+            'owner': forms.HiddenInput()
+        }
