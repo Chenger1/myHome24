@@ -27,9 +27,10 @@ class ListPaymentTicketsByFlatView(ListPaginatedQuery):
                 instances = instances.filter(status=form.cleaned_data.get('status'))
         else:
             instances = flat.tickets.all().order_by('-pk')
-        return render(request, self.template_name, context={'instances': self.get_paginated_query(instances, page),
-                                                            'flat': flat,
-                                                            'form': form})
+        return render(request, self.template_name,
+                      context={'instances': self.get_paginated_query(instances.order_by('-pk'), page),
+                               'flat': flat,
+                               'form': form})
 
 
 class ListPaymentTicketsView(ListPaginatedQuery):
@@ -48,8 +49,9 @@ class ListPaymentTicketsView(ListPaginatedQuery):
                 instances = instances.filter(status=form.cleaned_data.get('status'))
         else:
             instances = instances.order_by('-pk')
-        return render(request, self.template_name, context={'instances': self.get_paginated_query(instances, page),
-                                                            'form': form})
+        return render(request, self.template_name,
+                      context={'instances': self.get_paginated_query(instances.order_by('-pk'), page),
+                               'form': form})
 
 
 class PaymentTicketDetailClintView(DetailView):
