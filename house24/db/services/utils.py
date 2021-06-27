@@ -22,7 +22,7 @@ def generate_next_user_number(model):
     User = get_user_model()
     last = User.objects.filter(is_staff=False).last()
     if last:
-        next_number = last.pk + 1
+        next_number = int(last.number) + 1
     else:
         next_number = 1
     return f'000{next_number}'
