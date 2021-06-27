@@ -28,11 +28,12 @@ class CreateMessageForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'form-control to_valid', 'id': 'title',
                                             'placeholder': 'Тема сообщения:'}),
             'text': forms.Textarea(attrs={'id': 'text', 'class': 'form-control'}),
-            'house': forms.Select(attrs={'class': 'form-control', 'id': 'house'}),
-            'section': forms.Select(attrs={'class': 'form-control', 'id': 'section'}),
-            'floor': forms.Select(attrs={'class': 'form-control', 'id': 'floor'}),
-            'flat': forms.Select(attrs={'class': 'form-control', 'id': 'flat'}),
-            'with_debt': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'with_debt'})
+            'house': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
+            'section': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
+            'floor': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
+            'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
+            'with_debt': forms.CheckboxInput(attrs={'class': 'form-check-input', 'id': 'with_debt'}),
+            'owner': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'owner'})
         }
 
 

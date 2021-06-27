@@ -101,6 +101,8 @@
                                                                 {% if message.flat %},
                                                                 <a href="{% url 'admin_panel:detail_flat_admin' message.flat.pk %}">Квартира №{{ message.flat }}</a>
                                                                 {% endif %}
+                                                            {% elif message.owner %}
+                                                                <a href="{% url 'admin_panel:detail_owner_admin' message.owner.pk %}">{{ message.owner }}</a>
                                                             {% else %}
                                                                 Всем
                                                             {% endif %}

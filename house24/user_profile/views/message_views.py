@@ -27,8 +27,10 @@ class ListClientMessagesView(ListPaginatedQuery):
         message_for_all = Message.objects.exclude(excluded_receivers=request.user).filter(house__isnull=True,
                                                                                           section__isnull=True,
                                                                                           floor__isnull=True,
-                                                                                          flat__isnull=True)
-        instances = messages | message_for_all
+                                                                                          flat__isnull=True,
+                                                                                          owner__isnull=True)
+        message_for_owner = Message.objects.filter(owner=request.user)
+        instances = messages | message_for_all | message_for_owner
         if not request.user.has_debt:
             instances = instances.exclude(with_debt=True)
         page = request.GET.get('page')

@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.db.models import ObjectDoesNotExist
+from django.contrib.auth import get_user_model
 
 from db.models.house import Message, InviteMessage
 from db.services.search import MessageSearch
@@ -45,6 +46,29 @@ class CreateMessageWithDebtView(CreateMessageView):
             form = self.form_class(self.request.POST)
         else:
             form = self.form_class(initial={'with_debt': True})
+        return form
+
+
+class CreateMessageForOwner(CreateMessageView):
+    model = Message
+    form_class = CreateMessageForm
+    template_name = 'message/create_message_for_owner.html'
+    context_object_name = 'form'
+    success_url = reverse_lazy('admin_panel:list_messages_admin')
+    owner = None
+
+    def get(self, request, *args, **kwargs):
+        self.owner = kwargs.get('pk')
+        return super().get(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST)
+        else:
+            owners = get_user_model().objects.filter(is_staff=False)
+            owner = owners.get(pk=self.owner)
+            form = self.form_class(initial={'owner': owner})
+            form.fields['owner'].queryset = owners
         return form
 
 

@@ -46,7 +46,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <span class="dropdown-item dropdown-header">Новых пользователей - {{ new_users_count }}</span>
                     <div class="dropdown-divider"></div>
                     {% for new_user in new_users_query %}
-                    <a href="#" class="dropdown-item">
+                    <a href="{% url 'admin_panel:detail_owner_admin' new_user.pk %}" class="dropdown-item" style="text-overflow: ellipsis; overflow: hidden;">
                         {{ new_user.full_name }}
                     </a>
                     {% endfor %}

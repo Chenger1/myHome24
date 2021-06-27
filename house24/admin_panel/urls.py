@@ -277,6 +277,8 @@ urlpatterns = [
     path('message/index/create_message/', message_views.CreateMessageView.as_view(), name='create_message_admin'),
     path('message/index/create_message_with_debt/', message_views.CreateMessageWithDebtView.as_view(),
          name='create_message_with_debt_admin'),
+    path('message/index/create_message_for_owner/<int:pk>/', message_views.CreateMessageForOwner.as_view(),
+         name='create_message_for_owner'),
     path('message/index/delete_messages/', message_views.DeleteMessagesView.as_view(), name='delete_messages_admin'),
     path('message/index/detail_message/<int:pk>/', message_views.DetailMessageView.as_view(),
          name='detail_message_admin'),
