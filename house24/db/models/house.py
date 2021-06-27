@@ -398,6 +398,7 @@ class Message(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     sender = models.ForeignKey(User, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
     excluded_receivers = models.ManyToManyField(User, related_name='excluded', blank=True)
+    owner = models.ForeignKey(User, related_name='owner_messages', on_delete=models.SET_NULL, blank=True, null=True)
 
     @property
     def message_recipient(self):
