@@ -284,5 +284,7 @@ urlpatterns = [
          name='detail_message_admin'),
     path('message/index/delete_message/<int:pk>/', message_views.DeleteMessageView.as_view(),
          name='delete_message_admin'),
-    path('message/index/invite_message/', message_views.CreateInviteMessageView.as_view(), name='create_invite_message')
+    path('message/index/invite_message/', message_views.CreateInviteMessageView.as_view(), name='create_invite_message'),
+    path('message/index/invite_message_for_user/<int:pk>/', message_views.CreateInviteMessageForUserView.as_view(),
+         name='create_invite_message_for_user'),
 ]

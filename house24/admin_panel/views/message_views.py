@@ -50,11 +50,7 @@ class CreateMessageWithDebtView(CreateMessageView):
 
 
 class CreateMessageForOwner(CreateMessageView):
-    model = Message
-    form_class = CreateMessageForm
     template_name = 'message/create_message_for_owner.html'
-    context_object_name = 'form'
-    success_url = reverse_lazy('admin_panel:list_messages_admin')
     owner = None
 
     def get(self, request, *args, **kwargs):
@@ -99,3 +95,20 @@ class CreateInviteMessageView(AdminPermissionMixin, CreateView):
     form_class = CreateInviteMessageForm
     success_url = reverse_lazy('admin_panel:list_owners_admin')
     template_name = 'message/create_invite_message.html'
+
+
+class CreateInviteMessageForUserView(CreateInviteMessageView):
+    user = None
+    success_url = reverse_lazy('admin_panel:list_users_admin')
+
+    def get(self, request, *args, **kwargs):
+        self.user = kwargs.get('pk')
+        return super().get(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST)
+        else:
+            user = get_object_or_404(get_user_model(), pk=self.user)
+            form = self.form_class(initial={'phone': user.phone_number})
+        return form
