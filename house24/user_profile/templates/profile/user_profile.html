@@ -188,6 +188,12 @@
                                     </div>
                             </div>
                         </div>
+                    {% empty %}
+                        <div class="card card-default">
+                            <div class="card-body">
+                                <h5 class="text-center">У вас пока что нет квартир</h5>
+                            </div>
+                        </div>
                     {% endfor %}
                 </div>
             </div>

@@ -24,7 +24,8 @@ class CreateClientMasterRequestView(View):
     form = CreateMasterRequest
 
     def get(self, request, pk):
-        form = self.form(initial={'flat': self.request.user.flats.all()})
+        form = self.form()
+        form.fields['flat'].queryset = request.user.flats.all()
         return render(request, self.template_name, context={'form': form})
 
     def post(self, request, pk):
