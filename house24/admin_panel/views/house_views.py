@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.forms.house_forms import (HouseSearchForm, CreateHouseForm, SectionFormset, UserFormset,
-                                           FloorFormset)
+                                           FloorFormset, create_floor_formset)
 from admin_panel.permission_mixin import AdminPermissionMixin
 
 from db.models.house import House, Floor
@@ -84,9 +84,13 @@ class UpdateHouseView(AdminPermissionMixin, View):
         inst = get_object_or_404(self.model, pk=pk)
         form = CreateHouseForm(instance=inst)
         section_formset = SectionFormset(instance=inst)
-        house_floors = Floor.objects.filter(section__house=inst)
-        floor_formset = FloorFormset(prefix='floors', queryset=house_floors)
-        floor_formset.form.base_fields['section'].queryset = inst.sections.all()
+        section_queryset = inst.sections.all()
+        floor_queryset = Floor.objects.filter(section__in=section_queryset)
+        floor_formset = create_floor_formset(floor_queryset=floor_queryset,
+                                             section_queryset=section_queryset)
+        # floor_formset = FloorFormset(prefix='floors')
+        # floor_formset.form.base_fields['sections'].queryset = inst.sections.all()
+        # Floor.objects.filter(section__in=section_queryset).annotate(sections=F('section__pk')).values_list('sections', flat=True).distinct()
         user_formset = UserFormset(instance=inst, prefix='users')
 
         return render(request, self.template_name, context={'form': form,
@@ -104,7 +108,23 @@ class UpdateHouseView(AdminPermissionMixin, View):
             form.save()
             section_formset.save()
             user_formset.save()
-            floor_formset.save()
+            for floor_form in floor_formset.forms:
+                if floor_form.cleaned_data['DELETE']:
+                    #  If we delete floor from house at all  we have to find all similar floors in this house
+                    #  and delete them all
+                    floors = Floor.objects.filter(section__in=floor_form.cleaned_data['sections'],
+                                                  name=floor_form['name'], section__house=inst)
+                    floors.delete()
+                    continue
+                for section in floor_form.cleaned_data['sections']:
+                    #  if floor already exists in section - get, otherwise - create
+                    floor, is_created = Floor.objects.get_or_create(name=floor_form.cleaned_data['name'],
+                                                                    section=section)
+                floors = Floor.objects.filter(section__in=inst.sections.all(), name=floor_form.cleaned_data['name'])\
+                    .exclude(section__in=floor_form.cleaned_data['sections'])
+                floors.delete()
+                # if there are no section in form cleaned data - section doesnt contains this floor anymore
+
             return redirect(self.redirect_url)
         else:
             return render(request, self.template_name, context={'form': form,

@@ -239,7 +239,7 @@
                                                         <div class="col-12 col-sm-6">
                                                             <label for="">Секция</label>
                                                             <div class="input-group">
-                                                                {{ floor_formset.empty_form.section }}
+                                                                {{ floor_formset.empty_form.sections }}
                                                                 <span class="input-group-btn">
                                                                     <button type="button"
                                                                             class="btn btn-danger delete_icon_floors"><i
@@ -263,7 +263,8 @@
                                                         <div class="col-12 col-sm-6">
                                                             <label for="">Секция</label>
                                                             <div class="input-group">
-                                                                {{ inline_form.section }}
+                                                                {{ inline_form.sections }}
+
                                                                 <span class="input-group-btn">
                                                                     <button type="button"
                                                                             class="btn btn-danger delete_icon_floors has_pk"
@@ -413,6 +414,20 @@
 
 </script>
 <script>
+    function setOptionSelecting(selector){
+        $(selector).each(function(){
+            $(this).find('option').each(function(){
+                $(this).mousedown(function(e){
+                    e.preventDefault();
+                    $(this).prop('selected', !$(this).prop('selected'));
+                    return false;
+                })
+            })
+        })
+    }
+    setOptionSelecting('.section_select');
+</script>
+<script>
 // Section init
     let section_cloner = new BaseCloner('sections', '.section_formset');
     section_cloner.init();
@@ -420,7 +435,7 @@
         section_cloner.clone();
     })
 // Floor init
-    let floor_cloner = new BaseCloner('floors', '.floor_formset');
+    let floor_cloner = new FormsetClonerWithCallback('floors', '.floor_formset', setOptionSelecting);
     floor_cloner.init();
     $('#add_floors').on('click', function(){
         floor_cloner.clone();

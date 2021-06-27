@@ -1,4 +1,5 @@
 from django import forms
+from django.db.models import F
 
 from db.models.house import House, Section, Floor, HouseUser
 from db.models.user import User
@@ -35,16 +36,13 @@ class SectionForm(forms.ModelForm):
         fields = ('name', )
 
 
-class FloorForm(forms.ModelForm):
+class FloorForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control to_valid'}),
                            required=False)
-    section = forms.ModelChoiceField(queryset=Section.objects.all(),
-                                     widget=forms.Select(attrs={'class': 'form-control to_valid'}),
-                                     required=False)
-
-    class Meta:
-        model = Floor
-        fields = '__all__'
+    sections = forms.ModelMultipleChoiceField(queryset=Section.objects.all(),
+                                              widget=forms.SelectMultiple(attrs={'class': 'form-control to_valid section_select',
+                                                                                 'multiple': 'true'}),
+                                              required=False)
 
 
 class HouseUserForm(forms.ModelForm):
@@ -60,7 +58,20 @@ class HouseUserForm(forms.ModelForm):
 SectionFormset = forms.inlineformset_factory(House, Section,
                                              form=SectionForm, can_delete=True, extra=0)
 
-FloorFormset = forms.modelformset_factory(model=Floor, form=FloorForm, can_delete=True, extra=0)
+FloorFormset = forms.formset_factory(form=FloorForm, can_delete=True)
 
 UserFormset = forms.inlineformset_factory(parent_model=House, model=HouseUser, form=HouseUserForm,
                                           extra=0, can_delete=True)
+
+
+def create_floor_formset(floor_queryset, section_queryset):
+    # Floor.objects.filter(name=3).annotate(sections=F('section__pk')).values_list('sections', flat=True).distinct()
+    floor_queryset_distinct = floor_queryset.distinct('name')
+    formset_factory = forms.formset_factory(form=FloorForm, can_delete=True, extra=floor_queryset_distinct.count())
+    formset = formset_factory(prefix='floors')
+    for form, floor in zip(formset.forms, floor_queryset_distinct):
+        form.fields['name'].initial = floor.name
+        form.fields['sections'].queryset = section_queryset
+        form.fields['sections'].initial = floor_queryset.filter(name=floor.name)\
+            .annotate(sections=F('section__pk')).values_list('sections', flat=True).distinct()
+    return formset
