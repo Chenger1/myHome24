@@ -46,7 +46,7 @@ urlpatterns = [
     # PAYMENT TICKETS
     path('payment_tickets/client/by_flat/<int:pk>/', payment_ticket_views.ListPaymentTicketsByFlatView.as_view(),
          name='list_payment_tickets_client_by_flat'),
-    path('payment_tickets/client/<int:pk>/', payment_ticket_views.ListPaymentTicketsView.as_view(),
+    path('payment_tickets/client/all/<int:pk>/', payment_ticket_views.ListPaymentTicketsView.as_view(),
          name='list_payment_tickets_client'),
     path('payment_tickets/client/ticket/<int:pk>/', payment_ticket_views.PaymentTicketDetailClintView.as_view(),
          name='payment_ticket_detail_client'),

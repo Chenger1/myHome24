@@ -123,7 +123,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     data-accordion="false">
                     <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
-                    <li class="nav-item">
+                    <li class="nav-item
+                    {% if '/user_profile/cabinet/flat/' in request.path %}menu-is-opening menu-open{% endif %}">
                         <a href="" class="nav-link">
                             <i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
                             <p>Сводка</p>
@@ -140,7 +141,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% endfor %}
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item
+                    {% if '/user_profile/payment_tickets/client/' in request.path %}menu-is-opening menu-open{% endif %}">
                         <a href="{}" class="nav-link">
                             <i class="nav-icon far fa-copy" aria-hidden="true"></i>
                             <p>Квитанции</p>
@@ -148,7 +150,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </a>
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
-                                    <a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="nav-link">
+                                    <a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="nav-link
+                                    {% if '/user_profile/payment_tickets/client/all/' in request.path %}active{% endif %}">
                                         <i class="far fa-copy"></i>
                                         <p>Все квитанции</p>
                                     </a>
@@ -163,7 +166,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             {% endfor %}
                         </ul>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item
+                    {% if '/user_profile/tariffs/client/' in request.path %}menu-is-opening menu-open{% endif %}">
                         <a href="" class="nav-link">
                             <i class="nav-icon far fa-money-bill-alt" aria-hidden="true"></i>
                             <p>Тарифы</p>
@@ -241,7 +245,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
 </body>
 <script>
-  let mini = $('#logo-mini').first();
+$(document).ready(function(){
+      let mini = $('#logo-mini').first();
   let lg = $('#logo-lg').first();
 
   $('#push').on('click', function(){
@@ -267,5 +272,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           $(mini).css('display', 'block');
         }
   })
+   $('a[class=nav-link][href="'+  window.location.pathname +'"]').addClass('active');
+   // look for link with current path. Set 'active' class for it
+})
 </script>
 </html>
