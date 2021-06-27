@@ -94,7 +94,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="menu-footer" style="padding: 10px;">
                         <div class="row text-center" style="background-color: #F9F9F9">
                             <div class="col">
-                                <a href="" class="btn btn-default btn-flat">Профиль</a>
+                                <a href="{% url 'user_profile:user_profile' request.user.pk %}" class="btn btn-default btn-flat">Профиль</a>
                             </div>
                             <div class="col">
                                 <a href="{% url 'user_profile:logout_client' %}" class="btn btn-default btn-flat">Выйти</a>
