@@ -65,7 +65,7 @@ UserFormset = forms.inlineformset_factory(parent_model=House, model=HouseUser, f
 
 
 def create_floor_formset(floor_queryset, section_queryset):
-    floor_queryset_distinct = floor_queryset.distinct('name')
+    floor_queryset_distinct = floor_queryset.distinct('name')  # otherwise we will se duplicates on page
     formset_factory = forms.formset_factory(form=FloorForm, can_delete=True, extra=floor_queryset_distinct.count())
     formset = formset_factory(prefix='floors')
     for form, floor in zip(formset.forms, floor_queryset_distinct):
@@ -73,4 +73,5 @@ def create_floor_formset(floor_queryset, section_queryset):
         form.fields['sections'].queryset = section_queryset
         form.fields['sections'].initial = floor_queryset.filter(name=floor.name)\
             .annotate(sections=F('section__pk')).values_list('sections', flat=True).distinct()
+        # sections that contain this floor are selected.
     return formset
