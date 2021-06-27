@@ -295,6 +295,25 @@
                 colorize_input_invalid(this);
             }
         })
+
+        if($('.active_form').attr('id') == 'measure_form'){
+            let inputs = $('.measure_formset').find('input').not(':hidden');
+            let values = [];
+            for(input of inputs){
+                values.push($(input).val());
+            }
+            values.sort();
+            for(i=1; i<=values.length-1; i++){
+                if(values[i] == values[i-1]){
+                    trigger=false;
+                    $(document).Toasts('create', {
+                        class: 'bg-danger',
+                        title: 'Ошибка уникальности',
+                        body: 'Название ед. изм. не уникальны'
+                    })
+                }
+            }
+        }
         if(trigger){
             $('.active_form').first().submit();
         }
