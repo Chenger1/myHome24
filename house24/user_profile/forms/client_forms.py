@@ -72,7 +72,7 @@ class CreateMasterRequest(forms.ModelForm):
                 'id': 'time'
             }),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
-                                                 'style': 'resize:none;', 'id': 'description'}),
+                                                 'style': 'resize:none;', 'id': 'description', 'maxlength': '2000'}),
             'type': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'type'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat',
                                         'required': 'true'}),

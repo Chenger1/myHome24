@@ -57,7 +57,7 @@
                             <p>{{ page.description|safe }}</p>
                             <div class="row" style="align-items:center;">
                                 <div class="col-4">
-                                    <a href="" class="btn btn-primary">Подробнее</a>
+                                    <a href="{% url 'website:about_page_view' %}" class="btn btn-primary">Подробнее</a>
                                 </div>
                                 {% if page.show_link %}
                                 <div class="col-8">

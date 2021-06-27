@@ -26,7 +26,7 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">
+                    <h1 class="m-0 word-break">
                         {{ house }}
                     </h1>
                 </div><!-- /.col -->
@@ -59,10 +59,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-4">
-                                    <table class="table table-bordered table-striped table-view">
+                                    <table class="table table-bordered table-striped table-view" style="table-layout:fixed;">
                                         <tr>
                                             <td>Название</td>
-                                            <td>{{ house }}</td>
+                                            <td class="word-break">{{ house }}</td>
                                         </tr>
                                         <tr>
                                             <td>Адрес</td>

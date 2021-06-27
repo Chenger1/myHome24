@@ -28,7 +28,7 @@ class MainPage(SingletonModel):
 class InfoBlock(models.Model):
     entity = models.ForeignKey(MainPage, related_name='blocks', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='main_page/block/',  blank=True, null=True)
-    title = models.CharField(max_length=100,  blank=True, null=True)
+    title = models.CharField(max_length=150,  blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     def get_files(self):
@@ -42,7 +42,7 @@ class AboutPage(SingletonModel):
     seo_title = models.CharField(max_length=150, blank=True, null=True)
     seo_description = models.TextField(blank=True, null=True)
     seo_keywords = models.CharField(max_length=150, blank=True, null=True)
-    additional_title = models.CharField(max_length=100, blank=True, null=True)
+    additional_title = models.CharField(max_length=50, blank=True, null=True)
     additional_description = models.TextField(blank=True, null=True)
 
     def get_files(self):
@@ -76,7 +76,7 @@ class AdditionalGallery(models.Model):
 
 class Document(models.Model):
     entity = models.ForeignKey(AboutPage, related_name='documents', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=150)
     file = models.FileField(upload_to='about/documents/')
 
     def get_files(self):
@@ -97,13 +97,13 @@ class Credentials(SingletonModel):
 class ContactsPage(SingletonModel):
     phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
 
-    title = models.CharField(max_length=100, blank=True, null=True)
+    title = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
-    full_name = models.CharField(max_length=100, blank=True, null=True)
+    full_name = models.CharField(max_length=150, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(max_length=100, validators=[phone_validation], blank=True, null=True)
-    email = models.EmailField(max_length=150, blank=True, null=True)
+    phone = models.CharField(max_length=30, validators=[phone_validation], blank=True, null=True)
+    email = models.EmailField(max_length=70, blank=True, null=True)
     link = models.CharField(max_length=100, blank=True, null=True)
     map = models.TextField(blank=True, null=True)
     seo_title = models.CharField(max_length=150, blank=True, null=True)
@@ -126,7 +126,7 @@ class ServicesPage(SingletonModel):
 class ServiceBlock(models.Model):
     entity = models.ForeignKey(ServicesPage, related_name='blocks', on_delete=models.CASCADE)
     image = models.ImageField(upload_to='services_page/', blank=True, null=True)
-    title = models.CharField(max_length=100, blank=True, null=True)
+    title = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     def get_files(self):

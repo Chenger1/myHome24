@@ -202,7 +202,7 @@ class OwnerForm(forms.ModelForm):
             'status': forms.Select(attrs={'id': 'status', 'class': 'form-control to_valid'}),
             'email': forms.EmailInput(attrs={'id': 'email', 'class': 'form-control to_valid'}),
             'about': forms.Textarea(attrs={'id': 'about', 'class': 'form-control to_valid',
-                                           'style': 'height: 299px;'}),
+                                           'style': 'height: 299px;', 'maxlength': '2000'}),
             'photo': forms.FileInput(attrs={'id': 'photo', 'class': 'form-control-file to_valid'}),
             'number': forms.NumberInput(attrs={'id': 'number', 'class': 'form-control to_valid', 'min': '0'})
         }

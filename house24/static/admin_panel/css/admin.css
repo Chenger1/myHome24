@@ -246,6 +246,14 @@ select{
     color:#843534!important;
 }
 
+.word_break{
+    word-break: break-word;
+}
+
+.word_break_all{
+    word-break: break-all;
+}
+
 @media screen and (max-width: 766px){
     .profile_img{
         margin: 0 auto 15px;

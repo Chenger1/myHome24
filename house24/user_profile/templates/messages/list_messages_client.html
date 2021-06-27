@@ -89,8 +89,10 @@
 
                                                         </td>
                                                         <td>
-                                                            <strong style="color: black!important;">{{ message.title }}</strong> -
+                                                            <a href="{% url 'user_profile:client_detail_message' message.pk %}">
+                                                                <strong style="color: black!important;">{{ message.title }}</strong> -
                                                                 {{ message.text|safe|striptags|truncatewords:10 }}
+                                                            </a>
                                                         </td>
                                                         <td>{{ message.created }}</td>
                                                     </tr>

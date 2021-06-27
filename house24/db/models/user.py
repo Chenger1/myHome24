@@ -14,7 +14,7 @@ def get_dir_name(instance, filename):
 class Role(models.Model):
     reserved_names = ('Директор', 'Управляющий', 'Бухгалтер', 'Электрик', 'Сантехник')
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=30)
     statistic = models.BooleanField(default=1)
     account_transaction = models.BooleanField(default=1)
     ticket = models.BooleanField(default=1)
@@ -90,7 +90,7 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
-    phone_number = models.CharField(max_length=50, validators=[phone_validation])
+    phone_number = models.CharField(max_length=30, validators=[phone_validation])
     birthday = models.DateField(blank=True, null=True)
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
 
@@ -113,11 +113,11 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
 class User(CustomAbstractUser):
     role = models.ForeignKey(Role, related_name='admin_roles', on_delete=models.CASCADE, blank=True, null=True)
     photo = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
-    patronym = models.CharField(max_length=100, blank=True, null=True)
-    viber = models.CharField(max_length=100, blank=True, null=True)
-    telegram = models.CharField(max_length=100, blank=True, null=True)
+    patronym = models.CharField(max_length=50, blank=True, null=True)
+    viber = models.CharField(max_length=30, blank=True, null=True)
+    telegram = models.CharField(max_length=30, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
-    number = models.CharField(max_length=100, blank=True, null=True)
+    number = models.CharField(max_length=20, blank=True, null=True)
 
     def get_files(self):
         return [self.photo] if self.photo else None

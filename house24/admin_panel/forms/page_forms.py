@@ -34,7 +34,7 @@ class InfoBlockForm(forms.ModelForm):
                                             'accept': '.png, .jpeg, .jpg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'id': 'block_description', 'class': 'form-control',
-                                                 'style': 'resize:none;'}),
+                                                 'style': 'resize:none;', 'maxlength': '500'}),
         }
 
 
@@ -122,7 +122,7 @@ class ServicesBlockForm(forms.ModelForm):
                                             'accept': '.png, .jpeg, .jpg'}),
             'title': forms.TextInput(attrs={'id': 'title', 'class': 'form-control'}),
             'description': forms.Textarea(attrs={'id': 'block_description', 'class': 'form-control block_desc',
-                                                 'style': 'resize:none;'}),
+                                                 'style': 'resize:none;', 'maxlength': '1000'}),
         }
 
 

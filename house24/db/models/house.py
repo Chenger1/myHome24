@@ -12,8 +12,8 @@ def get_dir_name(instance, filename):
 
 
 class House(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=75)
     image1 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
     image2 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
     image3 = models.ImageField(upload_to=get_dir_name, blank=True, null=True)
@@ -49,7 +49,7 @@ class HouseUser(models.Model):
 
 class Section(models.Model):
     house = models.ForeignKey(House, related_name='sections', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
@@ -57,7 +57,7 @@ class Section(models.Model):
 
 class Floor(models.Model):
     section = models.ForeignKey(Section, related_name='floors', on_delete=models.CASCADE)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
@@ -77,7 +77,7 @@ class Measure(models.Model):
 
 
 class Service(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
     measure = models.ForeignKey(Measure, related_name='services', on_delete=models.CASCADE, blank=True, null=True)
     status = models.BooleanField(default=1)
 
@@ -92,7 +92,7 @@ class Service(models.Model):
 
 
 class Tariff(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
     description = models.TextField()
     updated = models.DateField(auto_now=True)
 
@@ -269,7 +269,7 @@ class PaymentItem(models.Model):
         (1, 'Расход')
     ]
 
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
     type = models.IntegerField(choices=type_choices)
     default_income_type = models.BooleanField(default=False)
 
@@ -388,7 +388,7 @@ class MasterRequest(models.Model):
 
 
 class Message(models.Model):
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=100)
     text = models.TextField(blank=True, null=True)
     house = models.ForeignKey(House, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
     section = models.ForeignKey(Section, related_name='messages', on_delete=models.SET_NULL, blank=True, null=True)
@@ -411,7 +411,7 @@ class Message(models.Model):
 
 
 class TicketTemplate(models.Model):
-    name = models.CharField(max_length=150)
+    name = models.CharField(max_length=50)
     file = models.FileField(upload_to='file_templates/')
     is_default = models.BooleanField(default=False)
 
@@ -420,6 +420,6 @@ class TicketTemplate(models.Model):
 
 
 class InviteMessage(models.Model):
-    phone = models.CharField(max_length=100)
+    phone = models.CharField(max_length=30)
     text = models.CharField(max_length=150)
     created = models.DateTimeField(auto_now_add=True)

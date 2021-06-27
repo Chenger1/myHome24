@@ -94,5 +94,6 @@ class CreateOutcomeForm(forms.ModelForm):
             'status': forms.CheckboxInput(attrs={'class': 'form-check-input to_valid',
                                                  'id': 'status'}),
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
-                                                 'id': 'description', 'style': 'resize:none;'})
+                                                 'id': 'description', 'style': 'resize:none;',
+                                                 'maxlength': '2000'})
         }
