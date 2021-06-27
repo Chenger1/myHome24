@@ -237,15 +237,18 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:duplicate_payment_ticket' ticket.pk %}">
+                                               href="{% url 'admin_panel:duplicate_payment_ticket' ticket.pk %}"
+                                            title="Копировать">
                                                 <i class="fa fa-clone"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:update_payment_ticket_admin' ticket.pk %}">
+                                               href="{% url 'admin_panel:update_payment_ticket_admin' ticket.pk %}"
+                                            title="Редактировать">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
-                                               href="{% url 'admin_panel:delete_payment_ticket_admin' ticket.pk %}">
+                                               href="{% url 'admin_panel:delete_payment_ticket_admin' ticket.pk %}"
+                                            title="Удалить">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>

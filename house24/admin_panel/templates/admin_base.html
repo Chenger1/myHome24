@@ -58,11 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
                     <i class="fa fa-user-circle text-purple"></i>
                     <span>
-                        {% if request.user.last_name %}
-                            {{ request.user.first_name }} {{ request.user.last_name }}
-                        {% else %}
-                            {{ request.user }}
-                        {% endif %}
+                        {{ request.user|truncatechars:30 }}
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg" style="left: inherit; right: 0px;">
@@ -70,11 +66,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                          style="padding-bottom: 50px; background-color: #f39c12; color:white; padding-top:15px;">
                 <span><i class="fa fa-user-circle text-purple bg-gray-light img-circle"
                          style="font-size: 78px;"></i></span>
-                        <p>{% if request.user.last_name %}
-                            {{ request.user.first_name }} {{ request.user.last_name }}
-                        {% else %}
-                            {{ request.user }}
-                        {% endif %}</p>
+                        <p>{{ request.user }}</p>
                         <p>{{ request.user.role }}</p>
                     </div>
                     <div class="menu-footer" style="padding: 10px;">

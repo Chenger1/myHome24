@@ -188,15 +188,18 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:create_message_for_owner' user.pk %}">
+                                               href="{% url 'admin_panel:create_message_for_owner' user.pk %}"
+                                            title="Отправить сообщение">
                                                 <i class="fas fa-envelope"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:update_owner_admin' user.pk %}">
+                                               href="{% url 'admin_panel:update_owner_admin' user.pk %}"
+                                            title="Редактировать">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
-                                               href="{% url 'admin_panel:delete_owner_admin' user.pk %}">
+                                               href="{% url 'admin_panel:delete_owner_admin' user.pk %}"
+                                            title="Удалить">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>

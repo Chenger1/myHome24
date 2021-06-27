@@ -68,11 +68,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <i class="fa fa-user-circle text-purple"></i>
                     {% endif %}
                     <span>
-                        {% if request.user.last_name %}
-                            {{ request.user.first_name }} {{ request.user.last_name }}
-                        {% else %}
-                            {{ request.user }}
-                        {% endif %}
+                        {{ request.user|truncatechars:30 }}
                     </span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg" style="left: inherit; right: 0px;">
@@ -86,11 +82,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                          style="font-size: 78px;"></i>
                     {% endif %}
                 </span>
-                        <p>{% if request.user.last_name %}
-                            {{ request.user.first_name }} {{ request.user.last_name }}
-                        {% else %}
-                            {{ request.user }}
-                        {% endif %}</p>
+                        <p>{{ request.user }}</p>
                     </div>
                     <div class="menu-footer" style="padding: 10px;">
                         <div class="row text-center" style="background-color: #F9F9F9">

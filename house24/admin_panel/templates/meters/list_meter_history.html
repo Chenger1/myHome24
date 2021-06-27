@@ -154,11 +154,13 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:update_meter_admin' meter.pk %}">
+                                               href="{% url 'admin_panel:update_meter_admin' meter.pk %}"
+                                            title="Редактировать">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
-                                               href="{% url 'admin_panel:delete_meter_admin' meter.pk meter.flat.pk %}">
+                                               href="{% url 'admin_panel:delete_meter_admin' meter.pk meter.flat.pk %}"
+                                            title="Удалить">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>

@@ -105,11 +105,13 @@
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm" target="_blank"
-                                               href="{% url 'admin_panel:duplicate_meter_admin' meter.pk %}">
+                                               href="{% url 'admin_panel:duplicate_meter_admin' meter.pk %}"
+                                            title="Снять новое показание счетчика">
                                                 <i class="fas fa-tachometer-alt"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}">
+                                               href="{% url 'admin_panel:list_meter_history' meter.flat.pk %}"
+                                            title="Показать историю показаний для счетчика">
                                                 <i class="fas fa-eye"></i>
                                             </a>
                                         </div>
