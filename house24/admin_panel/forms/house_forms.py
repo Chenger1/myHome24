@@ -65,7 +65,6 @@ UserFormset = forms.inlineformset_factory(parent_model=House, model=HouseUser, f
 
 
 def create_floor_formset(floor_queryset, section_queryset):
-    # Floor.objects.filter(name=3).annotate(sections=F('section__pk')).values_list('sections', flat=True).distinct()
     floor_queryset_distinct = floor_queryset.distinct('name')
     formset_factory = forms.formset_factory(form=FloorForm, can_delete=True, extra=floor_queryset_distinct.count())
     formset = formset_factory(prefix='floors')

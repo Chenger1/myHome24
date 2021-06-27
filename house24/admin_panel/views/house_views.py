@@ -88,9 +88,6 @@ class UpdateHouseView(AdminPermissionMixin, View):
         floor_queryset = Floor.objects.filter(section__in=section_queryset)
         floor_formset = create_floor_formset(floor_queryset=floor_queryset,
                                              section_queryset=section_queryset)
-        # floor_formset = FloorFormset(prefix='floors')
-        # floor_formset.form.base_fields['sections'].queryset = inst.sections.all()
-        # Floor.objects.filter(section__in=section_queryset).annotate(sections=F('section__pk')).values_list('sections', flat=True).distinct()
         user_formset = UserFormset(instance=inst, prefix='users')
 
         return render(request, self.template_name, context={'form': form,
@@ -113,7 +110,7 @@ class UpdateHouseView(AdminPermissionMixin, View):
                     #  If we delete floor from house at all  we have to find all similar floors in this house
                     #  and delete them all
                     floors = Floor.objects.filter(section__in=floor_form.cleaned_data['sections'],
-                                                  name=floor_form['name'], section__house=inst)
+                                                  name=floor_form.cleaned_data['name'], section__house=inst)
                     floors.delete()
                     continue
                 for section in floor_form.cleaned_data['sections']:
