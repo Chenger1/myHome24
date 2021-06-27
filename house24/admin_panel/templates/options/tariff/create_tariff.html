@@ -215,9 +215,11 @@
     $('.service_select').each(function(){
         let select_measure = $(this).closest('.formset').find('select[name=measure]');
         let selected = $(this).find(':selected').attr('value');
-        $(this).closest('.formset').find('.currency').val('грн.');
-        send_request('{% url "admin_panel:get_service_measure" %}', selected, select_measure);
-        setEvent(this, '.formset');
+        if(selected){
+            $(this).closest('.formset').find('.currency').val('грн.');
+            send_request('{% url "admin_panel:get_service_measure" %}', selected, select_measure);
+            setEvent(this, '.formset');
+        }
     })
     $('.to_valid').each(function(){
         $(this).on('change', function(){

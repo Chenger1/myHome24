@@ -449,15 +449,17 @@
     $('.users_select').each(function(){
         let selected_role = $(this).closest('.users_formset').find('.user_role');
         let selected = $(this).find(':selected').attr('value');
-        $.ajax({
-            url: '{% url "admin_panel:get_user_role" %}',
-            type: 'GET',
-            data: {'pk': selected},
+        if(selected){
+            $.ajax({
+                url: '{% url "admin_panel:get_user_role" %}',
+                type: 'GET',
+                data: {'pk': selected},
                 })
-        .done(function(response) {
-            console.log(response)
-            $(selected_role).val(response['role']);
-         })
+            .done(function(response) {
+                console.log(response)
+                $(selected_role).val(response['role']);
+            })
+        }
         setEvent(this, '.users_formset');
     })
 
