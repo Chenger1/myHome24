@@ -64,7 +64,7 @@ class Floor(models.Model):
 
 
 class Measure(models.Model):
-    measure_name = models.CharField(max_length=50)
+    measure_name = models.CharField(max_length=50, unique=True)
 
     @property
     def service_exists(self):
@@ -269,7 +269,7 @@ class PaymentItem(models.Model):
         (1, 'Расход')
     ]
 
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     type = models.IntegerField(choices=type_choices)
     default_income_type = models.BooleanField(default=False)
 
