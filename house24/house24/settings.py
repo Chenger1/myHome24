@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'house24.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('POSTGRES_DB', os.path.join(BASE_DIR, "house_db")),
+        'NAME': os.environ.get('POSTGRES_DB', 'house_db'),
         'USER': os.environ.get('POSTGRES_USER', 'nitron'),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '0660'), # temporary user and password. Doesnt important absolutely
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
