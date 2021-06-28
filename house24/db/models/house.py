@@ -113,11 +113,11 @@ class TariffService(models.Model):
 class Flat(models.Model):
     number = models.IntegerField()
     square = models.IntegerField(blank=True, null=True)
-    owner = models.ForeignKey(User, related_name='flats', on_delete=models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey(User, related_name='flats', on_delete=models.SET_NULL, blank=True, null=True)
     house = models.ForeignKey(House, related_name='flats', on_delete=models.CASCADE)
-    section = models.ForeignKey(Section, related_name='flats', on_delete=models.CASCADE, blank=True, null=True)
-    floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.CASCADE, blank=True, null=True)
-    tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.CASCADE, blank=True, null=True)
+    section = models.ForeignKey(Section, related_name='flats', on_delete=models.SET_NULL, blank=True, null=True)
+    floor = models.ForeignKey(Floor, related_name='flats', on_delete=models.SET_NULL, blank=True, null=True)
+    tariff = models.ForeignKey(Tariff, related_name='flats', on_delete=models.SET_NULL, blank=True, null=True)
 
     def get_flat_balance(self):
         if not hasattr(self, 'account'):
@@ -136,9 +136,9 @@ class PersonalAccount(models.Model):
 
     number = models.IntegerField()
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
-    house = models.ForeignKey(House, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
-    section = models.ForeignKey(Section, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
-    floor = models.ForeignKey(Floor, related_name='accounts', on_delete=models.CASCADE, blank=True, null=True)
+    house = models.ForeignKey(House, related_name='accounts', on_delete=models.SET_NULL, blank=True, null=True)
+    section = models.ForeignKey(Section, related_name='accounts', on_delete=models.SET_NULL, blank=True, null=True)
+    floor = models.ForeignKey(Floor, related_name='accounts', on_delete=models.SET_NULL, blank=True, null=True)
     flat = models.OneToOneField(Flat, related_name='account', on_delete=models.SET_NULL, blank=True, null=True)
 
     def get_account_balance(self):
