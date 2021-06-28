@@ -27,7 +27,7 @@ class SectionList(generics.ListAPIView):
             queryset = self.model.objects.filter(house__pk=house)
         else:
             queryset = []
-        return queryset.order_by('-name')
+        return queryset.order_by('name')
 
 
 class FloorList(generics.ListAPIView):
@@ -40,7 +40,7 @@ class FloorList(generics.ListAPIView):
             queryset = self.model.objects.filter(section__pk=section)
         else:
             queryset = []
-        return queryset.order_by('-name')
+        return queryset.order_by('name')
 
 
 class FlatList(generics.ListAPIView):
@@ -53,7 +53,7 @@ class FlatList(generics.ListAPIView):
             queryset = self.model.objects.filter(floor__pk=flat)
         else:
             queryset = []
-        return queryset.order_by('-number')
+        return queryset.order_by('number')
 
 
 class GetTariffServices(View):
