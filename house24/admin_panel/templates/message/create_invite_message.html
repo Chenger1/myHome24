@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-Пригласить владельца квартир
+Пригласить пользователя
 {% endblock %}
 
 {% block content %}
@@ -15,7 +15,7 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Пригласить владельца квартир
+                        Пригласть пользователя
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
@@ -23,11 +23,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
                                 <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_owners_admin' %}"
-                                   style="color: black;">Владельцы квартир</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Пригласить владельца квартир</li>
+                            <li class="breadcrumb-item active" aria-current="page">Пригласить пользователя</li>
                         </ol>
                     </nav>
                 </div>
