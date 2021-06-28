@@ -13,7 +13,7 @@ def create_role_instances(sender, **kwargs):
 def create_payment_item_instance(sender, **kwargs):
     from db.models.house import PaymentItem
     PaymentItem.objects.get_or_create(name='Основной приход', type=0, default_income_type=True)
-    PaymentItem.objects.get_or_create(name='Основной расход', type=1, default_income_type=True)
+    PaymentItem.objects.get_or_create(name='Основной расход', type=1)
 
 
 def create_measure_instances(sender, **kwargs):

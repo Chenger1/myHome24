@@ -80,7 +80,7 @@ class CreateTransactionByTicket(View):
                                   'owner': request.user,
                                   'personal_account': ticket.personal_account,
                                   'payment_ticket': ticket,
-                                  'payment_item_type': PaymentItem.objects.get(default_income_type=True)})
+                                  'payment_item_type': PaymentItem.objects.filter(default_income_type=True).first()})
         return render(request, self.template_name, context={'form': form,
                                                             'ticket': ticket})
 
