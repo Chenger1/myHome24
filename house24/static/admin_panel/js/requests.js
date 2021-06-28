@@ -41,5 +41,5 @@ function append_select_section_floor(selector, data){
     $(selector).append('<option value='+ data['id'] +' >' + data['name'] + '</option>');
 }
 function append_select_flat(selector, data){
-    $(selector).append('<option value="'+ data['id'] +'">'+ data['number'] +'</options>');
+    $(selector).append('<option value="'+ data['id'] +'"> Кв. '+ data['number'] +'</options>');
 }
