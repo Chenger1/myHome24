@@ -341,7 +341,7 @@ class Transaction(models.Model):
     def save(self, *args, **kwargs):
         if self.payment_ticket:
             total_paid = (self.payment_ticket.transactions.all()
-                          .aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0) + self.paid_sum
+                          .aggregate(models.Sum('paid_sum'))['paid_sum__sum'] or 0) + self.paid_sum if not self.pk else 0
             if self.payment_ticket.sum <= total_paid:
                 self.payment_ticket.status = 0
             elif self.payment_ticket.sum > total_paid:
