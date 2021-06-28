@@ -68,6 +68,10 @@ urlpatterns = [
          name='update_payment_item_admin'),
     path('payment_items/index/delete_item/<int:pk>/', option_views.DeletePaymentItemView.as_view(),
          name='delete_payment_item_admin'),
+    path('payment_items/index/ascending/', option_views.PaymentItemsListViewByTypeAscending.as_view(),
+         name='payment_items_admin_ascending'),
+    path('payment_items/index/descending/', option_views.PaymentItemsListViewByTypeDescending.as_view(),
+         name='payment_items_admin_descending'),
 
     # OWNERS
     path('owners/index/', user_views.ListOwnerView.as_view(), name='list_owners_admin'),

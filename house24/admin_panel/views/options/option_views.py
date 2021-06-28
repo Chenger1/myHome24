@@ -71,6 +71,16 @@ class PaymentItemsListView(ListView):
     paginate_by = 20
 
 
+class PaymentItemsListViewByTypeAscending(PaymentItemsListView):
+    def get_queryset(self):
+        return super().get_queryset().order_by('-type')
+
+
+class PaymentItemsListViewByTypeDescending(PaymentItemsListView):
+    def get_queryset(self):
+        return super().get_queryset().order_by('type')
+
+
 class CreatePaymentItemView(CreateView):
     model = PaymentItem
     form_class = PaymentItemForm

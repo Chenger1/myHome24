@@ -43,7 +43,18 @@
                                 <thead>
                                 <tr>
                                     <th>Название</th>
-                                    <th>Приход/расход</th>
+                                    <th>
+                                        {% if 'ascending' in request.path %}
+                                        <a href="{% url 'admin_panel:payment_items_admin_descending' %}">
+                                            Приход/расход <i class="fas fa-sort-amount-down"></i></a>
+                                        {% elif 'descending' in request.path %}
+                                        <a href="{% url 'admin_panel:payment_items_admin_ascending' %}"
+                                        >Приход/расход <i class="fas fa-sort-amount-up"></i></a>
+                                        {% else %}
+                                        <a href="{% url 'admin_panel:payment_items_admin_descending' %}">
+                                            Приход/расход <i class="fas fa-sort-amount-down"></i></a>
+                                        {% endif %}
+                                    </th>
                                     <th style="width: 40px"></th>
                                 </tr>
                                 </thead>
