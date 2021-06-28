@@ -129,10 +129,20 @@
                                                 {% for flat in user.flats.all %}
                                                     <tr>
                                                         <td>{{ forloop.counter }}</td>
-                                                        <td><a href="">{{ flat.house.name }}</a></td>
+                                                        <td>
+                                                            {% if flat.house %}
+                                                            <a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}">{{ flat.house.name }}</a>
+                                                            {% endif %}
+                                                        </td>
                                                         <td>{{ flat.section.name }}</td>
-                                                        <td><a href="">{{ flat.number }}</a></td>
-                                                        <td><a href="">{{ flat.personal_account }}</a></td>
+                                                        <td>
+                                                            <a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">Кв. {{ flat.number }}</a>
+                                                        </td>
+                                                        <td>
+                                                            {% if flat.account %}
+                                                            <a href="{% url 'admin_panel:detail_account_admin' flat.account.pk %}">{{ flat.account }}</a>
+                                                            {% endif %}
+                                                        </td>
                                                     </tr>
                                                 {% endfor %}
                                             </tbody>
