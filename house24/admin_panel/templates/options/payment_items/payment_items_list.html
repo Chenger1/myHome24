@@ -51,7 +51,13 @@
                                 {% for item in items %}
                                 <tr>
                                     <td><a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}">{{ item.name }}</a></td>
-                                    <td><a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}">{{ item.get_type_display }}</a></td>
+                                    <td>
+                                        {% if item.type == 0 %}
+                                        <a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}" style="color: #00a65a !important;">Приход</a>
+                                        {% else %}
+                                        <a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}" style="color: #dd4b39 !important;">Расход</a>
+                                        {% endif %}
+                                    </td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm" href="{% url 'admin_panel:update_payment_item_admin' item.pk %}">
