@@ -183,9 +183,10 @@ class PersonalAccountPaymentTicketList(APIView):
     def get(self, request):
         account = request.GET.get('pk')
         if account:
-            queryset = self.model.objects.filter(personal_account__pk=account)
+            queryset = self.model.objects.filter(personal_account__pk=account,
+                                                 status__in=[1, 2])
         else:
-            queryset = self.model.objects.all()
+            queryset = self.model.objects.filter(status__in=[1, 2])
         return Response(self.serialize(queryset))
 
     def serialize(self, queryset):
