@@ -130,7 +130,7 @@ class AdminUserForm(forms.ModelForm):
             'phone_number': forms.TextInput(attrs={'id': 'phone', 'class': 'form-control to_valid',
                                                    'placeholder': '+380638271139'}),
             'status': forms.Select(attrs={'id': 'status', 'class': 'form-control to_valid'}),
-            'role': forms.Select(attrs={'id': 'role', 'class': 'form-control to_valid'}),
+            'role': forms.Select(attrs={'id': 'role', 'class': 'form-control to_valid', 'required': 'true'}),
             'email': forms.EmailInput(attrs={'id': 'email', 'class': 'form-control to_valid'})
         }
 

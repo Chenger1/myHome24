@@ -8,7 +8,7 @@ class ListPaginatedQuery(View):
     paginate_by = 15
 
     def get_paginated_query(self, query, current_page):
-        paginator = Paginator(query, self.paginate_by)
+        paginator = Paginator(query.order_by('-pk'), self.paginate_by)
         page = current_page
 
         try:
