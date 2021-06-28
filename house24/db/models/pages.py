@@ -95,14 +95,12 @@ class Credentials(SingletonModel):
 
 
 class ContactsPage(SingletonModel):
-    phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
-
     title = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     full_name = models.CharField(max_length=150, blank=True, null=True)
     location = models.CharField(max_length=100, blank=True, null=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    phone = models.CharField(max_length=30, validators=[phone_validation], blank=True, null=True)
+    phone = models.CharField(max_length=30, blank=True, null=True)
     email = models.EmailField(max_length=70, blank=True, null=True)
     link = models.CharField(max_length=100, blank=True, null=True)
     map = models.TextField(blank=True, null=True)

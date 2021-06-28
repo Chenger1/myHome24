@@ -85,12 +85,10 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
         (2, 'Отключен')
     ]
 
-    phone_validation = RegexValidator(regex=r'^\+\d{8,15}$', message='Неправильный формат номера.')
-
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.EmailField(max_length=100, unique=True)
-    phone_number = models.CharField(max_length=30, validators=[phone_validation])
+    phone_number = models.CharField(max_length=30)
     birthday = models.DateField(blank=True, null=True)
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
 
