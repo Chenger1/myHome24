@@ -177,7 +177,7 @@
                                         {{ transaction.payment_item_type }}
                                     </a></td>
                                     <td><a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">
-                                        {{ transaction.owner|filter_none }}
+                                        {{ transaction.owner|filter_none|truncatechars:30 }}
                                     </a></td>
                                     <td>
                                         <a href="{% url 'admin_panel:detail_transaction_admin' transaction.pk %}">{{ transaction.personal_account|filter_none }}</a>

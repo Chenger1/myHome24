@@ -161,7 +161,7 @@
                                     <td><a href="{% url 'admin_panel:detail_flat_admin' req.flat.pk %}"
                                     style="color: #007bff;">{{ req.flat }}, {{ req.flat.house }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' req.owner.pk %}"
-                                           style="color: #007bff;">{{ req.owner|filter_none }}</a></td>
+                                           style="color: #007bff;">{{ req.owner|filter_none|truncatechars:50 }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.owner.phone_number|filter_none }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_master_request_admin' req.pk %}">{{ req.master|filter_none }}</a></td>
                                     <td class="text-center">

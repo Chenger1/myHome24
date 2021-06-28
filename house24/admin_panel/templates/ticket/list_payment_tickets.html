@@ -225,7 +225,7 @@
                                             Не указано
                                         {% endif %}
                                     </td>
-                                    <td>{{ ticket.flat.owner|filter_none }}</td>
+                                    <td>{{ ticket.flat.owner|filter_none|truncatechars:30 }}</td>
                                     <td>
                                         {% if ticket.is_done %}
                                             Проведена

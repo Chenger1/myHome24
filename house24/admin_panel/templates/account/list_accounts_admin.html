@@ -151,7 +151,7 @@
                                     <td>
                                         {% if account.flat.owner %}
                                             <a href="{% url 'admin_panel:detail_owner_admin' account.flat.owner.pk %}"
-                                            style="color: #007bff;">{{ account.flat.owner.full_name|filter_none }}</a>
+                                            style="color: #007bff;">{{ account.flat.owner.full_name|filter_none|truncatechars:30 }}</a>
                                         {% else %}
                                             Не указано
                                         {% endif %}
