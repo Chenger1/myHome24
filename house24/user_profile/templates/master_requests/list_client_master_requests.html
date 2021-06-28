@@ -58,7 +58,7 @@
                                 <tr>
                                     <td>{{ req.pk }}</td>
                                     <td>{{ req.get_type_display }}</td>
-                                    <td>{{ req.description|truncatechars:30|filter_none }}</td>
+                                    <td>{{ req.description|truncatechars:80|filter_none }}</td>
                                     <td>{{req.date}} - {{ req.time }}</td>
 
                                     <td class="text-center">
