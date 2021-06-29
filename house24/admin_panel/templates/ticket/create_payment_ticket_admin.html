@@ -330,6 +330,29 @@
 
     }
 
+    function setEventForOutcomeAndUnitprice(){
+        // Initialize sum updating for services
+        $('.outcome').each(function(){
+            $(this).on('change', function(){
+                let unit_price = $(this).closest('.formset').find('.unit_price');
+                let cost = $(this).closest('.formset').find('.cost');
+                sumPrice($(this), $(unit_price), $(cost));
+                calculateTotalSum('.formset');
+            })
+        })
+
+        $('.unit_price').each(function(){
+            $(this).on('change', function(){
+                let outcome = $(this).closest('.formset').find('.outcome');
+                let cost = $(this).closest('.formset').find('.cost');
+                sumPrice($(outcome), $(this), $(cost));
+                calculateTotalSum('.formset');
+            })
+        })
+
+    }
+
+
     function calculateTotalSum(element, selector){
         let total_price = $('#total_sum'); 
         let forms = $('.formset').find('.cost').not('input[id*="__prefix__"]').not(':hidden');
@@ -430,6 +453,9 @@
                 data: {'pk': flat_pk}
             }
         }).trigger('change.select2');
+
+        setEventForOutcomeAndUnitprice();
+
     })
 </script>
 <script>
