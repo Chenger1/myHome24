@@ -27,7 +27,7 @@ class StatisticController:
         total_debt = self.tickets.filter(is_done=True, status__in=(2, 1)).aggregate(Sum('sum'))
         total_paid = self.tickets.filter(is_done=True, status__in=(0, 1)).aggregate(Sum('transactions__paid_sum'))
 
-        return (total_paid['transactions__paid_sum__sum'] or 0) - (total_debt['sum__sum'] or 0)
+        return round((total_paid['transactions__paid_sum__sum'] or 0) - (total_debt['sum__sum'] or 0), 2)
 
     def prepare_flat_account(self):
         return self.flat.account.number

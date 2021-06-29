@@ -73,7 +73,7 @@ class StatisticController:
     @staticmethod
     def prepare_transaction():
         total_debt, balance = PaymentTicket.total_balance()
-        return Transaction.total_cash(), total_debt, balance
+        return round(Transaction.total_cash(), 2), round(total_debt), round(balance)
 
     @staticmethod
     def prepare_income():
