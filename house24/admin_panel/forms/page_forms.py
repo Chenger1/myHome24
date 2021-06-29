@@ -86,7 +86,8 @@ class DocumentForm(forms.ModelForm):
         fields = ('name', 'file')
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'file': forms.FileInput(attrs={'style': 'display:block;'})
+            'file': forms.FileInput(attrs={'style': 'display:block;',
+                                           'accept': '.png, .jpeg, .jpg, .pdf, .doc, .docx, .xls, .xlsx, .txt'})
         }
 
 
