@@ -463,5 +463,20 @@
         setEvent(this, '.users_formset');
     })
 
+    $('form').submit(function(e){
+        let users_formset = $('.users_formset').find('select').not(':hidden').find(':selected');
+        let values = []
+        for(val of users_formset){
+            values.push($(val).val());
+        }
+        values.sort();
+        for(i=1; i<=values.length; i++){
+            if(values[i-1] == values[i]){
+                e.preventDefault();
+                confirm('Вы выбрали одинаковых пользователей!')
+            }
+        }
+    })
+
 </script>
 {% endblock %}
