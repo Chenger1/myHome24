@@ -112,7 +112,7 @@ class TariffService(models.Model):
 
 class Flat(models.Model):
     number = models.IntegerField()
-    square = models.IntegerField(blank=True, null=True)
+    square = models.FloatField(blank=True, null=True)
     owner = models.ForeignKey(User, related_name='flats', on_delete=models.SET_NULL, blank=True, null=True)
     house = models.ForeignKey(House, related_name='flats', on_delete=models.CASCADE)
     section = models.ForeignKey(Section, related_name='flats', on_delete=models.SET_NULL, blank=True, null=True)
