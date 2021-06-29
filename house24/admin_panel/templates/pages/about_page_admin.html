@@ -225,7 +225,8 @@
                                     <div class="col-xs-12 col-md-6 documents_formset formset_block" style="display: none;" id="hidden_documents">
                                             <a href="#!" class="text-red form-row-remove-btn delete_icon_documents"
                                             style="float:right;"><i class="fa fa-trash"></i></a>
-                                            <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;" aria-hidden="true"></i>
+                                            <img src="{% static 'img/file.png' %}" alt style="float:left; margin-right: .3em;"
+                                            width="36" height="48" class="preview_img">
                                             <div class="form-group">
                                                 <label for="">PDF, JPG (макс. размер 20 Mb)</label>
                                                 {{ documents_formset.empty_form.file }}
@@ -248,7 +249,13 @@
                                             <a href="javascript:void(0)" class="text-red form-row-remove-btn delete_icon_documents"
                                             style="float:right;"><i class="fa fa-trash"></i></a>
                                             {% endif %}
-                                            <i class="far fa-file fa-3x" style="width: 32px; float:left; margin-right: .3em;" aria-hidden="true"></i>
+                                            {% if inline_form.instance.is_image %}
+                                            <img src="{{ inline_form.instance.file.url }}" alt style="float:left; margin-right: .3em;"
+                                                width="36" height="48" class="preview_img">
+                                            {% else %}
+                                                <img src="{% static 'img/file.png' %}" alt style="float:left; margin-right: .3em;"
+                                                width="36" height="48" class="preview_img">
+                                            {% endif %}
                                             <div class="form-group">
                                                 <label for="">PDF, JPG (макс. размер 20 Mb)</label>
                                                 {{ inline_form.file }}
@@ -332,7 +339,7 @@
     })
 
 // init documents cloner
-    let documents_cloner = new BaseCloner('documents', '.documents_formset');
+    let documents_cloner = new AdvancedFormsetCloner('documents', '.documents_formset');
     documents_cloner.init();
     $('#add_documents').on('click', function(){
         documents_cloner.clone();

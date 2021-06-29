@@ -85,6 +85,12 @@ class Document(models.Model):
     def get_delete_url(self):
         return reverse('admin_panel:delete_document', args=[self.pk])
 
+    def is_image(self):
+        ext = self.file.name.split('.')[-1]
+        if ext in ('jpg', 'jpeg', 'png'):
+            return True
+        return False
+
 
 class Credentials(SingletonModel):
     name = models.CharField(max_length=150)
