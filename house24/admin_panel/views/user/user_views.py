@@ -26,14 +26,26 @@ class UpdateRolesView(AdminPermissionMixin, View):
     redirect_url = 'admin_panel:list_roles_admin'
 
     def get(self, request):
+        director = Role.objects.get(name='Директор')
+        director_form = None
         formset = RoleFormSet()
+        for form in formset.forms:
+            if form.initial['id'] == director.pk:
+                director_form = form
+                break
+        if director_form:
+            for field in director_form.fields:
+                if not field == 'id':
+                    director_form.fields[field].disabled = True
         return render(request, self.template_name, context={'roles': formset})
 
     def post(self, request):
+        director = Role.objects.get(name='Директор')
         formset = RoleFormSet(request.POST)
         if formset.is_valid():
             for form in formset:
-                form.save()
+                if not form.initial['id'] == director.pk:
+                    form.save()
             return redirect('admin_panel:list_roles_admin')
         else:
             return render(request, self.template_name, context={'roles': formset})
