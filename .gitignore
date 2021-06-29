@@ -127,6 +127,6 @@ dmypy.json
 .pyre/
 venv
 .idea
-house24/db/migrations
 house24/static/admin
+house24/static/rest_framework
 house24/media/
