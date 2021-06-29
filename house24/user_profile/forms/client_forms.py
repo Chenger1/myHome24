@@ -112,7 +112,7 @@ class CreateTransaction(forms.ModelForm):
             }),
             'personal_account': forms.HiddenInput(),
             'paid_sum': forms.NumberInput(attrs={'class': 'form-control', 'id': 'paid_sum',
-                                                 'min': '0'}),
+                                                 'min': '0', 'step': '0.01'}),
             'payment_ticket': forms.HiddenInput(),
             'payment_item_type': forms.HiddenInput(),
             'owner': forms.HiddenInput()

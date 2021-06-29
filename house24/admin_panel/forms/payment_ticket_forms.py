@@ -91,10 +91,11 @@ class TicketServiceForm(forms.ModelForm):
         widgets = {
             'id': forms.HiddenInput(),
             'service': forms.Select(attrs={'class': 'form-control to_valid service'}),
-            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid outcome', 'min': '0'}),
+            'outcome': forms.NumberInput(attrs={'class': 'form-control to_valid outcome', 'min': '0',
+                                                'step': '0.01'}),
             'unit_price': forms.NumberInput(attrs={'class': 'form-control to_valid unit_price',
-                                                   'min': '0'}),
-            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid cost', 'min': '0'}),
+                                                   'min': '0', 'step': '0.01'}),
+            'cost': forms.NumberInput(attrs={'class': 'form-control to_valid cost', 'min': '0', 'step': '0.01'}),
         }
 
 

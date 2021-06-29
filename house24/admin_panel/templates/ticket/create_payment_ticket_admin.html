@@ -295,7 +295,7 @@
 <script>
     function sumPrice(outcome, unit_price, cost){
         let new_cost = Number(outcome.val())*Number(unit_price.val());
-        cost.val(new_cost);
+        cost.val(new_cost.toFixed(2));
     }
 
     function setEvent(element, selector){
