@@ -60,8 +60,16 @@
                     <div class="col-xc-12 col-sm-7 col-md-8">
                         <hr>
                         <div class="text">
-                            <h3>{{ page.title }}</h3>
-                            <p>{{ page.description|safe }}</p>
+                            <h3>
+                                {% if page.title %}
+                                    {{ page.title }}
+                                {% endif %}
+                            </h3>
+                            <p>
+                                {% if page.description %}
+                                    {{ page.description|safe }}
+                                {% endif %}
+                            </p>
                             <div class="row" style="align-items:center;">
                                 <div class="col-4">
                                     <a href="{% url 'website:about_page_view' %}" class="btn btn-primary">Подробнее</a>
@@ -114,10 +122,24 @@
                     {% for block in page.blocks.all %}
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <div class="card h-100">
-                            <a href="#!"><img class="card-img-top" src="{{ block.image.url }}" alt="..." /></a>
+                            <a href="#!">
+                                {% if block.image %}
+                                <img class="card-img-top" src="{{ block.image.url }}" alt="..." />
+                                {% else %}
+                                <img class="card-img-top" src="{% static 'img/default_form_image.png' %}" alt="..." />
+                                {% endif %}
+                            </a>
                             <div class="card-body">
-                                <h4 class="card-title">{{ block.title }}</h4>
-                                <p class="card-text">{{ block.description }}</p>
+                                <h4 class="card-title">
+                                    {% if block.title %}
+                                        {{ block.title }}
+                                    {% endif %}
+                                </h4>
+                                <p class="card-text">
+                                    {% if block.description %}
+                                        {{ block.description|safe }}
+                                    {% endif %}
+                                </p>
                             </div>
                         </div>
                     </div>
