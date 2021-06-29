@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, View
-from django.contrib.auth import get_user_model
 from django.contrib import messages
 
 from user_profile.views.mixin import ListPaginatedQuery
