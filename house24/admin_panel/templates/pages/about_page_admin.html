@@ -123,8 +123,10 @@
                                                 <img src="{% static 'img/default_form_image.png' %}" alt
                                                 class="img-thumbnail preview_img thumbnail_img" width="285.9">
                                             {% endif %}
-                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
-                                            {{ inline_form.image }}
+                                            <div>
+                                                <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                                {{ inline_form.image }}
+                                            </div>
                                             {% if inline_form.instance.pk %}
                                                 <a href="javascript:void(0)" class="delete_icon delete_icon_images has_pk" name="{{ inline_form.instance.pk }}">
                                                     <i class="fa fa-trash text-red" aria-hidden="true"></i>
@@ -194,8 +196,10 @@
                                                 <img src="{% static 'img/default_form_image.png' %}" alt
                                                 class="img-thumbnail preview_img thumbnail_img" width="285.9">
                                             {% endif %}
-                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
-                                            {{ inline_form.image }}
+                                            <div>
+                                                <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                                {{ inline_form.image }}
+                                            </div>
                                             {% if inline_form.instance.pk %}
                                                 <a href="javascript:void(0)" class="delete_icon delete_icon_add_images has_pk"
                                                 name="{{ inline_form.instance.pk }}">
