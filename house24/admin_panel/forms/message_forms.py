@@ -16,10 +16,10 @@ class MessageSearchForm(forms.Form):
 class CreateMessageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['house'].empty_label = 'Выберите...'
-        self.fields['section'].empty_label = 'Выберите...'
-        self.fields['floor'].empty_label = 'Выберите...'
-        self.fields['flat'].empty_label = 'Выберите...'
+        self.fields['house'].empty_label = 'Всем'
+        self.fields['section'].empty_label = 'Всем'
+        self.fields['floor'].empty_label = 'Всем'
+        self.fields['flat'].empty_label = 'Всем'
 
     class Meta:
         model = Message
