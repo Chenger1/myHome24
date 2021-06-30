@@ -8,7 +8,7 @@ from admin_panel.forms.house_forms import (HouseSearchForm, CreateHouseForm, Sec
                                            FloorFormset, create_floor_formset)
 from admin_panel.permission_mixin import AdminPermissionMixin
 
-from db.models.house import House, Floor
+from db.models.house import House, Floor, Section
 from db.services.search import HouseSearch
 
 
@@ -84,7 +84,7 @@ class UpdateHouseView(AdminPermissionMixin, View):
         inst = get_object_or_404(self.model, pk=pk)
         form = CreateHouseForm(instance=inst)
         section_formset = SectionFormset(instance=inst)
-        section_queryset = inst.sections.all()
+        section_queryset = Section.objects.filter(house=inst)
         floor_queryset = Floor.objects.filter(section__in=section_queryset)
         floor_formset = create_floor_formset(floor_queryset=floor_queryset,
                                              section_queryset=section_queryset)

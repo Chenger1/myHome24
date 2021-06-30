@@ -415,6 +415,18 @@
 </script>
 <script>
     function setOptionSelecting(selector){
+        let pk = '{{ form.instance.pk }}'
+        $.ajax({
+            method: 'GET',
+            url: '{% url "rest_api:get_section_list" %}',
+            data: {'pk': pk}
+        })
+        .done(function(response){
+            $(selector).find('select').children().remove();
+            for(key of response){
+                $(selector).find('select').append('<option value='+ key['id'] +' >' +  key['name'] + '</option>');
+            }
+
         $(selector).each(function(){
             $(this).find('option').each(function(){
                 $(this).mousedown(function(e){
@@ -423,6 +435,8 @@
                     return false;
                 })
             })
+        })
+            
         })
     }
     setOptionSelecting('.section_select');
