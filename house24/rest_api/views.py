@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.views.generic import View
 from django.shortcuts import get_object_or_404
 from django.db.models import Sum
+from django.contrib.auth import get_user_model
 
 from rest_api import serializers
 
@@ -252,5 +253,26 @@ class FlatPersonalAccount(APIView):
             result['results'].append({
                 'id': item.pk,
                 'text': item.number
+            })
+        return result
+
+
+class GetMasterByRole(APIView):
+    model = get_user_model()
+
+    def get(self, request):
+        if request.GET.get('pk'):
+            instances = self.model.objects.filter(role__pk=request.GET.get('pk'))
+        else:
+            instances = self.model.objects.filter(is_staff=True).exclude(role__name='Директор', role__isnull=False)
+        return Response(self.serializer(instances))
+
+    def serializer(self, queryset):
+        result = []
+        for item in queryset:
+            result.append({
+                'id': item.pk,
+                'role': item.role.name,
+                'full_name': item.full_name
             })
         return result

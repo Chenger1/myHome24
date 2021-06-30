@@ -20,4 +20,5 @@ urlpatterns = [
     path('personal_account_status/', views.PersonalAccountStatus.as_view(), name='get_account_status'),
     path('payment_ticket_sum/', views.PaymentTicketSum.as_view(), name='payment_ticket_sum'),
     path('flat_account/', views.FlatPersonalAccount.as_view(), name='get_flat_account'),
+    path('master_request/', views.GetMasterByRole.as_view(), name='get_master_by_role'),
 ]

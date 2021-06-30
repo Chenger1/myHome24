@@ -1,6 +1,6 @@
 from django import forms
 
-from db.models.user import User
+from db.models.user import User, Role
 from db.models.house import MasterRequest
 
 import datetime
@@ -52,6 +52,12 @@ class CreateMasterRequestForm(forms.ModelForm):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
                                    empty_label='Выберите...')
+    type = forms.ModelChoiceField(queryset=Role.objects.exclude(name='Директор'),
+                                  widget=forms.Select(attrs={'class': 'form-control'}), required=False,
+                                  empty_label='Любой специалист')
+    master = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True).exclude(role__name='Директор'),
+                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
+                                    empty_label='Выберите...')
 
     class Meta:
         model = MasterRequest
@@ -70,7 +76,6 @@ class CreateMasterRequestForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'class': 'form-control to_valid',
                                                  'style': 'resize:none;', 'maxlength': '2000'}),
             'comment': forms.Textarea(attrs={'id': 'comment'}),
-            'type': forms.Select(attrs={'class': 'form-control to_valid'}),
             'status': forms.Select(attrs={'class': 'form-control to_valid'}),
             'flat': forms.Select(attrs={'class': 'form-control to_valid'}),
         }

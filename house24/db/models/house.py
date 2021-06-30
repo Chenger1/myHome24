@@ -2,7 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 
-from db.models.user import User
+from db.models.user import User, Role
 
 import datetime
 
@@ -378,12 +378,12 @@ class MasterRequest(models.Model):
     time = models.TimeField()
     description = models.TextField()
     comment = models.TextField(blank=True, null=True)
-    type = models.IntegerField(choices=type_choices, default=type_choices[0][0])
+    type = models.ForeignKey(Role, related_name='requests', on_delete=models.SET_NULL, blank=True, null=True)
     status = models.IntegerField(choices=status_choices, default=[0][0])
     owner = models.ForeignKey(User, related_name='owner_requests', on_delete=models.CASCADE,
                               blank=True, null=True)
     flat = models.ForeignKey(Flat, related_name='requests', on_delete=models.CASCADE)
-    master = models.ForeignKey(User, related_name='master_requests', on_delete=models.CASCADE,
+    master = models.ForeignKey(User, related_name='master_requests', on_delete=models.SET_NULL,
                                blank=True, null=True)
 
 

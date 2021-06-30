@@ -158,6 +158,21 @@
 </script>
 <script>
     $(document).ready(function() {
+
+        $.ajax({
+            method: 'GET',
+            url: '{% url "rest_api:get_master_by_role" %}',
+            data: {'pk': ''}
+        })
+        .done(function(response){
+            let master = $('#id_master');
+            $(master).children().remove();
+            $(master).append('<option>Выберите...</option>');
+            for(key of response){
+                $('#id_master').append('<option value="'+ key['id'] +'" >'+ key['role'] +' - '+ key['full_name'] +'</option>')
+            }
+        })
+
         $('#id_owner').select2({
             theme: 'bootstrap4',
             width: '100%',
@@ -184,6 +199,23 @@
         })
         $('#id_flat').on('change', function(e){
           colorize_input_valid(this);
+        })
+
+        $('#id_type').on('change', function(e){
+            const pk = $(this).find(':selected').val();
+            $.ajax({
+                method: 'GET',
+                url: '{% url "rest_api:get_master_by_role" %}',
+                data: {'pk': pk}
+            })
+            .done(function(response){
+                let master = $('#id_master');
+                $(master).children().remove();
+                $(master).append('<option>Выберите...</option>');
+                for(key of response){
+                    $('#id_master').append('<option value="'+ key['id'] +'" >'+ key['role'] +' - '+ key['full_name'] +'</option>')
+                }
+            })
         })
     });
 </script>
