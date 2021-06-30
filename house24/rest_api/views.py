@@ -25,10 +25,10 @@ class SectionList(generics.ListAPIView):
     def get_queryset(self):
         house = self.request.query_params.get('pk')
         if house:
-            queryset = self.model.objects.filter(house__pk=house)
+            queryset = self.model.objects.filter(house__pk=house).order_by('name')
         else:
             queryset = []
-        return queryset.order_by('name')
+        return queryset
 
 
 class FloorList(generics.ListAPIView):
@@ -38,10 +38,10 @@ class FloorList(generics.ListAPIView):
     def get_queryset(self):
         section = self.request.query_params.get('pk')
         if section:
-            queryset = self.model.objects.filter(section__pk=section)
+            queryset = self.model.objects.filter(section__pk=section).order_by('name')
         else:
             queryset = []
-        return queryset.order_by('name')
+        return queryset
 
 
 class FlatList(generics.ListAPIView):
@@ -51,10 +51,10 @@ class FlatList(generics.ListAPIView):
     def get_queryset(self):
         flat = self.request.query_params.get('pk')
         if flat:
-            queryset = self.model.objects.filter(floor__pk=flat)
+            queryset = self.model.objects.filter(floor__pk=flat).order_by('number')
         else:
             queryset = []
-        return queryset.order_by('number')
+        return queryset
 
 
 class GetTariffServices(View):
