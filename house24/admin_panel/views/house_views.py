@@ -106,19 +106,20 @@ class UpdateHouseView(AdminPermissionMixin, View):
             section_formset.save()
             user_formset.save()
             for floor_form in floor_formset.forms:
-                if floor_form.cleaned_data['DELETE']:
-                    #  If we delete floor from house at all  we have to find all similar floors in this house
-                    #  and delete them all
-                    floors = Floor.objects.filter(section__in=floor_form.cleaned_data['sections'],
-                                                  name=floor_form.cleaned_data['name'], section__house=inst)
-                    floors.delete()
-                    continue
-                for section in floor_form.cleaned_data['sections']:
-                    #  if floor already exists in section - get, otherwise - create
-                    floor, is_created = Floor.objects.get_or_create(name=floor_form.cleaned_data['name'],
-                                                                    section=section)
-                floors = Floor.objects.filter(section__in=inst.sections.all(), name=floor_form.cleaned_data['name'])\
-                    .exclude(section__in=floor_form.cleaned_data['sections'])
+                if floor_form.cleaned_data.get('name'):
+                    if floor_form.cleaned_data['DELETE']:
+                        #  If we delete floor from house at all  we have to find all similar floors in this house
+                        #  and delete them all
+                        floors = Floor.objects.filter(section__in=floor_form.cleaned_data['sections'],
+                                                      name=floor_form.cleaned_data['name'], section__house=inst)
+                        floors.delete()
+                        continue
+                    for section in floor_form.cleaned_data['sections']:
+                        #  if floor already exists in section - get, otherwise - create
+                        floor, is_created = Floor.objects.get_or_create(name=floor_form.cleaned_data['name'],
+                                                                        section=section)
+                    floors = Floor.objects.filter(section__in=inst.sections.all(), name=floor_form.cleaned_data['name'])\
+                        .exclude(section__in=floor_form.cleaned_data['sections'])
                 floors.delete()
                 # if there are no section in form cleaned data - section doesnt contains this floor anymore
 
