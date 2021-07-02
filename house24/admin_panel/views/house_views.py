@@ -120,7 +120,7 @@ class UpdateHouseView(AdminPermissionMixin, View):
                                                                         section=section)
                     floors = Floor.objects.filter(section__in=inst.sections.all(), name=floor_form.cleaned_data['name'])\
                         .exclude(section__in=floor_form.cleaned_data['sections'])
-                floors.delete()
+                    floors.delete()
                 # if there are no section in form cleaned data - section doesnt contains this floor anymore
 
             return redirect(self.redirect_url)
