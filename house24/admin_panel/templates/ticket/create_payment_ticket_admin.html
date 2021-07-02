@@ -490,7 +490,28 @@
             }
         })
 
+        let formsets = $('.formset').not('#hidden_services');
+        if(formsets){
+            let selected = [];
+            for(form of formsets){
+                selected.push(form); // add 'select' to list
+            }
+            selected.sort((a, b) => $(a).find(':selected').val() - $(b).find(':selected').val());
+            // sort by value of each select
+            for(i=1; i<=selected.length;i++){
+                if($(selected[i]).find(':selected').val() == $(selected[i-1]).find(':selected').val()){
+                    // compare sorted elements
 
+                    if(!$(selected[i]).closest('tr').find('input[type=checkbox]').prop('checked') &&
+                        !$(selected[i-1]).closest('tr').find('input[type=checkbox]').prop('checked')){
+                        // if elements are the same AND one of them DO not for delete - prevent event
+                        e.preventDefault();
+                        confirm('Обнаружены дубликаты в услугах!');
+                        break;
+                    }
+                }
+            }
+        }
         $('#ticket_sum').val(parseFloat($('#total_sum').text()));
     })
 </script>
