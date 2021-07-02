@@ -62,6 +62,7 @@ class UpdatePersonalAccountView(AdminPermissionMixin, View):
             form = self.form(instance=instance, **{'house_pk': house_pk})
         else:
             form = self.form(instance=instance)
+        form.fields['number'].widget.attrs['readonly'] = 'true'
         context = {'form': form}
         if instance.flat and instance.flat.owner:
             owner = instance.flat.owner.full_name
