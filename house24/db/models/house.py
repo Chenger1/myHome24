@@ -244,7 +244,7 @@ class Meter(models.Model):
         (3, 'Нулевое')
     ]
 
-    number = models.IntegerField(unique=True)
+    number = models.IntegerField()
     date = models.DateField()
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     data = models.IntegerField()

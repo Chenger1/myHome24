@@ -63,11 +63,10 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
             parent_obj = self.get_parent_object(pk)
             form = CreatePaymentTicketForm(initial=self.get_initial_dict(parent_obj))
         else:
-            form = CreatePaymentTicketForm()
+            form = CreatePaymentTicketForm(initial={'number': generate_next_instance_number(self.model)})
         formset = TicketServiceFormset()
         return render(request, self.template_name, context={'form': form,
-                                                            'formset': formset,
-                                                            'next_number': generate_next_instance_number(self.model)})
+                                                            'formset': formset})
 
     def post(self, request, account_pk=None):
         form = CreatePaymentTicketForm(request.POST)
@@ -78,8 +77,12 @@ class CreatePaymentTicketView(AdminPermissionMixin, View):
             formset.save()
             return redirect(self.redirect_url)
         else:
+            next_number = None
+            if form.errors.get('number'):
+                next_number = generate_next_instance_number(self.model)
             return render(request, self.template_name, context={'form': form,
-                                                                'formset': formset})
+                                                                'formset': formset,
+                                                                'next_number': next_number})
 
     def get_parent_object(self, pk):
         return get_object_or_404(self.parent_model, pk=pk)
@@ -97,7 +100,8 @@ class CreatePaymentTicketWithAccount(CreatePaymentTicketView):
                 'floor': parent_obj.flat.floor,
                 'flat': parent_obj.flat,
                 'personal_account': parent_obj,
-                'tariff': parent_obj.flat.tariff}
+                'tariff': parent_obj.flat.tariff,
+                'number': generate_next_instance_number(self.model)}
 
 
 class CreatePaymentTicketWithFlat(CreatePaymentTicketView):
@@ -109,7 +113,8 @@ class CreatePaymentTicketWithFlat(CreatePaymentTicketView):
                 'floor': parent_obj.floor,
                 'flat': parent_obj.pk,
                 'personal_account': parent_obj.account if parent_obj.account else None,
-                'tariff': parent_obj.tariff}
+                'tariff': parent_obj.tariff,
+                'number': generate_next_instance_number(self.model)}
 
 
 class DeletePaymentTicketView(DeleteInstanceView):
@@ -127,6 +132,7 @@ class UpdatePaymentTicketView(AdminPermissionMixin, View):
     def get(self, request, pk):
         obj = get_object_or_404(self.model, pk=pk)
         form = self.form_class(instance=obj, **{'house_pk': obj.house.pk})
+        form.fields['number'].widget.attrs['readonly'] = 'true'
         formset = self.formset_class(instance=obj)
         return render(request, self.template_name, context={'form': form,
                                                             'formset': formset})
