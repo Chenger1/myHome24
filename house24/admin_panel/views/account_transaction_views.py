@@ -98,19 +98,26 @@ class CreateIncomeByFlatView(CreateIncomeView):
                 'personal_account': self.parent_object.account.pk}
 
 
-class CreateOutcomeView(AdminPermissionMixin, CreateView):
+class CreateOutcomeView(AdminPermissionMixin, View):
     model = Transaction
     form_class = CreateOutcomeForm
     template_name = 'account_transaction/create_outcome_admin.html'
-    context_object_name = 'form'
-    success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
 
-    def get_form(self, form_class=None):
-        if self.request.POST:
-            form = self.form_class(self.request.POST)
+    def get(self, request):
+        form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
+        return render(request, self.template_name, context={'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_panel:list_account_transaction_admin')
         else:
-            form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
-        return form
+            next_number = None
+            if form.errors.get('number'):
+                next_number = generate_next_instance_number(self.model)
+            return render(request, self.template_name, context={'form': form,
+                                                                'next_number': next_number})
 
 
 class UpdateIncomeView(AdminPermissionMixin, UpdateView):
@@ -135,6 +142,14 @@ class UpdateOutcomeView(AdminPermissionMixin, UpdateView):
     template_name = 'account_transaction/create_outcome_admin.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST, instance=self.object)
+        else:
+            form = self.form_class(instance=self.object)
+            form.fields['number'].widget.attrs['readonly'] = 'true'
+        return form
 
 
 class DeleteTransactionView(DeleteInstanceView):
