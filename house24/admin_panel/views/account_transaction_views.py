@@ -46,29 +46,32 @@ class ListAccountTransactionViewDescendingView(ListAccountTransactionView):
         return queryset
 
 
-class CreateIncomeView(AdminPermissionMixin, CreateView):
+class CreateIncomeView(AdminPermissionMixin, View):
     model = Transaction
     form_class = CreateIncomeForm
     template_name = 'account_transaction/create_income_admin.html'
-    context_object_name = 'form'
-    success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
-    parent_object = None
     parent_model = None
+    parent_object = None
 
-    def get(self, request, *args, **kwargs):
-        if kwargs.get('pk'):
-            self.parent_object = self.get_parent_object(kwargs.get('pk'))
-        return super().get(request, *args, **kwargs)
-
-    def get_form(self, form_class=None):
-        if self.request.POST:
-            form = self.form_class(self.request.POST)
+    def get(self, request, pk=None):
+        if pk:
+            self.parent_object = self.get_parent_object(pk)
+            form = self.form_class(initial=self.get_initial_dict())
         else:
-            if self.parent_object:
-                form = self.form_class(initial=self.get_initial_dict())
-            else:
-                form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
-        return form
+            form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
+        return render(request, self.template_name, context={'form': form})
+
+    def post(self, request, pk=None):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_panel:list_account_transaction_admin')
+        else:
+            next_number = None
+            if form.errors.get('number'):
+                next_number = generate_next_instance_number(self.model)
+            return render(request, self.template_name, context={'form': form,
+                                                                'next_number': next_number})
 
     def get_parent_object(self, pk):
         return get_object_or_404(self.parent_model, pk=pk)
@@ -116,6 +119,14 @@ class UpdateIncomeView(AdminPermissionMixin, UpdateView):
     template_name = 'account_transaction/create_income_admin.html'
     context_object_name = 'form'
     success_url = reverse_lazy('admin_panel:list_account_transaction_admin')
+
+    def get_form(self, form_class=None):
+        if self.request.POST:
+            form = self.form_class(self.request.POST, instance=self.object)
+        else:
+            form = self.form_class(instance=self.object)
+            form.fields['number'].widget.attrs['readonly'] = 'true'
+        return form
 
 
 class UpdateOutcomeView(AdminPermissionMixin, UpdateView):

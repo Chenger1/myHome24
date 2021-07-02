@@ -53,6 +53,16 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
+                <div class="col-12">
+                {% if next_number %}
+                    <div class="alert alert-success alert-dismissible">
+                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                      <h5><i class="icon fas fa-check"></i>Сгенерирован валидный номер - {{ next_number }}</h5>
+                    </div>
+                {% endif %}
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12" style="margin-top:15px;">
                     <form action="" method="post">
                         {% csrf_token %}
