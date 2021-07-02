@@ -134,7 +134,7 @@ class PersonalAccount(models.Model):
         (1, 'Неактивен')
     ]
 
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     house = models.ForeignKey(House, related_name='accounts', on_delete=models.SET_NULL, blank=True, null=True)
     section = models.ForeignKey(Section, related_name='accounts', on_delete=models.SET_NULL, blank=True, null=True)
@@ -168,7 +168,7 @@ class PaymentTicket(models.Model):
         (2, 'Неоплачена')
     ]
 
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     status = models.IntegerField(choices=status_choices, default=2)
     is_done = models.BooleanField(default=0)
     start = models.DateField()
@@ -244,7 +244,7 @@ class Meter(models.Model):
         (3, 'Нулевое')
     ]
 
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     date = models.DateField()
     status = models.IntegerField(choices=status_choices, default=status_choices[0][0])
     data = models.IntegerField()
@@ -278,7 +278,7 @@ class PaymentItem(models.Model):
 
 
 class Transaction(models.Model):
-    number = models.IntegerField()
+    number = models.IntegerField(unique=True)
     created = models.DateField()
     owner = models.ForeignKey(User, related_name='owner_transfer', on_delete=models.CASCADE, blank=True, null=True)
     personal_account = models.ForeignKey(PersonalAccount, related_name='transfers', on_delete=models.CASCADE,

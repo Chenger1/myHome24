@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 
+from house24.config import db_name, db_password
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -92,9 +94,9 @@ WSGI_APPLICATION = 'house24.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('POSTGRES_DB', 'house_db'),
-        'USER': os.environ.get('POSTGRES_USER', 'nitron'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', '0660'), # temporary user and password. Doesnt important absolutely
+        'NAME': os.environ.get('POSTGRES_DB', db_name),
+        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', db_password), # temporary user and password. Doesnt important absolutely
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
         'PORT': os.environ.get('POSTGRES_POR', '5432')
     }
