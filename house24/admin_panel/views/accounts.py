@@ -28,16 +28,26 @@ class ListPersonalAccountsView(ListInstancesMixin):
         return context
 
 
-class CreatePersonalAccountView(AdminPermissionMixin, CreateView):
+class CreatePersonalAccountView(AdminPermissionMixin, View):
     model = PersonalAccount
     form_class = CreatePersonalAccountForm
     template_name = 'account/create_account_admin.html'
-    success_url = reverse_lazy('admin_panel:list_accounts_admin')
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['next_number'] = generate_next_instance_number(self.model)
-        return context
+    def get(self, request):
+        form = self.form_class(initial={'number': generate_next_instance_number(self.model)})
+        return render(request, self.template_name, context={'form': form})
+
+    def post(self, request):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('admin_panel:list_accounts_admin')
+        else:
+            next_number = None
+            if form.errors.get('number'):
+                next_number = generate_next_instance_number(self.model)
+            return render(request, self.template_name, context={'form': form,
+                                                                'next_number': next_number})
 
 
 class UpdatePersonalAccountView(AdminPermissionMixin, View):
