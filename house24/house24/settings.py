@@ -94,9 +94,9 @@ WSGI_APPLICATION = 'house24.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.environ.get('POSTGRES_DB', db_name),
+        'NAME': os.environ.get('POSTGRES_DB', 'db_name'),
         'USER': os.environ.get('POSTGRES_USER', 'postgres'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', db_password), # temporary user and password. Doesnt important absolutely
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD', 'db_password'), # temporary user and password. Doesnt important absolutely
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
         'PORT': os.environ.get('POSTGRES_POR', '5432')
     }
