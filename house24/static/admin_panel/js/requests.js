@@ -21,11 +21,12 @@ function send_request_to_api(url, pk, callback){
     })
 }
 
-function update_select(element, url, parent_pk, constructor){
+function update_select(element, url, parent_pk, constructor, extra=''){
     $.ajax({
         url: url,
         type: 'GET',
-        data: {'pk': parent_pk},
+        data: { 'pk': parent_pk,
+                'extra': extra},
     })
     .done(function(response){
         $(element).children().remove();

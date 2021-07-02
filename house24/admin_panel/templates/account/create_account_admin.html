@@ -196,7 +196,7 @@
         $('select[name=floor]').on('change', function(){
             let value = $(this).find(':selected').val();
             update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}", parent_pk=value,
-                          constructor=append_select_flat);
+                          constructor=append_select_flat, extra='1');
         })
     })
 </script>

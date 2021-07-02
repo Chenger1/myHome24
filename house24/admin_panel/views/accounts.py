@@ -1,5 +1,4 @@
-from django.views.generic import CreateView, View, DetailView
-from django.urls import reverse_lazy
+from django.views.generic import View, DetailView
 from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 
@@ -8,7 +7,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.account_forms import AccountSearchForm, CreatePersonalAccountForm
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PersonalAccount
+from db.models.house import PersonalAccount, Flat
 from db.services.search import PersonalAccountSearch
 from db.services.utils import generate_next_instance_number
 from db.services.spreadsheet import AccountSpreadSheet
@@ -63,6 +62,11 @@ class UpdatePersonalAccountView(AdminPermissionMixin, View):
         else:
             form = self.form(instance=instance)
         form.fields['number'].widget.attrs['readonly'] = 'true'
+        if instance.flat:
+            queryset = Flat.objects.filter(pk=instance.flat.pk) | Flat.objects.filter(account__isnull=True)
+        else:
+            queryset = Flat.objects.filter(account__isnull=True)
+        form.fields['flat'].queryset = queryset
         context = {'form': form}
         if instance.flat and instance.flat.owner:
             owner = instance.flat.owner.full_name

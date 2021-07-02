@@ -51,7 +51,10 @@ class FlatList(generics.ListAPIView):
     def get_queryset(self):
         flat = self.request.query_params.get('pk')
         if flat:
-            queryset = self.model.objects.filter(floor__pk=flat).order_by('number')
+            if self.request.query_params.get('extra'):
+                queryset = self.model.objects.filter(floor__pk=flat, account__isnull=True).order_by('number')
+            else:
+                queryset = self.model.objects.filter(floor__pk=flat).order_by('number')
         else:
             queryset = []
         return queryset
