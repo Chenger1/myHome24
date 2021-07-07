@@ -179,6 +179,11 @@
             update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");
             update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}");
         {% endif %}
+        {% if form.errors %}
+            update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
+            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");
+            update_select(element=$('#flat'), url="{% url 'rest_api:get_flat_list' %}");
+        {% endif %}
         $('select[name=house]').on('change', function(){
             let value = $(this).find(':selected').val();
             $('#owner').text('Не выбран');
