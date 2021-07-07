@@ -98,6 +98,11 @@ class PostInstanceMixin:
                 personal_account.save()
                 return redirect(self.redirect_url)
             else:
+                if 'update_flat' in request.path:
+                    if hasattr(obj, 'account'):
+                        old_account = obj.account
+                        old_account.flat = None
+                        old_account.save()
                 return redirect(self.redirect_url)
         else:
             personal_accounts = PersonalAccount.objects.filter(flat__isnull=True)
