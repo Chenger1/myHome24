@@ -93,6 +93,9 @@ class PostInstanceMixin:
                 if hasattr(obj, 'account'):
                     old_account = obj.account
                     old_account.flat = None
+                    old_account.house = None
+                    old_account.section = None
+                    old_account.floor = None
                     old_account.save()
                 personal_account.flat = obj
                 personal_account.save()
@@ -102,6 +105,9 @@ class PostInstanceMixin:
                     if hasattr(obj, 'account'):
                         old_account = obj.account
                         old_account.flat = None
+                        old_account.house = None
+                        old_account.section = None
+                        old_account.floor = None
                         old_account.save()
                 return redirect(self.redirect_url)
         else:

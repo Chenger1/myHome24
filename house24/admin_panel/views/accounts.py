@@ -7,7 +7,7 @@ from admin_panel.permission_mixin import AdminPermissionMixin
 from admin_panel.forms.account_forms import AccountSearchForm, CreatePersonalAccountForm
 from admin_panel.utils.statistic import MinimalStatisticCollector
 
-from db.models.house import PersonalAccount, Flat
+from db.models.house import PersonalAccount, Flat, Section, Floor, House
 from db.services.search import PersonalAccountSearch
 from db.services.utils import generate_next_instance_number
 from db.services.spreadsheet import AccountSpreadSheet
@@ -63,8 +63,17 @@ class UpdatePersonalAccountView(AdminPermissionMixin, View):
             form = self.form(instance=instance)
         form.fields['number'].widget.attrs['readonly'] = 'true'
         if instance.flat:
+            section_queryset = instance.flat.house.sections.all()
+            floor_queryset = instance.flat.section.floors.all()
+            form.fields['section'].queryset = section_queryset
+            form.fields['floor'].queryset = floor_queryset
+            form.fields['floor'].initial = instance.flat.floor
             queryset = Flat.objects.filter(pk=instance.flat.pk) | Flat.objects.filter(account__isnull=True)
         else:
+            form.fields['house'].queryset = House.objects.all()
+            form.fields['house'].initial = None
+            form.fields['section'].queryset = Section.objects.none()
+            form.fields['floor'].queryset = Floor.objects.none()
             queryset = Flat.objects.filter(account__isnull=True)
         form.fields['flat'].queryset = queryset
         context = {'form': form}
