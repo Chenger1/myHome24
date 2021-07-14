@@ -138,6 +138,9 @@ class AdminUserForm(forms.ModelForm):
         super().clean()
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email.lower()).exists():
+            raise ValidationError('Пользователь с таким электронным адресом уже существует')
         if password2 != password1:
             raise ValidationError('Пароли не совпадают')
 
@@ -218,6 +221,9 @@ class CreateOwnerForm(OwnerForm):
         super().clean()
         password1 = self.cleaned_data['password1']
         password2 = self.cleaned_data['password2']
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email.lower()).exists():
+            raise ValidationError('Пользователь с таким электронным адресом уже существует')
         if password2 != password1:
             raise ValidationError('Пароли не совпадают')
 
@@ -241,6 +247,9 @@ class UpdateOwnerUserForm(OwnerForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         password = self.cleaned_data['password1']
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email.lower()).exists():
+            raise ValidationError('Пользователь с таким электронным адресом уже существует')
         if password:
             user.set_password(password)
         else:
