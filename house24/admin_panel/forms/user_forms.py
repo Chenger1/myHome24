@@ -1,3 +1,5 @@
+import datetime
+
 from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import update_last_login
@@ -195,7 +197,8 @@ class OwnerForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'id': 'first_name', 'class': 'form-control to_valid'}),
             'last_name': forms.TextInput(attrs={'id': 'last_name', 'class': 'form-control to_valid'}),
             'patronym': forms.TextInput(attrs={'id': 'patronym', 'class': 'form-control to_valid'}),
-            'birthday': forms.DateInput(attrs={'id': 'date', 'class': 'form-control to_valid', 'type': 'date'}),
+            'birthday': forms.DateInput(attrs={'id': 'date', 'class': 'form-control to_valid', 'type': 'date',
+                                               'max': datetime.date.today()}),
             'phone_number': forms.TextInput(attrs={'id': 'phone', 'class': 'form-control to_valid',
                                                    'placeholder': '+380638271139'}),
             'viber': forms.TextInput(attrs={'id': 'viber', 'class': 'form-control to_valid',
