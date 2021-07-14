@@ -2,6 +2,7 @@ from django.views.generic import View, DetailView
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse
 from django.contrib.auth import get_user_model
+from django.contrib import messages
 
 from admin_panel.views.mixins import ListInstancesMixin, DeleteInstanceView
 from admin_panel.forms.house_forms import (HouseSearchForm, CreateHouseForm, SectionFormset, UserFormset,
@@ -68,6 +69,7 @@ class CreateHouseView(AdminPermissionMixin, View):
             section_formset.instance = user_formset.instance = obj
             section_formset.save()
             user_formset.save()
+            messages.info(request, 'Дом был успешно создан')
             return redirect(self.redirect_url, pk=obj.pk)
         else:
             return render(request, self.template_name, context={'form': form,
