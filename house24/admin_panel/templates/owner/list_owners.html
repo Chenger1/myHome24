@@ -153,9 +153,9 @@
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.phone_number }}</a></td>
                                     <td><a href="{% url 'admin_panel:detail_owner_admin' user.pk %}">{{ user.email|truncatechars:50 }}</a></td>
                                     <td>
-                                        {% for flat in user.flats.all %}
-                                            <a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}" style="color: #007bff;">
-                                                {{ flat.house.name|truncatechars:30 }}
+                                        {% for house in user.owner_houses %}
+                                            <a href="{% url 'admin_panel:detail_house_admin' house.house__pk %}" style="color: #007bff;">
+                                                {{ house.house__name|truncatechars:30 }}
                                             </a>
                                         {% if not forloop.last %},{% endif %}
                                         {% endfor %}

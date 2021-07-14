@@ -164,6 +164,10 @@ class User(CustomAbstractUser):
             return False
         return False
 
+    @property
+    def owner_houses(self):
+        return self.flats.all().values('house__name', 'house__pk').distinct()
+
     def __str__(self):
         return self.full_name
 
