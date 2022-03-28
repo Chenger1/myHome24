@@ -16,13 +16,14 @@ class UserChat:
     to_user_pk: int
     to_user_full_name: str
     chat_uuid: str
+    chat_with_admin: bool
 
 
 class ListChatView(View):
     def get(self, request):
         chats = Chat.get_chats_for_user(request.user.uuid)
         context = {'chats': self.transform_chat_obj_to_dataclass(chats, request.user.uuid)}
-        return render(request, 'chat/list_chats.html', context=context)
+        return render(request, 'user_chat/list_chats.html', context=context)
 
     def transform_chat_obj_to_dataclass(self, chats, from_user_uuid):
         users_uuid = [chat.get_second_person(from_user_uuid) for chat in chats]
@@ -34,7 +35,7 @@ class ListChatView(View):
             if not user:
                 continue
             user_chats.append(UserChat(to_user_pk=user.pk, to_user_full_name=user.full_name,
-                                       chat_uuid=chat.chat_uuid))
+                                       chat_uuid=chat.chat_uuid, chat_with_admin=user.is_staff))
         return user_chats
 
 
@@ -47,4 +48,4 @@ class ChatView(View):
                    'messages': messages,
                    'chat_path': settings.CHAT_PATH,
                    'to_user': to_user}
-        return render(request, 'chat/detail_chat.html', context=context)
+        return render(request, 'user_chat/detail_chat.html', context=context)

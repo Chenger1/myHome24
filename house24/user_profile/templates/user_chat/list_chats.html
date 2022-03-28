@@ -1,4 +1,4 @@
-{% extends "admin_base.html" %}
+{% extends "user_profile_base.html" %}
 {% load static %}
 
 {% block title %}Чаты{% endblock %}
@@ -71,10 +71,17 @@
 													   class="delete_checkbox" data-chat_uuid="{{ chat.chat_uuid }}">
 												<label for="checkboxPrimary-{{ forloop.counter }}">
 												</label>
-											</div></th>
-											<th>{{ chat.to_user_full_name }}</th>
+											</div>
+												<input type="hidden" value="" class="chat_pk"></th>
 											<th>
-												<a href="{% url 'admin_panel:detail_chat_admin' chat.to_user_pk %}"
+											{% if chat.chat_with_admin %}
+												(A) {{ chat.to_user_full_name }}
+											{% else %}
+												{{ chat.to_user_full_name }}
+											{% endif %}
+											</th>
+											<th>
+												<a href="{% url 'user_profile:user_chat_detail' chat.to_user_pk %}"
 												   class="btn-sm btn-success">Открыть чат</a>
 											</th>
 										{% endfor %}

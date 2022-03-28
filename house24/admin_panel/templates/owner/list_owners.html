@@ -187,6 +187,11 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
+											<a class="btn btn-default btn-sm"
+                                               href="{% url 'admin_panel:detail_chat_admin' user.pk %}"
+                                            title="Открыть чат">
+                                                <i class="fas fa-comment"></i>
+                                            </a>
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:create_message_for_owner' user.pk %}"
                                             title="Отправить сообщение">

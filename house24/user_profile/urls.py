@@ -8,6 +8,7 @@ from user_profile.views import message_views
 from user_profile.views import tariff_views
 from user_profile.views import payment_ticket_views
 from user_profile.views import index
+from user_profile.views import chat_views
 
 from common.render_pdf import RenderPdfTemplate
 
@@ -58,4 +59,8 @@ urlpatterns = [
          name='payment_ticket_print'),
     path('payment_tickets/client/ticket/<int:pk>/payment/',
          payment_ticket_views.CreateTransactionByTicket.as_view(), name='create_client_transaction_by_ticket'),
-]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    # CHAT
+    path('chats/', chat_views.ListChatView.as_view(), name='user_chat_list'),
+    path('chats/<int:to_user>/', chat_views.ChatView.as_view(), name='user_chat_detail'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

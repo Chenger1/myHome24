@@ -167,3 +167,5 @@ SITE_ID = 1
 ROBOTS_SITEMAP_URLS = [
     'http://127.0.0.1/sitemap.xml',
 ]
+
+CHAT_PATH = os.environ.get('CHAT_APP_PATH', 'http://127.0.0.1:5000/')

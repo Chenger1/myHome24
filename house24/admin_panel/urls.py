@@ -296,5 +296,6 @@ urlpatterns = [
          name='create_invite_message_for_user'),
 
     # CHAT
-    path('chats/', chat_views.ListChatView.as_view(), name='list_chats_admin')
+    path('chats/', chat_views.ListChatView.as_view(), name='list_chats_admin'),
+    path('chats/detail/<int:to_user>/', chat_views.ChatView.as_view(), name='detail_chat_admin'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
