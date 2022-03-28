@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.staticfiles.urls import static
+from django.conf import settings
 
 from admin_panel.views.index_views import IndexView, LogoutAdmin
 from admin_panel.views.pages import page_views
@@ -14,6 +16,7 @@ from admin_panel.views import master_request_views
 from admin_panel.views import payment_ticket_views
 from admin_panel.views import account_transaction_views
 from admin_panel.views import message_views
+from admin_panel.views import chat_views
 
 from common.render_pdf import RenderPdfTemplate
 
@@ -291,4 +294,7 @@ urlpatterns = [
     path('message/index/invite_message/', message_views.CreateInviteMessageView.as_view(), name='create_invite_message'),
     path('message/index/invite_message_for_user/<int:pk>/', message_views.CreateInviteMessageForUserView.as_view(),
          name='create_invite_message_for_user'),
-]
+
+    # CHAT
+    path('chats/', chat_views.ListChatView.as_view(), name='list_chats_admin')
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

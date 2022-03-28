@@ -1,4 +1,6 @@
 from django.urls import path
+from django.contrib.staticfiles.urls import static
+from django.conf import settings
 
 from user_profile.views import user_views
 from user_profile.views import master_views
@@ -56,4 +58,4 @@ urlpatterns = [
          name='payment_ticket_print'),
     path('payment_tickets/client/ticket/<int:pk>/payment/',
          payment_ticket_views.CreateTransactionByTicket.as_view(), name='create_client_transaction_by_ticket'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

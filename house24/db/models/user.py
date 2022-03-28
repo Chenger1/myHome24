@@ -1,3 +1,5 @@
+from uuid import uuid4
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
@@ -115,6 +117,8 @@ class User(CustomAbstractUser):
     telegram = models.CharField(max_length=30, blank=True, null=True)
     about = models.TextField(blank=True, null=True)
     number = models.CharField(max_length=20, blank=True, null=True)
+
+    uuid = models.UUIDField(default=uuid4)
 
     def get_files(self):
         return [self.photo] if self.photo else None

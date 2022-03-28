@@ -1,0 +1,261 @@
+html,body
+{
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden;
+}
+
+.admin_img{
+    display: block;
+    opacity: .8;
+    height:40px;
+    margin: 0 auto;
+}
+
+.menu-header{
+    text-align:center;
+}
+.info-box-text{
+    text-transform: uppercase;
+    font-size: 14px;
+}
+
+.info-box-content{
+    overflow: hidden;  /*For text-overflow:ellipsis;*/
+}
+
+.info-box{
+	height: 100px;
+}
+
+.info-box .info-box-icon{
+	width: 90px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: '>';
+}
+
+.border_bottom {
+    border-bottom: 1px solid #d2d6de;
+    padding-bottom: 20px;
+}
+
+.slider_img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.near_img{
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.formset_block{
+    position: relative;
+    margin-top: 10px;
+}
+
+.delete_icon{
+    position: absolute;
+    top: -10px;
+    right: 5px;
+}
+
+.thumbnail_img{
+    height: 150px;
+    object-fit: cover;
+}
+
+.table-hover{
+    font-size: 14px;
+}
+.table-hover td{
+    border: 1px solid #c9c9c9;
+}
+
+.linkedRow td{
+    cursor: pointer;
+}
+.linkedRow td>a{
+    color: black;
+}
+
+.breadcrumb_pull_right{
+    float: right;
+}
+
+.label{
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+.label-success{
+    background-color: #28a745;
+}
+
+.label-primary{
+    background-color: #007bff;
+}
+
+.label-danger{
+    background-color: #dc3545;
+}
+
+.label-warning{
+    background-color: #f39c12;
+}
+
+.is_valid{
+    border-color: #28a745;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.is_invalid{
+    border-color: #dc3545;
+    padding-right: 2.25rem;
+    background-repeat: no-repeat;
+    background-position: right calc(.375em + .1875rem) center;
+    background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+}
+
+.is_valid_label{
+    color: #28a745;
+}
+.is_invalid_label{
+    color: #dc3545;
+}
+
+.input_group{
+    display: table;
+}
+
+select{
+    display: table-cell;
+}
+
+.delete_input{
+    display: table-cell;
+}
+
+.btn{
+	vertical-align: inherit!important;
+	border: 2px solid transparent !important;
+}
+.btn-hover-blue:hover{
+    background-color: #3c8dbc;
+    color: white;
+}
+
+.input-group-btn{
+    white-space: nowrap;
+}
+
+.photo_image{
+    height: 160px;
+    width: 160px;
+    border-radius: 50%;
+    float: left;
+    margin: 0 15px 15px 0;
+}
+
+.img_responsive{
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.house_large_img{
+    height: 350px;
+}
+
+.house_small_image{
+    width: 248px;
+    height: 160px;
+}
+
+.margin-auto-bottom-30{
+    margin:0 auto 30px;
+}
+
+.input-group-addon{
+    padding: 6px 12px;
+    background-color: white;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.page-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.delete-input-hidden{
+    display: none;
+}
+
+.disabled_button{
+    cursor: not-allowed!important;
+    box-shadow: none;
+    opacity: .65;
+}
+
+.input-container{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.form-control-feedback{
+    position: absolute;
+    top: 0;
+    left: 80%;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    pointer-events: none;
+    color: #777;
+}
+
+.template > a{
+    font-size: 14px!important;
+    margin-right: 15px;
+}
+
+#template_by_default{
+    color: #3C7644!important;
+}
+#template_by_default:hover{
+    color: #2b542c!important;
+}
+#delete_pdf_template{
+    color:#a94442!important;
+}
+#delete_pdf_template:hover{
+    color:#843534!important;
+}
+
+.word_break{
+    word-break: break-word;
+}
+
+.word_break_all{
+    word-break: break-all;
+}
+
+@media screen and (max-width: 766px){
+    .profile_img{
+        margin: 0 auto 15px;
+    }
+}

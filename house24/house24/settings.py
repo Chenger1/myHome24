@@ -14,7 +14,7 @@ from pathlib import Path
 import os
 
 try:
-    from house24.config import db_name, db_password
+    from house24.config import db_name, db_password, db_user
 except ModuleNotFoundError:
     db_name = 'db_name'
     db_password = 'db_password'
@@ -99,7 +99,7 @@ DATABASES = {
     'default': {
         'ENGINE': os.environ.get('POSTGRES_ENGINE', 'django.db.backends.postgresql'),
         'NAME': os.environ.get('POSTGRES_DB', db_name),
-        'USER': os.environ.get('POSTGRES_USER', 'postgres'),
+        'USER': os.environ.get('POSTGRES_USER', db_user),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', db_password), # temporary user and password. Doesnt important absolutely
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
         'PORT': os.environ.get('POSTGRES_POR', '5432')
@@ -144,17 +144,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-if DEBUG:
-    STATICFILES_DIRS = (
-        ('bootstrap', Path(__file__).parent.parent.joinpath('static/bootstrap')),
-        ('website', Path(__file__).parent.parent.joinpath('static/website')),
-        ('img', Path(__file__).parent.parent.joinpath('static/img')),
-        ('admin_panel', Path(__file__).parent.parent.joinpath('static/admin_panel')),
-        ('utils', Path(__file__).parent.parent.joinpath('static/utils')),
-        ('user_profile', Path(__file__).parent.parent.joinpath('static/user_profile'))
-    )
-else:
-    STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
+STATIC_ROOT = Path(__file__).parent.parent.joinpath('static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path(__file__).parent.parent.joinpath('media/')
@@ -175,5 +165,5 @@ EMAIL_USE_TLS = True
 
 SITE_ID = 1
 ROBOTS_SITEMAP_URLS = [
-    'http://188.225.43.69/sitemap.xml',
+    'http://127.0.0.1/sitemap.xml',
 ]
