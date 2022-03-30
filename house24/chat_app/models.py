@@ -34,6 +34,10 @@ class Chat(me.Document):
     def get_chat_by_uuid(cls, chat_uuid):
         return cls.objects(chat_uuid=chat_uuid).first()
 
+    @classmethod
+    def delete_chat(cls, chat_uuid):
+        cls.objects(chat_uuid=chat_uuid).delete()
+
 
 class Message(me.Document):
     chat = me.ReferenceField(Chat, required=True)

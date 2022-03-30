@@ -298,4 +298,5 @@ urlpatterns = [
     # CHAT
     path('chats/', chat_views.ListChatView.as_view(), name='list_chats_admin'),
     path('chats/detail/<int:to_user>/', chat_views.ChatView.as_view(), name='detail_chat_admin'),
+    path('chats/delete_chats/', chat_views.DeleteChatView.as_view(), name='delete_chats_admin')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
