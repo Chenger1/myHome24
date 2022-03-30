@@ -172,6 +172,12 @@ class User(CustomAbstractUser):
     def owner_houses(self):
         return self.flats.all().values('house__name', 'house__pk').distinct()
 
+    @property
+    def photo_url(self):
+        if self.photo:
+            return self.photo.url
+        return None
+
     def __str__(self):
         return self.full_name
 

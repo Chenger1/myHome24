@@ -40,7 +40,11 @@ class Message(me.Document):
     from_user = me.UUIDField(required=True)
     to_user = me.UUIDField(required=True)
     text = me.StringField(required=True)
-    created = me.DateTimeField(default=datetime)
+    created = me.DateTimeField(default=datetime.now)
+
+    @property
+    def created_time(self):
+        return self.created.strftime('%H:%M')
 
     @classmethod
     def get_messages_by_chat(cls, chat):

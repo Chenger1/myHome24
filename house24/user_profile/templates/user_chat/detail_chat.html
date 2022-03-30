@@ -14,10 +14,10 @@
 					<div class="col-sm-6">
 						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
 							<ol class="breadcrumb">
-								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+								<li class="breadcrumb-item"><a href="" style="color: black;">
 									<i class="fa fa-home"></i> Главная</a></li>
 								<li class="breadcrumb-item">
-									<a href="{% url 'admin_panel:list_chats_admin' %}" style="color: black;">Чаты</a>
+									<a href="" style="color: black;">Чаты</a>
 								</li>
 								<li class="breadcrumb-item active" aria-current="page">Чат</li>
 							</ol>
@@ -31,41 +31,46 @@
 			<div class="container-fluid" style="height: 80vh;">
 				<section class="msger">
 					<main class="msger-chat">
-						<div class="msg left-msg">
-							<div
-									class="msg-img"
-									style="background-image: url(https://image.flaticon.com/icons/svg/327/327779.svg)"
-							></div>
+						{% for message in messages %}
+							{% if message.from_user == to_user.uuid %}
+								<div class="msg left-msg">
+									<div
+											class="msg-img"
+											style="background-image: url({{ to_user.photo_url }})"
+									></div>
 
-							<div class="msg-bubble">
-								<div class="msg-info">
-									<div class="msg-info-name">BOT</div>
-									<div class="msg-info-time">12:45</div>
+									<div class="msg-bubble">
+										<div class="msg-info">
+											<div class="msg-info-name">{{ to_user.full_name }}</div>
+											<div class="msg-info-time">{{ message.created_time }}</div>
+										</div>
+
+										<div class="msg-text">
+											{{ message.text }}
+										</div>
+									</div>
 								</div>
+							{% else %}
+								<div class="msg right-msg">
+									<div
+											class="msg-img"
+											style="background-image: url({{ request.user.photo_url }})"
+									></div>
 
-								<div class="msg-text">
-									Hi, welcome to SimpleChat! Go ahead and send me a message. 😄
+									<div class="msg-bubble">
+										<div class="msg-info">
+											<div class="msg-info-name">{{ request.user.full_name }}</div>
+											<div class="msg-info-time">{{ message.created_time }}</div>
+										</div>
+
+										<div class="msg-text">
+											{{ message.text }}
+										</div>
+									</div>
 								</div>
-							</div>
-						</div>
+							{% endif %}
 
-						<div class="msg right-msg">
-							<div
-									class="msg-img"
-									style="background-image: url(https://image.flaticon.com/icons/svg/145/145867.svg)"
-							></div>
-
-							<div class="msg-bubble">
-								<div class="msg-info">
-									<div class="msg-info-name">Sajad</div>
-									<div class="msg-info-time">12:46</div>
-								</div>
-
-								<div class="msg-text">
-									You can change your name in JS section!
-								</div>
-							</div>
-						</div>
+						{% endfor %}
 					</main>
 
 					<form class="msger-inputarea">
@@ -86,25 +91,8 @@
         const msgerInput = $('.msger-input');
         const msgerChat = $('.msger-chat');
 
-        const BOT_MSGS = [
-            "Hi, how are you?",
-            "Ohh... I can't understand what you trying to say. Sorry!",
-            "I like to play games... But I don't know how to play!",
-            "Sorry if my answers are not relevant. :))",
-            "I feel sleepy! :("
-        ];
-
-        // Icons made by Freepik from www.flaticon.com
-        {% if to_user.photo %}
-            const TO_USER_IMG = "{{ to_user.photo.url }}";
-        {% else %}
-            const TO_USER_IMG = "";
-        {% endif %}
-        {% if request.user.photo %}
-            const FROM_USER_IMG = "{{ request.user.photo.url }}";
-        {% else %}
-            const FROM_USER_IMG = "";
-        {% endif %}
+        const TO_USER_IMG = "{{ to_user.photo_url }}";
+        const FROM_USER_IMG = "{{ request.user.photo_url }}";
         const TO_USER_NAME = "{{ to_user.full_name }}";
         const TO_USER_UUID = '{{ to_user.uuid }}';
         const FROM_USER_NAME = "{{ request.user.full_name }}";
@@ -131,7 +119,7 @@
                     appendMessage(FROM_USER_NAME, FROM_USER_IMG, 'right', msgText);
                 }else{
                     appendMessage(TO_USER_NAME, TO_USER_IMG, "left", msgText);
-				}
+                }
             })
 
             $(msgerForm).on('submit', function(event){
@@ -165,18 +153,6 @@
             msgerChat.append(msgHTML);
             msgerChat.scrollTop(msgerChat.scrollTop() + 500);
         }
-
-        function botResponse() {
-            const r = random(0, BOT_MSGS.length - 1);
-            const msgText = BOT_MSGS[r];
-            const delay = msgText.split(" ").length * 100;
-
-            setTimeout(() => {
-                appendMessage(TO_USER_NAME, TO_USER_IMG, "left", msgText);
-            }, delay);
-        }
-
-        // Utils
 
         function formatDate(date) {
             const h = "0" + date.getHours();

@@ -66,24 +66,28 @@
 										</thead>
 										<tbody>
 										{% for chat in chats %}
-											<th><div class="icheck-primary d-inline">
-												<input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
-													   class="delete_checkbox" data-chat_uuid="{{ chat.chat_uuid }}">
-												<label for="checkboxPrimary-{{ forloop.counter }}">
-												</label>
-											</div>
-												<input type="hidden" value="" class="chat_pk"></th>
-											<th>
-											{% if chat.chat_with_admin %}
-												(A) {{ chat.to_user_full_name }}
-											{% else %}
-												{{ chat.to_user_full_name }}
-											{% endif %}
-											</th>
-											<th>
-												<a href="{% url 'user_profile:user_chat_detail' chat.to_user_pk %}"
-												   class="btn-sm btn-success">Открыть чат</a>
-											</th>
+											<tr>
+												<td>
+													<div class="icheck-primary d-inline">
+														<input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
+															   class="delete_checkbox" data-chat_uuid="{{ chat.chat_uuid }}">
+														<label for="checkboxPrimary-{{ forloop.counter }}">
+														</label>
+													</div>
+													<input type="hidden" value="" class="chat_pk">
+												</td>
+												<td>
+													{% if chat.chat_with_admin %}
+														<strong>{{ chat.to_user_full_name }}</strong>
+													{% else %}
+														{{ chat.to_user_full_name }}
+													{% endif %}
+												</td>
+												<td>
+													<a href="{% url 'user_profile:user_chat_detail' chat.to_user_pk %}"
+													   class="btn-sm btn-success">Открыть чат</a>
+												</td>
+											</tr>
 										{% endfor %}
 										</tbody>
 									</table>

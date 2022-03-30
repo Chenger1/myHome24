@@ -66,17 +66,21 @@
 										</thead>
 										<tbody>
 										{% for chat in chats %}
-											<th><div class="icheck-primary d-inline">
-												<input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
-													   class="delete_checkbox" data-chat_uuid="{{ chat.chat_uuid }}">
-												<label for="checkboxPrimary-{{ forloop.counter }}">
-												</label>
-											</div></th>
-											<th>{{ chat.to_user_full_name }}</th>
-											<th>
-												<a href="{% url 'admin_panel:detail_chat_admin' chat.to_user_pk %}"
-												   class="btn-sm btn-success">Открыть чат</a>
-											</th>
+											<tr>
+												<td>
+													<div class="icheck-primary d-inline">
+														<input type="checkbox" id="checkboxPrimary-{{ forloop.counter }}"
+															   class="delete_checkbox" data-chat_uuid="{{ chat.chat_uuid }}">
+														<label for="checkboxPrimary-{{ forloop.counter }}">
+														</label>
+													</div>
+												</td>
+												<td>{{ chat.to_user_full_name }}</td>
+												<td>
+													<a href="{% url 'admin_panel:detail_chat_admin' chat.to_user_pk %}"
+													   class="btn-sm btn-success">Открыть чат</a>
+												</td>
+											</tr>
 										{% endfor %}
 										</tbody>
 									</table>

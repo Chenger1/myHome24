@@ -7,5 +7,8 @@ docker-down:
 db-migrate:
 	docker-compose exec web python manage.py migrate
 
-run_chat_app:
-	python chat_app/server.py
+chat:
+	cd chat_app && gunicorn -k geventwebsocket.gunicorn.workers.GeventWebSocketWorker -w 1 server:app -b 127.0.0.1:5000 --reload
+
+chat-local:
+	cd chat_app && python server.py

@@ -1,12 +1,18 @@
-from chat_app.server import socketio
-from flask_socketio import join_room, leave_room, emit, send
+import logging
+
+from flask_socketio import SocketIO, join_room, leave_room, emit
 from flask import request, session
 
-from .models import Chat, Message
+from models import Chat, Message
+
+
+socketio = SocketIO(None, cors_allowed_origins='*')
+
+logger = logging.Logger(__name__)
 
 
 @socketio.on('connect_event')
-def connect(data):
+def connect_handler(data):
     try:
         session[request.sid] = {'chat_uuid': data['chat_uuid'],
                                 'user_uuid': data['user_uuid']}
@@ -15,10 +21,11 @@ def connect(data):
         emit('client_info_handler', {'success': False})
     else:
         emit('client_info_handler', {'success': True})
+    logger.info('Connected')
 
 
 @socketio.on('disconnect_event')
-def disconnect(data):
+def disconnect_handler(data):
     leave_room(data['chat_uuid'])
     emit('client_info_handler', {'success': True})
 
