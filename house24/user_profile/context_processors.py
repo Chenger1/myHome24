@@ -1,9 +1,14 @@
 from django.db.models import Q
+from django.conf import settings
 
 from db.models.house import Message, Section, Floor, House
 
 
 def add_client_info_to_template(request):
+    base_context = {
+        'socket_io_path': settings.SOCKET_IO_PATH
+    }
+
     if request.user.is_authenticated and not request.user.is_staff:
         flats = request.user.flats.all()
         houses = House.objects.filter(flats__in=flats)
@@ -21,11 +26,10 @@ def add_client_info_to_template(request):
         instances = messages | message_for_all | message_for_owner
         if not request.user.has_debt:
             instances = instances.exclude(with_debt=True)
-        return {
-            'houses': houses,
-            'flats': flats,
-            'client_messages': instances[:10],
-            'messages_count': instances.count()
-        }
+        base_context['houses'] = houses
+        base_context['flats'] = flats
+        base_context['client_messages'] = instances[:10]
+        base_context['messages_count'] = instances.count()
+        return base_context
     else:
-        return {}
+        return base_context

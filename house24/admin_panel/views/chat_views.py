@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from django.contrib.auth import get_user_model
 
 from common.chat_mixins import ListChatViewMixin, ChatViewMixin, DeleteChatViewMixin
+from admin_panel.views.mixins import AdminPermissionMixin
 
 
 User = get_user_model()
@@ -15,13 +16,13 @@ class UserChat:
     chat_uuid: str
 
 
-class ListChatView(ListChatViewMixin):
+class ListChatView(AdminPermissionMixin, ListChatViewMixin):
     template = 'chat/list_chats.html'
 
 
-class ChatView(ChatViewMixin):
+class ChatView(AdminPermissionMixin, ChatViewMixin):
     template = 'chat/detail_chat.html'
 
 
-class DeleteChatView(DeleteChatViewMixin):
+class DeleteChatView(AdminPermissionMixin, DeleteChatViewMixin):
     pass

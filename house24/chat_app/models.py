@@ -46,6 +46,8 @@ class Message(me.Document):
     text = me.StringField(required=True)
     created = me.DateTimeField(default=datetime.now)
 
+    read = me.BooleanField(default=False)
+
     @property
     def created_time(self):
         return self.created.strftime('%H:%M')
@@ -56,7 +58,18 @@ class Message(me.Document):
 
     @classmethod
     def create_message(cls, from_user, to_user, text, chat):
-        cls(from_user=from_user,
-            to_user=to_user,
-            text=text,
-            chat=chat).save()
+        msg = cls(from_user=from_user,
+                  to_user=to_user,
+                  text=text,
+                  chat=chat).save()
+        return msg
+
+    @classmethod
+    def set_messages_as_read(cls, chat_uuid, current_user):
+        chat = Chat.objects(chat_uuid=chat_uuid).first()
+        messages = cls.objects(me.Q(chat=chat, read=False, from_user__ne=current_user) |
+                               me.Q(chat=chat, read=False, to_user__ne=current_user))
+        for msg in messages:
+            msg.read = True
+            msg.save()
+        return messages.count()

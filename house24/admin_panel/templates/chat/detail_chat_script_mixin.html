@@ -1,6 +1,4 @@
 {% load static %}
-
-<script src="{% static 'admin_panel/js/socket_io.js' %}"></script>
 <script>
     const CHAT_PATH = '{{ chat_path }}';
     const CHAT_UUID = '{{ chat.chat_uuid }}';
@@ -17,11 +15,12 @@
 
     $(document).ready(function(){
         const socket = io(CHAT_PATH);
-        msgerChat.scrollTop(500);
+        msgerChat.scrollTop(msgerChat[0].scrollHeight);
         msgerChat.focus();
 
         socket.on('connect', function(){
             socket.emit('connect_event', {'chat_uuid': CHAT_UUID, 'user_uuid': TO_USER_UUID});
+            socket.emit('set_messages_as_read', {'chat_uuid': CHAT_UUID, 'user_uuid': TO_USER_UUID})
         })
 
         socket.on('client_info_handler', function(data){
@@ -38,6 +37,7 @@
                 appendMessage(FROM_USER_NAME, FROM_USER_IMG, 'right', msgText);
             }else{
                 appendMessage(TO_USER_NAME, TO_USER_IMG, "left", msgText);
+            	socket.emit('set_single_message_as_read', {'message_id': data['message_id']})
             }
         })
 
