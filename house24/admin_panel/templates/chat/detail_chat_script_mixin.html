@@ -1,56 +1,21 @@
 {% load static %}
+<script src="{% static 'utils/chat.js' %}"></script>
 <script>
-    const CHAT_PATH = '{{ chat_path }}';
-    const CHAT_UUID = '{{ chat.chat_uuid }}';
     const msgerForm = $('.msger-inputarea');
     const msgerInput = $('.msger-input');
     const msgerChat = $('.msger-chat');
+    const SOCKET_IO_PATH = '{{ socket_io_path }}';
+    var socket = io(SOCKET_IO_PATH+'/chat');
 
-    const TO_USER_IMG = "{{ to_user.photo_url }}";
-    const FROM_USER_IMG = "{{ request.user.photo_url }}";
-    const TO_USER_NAME = "{{ to_user.full_name }}";
-    const TO_USER_UUID = '{{ to_user.uuid }}';
-    const FROM_USER_NAME = "{{ request.user.full_name }}";
-    const FROM_USER_UUID  = '{{ request.user.uuid }}';
-
-    $(document).ready(function(){
-        const socket = io(CHAT_PATH);
-        msgerChat.scrollTop(msgerChat[0].scrollHeight);
-        msgerChat.focus();
-
-        socket.on('connect', function(){
-            socket.emit('connect_event', {'chat_uuid': CHAT_UUID, 'user_uuid': TO_USER_UUID});
-            socket.emit('set_messages_as_read', {'chat_uuid': CHAT_UUID, 'user_uuid': TO_USER_UUID})
-        })
-
-        socket.on('client_info_handler', function(data){
-            if(data['success'] === true){
-                console.log('Connected')
-            }else{
-                console.log('Not connected')
-            }
-        })
-
-        socket.on('client_message_handler', function(data){
-            const msgText = data['text'];
-            if(data['from_user'] === FROM_USER_UUID){
-                appendMessage(FROM_USER_NAME, FROM_USER_IMG, 'right', msgText);
-            }else{
-                appendMessage(TO_USER_NAME, TO_USER_IMG, "left", msgText);
-            	socket.emit('set_single_message_as_read', {'message_id': data['message_id']})
-            }
-        })
-
-        $(msgerForm).on('submit', function(event){
-            event.preventDefault();
-            const msgText = msgerInput.val();
-            if (!msgText) return;
-
-            socket.emit('send_message', {'from_user': FROM_USER_UUID, 'to_user': TO_USER_UUID, 'text': msgText});
-            msgerInput.val("");
-        })
-
-    })
+    const config = {
+        'chat_uuid': '{{ chat.chat_uuid }}',
+        'to_user_img': '{{ to_user.photo_url }}',
+        'from_user_img': '{{ request.user.photo_url }}',
+        'to_user_name': '{{ to_user.full_name }}',
+        'to_user_uuid': '{{ to_user.uuid }}',
+        'from_user_name': '{{ request.user.full_name }}',
+        'from_user_uuid': '{{ request.user.uuid }}'
+    }
 
     function appendMessage(name, img, side, text) {
         //   Simple solution for small apps
@@ -73,8 +38,6 @@
         msgerChat.scrollTop(msgerChat.scrollTop() + 500);
     }
 
-    // Utils
-
     function formatDate(date) {
         const h = "0" + date.getHours();
         const m = "0" + date.getMinutes();
@@ -82,4 +45,35 @@
         return `${h.slice(-2)}:${m.slice(-2)}`;
     }
 
+    $(document).ready(function(){
+        msgerChat.scrollTop(msgerChat[0].scrollHeight);
+        msgerChat.focus();
+
+        const chatResponseManager = new ChatResponseManager(config, socket, appendMessage);
+
+        socket.on('connect', function(){
+            socket.emit('connect_event', {'chat_uuid': config['chat_uuid'], 'user_uuid': config['to_user_uuid']});
+        })
+
+        socket.on('client_info_handler', function(data){
+            if(data['success'] === true){
+                console.log('Connected')
+            }else{
+                console.log('Not connected')
+            }
+        })
+
+        socket.on('client_message_handler', function(data){
+            chatResponseManager.addRegularMessage(data);
+        })
+
+        $(msgerForm).on('submit', function(event){
+            event.preventDefault();
+            const msgText = msgerInput.val();
+            if(!msgText) return;
+
+            socket.emit('send_message', {'from_user': config['from_user_uuid'], 'to_user': config['to_user_uuid'], 'text': msgText});
+            msgerInput.val('');
+        })
+    })
 </script>

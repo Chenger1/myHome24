@@ -41,9 +41,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
 				<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
 					<i class="far fa-comments"></i>
-					<span class="badge badge-primary navbar-badge chat_badge"><strong>0</strong></span>
+					<span class="badge badge-primary navbar-badge chat_badge"><strong>{{ unread_messages|length }}</strong></span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right chat_dropdown_menu" style="left: inherit; right: 0;">
+					{% for message in unread_messages %}
+						<a href="{% url 'admin_panel:detail_chat_admin' message.to_user %}" class="dropdown-item">
+							<!-- Message Start -->
+							<div class="media">
+								<img src="{{ message.photo_url }}" alt="Аватар пользователя" class="img-size-50 mr-3 img-circle dropdown-chat-avatar">
+								<div class="media-body">
+									<h3 class="dropdown-item-title">
+										{{ message.user_full_name }}
+										<span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+									</h3>
+									<p class="text-sm">{{ message.text }}</p>
+									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ message.created }}</p>
+								</div>
+							</div>
+							<!-- Message End -->
+						</a>
+					{% empty %}
+						<a href="#" class="dropdown-item no_messages">
+							<!-- Message Start -->
+							<div class="media">
+								<div class="media-body">
+									<p class="text-sm text-center">Нет новых сообщений</p>
+								</div>
+							</div>
+							<!-- Message End -->
+						</a>
+					{% endfor %}
 					<a href="{% url 'admin_panel:list_chats_admin' %}" class="dropdown-item dropdown-footer">Перейти в чаты</a>
 				</div>
 			</li>
@@ -406,55 +433,37 @@ scratch. This page gets rid of all links and provides the needed markup only.
         }
     })
 </script>
-<script>
-    const SOCKET_IO_PATH = '{{ socket_io_path }}';
-    const CHAT_DROPDOWN_MENU = $('.chat_dropdown_menu');
-    const CHAT_BADGE = $('.chat_badge')
+{% block chat_script %}
+	<script src="{% static 'utils/chat.js' %}"></script>
+	<script>
+        const SOCKET_IO_PATH = '{{ socket_io_path }}';
+        const CHAT_DROPDOWN_MENU = $('.chat_dropdown_menu');
+        const CHAT_BADGE = $('.chat_badge');
+        var socket = io(SOCKET_IO_PATH+'/chat');
+        const config = {
+            'user_uuid': '{{ request.user.uuid }}',
+        }
 
-    function append_new_navbar_message(data){
-        const msg = `
-			<a href="#" class="dropdown-item">
-				<!-- Message Start -->
-				<div class="media">
-					<img src="${data['photo_url']}" alt="Аватар пользователя" class="img-size-50 mr-3 img-circle">
-					<div class="media-body">
-						<h3 class="dropdown-item-title">
-							${data['user_full_name']}
-							<span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-						</h3>
-						<p class="text-sm">${data['text']}</p>
-						<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> ${data['created_time']}</p>
-					</div>
-				</div>
-				<!-- Message End -->
-			</a>`;
-        CHAT_DROPDOWN_MENU.prepend(msg);
-    }
+        $(document).ready(function(){
 
-    function increment_badge(){
-        const current_val = Number(CHAT_BADGE.val());
-        CHAT_BADGE.val(current_val+1);
-	}
+            const chatResponseManager = new ChatResponseManager(config, socket, appendMessage, 'chats/detail');
 
-    function reduce_badge(data){
-        const current_val = Number(CHAT_BADGE.val());
-        const to_reduce = Number(data['count']);
-        const reduced = current_val - to_reduce;
-        CHAT_BADGE.val(reduced > 0 ? reduced: 0);
-	}
+            socket.on('connect', function(){
+                socket.emit('connect_notification_event', {'user_uuid': config['user_uuid']});
+            })
 
-    {#$(document).ready(function(){#}
-    {#    const socket_io = io(SOCKET_IO_PATH);#}
-	{##}
-    {#    socket_io.on('new_message', function(){#}
-	{#		append_new_navbar_message(data);#}
-    {#        increment_badge();#}
-    {#    })#}
-	{##}
-	{#	socket_io.on('read_message_response', function(){#}
-    {#        reduce_badge(data);#}
-	{#	})#}
-    {#})#}
-</script>
+            socket.on('notify_response', function(data){
+                console.log('Message');
+                $('.no_messages').remove();
+                chatResponseManager.addNotificationMessage(data);
+                increment_badge(CHAT_BADGE);
+            })
+
+            socket.on('read_message_response', function(data){
+                reduce_badge(data, CHAT_BADGE);
+            })
+        })
+	</script>
+{% endblock %}
 {% block script %}{% endblock %}
 </html>

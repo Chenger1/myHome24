@@ -108,6 +108,9 @@ class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     def full_name(self):
         return f'{self.first_name} {self.last_name}'
 
+    class Meta:
+        abstract = True
+
 
 class User(CustomAbstractUser):
     role = models.ForeignKey(Role, related_name='admin_roles', on_delete=models.CASCADE, blank=True, null=True)

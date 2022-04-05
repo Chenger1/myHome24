@@ -30,6 +30,6 @@
 		{% include 'chat/detail_chat_mixin.html' with messages=messages to_user=to_user for_admin=True %}
 	</div>
 {% endblock %}
-{% block script %}
+{% block chat_script %}
 	{% include 'chat/detail_chat_script_mixin.html' with to_user=to_user %}
 {% endblock %}

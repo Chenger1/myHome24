@@ -83,6 +83,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'admin_panel.context_processors.add_new_users_to_template',
+                'admin_panel.context_processors.add_unread_messages_to_template',
                 'user_profile.context_processors.add_client_info_to_template'
             ],
         },
@@ -102,7 +103,7 @@ DATABASES = {
         'USER': os.environ.get('POSTGRES_USER', db_user),
         'PASSWORD': os.environ.get('POSTGRES_PASSWORD', db_password), # temporary user and password. Doesnt important absolutely
         'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'PORT': os.environ.get('POSTGRES_POR', '5432')
+        'PORT': os.environ.get('POSTGRES_PORT', '5432')
     }
 }
 
@@ -168,5 +169,4 @@ ROBOTS_SITEMAP_URLS = [
     'http://127.0.0.1/sitemap.xml',
 ]
 
-CHAT_PATH = os.environ.get('CHAT_APP_PATH', 'http://127.0.0.1:5000/chat')
 SOCKET_IO_PATH = os.environ.get('SOCKET_IO_PATH', 'http://127.0.0.1:5000/')

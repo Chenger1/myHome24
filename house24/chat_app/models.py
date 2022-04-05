@@ -1,9 +1,11 @@
 import uuid
 from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
 
 import mongoengine as me
 
 me.connect('localhost:5000')
+db = SQLAlchemy()
 
 
 class Chat(me.Document):
@@ -73,3 +75,34 @@ class Message(me.Document):
             msg.read = True
             msg.save()
         return messages.count()
+
+    @classmethod
+    def get_unread_messages(cls, current_user):
+        return cls.objects(me.Q(from_user=current_user, read=False) |
+                           me.Q(to_user=current_user, read=False))
+
+
+# SQL Part
+
+class User(db.Model):
+    __tablename__ = 'db_user'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String, unique=True, nullable=True)
+    uuid = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    is_staff = db.Column(db.Boolean)
+    is_active = db.Column(db.Boolean)
+    photo = db.Column(db.String)
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
+    @property
+    def photo_url(self):
+        return f'media/{self.photo}'
+
+    @classmethod
+    def get_user_by_uuid(cls, user_uuid):
+        return cls.query.filter(cls.uuid == user_uuid).first()

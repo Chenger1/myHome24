@@ -1,3 +1,12 @@
+#!make
+ENV_FILE_CHECK = local.env
+ifneq ("$(wildcard $(ENV_FILE_CHECK))","")
+	include local.env
+	export $(shell sed 's/=.*//' local.env)
+endif
+
+MANAGE = python manage.py
+
 docker-up:
 	docker-compose up -d
 
@@ -12,3 +21,16 @@ chat:
 
 chat-local:
 	cd chat_app && python server.py
+
+
+migrations:
+	$(MANAGE) makemigrations
+
+migrate:
+	$(MANAGE) migrate
+
+shell:
+	$(MANAGE) shell
+
+super:
+	$(MANAGE) createsuperuser

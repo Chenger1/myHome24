@@ -41,6 +41,46 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
 				<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+					<i class="far fa-comments"></i>
+					<span class="badge badge-primary navbar-badge chat_badge"><strong>{{ unread_messages|length }}</strong></span>
+				</a>
+				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right chat_dropdown_menu" style="left: inherit; right: 0;">
+					{% for message in unread_messages %}
+						<a href="{% url 'user_profile:user_chat_detail' message.to_user %}" class="dropdown-item">
+							<!-- Message Start -->
+							<div class="media">
+								{% if message.is_staff %}
+									<img src="{% static 'img/logo.svg' %}" alt="Аватар пользователя" class="img-size-50 mr-3 img-circle dropdown-chat-avatar">
+								{% else %}
+									<img src="{{ message.photo_url }}" alt="Аватар пользователя" class="img-size-50 mr-3 img-circle dropdown-chat-avatar">
+								{% endif %}
+								<div class="media-body">
+									<h3 class="dropdown-item-title">
+										{{ message.user_full_name }}
+										<span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+									</h3>
+									<p class="text-sm">{{ message.text }}</p>
+									<p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ message.created }}</p>
+								</div>
+							</div>
+							<!-- Message End -->
+						</a>
+					{% empty %}
+						<a href="#" class="dropdown-item no_messages">
+							<!-- Message Start -->
+							<div class="media">
+								<div class="media-body">
+									<p class="text-sm text-center">Нет новых сообщений</p>
+								</div>
+							</div>
+							<!-- Message End -->
+						</a>
+					{% endfor %}
+					<a href="{% url 'admin_panel:list_chats_admin' %}" class="dropdown-item dropdown-footer">Перейти в чаты</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
+				<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
 					<i class="fas fa-bell fa-lg"></i>
 					<span class="badge badge-warning navbar-badge" style="top: 0px;">{{ messages_count }}</span>
 				</a>
@@ -251,6 +291,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'admin_panel/dist/js/adminlte.min.js' %}"></script>
+<!-- Custom -->
+<script src="{% static 'admin_panel/js/socket_io.js' %}"></script>
 </body>
 <script>
     $(document).ready(function(){
@@ -284,5 +326,41 @@ scratch. This page gets rid of all links and provides the needed markup only.
         // look for link with current path. Set 'active' class for it
     })
 </script>
+{% block chat_script %}
+	<script src="{% static 'utils/chat.js' %}"></script>
+	<script>
+        const SOCKET_IO_PATH = '{{ socket_io_path }}';
+        const CHAT_DROPDOWN_MENU = $('.chat_dropdown_menu');
+        const CHAT_BADGE = $('.chat_badge');
+        var socket = io(SOCKET_IO_PATH+'/chat');
+        const config = {
+            'user_uuid': '{{ request.user.uuid }}',
+        }
+        const admin_logo = '{% static "img/logo.svg" %}'
+
+        $(document).ready(function(){
+
+            const chatResponseManager = new ChatResponseManager(config, socket, appendMessage, 'chats/detail');
+
+            socket.on('connect', function(){
+                socket.emit('connect_notification_event', {'user_uuid': config['user_uuid']});
+            })
+
+            socket.on('notify_response', function(data){
+                console.log('Message');
+                $('.no_messages').remove();
+                if(data['is_staff'] === true){
+                    data['photo_url'] = admin_logo;
+				}
+                chatResponseManager.addNotificationMessage(data);
+                increment_badge(CHAT_BADGE);
+            })
+
+            socket.on('read_message_response', function(data){
+                reduce_badge(data, CHAT_BADGE);
+            })
+        })
+	</script>
+{% endblock %}
 {% block script %}{% endblock %}
 </html>

@@ -52,9 +52,10 @@ class ChatViewMixin(View):
         to_user = User.objects.get(pk=to_user)
         chat = Chat.get_or_create(request.user.uuid, to_user.uuid)
         messages = Message.get_messages_by_chat(chat)
+        Message.set_messages_as_read(chat.chat_uuid, request.user.uuid)
         context = {'chat': chat,
                    'messages': messages,
-                   'chat_path': settings.CHAT_PATH,
+                   'chat_path': settings.SOCKET_IO_PATH,
                    'to_user': to_user}
         return render(request, self.template, context=context)
 
