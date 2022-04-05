@@ -142,7 +142,8 @@ class AdminUserForm(forms.ModelForm):
         password2 = self.cleaned_data['password2']
         email = self.cleaned_data['email']
         if User.objects.filter(email=email.lower()).exists():
-            raise ValidationError('Пользователь с таким электронным адресом уже существует')
+            if self.instance and self.instance.email != email:
+                raise ValidationError('Пользователь с таким электронным адресом уже существует')
         if password2 != password1:
             raise ValidationError('Пароли не совпадают')
 
