@@ -9,7 +9,7 @@ import datetime
 class AccountTransactionSearchForm(forms.Form):
     status_choices = [
         ('', 'Выберите...'),
-        (0, 'Непроведен'),
+        (0, 'Не проведен'),
         (1, 'Проведен')
     ]
     income_outcome_choices = [
@@ -27,7 +27,8 @@ class AccountTransactionSearchForm(forms.Form):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
                                    empty_label='Выберите...')
-    personal_account = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}), required=False)
+    personal_account = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
+                                          required=False)
     income_outcome = forms.ChoiceField(choices=income_outcome_choices,
                                        widget=forms.Select(attrs={'class': 'form-control'}), required=False)
     start = forms.DateField(widget=forms.HiddenInput(attrs={'id': 'date_start'}), required=False)

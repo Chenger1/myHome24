@@ -52,8 +52,6 @@ class StatisticController:
     def prepare_outcome_by_month(self):
         result = []
         for month in range(1, 13):
-            # data = self.tickets.filter(created__month=month).values('services__service__name')\
-            #     .annotate(service_sum=Sum('services__outcome'))
             data = self.tickets.filter(created__month=month).aggregate(service_sum=Sum('services__outcome'))
             if data.get('service_sum'):
                 result.append(data.get('service_sum', 0))
@@ -62,14 +60,6 @@ class StatisticController:
         return result
 
     def calculate_outcome(self, queryset):
-        # result = {}
-        # for ticket in queryset:
-        #     for service in ticket.services.all():
-        #         if result.get(service.service.name):
-        #             result[service.service.name] += service.outcome
-        #         else:
-        #             result[service.service.name] = service.outcome
-        # return result
         data = queryset.values('services__service__name').annotate(Sum('services__outcome'))
         return self.serializer_value_queryset(data)
 

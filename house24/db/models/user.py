@@ -74,7 +74,7 @@ class Role(models.Model):
 
     @property
     def site_options(self):
-        if self.services or self.tariffs or self.users or self.credentials or self.roles:
+        if any([self.services, self.tariffs, self.users, self.credentials, self.roles]):
             return True
         return False
 

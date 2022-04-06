@@ -68,9 +68,7 @@ class Measure(models.Model):
 
     @property
     def service_exists(self):
-        if self.services.exists():
-            return True
-        return False
+        return self.services.exists()
 
     def __str__(self):
         return self.measure_name
@@ -83,9 +81,7 @@ class Service(models.Model):
 
     @property
     def tariff_exists(self):
-        if self.tariffs.exists():
-            return True
-        return False
+        return self.tariffs.exists()
 
     def __str__(self):
         return self.name

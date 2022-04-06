@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.core.exceptions import ValidationError
-from django.urls import reverse_lazy
 
 from website.forms.auth_forms import ClientLoginForm
 
