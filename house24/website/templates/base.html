@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -7,7 +8,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-        <title>{% block title %}Мой дом24{% endblock %}</title>
+        <title>{% block title %}{% trans 'My house 24' %}{% endblock %}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -31,15 +32,15 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
-                        {% block main_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:main_page_view' %}">Главная</a></li>{% endblock %}
-                        {% block about_header %} <li class="nav-item"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>{% endblock %}
-                        {% block services_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:services_page_view' %}">Услуги</a></li>{% endblock %}
-                        <li class="nav-item"><a class="nav-link" href="https://avada-media.ua/myhouse24/">Условия приобретения</a></li>
-                        {% block contact_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:contacts_page_view' %}">Контакты</a></li>{% endblock %}
+                        {% block main_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:main_page_view' %}">{% trans 'Home' %}</a></li>{% endblock %}
+                        {% block about_header %} <li class="nav-item"><a class="nav-link" href="{% url 'website:about_page_view' %}">{% trans 'About us' %}</a></li>{% endblock %}
+                        {% block services_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:services_page_view' %}">{% trans 'Services' %}</a></li>{% endblock %}
+                        <li class="nav-item"><a class="nav-link" href="https://avada-media.ua/myhouse24/">{% trans 'Terms of purchase' %}</a></li>
+                        {% block contact_header %}<li class="nav-item"><a class="nav-link" href="{% url 'website:contacts_page_view' %}">{% trans 'Contacts' %}</a></li>{% endblock %}
                         <li class="nav-item">
                             <a class="nav-link" href="{% url 'website:client_site_login_view' %}">
                             <i class="fas fa-sign-in-alt"></i>
-                            Вход
+                            {% trans 'Login' %}
                             </a>
                         </li>
                     </ul>
@@ -52,8 +53,7 @@
         <!-- Footer-->
         <footer class="py-3">
             <div class="container"><p class="m-0 text-center">
-            Разработано <a href="https://avada-media.ua/">AVADA-MEDIA</a>. На базе системы управления
-                <a href="https://avada-media.ua/moydom24/">"МойДом24"</a></p></div>
+           	{% trans 'Developed by Chenger1' %}
         </footer>
         <!-- Bootstrap core JS-->
         <script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>

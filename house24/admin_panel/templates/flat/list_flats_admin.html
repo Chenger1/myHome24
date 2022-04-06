@@ -1,294 +1,294 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Квартиры{% endblock %}
+{% block title %}{% trans 'Flats' %}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
 {% endblock %}
 
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Квартиры</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Квартиры</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">{% trans 'Flats' %}</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'Flats' %}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <a href="{% url 'admin_panel:create_flat_admin' %}" class="btn btn-success" style="float: right;">Добавить
-                        квартиру</a>
-                </div>
-                <div class="col-12" style="margin-top:15px;">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <a href="{% url 'admin_panel:list_flats_admin' %}" class="btn btn-default"
-                            style="float:right;">Очистить</a>
-                        </div>
-                        <div class="card-body card-body table-responsive p-0">
-                            <form action="" method="get">
-                                {% csrf_token %}
-                            <table class="table table-hover table-striped text-nowrap linkedRow">
-                                <thead>
-                                <tr>
-                                    <th style="width: 120px; min-width: 120px">
-                                        {% if 'number_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_number_descending_admin' %}"
-                                            class="submit_link">
-                                               № квартиры <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_number_descending_admin' %}">
-                                        {% elif 'number_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_number_ascending_admin' %}"
-                                            class="submit_link">
-                                               № квартиры <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_number_ascending_admin' %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_flats_number_descending_admin' %}"
-                                            class="submit_link">
-                                                   № квартиры
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_number_descending_admin' %}">
-                                        {% endif %}
-                                    </th>
-                                    <th>
-                                        {% if 'house_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_house_descending_admin' %}"
-                                            class="submit_link">
-                                               Дом <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_house_descending_admin' %}">
-                                        {% elif 'house_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_house_ascending_admin' %}"
-                                            class="submit_link">
-                                               Дом <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_house_ascending_admin' %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_flats_house_descending_admin' %}"
-                                            class="submit_link">
-                                                   Дом
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_house_descending_admin' %}">
-                                        {% endif %}
-                                    </th>
-                                    <th>
-                                        {% if 'section_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_section_descending_admin' %}"
-                                            class="submit_link">
-                                               Секция <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_section_descending_admin' %}">
-                                        {% elif 'section_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_section_ascending_admin' %}"
-                                            class="submit_link">
-                                               Секция <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_section_ascending_admin' %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_flats_section_descending_admin' %}"
-                                            class="submit_link">
-                                                   Секция
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_section_descending_admin' %}">
-                                        {% endif %}
-                                    </th>
-                                    <th>
-                                        {% if 'floor_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_floor_descending_admin' %}"
-                                            class="submit_link">
-                                               Этаж <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_floor_descending_admin' %}">
-                                        {% elif 'floor_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_floor_ascending_admin' %}"
-                                            class="submit_link">
-                                               Этаж <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_floor_ascending_admin' %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_flats_floor_descending_admin' %}"
-                                            class="submit_link">
-                                                   Этаж
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_floor_descending_admin' %}">
-                                        {% endif %}
-                                    </th>
-                                    <th>
-                                        {% if 'owner_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_owner_descending_admin' %}"
-                                            class="submit_link">
-                                               Владелец <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_owner_descending_admin' %}">
-                                        {% elif 'owner_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_flats_owner_ascending_admin' %}"
-                                            class="submit_link">
-                                               Владелец <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_flats_owner_descending_admin' %}"
-                                            class="submit_link">
-                                                   Владелец
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_flats_owner_descending_admin' %}">
-                                        {% endif %}
-                                    </th>
-                                    <th style="width: 120px; min-width: 120px">Остаток (грн)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        {{ form.number }}
-                                    </td>
-                                    <td>
-                                        {{ form.house }}
-                                    </td>
-                                    <td>
-                                        {{ form.section }}
-                                    </td>
-                                    <td>
-                                        {{ form.floor }}
-                                    </td>
-                                    <td>
-                                        {{ form.user }}
-                                    </td>
-                                    <td>
-                                        {{ form.debt }}
-                                    </td>
-                                    <td></td>
-                                </tr>
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<a href="{% url 'admin_panel:create_flat_admin' %}" class="btn btn-success" style="float: right;">{% trans 'Add flat' %}</a>
+					</div>
+					<div class="col-12" style="margin-top:15px;">
+						<div class="card card-default">
+							<div class="card-header">
+								<a href="{% url 'admin_panel:list_flats_admin' %}" class="btn btn-default"
+								   style="float:right;">{% trans 'Clear' %}</a>
+							</div>
+							<div class="card-body card-body table-responsive p-0">
+								<form action="" method="get">
+									{% csrf_token %}
+									<table class="table table-hover table-striped text-nowrap linkedRow">
+										<thead>
+										<tr>
+											<th style="width: 120px; min-width: 120px">
+												{% if 'number_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_number_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Flat №' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_number_descending_admin' %}">
+												{% elif 'number_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_number_ascending_admin' %}"
+													   class="submit_link">
+														{% trans 'Flat №' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_number_ascending_admin' %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_flats_number_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Flat №' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_number_descending_admin' %}">
+												{% endif %}
+											</th>
+											<th>
+												{% if 'house_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_house_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'House' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_house_descending_admin' %}">
+												{% elif 'house_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_house_ascending_admin' %}"
+													   class="submit_link">
+														{% trans 'House' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_house_ascending_admin' %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_flats_house_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'House' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_house_descending_admin' %}">
+												{% endif %}
+											</th>
+											<th>
+												{% if 'section_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_section_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Section' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_section_descending_admin' %}">
+												{% elif 'section_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_section_ascending_admin' %}"
+													   class="submit_link">
+														{% trans 'Section' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_section_ascending_admin' %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_flats_section_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Section' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_section_descending_admin' %}">
+												{% endif %}
+											</th>
+											<th>
+												{% if 'floor_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_floor_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Floor' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_floor_descending_admin' %}">
+												{% elif 'floor_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_floor_ascending_admin' %}"
+													   class="submit_link">
+														{% trans 'Floor' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_floor_ascending_admin' %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_flats_floor_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Floor' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_floor_descending_admin' %}">
+												{% endif %}
+											</th>
+											<th>
+												{% if 'owner_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_owner_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Owner' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_owner_descending_admin' %}">
+												{% elif 'owner_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_flats_owner_ascending_admin' %}"
+													   class="submit_link">
+														{% trans 'Owner' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_owner_ascending_admin' %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_flats_owner_descending_admin' %}"
+													   class="submit_link">
+														{% trans 'Owner' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_flats_owner_descending_admin' %}">
+												{% endif %}
+											</th>
+											<th style="width: 120px; min-width: 120px">{% trans 'Balance' %})</th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td>
+												{{ form.number }}
+											</td>
+											<td>
+												{{ form.house }}
+											</td>
+											<td>
+												{{ form.section }}
+											</td>
+											<td>
+												{{ form.floor }}
+											</td>
+											<td>
+												{{ form.user }}
+											</td>
+											<td>
+												{{ form.debt }}
+											</td>
+											<td></td>
+										</tr>
 
-                                {% for flat in instances %}
-                                <tr>
-                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.number }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}"
-                                    style="color: #007bff;">{{ flat.house|truncatechars:30 }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.section|filter_none|truncatechars:30 }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.floor|filter_none|truncatechars:30 }}</a></td>
-                                    <td>
-                                        {% if flat.owner %}
-                                            <a href="{% url 'admin_panel:detail_owner_admin' flat.pk %}"
-                                            style="color: #007bff;">{{ flat.owner|filter_none|truncatechars:30 }}</a>
-                                        {% else %}
-                                            Не указано
-                                        {% endif %}
-                                    </td>
-                                    <td><span class="debt_integer">{{ flat.get_flat_balance }}</span></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:update_flat_admin' flat.pk %}"
-                                            title="Редактировать">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a class="btn btn-default btn-sm delete_instances"
-                                               href="{% url 'admin_panel:delete_flat_admin' flat.pk %}"
-                                            title="Удалить">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="7">Ничего не найдено</td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row" style="align-items:center;">
-                                <div class="col-6">
-                                    Количество квартир: <strong>{{ count }}</strong>
-                                </div>
-                                <div class="col-6">
-                                    {% include "pagination.html" with page=instances %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+										{% for flat in instances %}
+											<tr>
+												<td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.number }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}"
+													   style="color: #007bff;">{{ flat.house|truncatechars:30 }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.section|filter_none|truncatechars:30 }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{{ flat.floor|filter_none|truncatechars:30 }}</a></td>
+												<td>
+													{% if flat.owner %}
+														<a href="{% url 'admin_panel:detail_owner_admin' flat.pk %}"
+														   style="color: #007bff;">{{ flat.owner|filter_none|truncatechars:30 }}</a>
+													{% else %}
+														{% trans 'Not specified' %}
+													{% endif %}
+												</td>
+												<td><span class="debt_integer">{{ flat.get_flat_balance }}</span></td>
+												<td>
+													<div class="btn-group">
+														<a class="btn btn-default btn-sm"
+														   href="{% url 'admin_panel:update_flat_admin' flat.pk %}"
+														   title="{% trans 'Edit' %}">
+															<i class="fas fa-edit"></i>
+														</a>
+														<a class="btn btn-default btn-sm delete_instances"
+														   href="{% url 'admin_panel:delete_flat_admin' flat.pk %}"
+														   title="{% trans 'Delete' %}">
+															<i class="fa fa-trash"></i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										{% empty %}
+											<tr>
+												<td colspan="7">{% trans 'Not found any data' %}</td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<div class="card-footer">
+								<div class="row" style="align-items:center;">
+									<div class="col-6">
+										{% trans 'Number of flats' %}: <strong>{{ count }}</strong>
+									</div>
+									<div class="col-6">
+										{% include "pagination.html" with page=instances %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/utils.js' %}"></script>
-<script src="{% static 'admin_panel/js/requests.js' %}"></script>
-<script>
-    $(document).ready(function(){
-        $('.debt_integer').each(function(){
-            const value = parseFloat($(this).text());
-            if(value >=0){
-                $(this).addClass('text-success');
-            }
-            if(value < 0){
-                $(this).addClass('text-danger');
-            }
-        })
-        let value = $('select[name=house]').find(':selected').val();
-        update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
-            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
-
-        $('select[name=house]').on('change', function(){
-            let value = $(this).find(':selected').val();
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+	<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+	<script>
+        $(document).ready(function(){
+            $('.debt_integer').each(function(){
+                const value = parseFloat($(this).text());
+                if(value >=0){
+                    $(this).addClass('text-success');
+                }
+                if(value < 0){
+                    $(this).addClass('text-danger');
+                }
+            })
+            let value = $('select[name=house]').find(':selected').val();
             update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
+                constructor=append_select_section_floor);
             update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
-        })
-        $('#user').select2({
-            theme: 'bootstrap4',
-            width: '100%',
-        });
+                constructor=append_select_section_floor);
 
-        submit_form_after_keypress();
-        submit_form_after_ordering();
-        confirm_deleting();
-    });
-</script>
+            $('select[name=house]').on('change', function(){
+                let value = $(this).find(':selected').val();
+                update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                    constructor=append_select_section_floor);
+                update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
+                    constructor=append_select_section_floor);
+            })
+            $('#user').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+            });
+
+            submit_form_after_keypress();
+            submit_form_after_ordering();
+            confirm_deleting();
+        });
+	</script>
 {% endblock %}

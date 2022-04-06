@@ -2,8 +2,9 @@
 {% load static %}
 {% load beautify_line %}
 {% load utils %}
+{% load i18n %}
 
-{% block title %}Редактирование страницы{% endblock %}
+{% block title %}{% trans 'Edit page' %}{% endblock %}
 
 {% block head %}
 <script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -28,14 +29,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Редактирование страницы</h1>
+                    <h1 class="m-0">{% trans 'Edit page' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Редактирование страницы</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Edit page' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -50,14 +51,14 @@
                 <div class="col-12">
                     <div class="card card-default">
                         <div class="card-header">
-                            <span style="font-size: 22px;">Редактирование страницы "О нас"</span>
+                            <span style="font-size: 22px;">{% trans 'Edit page "About us"' %}</span>
                             <a style="float:right;" class="btn btn-default"
-                            href="{% url 'website:get_sitemap' %}">Обновить robots и sitemap</a>
+                            href="{% url 'website:get_sitemap' %}">{% trans 'Update robots and sitemap' %}</a>
                         </div>
                         <div class="card-body">
                             <div class="row border_bottom">
                                 <div class="col-12">
-                                    <h5>Информация</h5>
+                                    <h5>{% trans 'Information' %}</h5>
                                 </div>
                             </div>
 
@@ -66,11 +67,11 @@
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label for="title">Заголовок</label>
+                                            <label for="title">{% trans 'Title' %}</label>
                                             {{ form.title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Краткий текст</label>
+                                            <label for="description">{% trans 'Description' %}</label>
                                             {{ form.description }}
                                         </div>
                                     </div>
@@ -85,7 +86,7 @@
                                                 width="250" height="300" class="preview_img">
                                             {% endif %}
                                             <div>
-                                                <label for="photo">Рекомендуемый размер: (250x310)</label>
+                                                <label for="photo">{% trans 'Size' %}: (250x310)</label>
                                                 {{ form.photo }}
                                             </div>
                                         </div>
@@ -94,7 +95,7 @@
 
                                 <div class="row border_bottom" style="margin-top:50px;">
                                     <div class="col-12">
-                                        <h5>Фотогалерея</h5>
+                                        <h5>{% trans 'Gallery' %}</h5>
                                     </div>
                                 </div>
 
@@ -104,7 +105,7 @@
                                         id="hidden_images">
                                             <img src="{% static 'img/default_form_image.png' %}" alt class="img-thumbnail preview_img
                                                 thumbnail_img">
-                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                            <label for="">{% trans 'Size' %}: (1200x1200)</label>
                                             {{ formset.empty_form.image }}
                                             <a href="javascript:void(0)" class="delete_icon  delete_icon_images">
                                                 <i class="fa fa-trash text-red" aria-hidden="true"></i>
@@ -124,7 +125,7 @@
                                                 class="img-thumbnail preview_img thumbnail_img" width="285.9">
                                             {% endif %}
                                             <div>
-                                                <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                                <label for="">{% trans 'Size' %}: (1200x1200)</label>
                                                 {{ inline_form.image }}
                                             </div>
                                             {% if inline_form.instance.pk %}
@@ -141,24 +142,24 @@
                                 </div>
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col">
-                                        <button class="btn btn-success" id="add_images" type="button">Добавить фото</button>
+                                        <button class="btn btn-success" id="add_images" type="button">{% trans 'Add photo' %}</button>
                                     </div>
                                 </div>
 
                                 <div class="row border_bottom" style="margin-top:50px;">
                                     <div class="col-12">
-                                        <h5>Дополнительная информация</h5>
+                                        <h5>{% trans 'Additional information' %}</h5>
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin-top:20px;">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="additional_title">Заголовок</label>
+                                            <label for="additional_title">{% trans 'Title' %}</label>
                                             {{ form.additional_title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="additional_description">Краткий текст</label>
+                                            <label for="additional_description">{% trans 'Short text' %}</label>
                                             {{ form.additional_description }}
                                         </div>
                                     </div>
@@ -166,7 +167,7 @@
 
                                 <div class="row border_bottom" style="margin-top:30px;">
                                     <div class="col-12">
-                                        <h5>Дополнительная фотогалерея</h5>
+                                        <h5>{% trans 'Additional gallery' %}</h5>
                                     </div>
                                 </div>
 
@@ -176,7 +177,7 @@
                                         id="hidden_add_images">
                                             <img src="{% static 'img/default_form_image.png' %}" alt class="img-thumbnail preview_img
                                                 thumbnail_img">
-                                            <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                            <label for="">{% trans 'Size' %}: (1200x1200)</label>
                                             {{ additional_formset.empty_form.image }}
                                             <a href="javascript:void(0)" class="delete_icon delete_icon_add_images">
                                                 <i class="fa fa-trash text-red" aria-hidden="true"></i>
@@ -197,7 +198,7 @@
                                                 class="img-thumbnail preview_img thumbnail_img" width="285.9">
                                             {% endif %}
                                             <div>
-                                                <label for="">Рекомендуемый размер: (1200x1200)</label>
+                                                <label for="">{% trans 'Size' %}: (1200x1200)</label>
                                                 {{ inline_form.image }}
                                             </div>
                                             {% if inline_form.instance.pk %}
@@ -216,13 +217,13 @@
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col">
                                         <button class="btn btn-success" id="add_add_images"
-                                        type="button">Добавить фото</button>
+                                        type="button">{% trans 'Add photo' %}</button>
                                     </div>
                                 </div>
 
                                 <div class="row border_bottom" style="margin-top:50px;">
                                     <div class="col-12">
-                                        <h5>Документы</h5>
+                                        <h5>{% trans 'Documents' %}</h5>
                                     </div>
                                 </div>
 
@@ -234,11 +235,11 @@
                                             <img src="{% static 'img/file.png' %}" alt style="float:left; margin-right: .3em;"
                                             width="36" height="48" class="preview_img">
                                             <div class="form-group">
-                                                <label for="">PDF, JPG (макс. размер 20 Mb)</label>
+                                                <label for="">{% trans 'PDF, JPG (max size 20 Mb)' %}</label>
                                                 {{ documents_formset.empty_form.file }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Название документа</label>
+                                                <label for="name">{% trans 'Document name' %}</label>
                                                 {{ documents_formset.empty_form.name }}
                                             </div>
                                         </div>
@@ -263,11 +264,11 @@
                                                 width="36" height="48" class="preview_img">
                                             {% endif %}
                                             <div class="form-group">
-                                                <label for="">PDF, JPG (макс. размер 20 Mb)</label>
+                                                <label for="">{% trans 'PDF, JPG (max size 20 Mb)' %}</label>
                                                 {{ inline_form.file }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Название документа</label>
+                                                <label for="name">{% trans 'Название документа' %}</label>
                                                 {{ inline_form.name }}
                                             </div>
                                         </div>
@@ -276,35 +277,35 @@
                                 <div class="row" style="margin-top: 20px;">
                                     <div class="col">
                                         <button class="btn btn-success" id="add_documents"
-                                        type="button">Добавить документ</button>
+                                        type="button">{% trans 'Add document' %}</button>
                                     </div>
                                 </div>
                                 <div class="row border_bottom" style="margin-top:30px;">
                                     <div class="col-12">
-                                        <h5>Настройки SEO</h5>
+                                        <h5>{% trans 'SEO settings' %}</h5>
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin-top:20px;">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="seo_title">Title</label>
+                                            <label for="seo_title">{% trans 'Title' %}</label>
                                             {{ form.seo_title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="seo_description">Description</label>
+                                            <label for="seo_description">{% trans 'Description' %}</label>
                                             {{ form.seo_description }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="seo_keywords">Keywords</label>
+                                            <label for="seo_keywords">{% trans 'Keywords' %}</label>
                                             {{ form.seo_keywords }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top:15px;">
                                     <div class="col-12 text-center">
-                                        <a href="{% url 'admin_panel:about_page' %}" class="btn btn-default">Отмена</a>
-                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                        <a href="{% url 'admin_panel:about_page' %}" class="btn btn-default">{% trans 'Отмена' %}</a>
+                                        <button type="submit" class="btn btn-success">{% trans 'Сохранить' %}</button>
                                     </div>
                                 </div>
 

@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}CRM система для ОСМД - "МОЙ ДОМ 24"{% endblock %}
+{% block title %}{% trans 'CRM system for condominiums - "MY HOUSE 24"' %}{% endblock %}
 
 {% block head %}
 <meta name="title" content="{{ page.seo_title }}">
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block services_header %}
-<li class="nav-item active"><a class="nav-link" href="{% url 'website:services_page_view' %}">Услуги</a>
+<li class="nav-item active"><a class="nav-link" href="{% url 'website:services_page_view' %}">{% trans 'Services' %}</a>
 </li>{% endblock %}
 
 {% block content %}
@@ -20,8 +21,8 @@
             <div class="col">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Услуги</li>
+                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">{% trans 'Home' %} </a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Services' %}</li>
                     </ol>
                 </nav>
             </div>
@@ -29,7 +30,7 @@
 
         <div class="row">
             <div class="col-md">
-                <div style="border-bottom: 1px solid #eee; margin-top:30px;"><h3>Наши услуги</h3></div>
+                <div style="border-bottom: 1px solid #eee; margin-top:30px;"><h3>{% trans 'Our services' %}</h3></div>
             </div>
         </div>
 
@@ -48,7 +49,7 @@
                 {% if block.title %}
                     <h3 style="border-bottom: 1px solid #eee; padding-bottom:25px;">{{ block.title }}</h3>
                 {% else %}
-                    <h3 style="border-bottom: 1px solid #eee; padding-bottom:25px;">Услуга</h3>
+                    <h3 style="border-bottom: 1px solid #eee; padding-bottom:25px;">{% trans 'Service' %}</h3>
                 {% endif %}
                 {% if block.description %}
                     <p>{{ block.description|safe }}</p>

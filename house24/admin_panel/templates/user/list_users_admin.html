@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Пользователи{% endblock %}
+{% block title %}{% trans 'Users' %}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
@@ -15,14 +16,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Пользователи</h1>
+                    <h1 class="m-0">{% trans 'Users' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Пользователи</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Users' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -35,14 +36,13 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'admin_panel:create_user_admin' %}" class="btn btn-success" style="float: right;">Добавить
-                        пользователя</a>
+                    <a href="{% url 'admin_panel:create_user_admin' %}" class="btn btn-success" style="float: right;">{% trans 'Add user' %}</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
                             <a href="{% url 'admin_panel:list_users_admin' %}" class="btn btn-default"
-                            style="float:right;">Очистить</a>
+                            style="float:right;">{% trans 'Clear' %}</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
                             <form action="" method="get">
@@ -51,11 +51,11 @@
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Пользователь</th>
-                                    <th>Роль</th>
-                                    <th>Телефон</th>
-                                    <th>Email(логин)</th>
-                                    <th>Статус</th>
+                                    <th>{% trans 'User' %}</th>
+                                    <th>{% trans 'Role' %}</th>
+                                    <th>{% trans 'Phone' %}</th>
+                                    <th>{% trans 'Email(login)' %}</th>
+                                    <th>{% trans 'Status' %}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -100,17 +100,17 @@
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:create_invite_message_for_user' user.pk %}"
-                                            title="Отправить приглашение">
+                                            title="{% trans 'Send invite' %}">
                                                 <i class="fas fa-redo-alt"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:update_user_admin' user.pk %}"
-                                            title="Редактировать">
+                                            title="{% trans 'Edit' %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_user_admin' user.pk %}"
-                                            title="Удалить">
+                                            title="{% trans 'Delete' %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -118,7 +118,7 @@
                                 </tr>
                                 {% empty %}
                                     <tr>
-                                        <td colspan="7">Ничего не найдено</td>
+                                        <td colspan="7">{% trans 'No data found' %}</td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>

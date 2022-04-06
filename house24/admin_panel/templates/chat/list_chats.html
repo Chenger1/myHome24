@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Чаты{% endblock %}
+{% block title %}{% trans 'Chats' %}{% endblock %}
 
 {% block head %}
 	<link rel="stylesheet" href="{% static 'admin_panel/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
@@ -13,14 +14,14 @@
 			<div class="container-fluid">
 				<div class="row mb-2 border_bottom" style="align-items: center;">
 					<div class="col-sm-6">
-						<h1 class="m-0">Чаты</h1>
+						<h1 class="m-0">{% trans 'Chats' %}</h1>
 					</div><!-- /.col -->
 					<div class="col-sm-6">
 						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-									<i class="fa fa-home"></i> Главная</a></li>
-								<li class="breadcrumb-item active" aria-current="page">Чаты</li>
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'Chats' %}</li>
 							</ol>
 						</nav>
 					</div>
@@ -60,7 +61,7 @@
 										<thead>
 										<tr>
 											<th style="max-width: 50px; width: 50px;"></th>
-											<th style="max-width: 300px; width: 300px;">Пользователь</th>
+											<th style="max-width: 300px; width: 300px;">{% trans 'User' %}</th>
 											<th></th>
 										</tr>
 										</thead>
@@ -78,7 +79,7 @@
 												<td>{{ chat.to_user_full_name }}</td>
 												<td>
 													<a href="{% url 'admin_panel:detail_chat_admin' chat.to_user_pk %}"
-													   class="btn-sm btn-success">Открыть чат</a>
+													   class="btn-sm btn-success">{% trans 'Open chat' %}</a>
 												</td>
 											</tr>
 										{% endfor %}
@@ -128,7 +129,7 @@
             })
             $('.delete_toggle').each(function(){
                 $(this).on('click', function(){
-                    if(confirm('Вы уверены что хотите удалить эти чаты?')){
+                    if(confirm('{% trans "Are you sure you want to delete these chats?" %}')){
                         let result = [];
                         $('input[type=checkbox]:checked').each(function(){
                             result.push($(this).attr('data-chat_uuid'));

@@ -2,8 +2,9 @@
 {% load static %}
 {% load beautify_line %}
 {% load utils %}
+{% load i18n %}
 
-{% block title %}Редактирование страницы{% endblock %}
+{% block title %}{% trans 'Edit page' %}{% endblock %}
 {% block head %}
 <script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js"
         referrerpolicy="origin"></script>
@@ -21,14 +22,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Редактирование страницы</h1>
+                    <h1 class="m-0">{% trans 'Edit page' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Редактирование страницы</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Edit page' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -43,14 +44,14 @@
                 <div class="col-12">
                     <div class="card card-default">
                         <div class="card-header">
-                            <span style="font-size:22px;">Редактирование страницы "Услуги"</span>
+                            <span style="font-size:22px;">{% trans 'Edit page "Services"' %}</span>
                             <a style="float:right;" class="btn btn-default"
-                            href="{% url 'website:get_sitemap' %}">Обновить robots и sitemap</a>
+                            href="{% url 'website:get_sitemap' %}">{% trans 'Update robots and sitemap' %}</a>
                         </div>
                         <div class="card-body">
                             <div class="row border_bottom">
                                 <div class="col-12">
-                                    <h5>Услуги</h5>
+                                    <h5>{% trans 'Services' %}</h5>
                                 </div>
                             </div>
                             <form action="" method="post" enctype="multipart/form-data">
@@ -60,7 +61,7 @@
                                     <div class="col-md-4 formset formset_block"
                                          style="display:none;"
                                          id="hidden_blocks">
-                                        <h4>Услуга <span class="counter"></span>
+                                        <h4>{% trans 'Service' %} <span class="counter"></span>
                                             <a href="javascript:void(0)" style="float:right;"
                                                class="text-red delete_icon_blocks">
                                                 <i class="fa fa-trash" style="font-size:18px;"></i>
@@ -68,17 +69,17 @@
                                         </h4>
                                         <img src="{% static 'img/default_form_image.png' %}" alt
                                              class="near_img preview_img">
-                                        <label for="" style="margin-top:10px;">Рекомендуемый размер:
+                                        <label for="" style="margin-top:10px;">{% trans 'Size' %}:
                                             (650x300) </label>
                                         <div class="form-group">
                                             {{ formset.empty_form.image }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Заголовок блока</label>
+                                            <label for="">{% trans 'Block title' %}</label>
                                             {{ formset.empty_form.title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Описание</label>
+                                            <label for="">{% trans 'Description' %}</label>
                                             {{ formset.empty_form.description }}
                                         </div>
                                     </div>
@@ -90,7 +91,7 @@
                                     {% endfor %}
                                     <div class="col-md-4 formset formset_block">
                                         {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
-                                        <h4>Услуга <span class="counter">{{ forloop.counter }}</span>
+                                        <h4>{% trans 'Service' %} <span class="counter">{{ forloop.counter }}</span>
                                             {% if inline_form.instance.pk %}
                                             <a href="javascript:void(0)" style="float:right;"
                                                class="delete_icon_blocks text-red has_pk" name="{{ inline_form.instance.pk }}">
@@ -110,17 +111,17 @@
                                         <img src="{% static 'img/default_form_image.png' %}" alt
                                              class="near_img preview_img">
                                         {% endif %}
-                                        <label for="" style="margin-top:10px;">Рекомендуемый размер:
+                                        <label for="" style="margin-top:10px;">{% trans 'Size' %}:
                                             (650x300) </label>
                                         <div class="form-group">
                                             {{ inline_form.image }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Заголовок блока</label>
+                                            <label for="">{% trans 'Block title' %}</label>
                                             {{ inline_form.title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="">Описание</label>
+                                            <label for="">{% trans 'Description' %}</label>
                                             {{ inline_form.description }}
                                         </div>
                                     </div>
@@ -128,32 +129,32 @@
                                 </div>
                                 <div class="row border_bottom" style="margin-top:30px;">
                                     <div class="col-12">
-                                        <h5>Настройки SEO</h5>
+                                        <h5>{% trans 'SEO settings' %}</h5>
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin-top:20px;">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="seo_title">Title</label>
+                                            <label for="seo_title">{% trans 'Title' %}</label>
                                             {{ form.seo_title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="seo_description">Description</label>
+                                            <label for="seo_description">{% trans 'Description' %}</label>
                                             {{ form.seo_description }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="seo_keywords">Keywords</label>
+                                            <label for="seo_keywords">{% trans 'Keywords' %}</label>
                                             {{ form.seo_keywords }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top:15px;">
                                     <div class="col-12 text-center">
-                                        <a href="{% url 'admin_panel:services_page' %}" class="btn btn-default">Отмена</a>
-                                        <button type="button" class="btn btn-success" id="add_formset">Добавить услугу
+                                        <a href="{% url 'admin_panel:services_page' %}" class="btn btn-default">{% trans 'Cancel' %}</a>
+                                        <button type="button" class="btn btn-success" id="add_formset">{% trans 'Add service' %}
                                         </button>
-                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                        <button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
                                     </div>
                                 </div>
 

@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Статьи приходов/расходов{% endblock %}
+{% block title %}{% trans 'Types of Income/Outcome' %}{% endblock %}
 
 
 {% block content %}
@@ -13,14 +14,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Статьи приходов/расходов</h1>
+                    <h1 class="m-0">{% trans 'Types of Income/Outcome' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Статьи приходов/расходов</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Types of Income/Outcome' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -33,8 +34,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'admin_panel:create_payment_item_admin' %}" class="btn btn-success" style="float: right;">Добавить
-                        статью</a>
+                    <a href="{% url 'admin_panel:create_payment_item_admin' %}" class="btn btn-success" style="float: right;">{% trans 'Add type' %}</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
@@ -42,17 +42,17 @@
                             <table class="table table-hover table-striped text-nowrap linkedRow">
                                 <thead>
                                 <tr>
-                                    <th>Название</th>
+                                    <th>{% trans 'Name' %}</th>
                                     <th>
                                         {% if 'descending' in request.path %}
                                         <a href="{% url 'admin_panel:payment_items_admin_ascending' %}">
-                                            Приход/расход <i class="fas fa-sort-amount-down"></i></a>
+                                            {% trans 'Income/Outcome' %} <i class="fas fa-sort-amount-down"></i></a>
                                         {% elif 'ascending' in request.path %}
                                         <a href="{% url 'admin_panel:payment_items_admin_descending' %}"
-                                        >Приход/расход <i class="fas fa-sort-amount-up"></i></a>
+                                        >{% trans 'Income/Outcome' %} <i class="fas fa-sort-amount-up"></i></a>
                                         {% else %}
                                         <a href="{% url 'admin_panel:payment_items_admin_ascending' %}">
-                                            Приход/расход</a>
+                                            {% trans 'Income/Outcome' %}</a>
                                         {% endif %}
                                     </th>
                                     <th style="width: 40px"></th>
@@ -64,9 +64,9 @@
                                     <td><a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}">{{ item.name }}</a></td>
                                     <td>
                                         {% if item.type == 0 %}
-                                        <a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}" style="color: #00a65a !important;">Приход</a>
+                                        <a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}" style="color: #00a65a !important;">{% trans 'Income' %}</a>
                                         {% else %}
-                                        <a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}" style="color: #dd4b39 !important;">Расход</a>
+                                        <a href="{% url 'admin_panel:update_payment_item_admin' item.pk %}" style="color: #dd4b39 !important;">{% trans 'Outcome' %}</a>
                                         {% endif %}
                                     </td>
                                     <td>
@@ -82,7 +82,7 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="3">Ничего не найдено</td>
+                                    <td colspan="3">{% trans 'No data found' %}</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>

@@ -2,505 +2,506 @@
 {% load static %}
 {% load beautify_line %}
 {% load utils %}
+{% load i18n %}
 
-{% block title %}Новый дом{% endblock %}
+{% block title %}{% trans 'New House' %}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'admin_panel/css/services_measure.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/css/services_measure.css' %}">
 {% endblock %}
 
 {% block content %}
-{% if form.errors %}
-{% include 'errors.html' with errors=form.errors %}
-{% endif %}
-{% if section_formset.errors %}
-{% include 'errors.html' with errors=section_formset.errors|prepare_error_message %}
-{% endif %}
-{% if floor_formset.errors %}
-{% include 'errors.html' with errors=floor_formset.errors|prepare_error_message %}
-{% endif %}
-{% if user_formset.errors %}
-{% include 'errors.html' with errors=user_formset.errors|prepare_error_message %}
-{% endif %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">
-                        {% if form.instance.pk %}
-                        Дом
-                        {% else %}
-                        Новый дом
-                        {% endif %}
-                    </h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_houses_admin' %}"
-                                   style="color: black;">Дома</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Новый дом</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	{% if form.errors %}
+		{% include 'errors.html' with errors=form.errors %}
+	{% endif %}
+	{% if section_formset.errors %}
+		{% include 'errors.html' with errors=section_formset.errors|prepare_error_message %}
+	{% endif %}
+	{% if floor_formset.errors %}
+		{% include 'errors.html' with errors=floor_formset.errors|prepare_error_message %}
+	{% endif %}
+	{% if user_formset.errors %}
+		{% include 'errors.html' with errors=user_formset.errors|prepare_error_message %}
+	{% endif %}
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							{% if form.instance.pk %}
+								{% trans 'House' %}
+							{% else %}
+								{% trans 'New House' %}
+							{% endif %}
+						</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+									<i class="fa fa-home"></i>{% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item">
+									<a href="{% url 'admin_panel:list_houses_admin' %}"
+									   style="color: black;">{% trans 'Houses' %}</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'New House' %}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <h5><i class="icon fas fa-check"></i>Операция прошла успешно</h5>
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <div class="row">
-                <div class="col-12" style="margin-top:15px;">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="card card-default">
+		<div class="content">
+			<div class="container-fluid">
+				{% if messages %}
+					{% for message in messages %}
+						<div class="alert alert-success alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<h5><i class="icon fas fa-check"></i>{% trans 'Operation successfully completed' %}</h5>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+				<div class="row">
+					<div class="col-12" style="margin-top:15px;">
+						<form action="" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="card card-default">
 
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="name">Название</label>
-                                            {{ form.name }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="address">Адрес</label>
-                                            {{ form.address }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image1">Изображение #1. Размер: (522x350)</label>
-                                            {{ form.image1 }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image2">Изображение #2. Размер: (248x160)</label>
-                                            {{ form.image2 }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image3">Изображение #3. Размер: (248x160)</label>
-                                            {{ form.image3 }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image4">Изображение #4. Размер: (248x160)</label>
-                                            {{ form.image4 }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="image5">Изображение #5. Размер: (248x160)</label>
-                                            {{ form.image5 }}
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-8">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                {% if form.instance.image1 %}
-                                                <img src="{{ form.instance.image1.url }}" alt
-                                                     class="house_large_img img_responsive margin-auto-bottom-30"
-                                                     id="preview_image1">
-                                                {% else %}
-                                                <img src="{% static 'img/default_form_image.png' %}" alt
-                                                     class="house_large_img img_responsive margin-auto-bottom-30"
-                                                     id="preview_image1">
-                                                {% endif %}
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="row">
-                                                    <div class="col-6 col-md-6">
-                                                        {% if form.instance.image2 %}
-                                                        <img src="{{ form.instance.image2.url }}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image2">
-                                                        {% else %}
-                                                        <img src="{% static 'img/default_form_image.png' %}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image2">
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        {% if form.instance.image3 %}
-                                                        <img src="{{ form.instance.image3.url }}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image3">
-                                                        {% else %}
-                                                        <img src="{% static 'img/default_form_image.png' %}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image3">
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        {% if form.instance.image4 %}
-                                                        <img src="{{ form.instance.image4.url }}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image4">
-                                                        {% else %}
-                                                        <img src="{% static 'img/default_form_image.png' %}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image4">
-                                                        {% endif %}
-                                                    </div>
-                                                    <div class="col-6 col-md-6">
-                                                        {% if form.instance.image5 %}
-                                                        <img src="{{ form.instance.image5.url }}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image5">
-                                                        {% else %}
-                                                        <img src="{% static 'img/default_form_image.png' %}" alt
-                                                             class="img_responsive margin-auto-bottom-30 house_small_image"
-                                                             id="preview_image5">
-                                                        {% endif %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 col-lg-8"
-                                         style="box-shadow: 0 1px 1px rgb(0 0 0 / 10%); padding:10px;">
-                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link active" id="section-tab" data-toggle="tab"
-                                                   href="#section"
-                                                   role="tab" aria-controls="section" aria-selected="true">Секции</a>
-                                            </li>
-                                            {% if floor_formset %}
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="floor-tab" data-toggle="tab" href="#floor"
-                                                   role="tab" aria-controls="floor" aria-selected="false">Этажи</a>
-                                            </li>
-                                            {% endif %}
-                                            <li class="nav-item" role="presentation">
-                                                <a class="nav-link" id="user-tab" data-toggle="tab" href="#user"
-                                                   role="tab" aria-controls="user"
-                                                   aria-selected="false">Пользователи</a>
-                                            </li>
-                                        </ul>
-                                        <div class="tab-content" style="padding: 10px;">
-                                            <div class="tab-pane active" id="section">
-                                                <div class="col-12">
-                                                    {{ section_formset.management_form }}
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12 col-lg-4">
+											<div class="form-group">
+												<label for="name">{% trans 'Name' %}</label>
+												{{ form.name }}
+											</div>
+											<div class="form-group">
+												<label for="address">{% trans 'Address' %}</label>
+												{{ form.address }}
+											</div>
+											<div class="form-group">
+												<label for="image1">{% trans 'Image' %} #1. {% trans 'Size' %}: (522x350)</label>
+												{{ form.image1 }}
+											</div>
+											<div class="form-group">
+												<label for="image2">{% trans 'Image' %} #2. {% trans 'Size' %}: (248x160)</label>
+												{{ form.image2 }}
+											</div>
+											<div class="form-group">
+												<label for="image3">{% trans 'Image' %} #3. {% trans 'Size' %}: (248x160)</label>
+												{{ form.image3 }}
+											</div>
+											<div class="form-group">
+												<label for="image4">{% trans 'Image' %} #4. {% trans 'Size' %}: (248x160)</label>
+												{{ form.image4 }}
+											</div>
+											<div class="form-group">
+												<label for="image5">{% trans 'Image' %} #5. {% trans 'Size' %}: (248x160)</label>
+												{{ form.image5 }}
+											</div>
+										</div>
+										<div class="col-12 col-lg-8">
+											<div class="row">
+												<div class="col-12 col-md-6">
+													{% if form.instance.image1 %}
+														<img src="{{ form.instance.image1.url }}" alt
+															 class="house_large_img img_responsive margin-auto-bottom-30"
+															 id="preview_image1">
+													{% else %}
+														<img src="{% static 'img/default_form_image.png' %}" alt
+															 class="house_large_img img_responsive margin-auto-bottom-30"
+															 id="preview_image1">
+													{% endif %}
+												</div>
+												<div class="col-12 col-md-6">
+													<div class="row">
+														<div class="col-6 col-md-6">
+															{% if form.instance.image2 %}
+																<img src="{{ form.instance.image2.url }}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image2">
+															{% else %}
+																<img src="{% static 'img/default_form_image.png' %}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image2">
+															{% endif %}
+														</div>
+														<div class="col-6 col-md-6">
+															{% if form.instance.image3 %}
+																<img src="{{ form.instance.image3.url }}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image3">
+															{% else %}
+																<img src="{% static 'img/default_form_image.png' %}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image3">
+															{% endif %}
+														</div>
+														<div class="col-6 col-md-6">
+															{% if form.instance.image4 %}
+																<img src="{{ form.instance.image4.url }}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image4">
+															{% else %}
+																<img src="{% static 'img/default_form_image.png' %}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image4">
+															{% endif %}
+														</div>
+														<div class="col-6 col-md-6">
+															{% if form.instance.image5 %}
+																<img src="{{ form.instance.image5.url }}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image5">
+															{% else %}
+																<img src="{% static 'img/default_form_image.png' %}" alt
+																	 class="img_responsive margin-auto-bottom-30 house_small_image"
+																	 id="preview_image5">
+															{% endif %}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-lg-8"
+											 style="box-shadow: 0 1px 1px rgb(0 0 0 / 10%); padding:10px;">
+											<ul class="nav nav-tabs" id="myTab" role="tablist">
+												<li class="nav-item" role="presentation">
+													<a class="nav-link active" id="section-tab" data-toggle="tab"
+													   href="#section"
+													   role="tab" aria-controls="section" aria-selected="true">{% trans 'Sections' %}</a>
+												</li>
+												{% if floor_formset %}
+													<li class="nav-item" role="presentation">
+														<a class="nav-link" id="floor-tab" data-toggle="tab" href="#floor"
+														   role="tab" aria-controls="floor" aria-selected="false">{% trans 'Floors' %}</a>
+													</li>
+												{% endif %}
+												<li class="nav-item" role="presentation">
+													<a class="nav-link" id="user-tab" data-toggle="tab" href="#user"
+													   role="tab" aria-controls="user"
+													   aria-selected="false">{% trans 'Users' %}</a>
+												</li>
+											</ul>
+											<div class="tab-content" style="padding: 10px;">
+												<div class="tab-pane active" id="section">
+													<div class="col-12">
+														{{ section_formset.management_form }}
 
-                                                    <div class="form-group section_formset" style="display: none;"
-                                                         id="hidden_sections">
-                                                        <label for="">Название</label>
-                                                        <div class="input-group">
-                                                            {{ section_formset.empty_form.name }}
-                                                            <span class="input-group-btn">
+														<div class="form-group section_formset" style="display: none;"
+															 id="hidden_sections">
+															<label for="">{% trans 'Name' %}</label>
+															<div class="input-group">
+																{{ section_formset.empty_form.name }}
+																<span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger delete_icon_sections"><i
-                                                                        class="fa fa-trash"
-                                                                        style="color: white;"></i></button>
+																		class="btn btn-danger delete_icon_sections"><i
+																		class="fa fa-trash"
+																		style="color: white;"></i></button>
                                                                         </span>
-                                                        </div>
-                                                    </div>
+															</div>
+														</div>
 
 
-                                                    {% for inline_form in section_formset %}
-                                                    {% for hidden in inline_form.hidden_fields %}
-                                                    {{ hidden }}
-                                                    {% endfor %}
-                                                    <div class="form-group section_formset">
-                                                        {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
-                                                        <label for="">Название</label>
-                                                        <div class="input-group">
-                                                            {{ inline_form.name }}
-                                                            <span class="input-group-btn">
+														{% for inline_form in section_formset %}
+															{% for hidden in inline_form.hidden_fields %}
+																{{ hidden }}
+															{% endfor %}
+															<div class="form-group section_formset">
+																{{ inline_form.DELETE|add_class:'delete-input-hidden' }}
+																<label for="">{% trans 'Name' %}</label>
+																<div class="input-group">
+																	{{ inline_form.name }}
+																	<span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger delete_icon_sections has_pk"
-                                                                        name="{{ inline_form.instance.pk }}"><i
-                                                                        class="fa fa-trash"
-                                                                        style="color: white;"></i></button>
+																		class="btn btn-danger delete_icon_sections has_pk"
+																		name="{{ inline_form.instance.pk }}"><i
+																		class="fa fa-trash"
+																		style="color: white;"></i></button>
                                                                         </span>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                                <div class="col-12">
-                                                    <button class="btn btn-success" style="float:right;"
-                                                            id="add_sections"
-                                                            type="button">Добавить
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            {% if floor_formset %}
-                                            <div class="tab-pane" id="floor">
-                                                <div class="col-12">
-                                                    {{ floor_formset.management_form }}
+																</div>
+															</div>
+														{% endfor %}
+													</div>
+													<div class="col-12">
+														<button class="btn btn-success" style="float:right;"
+																id="add_sections"
+																type="button">{% trans 'Add' %}
+														</button>
+													</div>
+												</div>
+												{% if floor_formset %}
+													<div class="tab-pane" id="floor">
+														<div class="col-12">
+															{{ floor_formset.management_form }}
 
-                                                    <div class="row floor_formset" style="display: none;"
-                                                         id="hidden_floors">
-                                                        <div class="col-12 col-sm-6">
-                                                            <label for="">Название</label>
-                                                            {{ floor_formset.empty_form.name }}
-                                                        </div>
-                                                        <div class="col-12 col-sm-6">
-                                                            <label for="">Секция</label>
-                                                            <div class="input-group">
-                                                                {{ floor_formset.empty_form.sections }}
-                                                                <span class="input-group-btn">
+															<div class="row floor_formset" style="display: none;"
+																 id="hidden_floors">
+																<div class="col-12 col-sm-6">
+																	<label for="">{% trans 'Name' %}</label>
+																	{{ floor_formset.empty_form.name }}
+																</div>
+																<div class="col-12 col-sm-6">
+																	<label for="">{% trans 'Section' %}</label>
+																	<div class="input-group">
+																		{{ floor_formset.empty_form.sections }}
+																		<span class="input-group-btn">
                                                                     <button type="button"
-                                                                            class="btn btn-danger delete_icon_floors"><i
-                                                                            class="fa fa-trash"
-                                                                            style="color: white;"></i></button>
+																			class="btn btn-danger delete_icon_floors"><i
+																			class="fa fa-trash"
+																			style="color: white;"></i></button>
                                                                 </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+																	</div>
+																</div>
+															</div>
 
-                                                    {% for inline_form in floor_formset %}
-                                                        {% for hidden in inline_form.hidden_fields %}
-                                                        {{ hidden }}
-                                                        {% endfor %}
-                                                    <div class="row floor_formset">
-                                                        {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
-                                                        <div class="col-12 col-sm-6">
-                                                            <label for="">Название</label>
-                                                            {{ inline_form.name }}
-                                                        </div>
-                                                        <div class="col-12 col-sm-6">
-                                                            <label for="">Секция</label>
-                                                            <div class="input-group">
-                                                                {{ inline_form.sections }}
+															{% for inline_form in floor_formset %}
+																{% for hidden in inline_form.hidden_fields %}
+																	{{ hidden }}
+																{% endfor %}
+																<div class="row floor_formset">
+																	{{ inline_form.DELETE|add_class:'delete-input-hidden' }}
+																	<div class="col-12 col-sm-6">
+																		<label for="">{% trans 'Name' %}</label>
+																		{{ inline_form.name }}
+																	</div>
+																	<div class="col-12 col-sm-6">
+																		<label for="">{% trans 'Section' %}</label>
+																		<div class="input-group">
+																			{{ inline_form.sections }}
 
-                                                                <span class="input-group-btn">
+																			<span class="input-group-btn">
                                                                     <button type="button"
-                                                                            class="btn btn-danger delete_icon_floors has_pk"
-                                                                            name="{{ inline_form.instance.pk }}"><i
-                                                                            class="fa fa-trash"
-                                                                            style="color: white;"></i></button>
+																			class="btn btn-danger delete_icon_floors has_pk"
+																			name="{{ inline_form.instance.pk }}"><i
+																			class="fa fa-trash"
+																			style="color: white;"></i></button>
                                                                             </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                                <div class="col-12" style="margin-top:15px;">
-                                                    <button class="btn btn-success" style="float:right;" id="add_floors"
-                                                            type="button">Добавить
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            {% endif %}
-                                            <div class="tab-pane" id="user">
-                                                <div class="col-12">
-                                                    {{ user_formset.management_form }}
+																		</div>
+																	</div>
+																</div>
+															{% endfor %}
+														</div>
+														<div class="col-12" style="margin-top:15px;">
+															<button class="btn btn-success" style="float:right;" id="add_floors"
+																	type="button">{% trans 'Add' %}
+															</button>
+														</div>
+													</div>
+												{% endif %}
+												<div class="tab-pane" id="user">
+													<div class="col-12">
+														{{ user_formset.management_form }}
 
-                                                    <div class="row users_formset" style="display: none;"
-                                                         id="hidden_users">
-                                                        <div class="col-12 col-sm-7">
-                                                            <div class="form-group">
-                                                                <label for="">Пользователь</label>
-                                                                {{ user_formset.empty_form.user }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-5">
-                                                            <label for="">Роль</label>
-                                                            <div class="input-group">
-                                                                <input type="text" disabled
-                                                                       class="form-control user_role" name='__prefix__'>
-                                                                <div class="delete_input"> 
+														<div class="row users_formset" style="display: none;"
+															 id="hidden_users">
+															<div class="col-12 col-sm-7">
+																<div class="form-group">
+																	<label for="">{% trans 'Users' %}</label>
+																	{{ user_formset.empty_form.user }}
+																</div>
+															</div>
+															<div class="col-12 col-sm-5">
+																<label for="">{% trans 'Role' %}</label>
+																<div class="input-group">
+																	<input type="text" disabled
+																		   class="form-control user_role" name='__prefix__'>
+																	<div class="delete_input">
                                                             <span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger delete_icon_users"
-                                                                ><i class="fa fa-trash"
-                                                                    style="color: white;"></i></button>
+																		class="btn btn-danger delete_icon_users"
+																><i class="fa fa-trash"
+																	style="color: white;"></i></button>
                                                             </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+																	</div>
+																</div>
+															</div>
+														</div>
 
 
-                                                    {% for inline_form in user_formset %}
-                                                    {% for hidden in inline_form.hidden_fields %}
-                                                    {{ hidden }}
-                                                    {% endfor %}
-                                                    <div class="row users_formset">
-                                                        {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
-                                                        <div class="col-12 col-sm-7">
-                                                            <div class="form-group">
-                                                                <label for="">Пользователь</label>
-                                                                {{ inline_form.user }}
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12 col-sm-5">
-                                                            <label for="">Роль</label>
-                                                            <div class="input-group">
-                                                                <input type="text" disabled
-                                                                       class="form-control user_role">
-                                                                <div class="delete_input">
+														{% for inline_form in user_formset %}
+															{% for hidden in inline_form.hidden_fields %}
+																{{ hidden }}
+															{% endfor %}
+															<div class="row users_formset">
+																{{ inline_form.DELETE|add_class:'delete-input-hidden' }}
+																<div class="col-12 col-sm-7">
+																	<div class="form-group">
+																		<label for="">{% trans 'User' %}</label>
+																		{{ inline_form.user }}
+																	</div>
+																</div>
+																<div class="col-12 col-sm-5">
+																	<label for="">{% trans 'Role' %}</label>
+																	<div class="input-group">
+																		<input type="text" disabled
+																			   class="form-control user_role">
+																		<div class="delete_input">
                                                             <span class="input-group-btn">
                                                                 <button type="button"
-                                                                        class="btn btn-danger delete_icon_users has_pk"
-                                                                        name="{{ inline_form.instance.pk }}"><i
-                                                                        class="fa fa-trash"
-                                                                        style="color: white;"></i></button>
+																		class="btn btn-danger delete_icon_users has_pk"
+																		name="{{ inline_form.instance.pk }}"><i
+																		class="fa fa-trash"
+																		style="color: white;"></i></button>
                                                             </span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    {% endfor %}
-                                                </div>
-                                                <div class="col-12">
-                                                    <button class="btn btn-success" style="float:right;" id="add_users"
-                                                            type="button">Добавить
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														{% endfor %}
+													</div>
+													<div class="col-12">
+														<button class="btn btn-success" style="float:right;" id="add_users"
+																type="button">{% trans 'Add' %}
+														</button>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 
-                            <div class="row" style="margin-top:15px; margin-bottom: 15px;">
-                                <div class="col-12" style="text-align: right; padding-right: 20px;">
-                                    <a href="{% url 'admin_panel:list_houses_admin' %}"
-                                       class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success">Сохранить</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+								<div class="row" style="margin-top:15px; margin-bottom: 15px;">
+									<div class="col-12" style="text-align: right; padding-right: 20px;">
+										<a href="{% url 'admin_panel:list_houses_admin' %}"
+										   class="btn btn-default">{% trans 'Cancel' %}</a>
+										<button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
-<script src="{% static 'utils/dynamic_formset.js' %}"></script>
-<script src="{% static 'admin_panel/js/requests.js' %}"></script>
-<script>
-    $('#image1').on('change', function(){
-        setPreview(this, '.row', '#preview_image1');
-    })
-    $('#image2').on('change', function(){
-        setPreview(this, '.row', '#preview_image2');
-    })
-    $('#image3').on('change', function(){
-        setPreview(this, '.row', '#preview_image3');
-    })
-    $('#image4').on('change', function(){
-        setPreview(this, '.row', '#preview_image4');
-    })
-    $('#image5').on('change', function(){
-        setPreview(this, '.row', '#preview_image5');
-    })
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
+	<script src="{% static 'utils/dynamic_formset.js' %}"></script>
+	<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+	<script>
+        $('#image1').on('change', function(){
+            setPreview(this, '.row', '#preview_image1');
+        })
+        $('#image2').on('change', function(){
+            setPreview(this, '.row', '#preview_image2');
+        })
+        $('#image3').on('change', function(){
+            setPreview(this, '.row', '#preview_image3');
+        })
+        $('#image4').on('change', function(){
+            setPreview(this, '.row', '#preview_image4');
+        })
+        $('#image5').on('change', function(){
+            setPreview(this, '.row', '#preview_image5');
+        })
 
-</script>
-<script>
-    function setEvent(element, selector){
-        let select = $(element).closest(selector).find('.users_select');
-        let selected_role = $(element).closest(selector).find('.user_role');
+	</script>
+	<script>
+        function setEvent(element, selector){
+            let select = $(element).closest(selector).find('.users_select');
+            let selected_role = $(element).closest(selector).find('.user_role');
 
-        $(select).on('change', function(){
+            $(select).on('change', function(){
+                let selected = $(this).find(':selected').attr('value');
+                $.ajax({
+                    url: '{% url "admin_panel:get_user_role" %}',
+                    type: 'GET',
+                    data: {'pk': selected},
+                })
+                    .done(function(response) {
+                        console.log(response)
+                        $(selected_role).val(response['role']);
+                    })
+            })
+        }
+
+	</script>
+	<script>
+        function setOptionSelecting(selector){
+            let pk = '{{ form.instance.pk }}'
+            $.ajax({
+                method: 'GET',
+                url: '{% url "rest_api:get_section_list" %}',
+                data: {'pk': pk}
+            })
+                .done(function(response){
+                    $(selector).find('select').children().remove();
+                    for(key of response){
+                        $(selector).find('select').append('<option value='+ key['id'] +' >' +  key['name'] + '</option>');
+                    }
+
+                    $(selector).each(function(){
+                        $(this).find('option').each(function(){
+                            $(this).mousedown(function(e){
+                                e.preventDefault();
+                                $(this).prop('selected', !$(this).prop('selected'));
+                                return false;
+                            })
+                        })
+                    })
+
+                })
+        }
+        setOptionSelecting('.section_select');
+	</script>
+	<script>
+        // Section init
+        let section_cloner = new BaseCloner('sections', '.section_formset');
+        section_cloner.init();
+        $('#add_sections').on('click', function(){
+            section_cloner.clone();
+        })
+        // Floor init
+        let floor_cloner = new FormsetClonerWithCallback('floors', '.floor_formset', setOptionSelecting);
+        floor_cloner.init();
+        $('#add_floors').on('click', function(){
+            floor_cloner.clone();
+        })
+        // User init
+        let user_cloner = new FormsetClonerWithCallback('users', '.users_formset', setEvent);
+        user_cloner.init();
+        $('#add_users').on('click', function(){
+            user_cloner.clone();
+        })
+        $('.users_select').each(function(){
+            let selected_role = $(this).closest('.users_formset').find('.user_role');
             let selected = $(this).find(':selected').attr('value');
-            $.ajax({
-                url: '{% url "admin_panel:get_user_role" %}',
-                type: 'GET',
-                data: {'pk': selected},
-            })
-            .done(function(response) {
-                console.log(response)
-                $(selected_role).val(response['role']);
-            })
-        })
-    }
-
-</script>
-<script>
-    function setOptionSelecting(selector){
-        let pk = '{{ form.instance.pk }}'
-        $.ajax({
-            method: 'GET',
-            url: '{% url "rest_api:get_section_list" %}',
-            data: {'pk': pk}
-        })
-        .done(function(response){
-            $(selector).find('select').children().remove();
-            for(key of response){
-                $(selector).find('select').append('<option value='+ key['id'] +' >' +  key['name'] + '</option>');
+            if(selected){
+                $.ajax({
+                    url: '{% url "admin_panel:get_user_role" %}',
+                    type: 'GET',
+                    data: {'pk': selected},
+                })
+                    .done(function(response) {
+                        console.log(response)
+                        $(selected_role).val(response['role']);
+                    })
             }
+            setEvent(this, '.users_formset');
+        })
 
-        $(selector).each(function(){
-            $(this).find('option').each(function(){
-                $(this).mousedown(function(e){
+        $('form').submit(function(e){
+            let users_formset = $('.users_formset').find('select').not(':hidden').find(':selected');
+            let values = []
+            for(val of users_formset){
+                values.push($(val).val());
+            }
+            values.sort();
+            for(i=1; i<=values.length; i++){
+                if(values[i-1] == values[i]){
                     e.preventDefault();
-                    $(this).prop('selected', !$(this).prop('selected'));
-                    return false;
-                })
-            })
-        })
-            
-        })
-    }
-    setOptionSelecting('.section_select');
-</script>
-<script>
-// Section init
-    let section_cloner = new BaseCloner('sections', '.section_formset');
-    section_cloner.init();
-    $('#add_sections').on('click', function(){
-        section_cloner.clone();
-    })
-// Floor init
-    let floor_cloner = new FormsetClonerWithCallback('floors', '.floor_formset', setOptionSelecting);
-    floor_cloner.init();
-    $('#add_floors').on('click', function(){
-        floor_cloner.clone();
-    })
-// User init
-    let user_cloner = new FormsetClonerWithCallback('users', '.users_formset', setEvent);
-    user_cloner.init();
-    $('#add_users').on('click', function(){
-        user_cloner.clone();
-    })
-    $('.users_select').each(function(){
-        let selected_role = $(this).closest('.users_formset').find('.user_role');
-        let selected = $(this).find(':selected').attr('value');
-        if(selected){
-            $.ajax({
-                url: '{% url "admin_panel:get_user_role" %}',
-                type: 'GET',
-                data: {'pk': selected},
-                })
-            .done(function(response) {
-                console.log(response)
-                $(selected_role).val(response['role']);
-            })
-        }
-        setEvent(this, '.users_formset');
-    })
-
-    $('form').submit(function(e){
-        let users_formset = $('.users_formset').find('select').not(':hidden').find(':selected');
-        let values = []
-        for(val of users_formset){
-            values.push($(val).val());
-        }
-        values.sort();
-        for(i=1; i<=values.length; i++){
-            if(values[i-1] == values[i]){
-                e.preventDefault();
-                confirm('Вы выбрали одинаковых пользователей!')
-                break;
+                    confirm('{% trans "You have selected the same users" %}');
+                    break;
+                }
             }
-        }
-    })
+        })
 
-</script>
+	</script>
 {% endblock %}

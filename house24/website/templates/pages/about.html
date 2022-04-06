@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}CRM-система для управляющей компании ЖКХ
-- "МОЙ ДОМ 24"{% endblock %}
+{% block title %}{% trans 'CRM-system for the management company of housing and communal services - "MY HOUSE 24"' %}{% endblock %}
 
 {% block head %}
 <meta name="title" content="{{ page.seo_title }}">
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block about_header %}
-<li class="nav-item active"><a class="nav-link" href="{% url 'website:about_page_view' %}">О нас</a></li>
+<li class="nav-item active"><a class="nav-link" href="{% url 'website:about_page_view' %}">{% trans 'About us' %}</a></li>
 {% endblock %}
 
 {% block content %}
@@ -21,8 +21,8 @@
             <div class="col">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
-                        <li class="breadcrumb-item active" aria-current="page">О нас</li>
+                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">{% trans 'Home' %} </a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'About us' %}</li>
                     </ol>
                 </nav>
             </div>
@@ -80,7 +80,7 @@
 
         <div class="row" style="margin-top: 20px;">
             <div class="col-md">
-                <div style="border-bottom: 1px solid #eee;"><h3>Документы</h3></div>
+                <div style="border-bottom: 1px solid #eee;"><h3>{% trans 'Documents' %}</h3></div>
             </div>
         </div>
         <div class="row" style="margin-top:50px;">
@@ -92,7 +92,7 @@
                 </div>
                 <div style="display: table-cell; vertical-align:top;">
                     <h5>{{ inst.name }}</h5>
-                    <a href="{% url 'website:download_document' inst.pk %}">Скачать документ</a>
+                    <a href="{% url 'website:download_document' inst.pk %}">{% trans 'Download document' %}</a>
                 </div>
             </div>
             {% endfor %}

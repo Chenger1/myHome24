@@ -1,9 +1,10 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
 {% block title %}
-Оплата квитанции: #{{ ticket.number }}
+{% trans 'Receipt payment' %}: #{{ ticket.number }}
 {% endblock %}
 
 {% block content %}
@@ -16,20 +17,20 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Оплата квитанции: #{{ ticket.number }}
+                        {% trans 'Receipt payment' %}: #{{ ticket.number }}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" style="color: black;">
-                                Квитанции</a></li>
+                                {% trans 'Receipts' %}</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}" style="color: black;">
-                                Квитанция #{{ ticket.number }}</a></li>
+                                {% trans 'Receipt' %} #{{ ticket.number }}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Оплата квитанции: #{{ ticket.number }}
+                                {% trans 'Receipt payment' %}: #{{ ticket.number }}
                             </li>
                         </ol>
                     </nav>
@@ -52,7 +53,7 @@
                                     <div class="form-group" style="margin: 0; flex-basis: 45%;">
                                         <div class="input-group">
                                             <div class="input-group-addon to_valid">
-                                                Владелец
+                                                {% trans 'Owner' %}
                                             </div>
                                             <input type="text" class="form-control to_valid"
                                                    value="{{ request.user }}" disabled>
@@ -74,19 +75,19 @@
                                 <div class="row">
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label for="account">Лицевой счет</label>
+                                            <label for="account">{% trans 'Account' %}</label>
                                             <input type="text" id="account" value="{{ ticket.personal_account }}" disabled
                                             class="form-control">
                                             {{ form.personal_account }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="paid_sum">Сумма</label>
+                                            <label for="paid_sum">{% trans 'Sum' %}</label>
                                             {{ form.paid_sum }}
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-6">
                                         <div class="form-group">
-                                            <label for="payment_ticket">Квитанция</label>
+                                            <label for="payment_ticket">{% trans 'Receipt' %}</label>
                                             <input type="text" id="payment_ticket" value="{{ ticket }}" disabled
                                             class="form-control">
                                             {{ form.payment_ticket }}
@@ -94,7 +95,7 @@
                                         </div>
                                         <div class="form-group">
                                             <label for=""></label>
-                                            <h5>К оплате по квитанции: <strong id="sum">{{ ticket.sum }}</strong> грн.</h5>
+                                            <h5>{% trans 'To pay' %}: <strong id="sum">{{ ticket.sum }}</strong></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -103,8 +104,8 @@
                             <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
                                 <div class="col-12 text-right">
                                     <a href="{% url 'admin_panel:list_payment_ticket_admin' %}"
-                                       class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить
+                                       class="btn btn-default">{% trans 'Cancel' %}</a>
+                                    <button type="submit" class="btn btn-success" name="multiple" value="0">{% trans 'Save' %}
                                     </button>
                                 </div>
                             </div>

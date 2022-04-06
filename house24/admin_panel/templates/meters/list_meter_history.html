@@ -1,224 +1,224 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Показания счетчиков, кв.{{ flat.number }}{% endblock %}
+{% block title %}{% trans 'Meter readings, flat №' %}{{ flat.number }}{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
 {% endblock %}
 
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Показания счетчиков, кв.{{ flat.number }}</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:list_meters_admin' %}" style="color: black;">
-                                Счетчики</a></li>
-                            <li class="breadcrumb-item active">Показания счетчиков, кв.{{ flat.number }}</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">{% trans 'Meter readings, flat №' %}{{ flat.number }}</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:list_meters_admin' %}" style="color: black;">
+									{% trans 'Meters' %}</a></li>
+								<li class="breadcrumb-item active">{% trans 'Meter readings, flat №' %}{{ flat.number }}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <a href="{% url 'admin_panel:create_meter_by_flat_admin' flat.pk %}" class="btn btn-success" style="float: right;">Добавить
-                        показание</a>
-                </div>
-                <div class="col-12" style="margin-top:15px;">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <a href="{% url 'admin_panel:list_meter_history' flat.pk %}" class="btn btn-default"
-                            style="float:right;">Очистить</a>
-                        </div>
-                        <div class="card-body card-body table-responsive p-0">
-                            <form action="" method="get">
-                                {% csrf_token %}
-                            <table class="table table-hover table-striped text-nowrap linkedRow">
-                                <thead>
-                                <tr>
-                                    <th style="width: 125px; min-width: 125px">№</th>
-                                    <th>Статус</th>
-                                    <th style="width: 125px; min-width: 125px">
-                                        {% if 'date_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_meter_history_date_descending' flat.pk %}"
-                                            class="submit_link">
-                                               Дата <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}">
-                                        {% elif 'date_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}"
-                                            class="submit_link">
-                                               Дата <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}"
-                                            class="submit_link">
-                                                   Дата
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}">
-                                        {% endif %}
-                                    </th>
-                                    <th style="width: 125px; min-width: 125px">
-                                        {% if 'month_ascending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}"
-                                            class="submit_link">
-                                               Месяц <i class="fas fa-sort-amount-up"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}">
-                                        {% elif 'month_descending' in request.path %}
-                                            <a href="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}"
-                                            class="submit_link">
-                                               Месяц <i class="fas fa-sort-amount-down"></i>
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}">
-                                        {% else %}
-                                            <a href="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}"
-                                            class="submit_link">
-                                                   Месяц
-                                            </a>
-                                            <input type="hidden" class="next_link" 
-                                            value="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}">
-                                        {% endif %}
-                                    </th>
-                                    <th style="min-width: 200px">Дом</th>
-                                    <th style="min-width: 160px">Секция</th>
-                                    <th style="width: 110px; min-width: 110px">№ квартиры</th>
-                                    <th>Счетчик</th>
-                                    <th style="width: 90px; min-width: 90px">Показания</th>
-                                    <th style="width: 90px; min-width: 90px">Ед. изм.</th>
-                                    <th style="width: 80px; min-width: 80px"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>{{ form.number }}</td>
-                                    <td>{{ form.status }}</td>
-                                    <td>
-                                        <input type="text" id="date_range" class="form-control">
-                                        {{ form.start }}
-                                        {{ form.end }}
-                                    </td>
-                                    <td></td>
-                                    <td>{{ form.house }}</td>
-                                    <td>{{ form.section }}</td>
-                                    <td><input type="hidden" name="flat" value="{{ flat.pk }}"></td>
-                                    <td>{{ form.service }}</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<a href="{% url 'admin_panel:create_meter_by_flat_admin' flat.pk %}" class="btn btn-success" style="float: right;">{% trans 'Add meter reading' %}</a>
+					</div>
+					<div class="col-12" style="margin-top:15px;">
+						<div class="card card-default">
+							<div class="card-header">
+								<a href="{% url 'admin_panel:list_meter_history' flat.pk %}" class="btn btn-default"
+								   style="float:right;">{% trans 'Clear' %}</a>
+							</div>
+							<div class="card-body card-body table-responsive p-0">
+								<form action="" method="get">
+									{% csrf_token %}
+									<table class="table table-hover table-striped text-nowrap linkedRow">
+										<thead>
+										<tr>
+											<th style="width: 125px; min-width: 125px">№</th>
+											<th>{% trans 'Status' %}</th>
+											<th style="width: 125px; min-width: 125px">
+												{% if 'date_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_meter_history_date_descending' flat.pk %}"
+													   class="submit_link">
+														{% trans 'Date' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}">
+												{% elif 'date_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}"
+													   class="submit_link">
+														{% trans 'Date' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_meter_history_date_ascending' flat.pk  %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}"
+													   class="submit_link">
+														{% trans 'Date' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_meter_history_date_descending' flat.pk  %}">
+												{% endif %}
+											</th>
+											<th style="width: 125px; min-width: 125px">
+												{% if 'month_ascending' in request.path %}
+													<a href="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}"
+													   class="submit_link">
+														{% trans 'Month' %} <i class="fas fa-sort-amount-up"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}">
+												{% elif 'month_descending' in request.path %}
+													<a href="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}"
+													   class="submit_link">
+														{% trans 'Month' %} <i class="fas fa-sort-amount-down"></i>
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_meter_history_month_ascending' flat.pk  %}">
+												{% else %}
+													<a href="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}"
+													   class="submit_link">
+														{% trans 'Month' %}
+													</a>
+													<input type="hidden" class="next_link"
+														   value="{% url 'admin_panel:list_meter_history_month_descending' flat.pk  %}">
+												{% endif %}
+											</th>
+											<th style="min-width: 200px">{% trans 'House' %}</th>
+											<th style="min-width: 160px">{% trans 'Section' %}</th>
+											<th style="width: 110px; min-width: 110px">{% trans 'Flat №' %}</th>
+											<th>{% trans 'Meter' %}</th>
+											<th style="width: 90px; min-width: 90px">{% trans 'Readings' %}</th>
+											<th style="width: 90px; min-width: 90px">{% trans 'Unit' %}</th>
+											<th style="width: 80px; min-width: 80px"></th>
+										</tr>
+										</thead>
+										<tbody>
+										<tr>
+											<td>{{ form.number }}</td>
+											<td>{{ form.status }}</td>
+											<td>
+												<input type="text" id="date_range" class="form-control">
+												{{ form.start }}
+												{{ form.end }}
+											</td>
+											<td></td>
+											<td>{{ form.house }}</td>
+											<td>{{ form.section }}</td>
+											<td><input type="hidden" name="flat" value="{{ flat.pk }}"></td>
+											<td>{{ form.service }}</td>
+											<td></td>
+											<td></td>
+											<td></td>
+										</tr>
 
-                                {% for meter in instances %}
-                                <tr>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.number }}</a></td>
-                                    <td class="text-center"><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">
-                                        {% if meter.status == 0 %}
-                                        <small class="label label-warning">Новое</small>
-                                        {% elif meter.status == 1 %}
-                                        <small class="label label-success">Учтено</small>
-                                        {% elif meter.status == 2 %}
-                                        <small class="label label-success">Учтено и оплачено</small>
-                                        {% else %}
-                                        <small class="label label-primary">Нулевое</small>
-                                        {% endif %}
-                                    </a></td>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.meter_date }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.meter_month }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.house }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.section }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.flat.number }}</a></td>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.service }}</a></td>
-                                    <th><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.data }}</a></th>
-                                    <td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.service.measure }}</a></td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a class="btn btn-default btn-sm"
-                                               href="{% url 'admin_panel:update_meter_admin' meter.pk %}"
-                                            title="Редактировать">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <a class="btn btn-default btn-sm delete_instances"
-                                               href="{% url 'admin_panel:delete_meter_admin' meter.pk meter.flat.pk %}"
-                                            title="Удалить">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="11">Ничего не найдено</td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-                        <div class="card-footer">
-                            <div class="row" style="align-items:center;">
-                                <div class="col-12">
-                                    {% include "pagination.html" with page=instances %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+										{% for meter in instances %}
+											<tr>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.number }}</a></td>
+												<td class="text-center"><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">
+													{% if meter.status == 0 %}
+														<small class="label label-warning">{% trans 'Новое' %}</small>
+													{% elif meter.status == 1 %}
+														<small class="label label-success">{% trans 'Accounted' %}</small>
+													{% elif meter.status == 2 %}
+														<small class="label label-success">{% trans 'Accounted and paid' %}</small>
+													{% else %}
+														<small class="label label-primary">{% trans 'Zero' %}</small>
+													{% endif %}
+												</a></td>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.meter_date }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.meter_month }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.house }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.section }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.flat.number }}</a></td>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.service }}</a></td>
+												<th><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.data }}</a></th>
+												<td><a href="{% url 'admin_panel:detail_meter_admin' meter.pk %}">{{ meter.service.measure }}</a></td>
+												<td>
+													<div class="btn-group">
+														<a class="btn btn-default btn-sm"
+														   href="{% url 'admin_panel:update_meter_admin' meter.pk %}"
+														   title="Редактировать">
+															<i class="fas fa-edit"></i>
+														</a>
+														<a class="btn btn-default btn-sm delete_instances"
+														   href="{% url 'admin_panel:delete_meter_admin' meter.pk meter.flat.pk %}"
+														   title="Удалить">
+															<i class="fa fa-trash"></i>
+														</a>
+													</div>
+												</td>
+											</tr>
+										{% empty %}
+											<tr>
+												<td colspan="11">{% trans 'No data found' %}</td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</form>
+							</div>
+							<div class="card-footer">
+								<div class="row" style="align-items:center;">
+									<div class="col-12">
+										{% include "pagination.html" with page=instances %}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/utils.js' %}"></script>
-<script src="{% static 'admin_panel/js/requests.js' %}"></script>
-<script>
-    $(document).ready(function(){
-        $('#date_range').daterangepicker({
-            locale: {
-                format: 'YYYY-MM-DD'
-            }
-        });
-        submit_form_after_keypress();
-        submit_form_after_ordering();
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+	<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+	<script>
+        $(document).ready(function(){
+            $('#date_range').daterangepicker({
+                locale: {
+                    format: 'YYYY-MM-DD'
+                }
+            });
+            submit_form_after_keypress();
+            submit_form_after_ordering();
 
-        $('.applyBtn').on('click', function(){
-            const date_range = $('#date_range').data('daterangepicker');
-            $('#date_start').val(date_range.startDate.format('YYYY-MM-DD'));
-            $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
-            $('form').submit();
-        })
+            $('.applyBtn').on('click', function(){
+                const date_range = $('#date_range').data('daterangepicker');
+                $('#date_start').val(date_range.startDate.format('YYYY-MM-DD'));
+                $('#date_end').val(date_range.endDate.format('YYYY-MM-DD'));
+                $('form').submit();
+            })
 
-        let value = $('select[name=house]').find(':selected').val();
-        update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
-
-        $('select[name=house]').on('change', function(){
-            let value = $(this).find(':selected').val();
+            let value = $('select[name=house]').find(':selected').val();
             update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
+                constructor=append_select_section_floor);
+
+            $('select[name=house]').on('change', function(){
+                let value = $(this).find(':selected').val();
+                update_select(element=$('#id_section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                    constructor=append_select_section_floor);
+            })
+            confirm_deleting();
         })
-        confirm_deleting();
-    })
-</script>
+	</script>
 {% endblock %}

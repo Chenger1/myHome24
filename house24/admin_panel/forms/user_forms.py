@@ -4,6 +4,7 @@ from django import forms
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from db.models.user import Role
 from db.models.house import House
@@ -14,14 +15,14 @@ User = get_user_model()
 
 class AdminLoginForm(forms.Form):
     error_messages = {
-        'invalid_login': 'Неправильный логин или пароль',
-        'not_allowed': 'Войдите через профиль администрации'
+        'invalid_login': _('Wrong login and/or password'),
+        'not_allowed': _('Login as administrator')
     }
 
     email = forms.EmailField(widget=forms.EmailInput(attrs={'id': 'email', 'class': 'form-control', 'type': 'email',
                                                             'placeholder': 'E-mail'}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={'id': 'password', 'class': 'form-control',
-                                                                 'type': 'password', 'placeholder': 'Пароль'}))
+                                                                 'type': 'password', 'placeholder': _('Password')}))
     remember_me = forms.BooleanField(widget=forms.CheckboxInput(attrs={'id': 'remember_me'}), required=False)
 
     def authenticate_admin(self, request):
@@ -82,19 +83,19 @@ RoleFormSet = forms.modelformset_factory(model=Role, form=RoleForm, extra=0, can
 
 class SearchForm(forms.Form):
     status_choices = [
-        ('', 'Выберите...'),
-        (0, 'Активен'),
-        (1, 'Новый'),
-        (2, 'Отключен')
+        ('', _('Choose...')),
+        (0, _('Active')),
+        (1, _('New')),
+        (2, _('Disabled'))
     ]
     debt_choices = [
-        ('', 'Выберите...'),
-        (1, 'Да')
+        ('', _('Choose...')),
+        (1, _('Yes'))
     ]
 
     username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     role = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
-                                  queryset=Role.objects.all(), required=False, empty_label='Выберите...')
+                                  queryset=Role.objects.all(), required=False, empty_label=_('Choose...'))
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     email = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
@@ -105,7 +106,7 @@ class SearchForm(forms.Form):
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'id': 'house',
                                                               'class': 'form-control'}), required=False,
-                                   empty_label='Выберите...')
+                                   empty_label=_('Choose...'))
     flat = forms.CharField(widget=forms.TextInput(attrs={'id': 'flat',
                                                          'class': 'form-control'}), required=False)
     date_joined = forms.DateField(widget=forms.DateInput(attrs={'id': 'date',
@@ -119,8 +120,8 @@ class SearchForm(forms.Form):
 class AdminUserForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['status'].empty_label = 'Выберите...'
-        self.fields['role'].empty_label = 'Выберите...'
+        self.fields['status'].empty_label = _('Choose...')
+        self.fields['role'].empty_label = _('Choose...')
 
     class Meta:
         model = User
@@ -143,9 +144,9 @@ class AdminUserForm(forms.ModelForm):
         email = self.cleaned_data['email']
         if User.objects.filter(email=email.lower()).exists():
             if self.instance and self.instance.email != email:
-                raise ValidationError('Пользователь с таким электронным адресом уже существует')
+                raise ValidationError(_('User with this email already exists'))
         if password2 != password1:
-            raise ValidationError('Пароли не совпадают')
+            raise ValidationError(_('Passwords dont match'))
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -188,7 +189,7 @@ class UpdateAdminUserForm(AdminUserForm):
 class OwnerForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['status'].empty_label = 'Выберите...'
+        self.fields['status'].empty_label = _('Choose...')
 
     class Meta:
         model = User
@@ -227,9 +228,9 @@ class CreateOwnerForm(OwnerForm):
         password2 = self.cleaned_data['password2']
         email = self.cleaned_data['email']
         if User.objects.filter(email=email.lower()).exists():
-            raise ValidationError('Пользователь с таким электронным адресом уже существует')
+            raise ValidationError(_('User with this email already exists'))
         if password2 != password1:
-            raise ValidationError('Пароли не совпадают')
+            raise ValidationError(_('Passwords dont match'))
 
     def save(self, commit=True):
         user = super().save(commit=False)
@@ -253,7 +254,7 @@ class UpdateOwnerUserForm(OwnerForm):
         password = self.cleaned_data['password1']
         email = self.cleaned_data['email']
         if User.objects.filter(email=email.lower()).exists():
-            raise ValidationError('Пользователь с таким электронным адресом уже существует')
+            raise ValidationError(_('User with this email already exists'))
         if password:
             user.set_password(password)
         else:

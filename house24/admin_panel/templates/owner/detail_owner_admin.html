@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Профиль владельца{% endblock %}
+{% block title %}{% trans 'Owner Profile' %}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -10,19 +11,19 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Профиль владельца
+                        {% trans 'Owner Profile' %}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_owners_admin' %}"
-                                   style="color: black;">Владельцы квартир</a>
+                                   style="color: black;">{% trans 'Owner Profiles' %}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Профиль владельца</li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Owner Profile' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -39,7 +40,7 @@
                         <div class="card-header">
                             <a href="{% url 'admin_panel:update_owner_admin' user.pk %}" class="btn btn-primary btn-sm"
                                style="float:right; margin-left:5px;">
-                                Редактировать профиль
+                                {% trans 'Edit Profile' %}
                             </a>
                         </div>
                         <div class="card-body">
@@ -58,7 +59,7 @@
                                         <table class="table table-bordered table-striped table-view">
                                             <tbody>
                                             <tr>
-                                                <td>Статус</td>
+                                                <td>{% trans 'Status' %}</td>
                                                 <td>
                                                     {% if user.status == 0 %}
                                                     <small class="label label-success">{{ user.get_status_display }}</small>
@@ -74,27 +75,27 @@
                                                 <td>{{ user.number }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Фамилия</td>
+                                                <td>{% trans 'Surname' %}</td>
                                                 <td>{{ user.last_name }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Имя</td>
+                                                <td>{% trans 'Name' %}</td>
                                                 <td>{{ user.first_name }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Отчество</td>
+                                                <td>{% trans 'Middle' %}</td>
                                                 <td>{% if user.patronym %}{{ user.patronym }}{% endif %}</td>
                                             </tr>
                                             <tr>
-                                                <td>Дата рождения</td>
+                                                <td>{% trans 'Birthday' %}</td>
                                                 <td>{% if user.birthday %}{{ user.birthday }}{% endif %}</td>
                                             </tr>
                                             <tr>
-                                                <td>О владельце (заметки)</td>
+                                                <td>{% trans 'About' %}</td>
                                                 <td style="word-break:break-word;">{{ user.about }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Телефон</td>
+                                                <td>{% trans 'Phone' %}</td>
                                                 <td>{{ user.phone_number }}</td>
                                             </tr>
                                             <tr>
@@ -113,16 +114,16 @@
                                         </table>
                                     </div>
 
-                                    <h4>Квартиры</h4>
+                                    <h4>{% trans 'Flats' %}</h4>
                                     <div class="table-responsive no-padding" style="margin-top: 15px;">
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Дом</th>
-                                                    <th>Секция</th>
-                                                    <th>Квартира</th>
-                                                    <th>Лицевой счет</th>
+                                                    <th>{% trans 'House' %}</th>
+                                                    <th>{% trans 'Section' %}</th>
+                                                    <th>{% trans 'Flat' %}</th>
+                                                    <th>{% trans 'Account' %}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -136,7 +137,7 @@
                                                         </td>
                                                         <td>{{ flat.section.name }}</td>
                                                         <td>
-                                                            <a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">Кв. {{ flat.number }}</a>
+                                                            <a href="{% url 'admin_panel:detail_flat_admin' flat.pk %}">{% trans 'Flat' %} {{ flat.number }}</a>
                                                         </td>
                                                         <td>
                                                             {% if flat.account %}

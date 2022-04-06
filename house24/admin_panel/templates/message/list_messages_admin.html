@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Сообщения{% endblock %}
+{% block title %}{% trans 'Messages' %}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
@@ -13,14 +14,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Сообщения</h1>
+                    <h1 class="m-0">{% trans 'Messages' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Сообщения</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Messages' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -32,7 +33,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'admin_panel:create_message_admin' %}" class="btn btn-success" style="float:right;">Отправить сообщение</a>
+                    <a href="{% url 'admin_panel:create_message_admin' %}" class="btn btn-success" style="float:right;">{% trans 'Send message' %}</a>
                 </div>
             </div>
             <div class="card card-default" style="margin-top: 30px;">
@@ -65,15 +66,15 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th>Получатели</th>
-                                            <th>Текст</th>
-                                            <th>Дата</th>
+                                            <th>{% trans 'Receivers' %}</th>
+                                            <th>{% trans 'Text' %}</th>
+                                            <th>{% trans 'Date' %}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% if not instances and not invites %}
                                             <tr>
-                                                <td colspan="4">Ничего не найдено</td>
+                                                <td colspan="4">{% trans 'Not data found' %}</td>
                                             </tr>
                                         {% else %}
                                             {% for message in instances %}
@@ -99,12 +100,12 @@
                                                                 <a href="{% url 'admin_panel:detail_house_admin' message.house.pk %}">{{ message.floor }}</a>
                                                                 {% endif %}
                                                                 {% if message.flat %},
-                                                                <a href="{% url 'admin_panel:detail_flat_admin' message.flat.pk %}">Квартира №{{ message.flat }}</a>
+                                                                <a href="{% url 'admin_panel:detail_flat_admin' message.flat.pk %}">{% trans 'Flat' %} №{{ message.flat }}</a>
                                                                 {% endif %}
                                                             {% elif message.owner %}
                                                                 <a href="{% url 'admin_panel:detail_owner_admin' message.owner.pk %}">{{ message.owner }}</a>
                                                             {% else %}
-                                                                Всем
+                                                                {% trans 'Everyone' %}
                                                             {% endif %}
                                                         </td>
                                                         <td>
@@ -188,7 +189,7 @@
         })
         $('.delete_toggle').each(function(){
             $(this).on('click', function(){
-                if(confirm('Вы уверены что хотите удалить эти сообщения?')){
+                if(confirm('{% trans "Are you sure you want to delete these messages?" %}')){
                     let result = [];
                     $('input[type=checkbox]:checked').each(function(){
                         result.push($(this).closest('tr').find('.message_pk').val());

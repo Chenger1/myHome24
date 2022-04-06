@@ -1,9 +1,10 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
 {% block title %}
-Просмотр квитанции: #{{ ticket.number }}
+{% trans 'View receipt' %}: #{{ ticket.number }}
 {% endblock %}
 
 {% block content %}
@@ -13,18 +14,18 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Просмотр квитанции: #{{ ticket.number }}
+                        {% trans 'View receipt' %}: #{{ ticket.number }}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" style="color: black;">
-                                Квитанции</a></li>
+                                {% trans 'Receipts' %}</a></li>
                             <li class="breadcrumb-item active" aria-current="page">
-                                Просмотр квитанции: #{{ ticket.number }}
+                                {% trans 'View receipt' %}: #{{ ticket.number }}
                             </li>
                         </ol>
                     </nav>
@@ -40,18 +41,18 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
-                            <a href="{% url 'user_profile:payment_ticket_print' ticket.pk %}" class="btn btn-primary" style="float:right;"><i class="fas fa-print"></i> Распечатать</a>
+                            <a href="{% url 'user_profile:payment_ticket_print' ticket.pk %}" class="btn btn-primary" style="float:right;"><i class="fas fa-print"></i> {% trans 'Print' %}</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
                                 <table class="table table-striped linkedRow">
                                 <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Услуга</th>
-                                    <th>Количество потребления (расход)</th>
-                                    <th>Ед. изм.</th>
-                                    <th>Цена за ед., грн</th>
-                                    <th>Стоимость, грн</th>
+                                    <th>{% trans 'Service' %}</th>
+                                    <th>{% trans 'Amount of consumption (outcome)' %}</th>
+                                    <th>{% trans 'Unit' %}</th>
+                                    <th>{% trans 'Price for unit' %}</th>
+                                    <th>{% trans 'Price' %}</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -66,12 +67,12 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="10">Ничего не найдено</td>
+                                    <td colspan="10">{% trans 'No data found' %}</td>
                                 </tr>
                                 {% endfor %}
                                 <tr>
                                     <td colspan="5"></td>
-                                    <td><strong>Итого: {{ ticket.sum }} грн.</strong></td>
+                                    <td><strong>{% trans 'Total' %}: {{ ticket.sum }}</strong></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -82,9 +83,9 @@
                                     {% csrf_token %}
                                     <input type="hidden" name="ticket_pk" value="{{ ticket.pk }}">
                                     <button class="btn btn-warning" style="color: white;"
-                                    type="submit"><i class="far fa-file-pdf"></i> Скачать в PDF</button>
+                                    type="submit"><i class="far fa-file-pdf"></i> {% trans 'Download in PDF' %}</button>
                                     <a href="{% url 'user_profile:create_client_transaction_by_ticket' ticket.pk %}"
-                                       class="btn btn-success"><i class="far fa-credit-card"></i> Оплатить</a>
+                                       class="btn btn-success"><i class="far fa-credit-card"></i> {% trans 'PAY' %}</a>
                                 </form>
                             </div>
                         </div>

@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,32 +22,32 @@
       <div class="row" style="margin-top: 50px;">
         <div class="col-9">
           <div style="margin-top: 15px;">
-			<h5 class="lead">Квартира: <strong>{{ ticket.house }}, {{ ticket.section }},
-			{{ ticket.floor }}, квартира №{{ ticket.flat }}</strong></h5>
-			<h5 class="lead">Получатель: <strong>{{ ticket.flat.owner }}</strong></h5>
+			<h5 class="lead">{% trans 'Flat' %}: <strong>{{ ticket.house }}, {{ ticket.section }},
+			{{ ticket.floor }}, {% trans 'flat №' %}{{ ticket.flat }}</strong></h5>
+			<h5 class="lead">{% trans 'Receiver' %}: <strong>{{ ticket.flat.owner }}</strong></h5>
           </div>
         </div>
         <div class="col-3" style="float:right;">
           <div>
-              <h5 class="lead">Квитанция на оплату:</h5>
-              <h5 class="lead">Номер квитанции: <strong>{{ ticket.number }}</strong> </h5>
+              <h5 class="lead">{% trans 'Receipt for payment' %}:</h5>
+              <h5 class="lead">{% trans 'Receipt number' %}: <strong>{{ ticket.number }}</strong> </h5>
           </div>
           <div>
-              <h5 class="lead">Дата: <strong>{{ ticket.created }}</strong></h5>
+              <h5 class="lead">{% trans 'Date' %}: <strong>{{ ticket.created }}</strong></h5>
           </div>
         </div>
       </div>
 		<div style="margin-top: 50px;">
 			{% if ticket.services %}
-						<h3 style="text-align: center;">Услуги</h3>
+						<h3 style="text-align: center;">{% trans 'Services' %}</h3>
 			<table style="margin: auto; border: 1px solid; margin-top: 20px;" class="table">
 				<thead>
 					<tr>
-						<th>Услуга</th>
-						<th>Тариф</th>
-						<th>Ед. изм</th>
-						<th>Расход</th>
-						<th>Сумма, грн.</th>
+						<th>{% trans 'Service' %}</th>
+						<th>{% trans 'Tariff' %}</th>
+						<th>{% trans 'Unit' %}</th>
+						<th>{% trans 'Outcome' %}</th>
+						<th>{% trans 'Total' %}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,7 +58,7 @@
                               {% if service.service.tariff %}
                                 {{ service.service.tariff }}
                               {% else %}
-                                Не указано
+                                {% trans 'Not specified' %}
                               {% endif %}
                             </td>
 							<td>{{ service.service.measure.measure_name }}</td>
@@ -68,10 +69,10 @@
 					<tr>
 						<td colspan="4"
 						style="text-align: right;">
-							<strong>Всего к оплате:</strong>
+							<strong>{% trans 'Total' %}:</strong>
 						</td>
 						<td>
-							<u><strong>{{ ticket.total_cost }} грн.</strong></u>
+							<u><strong>{{ ticket.total_cost }}</strong></u>
 						</td>
 					</tr>
 				</tbody>
@@ -81,10 +82,10 @@
 		<div style="margin-top: 25px;">
           <div class="row">
             <div class="col-6">
-              <h5 class="lead">Номер лицевого счета: <strong>{{ ticket.flat.account }}</strong></h5>
+              <h5 class="lead">{% trans 'Account nubmer' %}: <strong>{{ ticket.flat.account }}</strong></h5>
             </div>
             <div class="col-6">
-              <h5 style="float:right;" class="lead">Оплатить до: <strong>{{ ticket.end }}</strong></h5>
+              <h5 style="float:right;" class="lead">{% trans 'Pay until' %}: <strong>{{ ticket.end }}</strong></h5>
             </div>
           </div>
 		</div>

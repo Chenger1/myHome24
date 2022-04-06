@@ -1,5 +1,6 @@
 {% extends "auth/base_login.html" %}
 {% load static %}
+{% load i18n %}
 
 
 {% block content %}
@@ -7,15 +8,15 @@
     <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
             <li>
-                <a href="{% url 'website:client_site_login_view' %}" style="display:block;">Для жильца</a>
+                <a href="{% url 'website:client_site_login_view' %}" style="display:block;">{% trans 'For resident' %}</a>
             </li>
             <li class="active">
                 {% if request.user.is_staff and request.user.is_authenticated %}
                 <a href="{% url 'admin_panel:index' %}"
-                style="display:block;">Для администрации</a>
+                style="display:block;">{% trans 'For administration' %}</a>
                 {% else %}
                 <a href="#admin"
-                style="display:block;">Для администрации</a>
+                style="display:block;">{% trans 'For administration' %}</a>
                 {% endif %}
             </li>
         </ul>
@@ -28,7 +29,7 @@
                 <div class="row">
                     <div class="col">
                         <div class="login-content">
-                            <p class="login-msg">Вход в панель управления</p>
+                            <p class="login-msg">{% trans 'Control panel login' %}</p>
 
                             <div class="input-container">
                                 {{ form.email }}
@@ -46,11 +47,11 @@
                     <div class="col-xl-12">
                         <div class="custom-control custom-checkbox" style="float:left;">
                             <input class="custom-control-input" type="checkbox" id="customCheckbox2" name="remember_me" checked>
-                            <label for="customCheckbox2" class="custom-control-label">Запомнить меня</label>
+                            <label for="customCheckbox2" class="custom-control-label">{% trans 'Remember me' %}</label>
                         </div>
                     </div>
                     <div class="col-xl-12" style="margin-top:15px;">
-                        <button type="submit" class="btn btn-primary btn-block login_button">Вход</button>
+                        <button type="submit" class="btn btn-primary btn-block login_button">{% trans 'Login' %}</button>
                     </div>
                 </div>
             </form>

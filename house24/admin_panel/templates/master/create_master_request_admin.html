@@ -1,247 +1,248 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-{% if form.instance.pk %}
-Заявка - {{ form.instance.pk }}
-{% else %}
-Новая заявка
-{% endif %}
+	{% if form.instance.pk %}
+		{% trans 'Request' %} - {{ form.instance.pk }}
+	{% else %}
+		{% trans 'New Request' %}
+	{% endif %}
 {% endblock %}
 
 {% block head %}
-<script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+	<script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
 {% endblock %}
 
 {% block content %}
-{% if form.errors %}
-{% include 'errors.html' with errors=form.errors %}
-{% endif %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">
-                        {% if form.instance.pk %}
-                        Заявка - {{ form.instance.pk }}
-                        {% else %}
-                        Новая заявка
-                        {% endif %}
-                    </h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_master_requests_admin' %}"
-                                   style="color: black;">Заявки вызова мастера</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Новая заявка</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	{% if form.errors %}
+		{% include 'errors.html' with errors=form.errors %}
+	{% endif %}
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							{% if form.instance.pk %}
+								{% trans 'Request' %} - {{ form.instance.pk }}
+							{% else %}
+								{% trans 'New Request' %}
+							{% endif %}
+						</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item">
+									<a href="{% url 'admin_panel:list_master_requests_admin' %}"
+									   style="color: black;">{% trans 'Master Requests' %}</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'New Request' %}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12" style="margin-top:15px;">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-12 col-md-7 col-lg-6">
-                                <div class="page-header">
-                                    <div class="form-group" style="margin: 0; flex-basis: 45%;">
-                                        <div class="input-group">
-                                            {{ form.date }}
-                                        </div>
-                                    </div>
-                                    <span style="margin: 0 15px;">от</span>
-                                    <div class="form-group" style="margin: 0; flex-basis: 45%;">
-                                        <div class="input-group">
-                                            {{ form.time }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12" style="margin-top:15px;">
+						<form action="" method="post">
+							{% csrf_token %}
+							<div class="row">
+								<div class="col-12 col-md-7 col-lg-6">
+									<div class="page-header">
+										<div class="form-group" style="margin: 0; flex-basis: 45%;">
+											<div class="input-group">
+												{{ form.date }}
+											</div>
+										</div>
+										<span style="margin: 0 15px;">от</span>
+										<div class="form-group" style="margin: 0; flex-basis: 45%;">
+											<div class="input-group">
+												{{ form.time }}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-                        <div class="card card-default">
+							<div class="card card-default">
 
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="owner">Владелец квартиры</label>
-                                            {{ form.owner }}
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6"></div>
-                                    <div class="clearfix"></div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="description">Описание</label>
-                                            {{ form.description }}
-                                            <small class="text-muted">Максимальное количество символов - 2000</small>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="flat">Квартира</label>
-                                            <select name="flat" id="id_flat" class="to_valid">
-                                                <option value>Выберите...</option>
-                                                {% for flat in flats %}
-                                                        <option value="{{ flat.pk }}"
-                                                        {% if flat.pk == form.instance.flat.pk %}selected{% endif %}>{{ flat.number }}, {{ flat.house }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="type">Тип мастера</label>
-                                            {{ form.type }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="status">Статус</label>
-                                            {{ form.status }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="master">Мастер</label>
-                                            <select name="master" id="id_master" class="form-control to_valid">
-                                                <option value>Выберите...</option>
-                                                {% for master in masters %}
-                                                        <option value="{{ master.pk }}"
-                                                        {% if master.pk == form.instance.master.pk %}selected{% endif %}>{{ master.role }} - {{ master.full_name }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <label for="comment">Комментарий</label>
-                                        {{ form.comment }}
-                                    </div>
-                                </div>
-                            </div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12 col-md-6">
+											<div class="form-group">
+												<label for="owner">{% trans 'Flat Owner' %}</label>
+												{{ form.owner }}
+											</div>
+										</div>
+										<div class="col-12 col-md-6"></div>
+										<div class="clearfix"></div>
+										<div class="col-12 col-md-6">
+											<div class="form-group">
+												<label for="description">{% trans 'Description' %}</label>
+												{{ form.description }}
+												<small class="text-muted">{% trans 'Max number of symbols' %} - 2000</small>
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<div class="form-group">
+												<label for="flat">{% trans 'Flat' %}</label>
+												<select name="flat" id="id_flat" class="to_valid">
+													<option value>{% trans 'Choose...' %}</option>
+													{% for flat in flats %}
+														<option value="{{ flat.pk }}"
+																{% if flat.pk == form.instance.flat.pk %}selected{% endif %}>{{ flat.number }}, {{ flat.house }}</option>
+													{% endfor %}
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="type">{% trans 'Master type' %}</label>
+												{{ form.type }}
+											</div>
+											<div class="form-group">
+												<label for="status">{% trans 'Status' %}</label>
+												{{ form.status }}
+											</div>
+											<div class="form-group">
+												<label for="master">{% trans 'Master' %}</label>
+												<select name="master" id="id_master" class="form-control to_valid">
+													<option value>{% trans 'Choose...' %}</option>
+													{% for master in masters %}
+														<option value="{{ master.pk }}"
+																{% if master.pk == form.instance.master.pk %}selected{% endif %}>{{ master.role }} - {{ master.full_name }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12">
+											<label for="comment">{% trans 'Comment' %}</label>
+											{{ form.comment }}
+										</div>
+									</div>
+								</div>
 
-                            <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
-                                <div class="col-12 text-right">
-                                    <a href="{% url 'admin_panel:list_master_requests_admin' %}"
-                                       class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+								<div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
+									<div class="col-12 text-right">
+										<a href="{% url 'admin_panel:list_master_requests_admin' %}"
+										   class="btn btn-default">{% trans 'Cancel' %}</a>
+										<button type="submit" class="btn btn-success" name="multiple" value="0">{% trans 'Save' %}
+										</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
-<script src="{% static 'admin_panel/js/requests.js' %}"></script>
-<script>
-      tinymce.init({
-        selector: '#comment'
-      });
-</script>
-<script>
-    $(document).ready(function() {
-
-        $.ajax({
-            method: 'GET',
-            url: '{% url "rest_api:get_master_by_role" %}',
-            data: {'pk': ''}
-        })
-        .done(function(response){
-            let master = $('#id_master');
-            $(master).children().remove();
-            $(master).append('<option>Выберите...</option>');
-            for(key of response){
-                $('#id_master').append('<option value="'+ key['id'] +'" >'+ key['role'] +' - '+ key['full_name'] +'</option>')
-            }
-        })
-
-        $('#id_owner').select2({
-            theme: 'bootstrap4',
-            width: '100%',
-            containerCssClass: 'to_valid'
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+	<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+	<script>
+        tinymce.init({
+            selector: '#comment'
         });
-        $('#id_flat').select2({
-            theme: 'bootstrap4',
-            width: '100%',
-            containerCssClass: 'to_valid'
-        });
-        $('#id_owner').on('change', function(e){
-          colorize_input_valid(this);
-          let pk = $(this).find(':selected').val();
-          $('#id_flat').select2({
-            theme: 'bootstrap4',
-            width: '100%',
-            containerCssClass: 'to_valid',
-            ajax: {
-                url: '{% url "rest_api:owner_flat_list" %}',
-                data: {'pk': pk}
-            }
-          }).trigger('change.select2');
+	</script>
+	<script>
+        $(document).ready(function() {
 
-        })
-        $('#id_flat').on('change', function(e){
-          colorize_input_valid(this);
-        })
-
-        $('#id_type').on('change', function(e){
-            const pk = $(this).find(':selected').val();
             $.ajax({
                 method: 'GET',
                 url: '{% url "rest_api:get_master_by_role" %}',
-                data: {'pk': pk}
+                data: {'pk': ''}
             })
-            .done(function(response){
-                let master = $('#id_master');
-                $(master).children().remove();
-                $(master).append('<option>Выберите...</option>');
-                for(key of response){
-                    $('#id_master').append('<option value="'+ key['id'] +'" >'+ key['role'] +' - '+ key['full_name'] +'</option>')
+                .done(function(response){
+                    let master = $('#id_master');
+                    $(master).children().remove();
+                    $(master).append('<option>Выберите...</option>');
+                    for(key of response){
+                        $('#id_master').append('<option value="'+ key['id'] +'" >'+ key['role'] +' - '+ key['full_name'] +'</option>')
+                    }
+                })
+
+            $('#id_owner').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                containerCssClass: 'to_valid'
+            });
+            $('#id_flat').select2({
+                theme: 'bootstrap4',
+                width: '100%',
+                containerCssClass: 'to_valid'
+            });
+            $('#id_owner').on('change', function(e){
+                colorize_input_valid(this);
+                let pk = $(this).find(':selected').val();
+                $('#id_flat').select2({
+                    theme: 'bootstrap4',
+                    width: '100%',
+                    containerCssClass: 'to_valid',
+                    ajax: {
+                        url: '{% url "rest_api:owner_flat_list" %}',
+                        data: {'pk': pk}
+                    }
+                }).trigger('change.select2');
+
+            })
+            $('#id_flat').on('change', function(e){
+                colorize_input_valid(this);
+            })
+
+            $('#id_type').on('change', function(e){
+                const pk = $(this).find(':selected').val();
+                $.ajax({
+                    method: 'GET',
+                    url: '{% url "rest_api:get_master_by_role" %}',
+                    data: {'pk': pk}
+                })
+                    .done(function(response){
+                        let master = $('#id_master');
+                        $(master).children().remove();
+                        $(master).append('<option>Выберите...</option>');
+                        for(key of response){
+                            $('#id_master').append('<option value="'+ key['id'] +'" >'+ key['role'] +' - '+ key['full_name'] +'</option>')
+                        }
+                    })
+            })
+        });
+	</script>
+	<script>
+        $('.to_valid').each(function(){
+            $(this).on('change', function(){
+                if($(this).val() != ''){
+                    colorize_input_valid(this);
+                }else{
+                    colorize_input_invalid(this);
                 }
             })
         })
-    });
-</script>
-<script>
-    $('.to_valid').each(function(){
-        $(this).on('change', function(){
-            if($(this).val() != ''){
-                colorize_input_valid(this);
-            }else{
-                colorize_input_invalid(this);
-            }
+	</script>
+	<script>
+        $('button[type=submit]').on('click', function(e){
+            $('.to_valid').each(function(){
+                if($(this).val() == '' && $(this).attr('required')){
+                    e.preventDefault();
+                    colorize_input_invalid(this);
+                }
+                if($('#id_flat').find(':selected').val() == ''){
+                    e.preventDefault();
+                    colorize_input_invalid($('#id_flat'));
+                }
+            })
         })
-    })
-</script>
-<script>
-    $('button[type=submit]').on('click', function(e){
-        $('.to_valid').each(function(){
-            if($(this).val() == '' && $(this).attr('required')){
-                e.preventDefault();
-                colorize_input_invalid(this);
-            }
-            if($('#id_flat').find(':selected').val() == ''){
-                e.preventDefault();
-                colorize_input_invalid($('#id_flat'));
-            }
-        })
-    })
-</script>
+	</script>
 {% endblock %}

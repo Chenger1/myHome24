@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 
 from db.models.manager import UserManager
 
@@ -13,7 +14,7 @@ def get_dir_name(instance, filename):
 
 
 class Role(models.Model):
-    reserved_names = ('Директор', 'Управляющий', 'Бухгалтер', 'Электрик', 'Сантехник')
+    reserved_names = ('Director', 'Manager', 'Accountant', 'Electrician', 'Plumber')
 
     name = models.CharField(max_length=30)
     statistic = models.BooleanField(default=1)
@@ -81,9 +82,9 @@ class Role(models.Model):
 
 class CustomAbstractUser(AbstractBaseUser, PermissionsMixin):
     status_choices = [
-        (0, 'Активен'),
-        (1, 'Новый'),
-        (2, 'Отключен')
+        (0, _('Active')),
+        (1, _('New')),
+        (2, _('Inactive'))
     ]
 
     first_name = models.CharField(max_length=100)
@@ -186,5 +187,5 @@ class User(CustomAbstractUser):
 
     def save(self, *args, **kwargs):
         if self.is_superuser:
-            self.role = Role.objects.get(name='Директор')
+            self.role = Role.objects.get(name='Director')
         return super().save(*args, **kwargs)

@@ -1,187 +1,188 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Лицевой счет{% endblock %}
+{% block title %}{% trans 'Accounts' %}{% endblock %}
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">
-                        Лицевой счет
-                    </h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_accounts_admin' %}"
-                                   style="color: black;">Лицевые счета</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Лицевой счет</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							{% trans 'Accounts' %}
+						</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+									<i class="fa fa-home"></i>{% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item">
+									<a href="{% url 'admin_panel:list_accounts_admin' %}"
+									   style="color: black;">{% trans 'Accounts' %}</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'Account' %}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12 col-md-4 col-lg-4">
-                    <div class="field-account-uid required has-success">
-                        <div class="input-group">
-                            <div class="input-group-addon to_valid">
-                                №
-                            </div>
-                            <input type="text" class="form-control to_valid"
-                                   value="{{ account.number }}" name="number" disabled>
-                            <input type="hidden" id="account_id" value="{{ account.pk }}">
-                        </div>
-                    </div>
-                </div>
-            </div>
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12 col-md-4 col-lg-4">
+						<div class="field-account-uid required has-success">
+							<div class="input-group">
+								<div class="input-group-addon to_valid">
+									№
+								</div>
+								<input type="text" class="form-control to_valid"
+									   value="{{ account.number }}" name="number" disabled>
+								<input type="hidden" id="account_id" value="{{ account.pk }}">
+							</div>
+						</div>
+					</div>
+				</div>
 
-            <div class="row">
-                <div class="col-12" style="margin-top:15px;">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            <h3 style="display: inline-block; margin: 0;">Просмотр лицевого счета</h3>
-                            <a href="{% url 'admin_panel:update_account_admin' account.pk %}"
-                               class="btn btn-primary btn-sm"
-                               style="float:right; margin-left:5px;">
-                                Редактировать счет
-                            </a>
-                            <a href="{% url 'admin_panel:create_ticket_with_account' account.pk %}" class="btn btn-default    btn-sm"
-                               style="float:right; margin-left:5px;" id="create_ticket">
-                                <i class="far fa-copy"></i> Оформить квитанцию
-                            </a>
-                            <a href="{% url 'admin_panel:create_income_with_account' account.pk %}" class="btn btn-default btn-sm"
-                               style="float:right; margin-left:5px;" id="create_transaction">
-                                <i class="fas fa-dollar-sign"></i> Принять платеж
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="table-responsive no-padding">
-                                        <table class="table table-bordered table-striped table-view">
-                                            <tbody>
-                                            <tr>
-                                                <td>Статус</td>
-                                                <td>
-                                                    {% if account.status == 0 %}
-                                                    <small class="label label-success">Активен</small>
-                                                    {% else %}
-                                                    <small class="label label-danger">Неактивен</small>
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Дом</td>
-                                                <td>
-                                                    {% if account.house %}
-                                                    {{ account.house }}
-                                                    {% else %}
-                                                    Не указано
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Секция</td>
-                                                <td>
-                                                    {% if account.section %}
-                                                    {{ account.section }}
-                                                    {% else %}
-                                                    Не указано
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Квартира</td>
-                                                <td>
-                                                    {% if account.flat %}
-                                                    {{ account.flat }}
-                                                    {% else %}
-                                                    Не указано
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Владелец</td>
-                                                <td>
-                                                    {% if account.flat.owner %}
-                                                    {{ account.flat.owner.full_name }}
-                                                    {% else %}
-                                                    Не указано
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Тариф</td>
-                                                <td>
-                                                    {% if account.flat.tariff %}
-                                                    {{ account.flat.tariff }}
-                                                    {% else %}
-                                                    Не указано
-                                                    {% endif %}
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                        <div>
-                                            {% if account.flat %}
-                                                <p><a href="{% url 'admin_panel:list_meter_history' account.flat.pk %}">Посмотреть показания счетчиков</a></p>
-                                            {% endif %}
-                                            <p><a href="{% url 'admin_panel:list_transactions_by_account' account.pk %}">Посмотреть приходы</a></p>
-                                            <p><a href="{% url 'admin_panel:list_payment_tickets_by_account' account.pk %}">Посмотреть квитанции</a></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+				<div class="row">
+					<div class="col-12" style="margin-top:15px;">
+						<div class="card card-default">
+							<div class="card-header">
+								<h3 style="display: inline-block; margin: 0;">{% trans 'View Account' %}</h3>
+								<a href="{% url 'admin_panel:update_account_admin' account.pk %}"
+								   class="btn btn-primary btn-sm"
+								   style="float:right; margin-left:5px;">
+									{% trans 'Edit accounts' %}
+								</a>
+								<a href="{% url 'admin_panel:create_ticket_with_account' account.pk %}" class="btn btn-default    btn-sm"
+								   style="float:right; margin-left:5px;" id="create_ticket">
+									<i class="far fa-copy"></i> {% trans 'Make recepit' %}
+								</a>
+								<a href="{% url 'admin_panel:create_income_with_account' account.pk %}" class="btn btn-default btn-sm"
+								   style="float:right; margin-left:5px;" id="create_transaction">
+									<i class="fas fa-dollar-sign"></i> {% trans 'Accept payment' %}
+								</a>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-12">
+										<div class="table-responsive no-padding">
+											<table class="table table-bordered table-striped table-view">
+												<tbody>
+												<tr>
+													<td>{% trans 'Status' %}</td>
+													<td>
+														{% if account.status == 0 %}
+															<small class="label label-success">{% trans 'Active' %}</small>
+														{% else %}
+															<small class="label label-danger">{% trans 'Inactive' %}</small>
+														{% endif %}
+													</td>
+												</tr>
+												<tr>
+													<td>{% trans 'House' %}</td>
+													<td>
+														{% if account.house %}
+															{{ account.house }}
+														{% else %}
+															{% trans 'Not specified' %}
+														{% endif %}
+													</td>
+												</tr>
+												<tr>
+													<td>{% trans 'Section' %}</td>
+													<td>
+														{% if account.section %}
+															{{ account.section }}
+														{% else %}
+															{% trans 'Not specified' %}
+														{% endif %}
+													</td>
+												</tr>
+												<tr>
+													<td>{% trans 'Flat' %}</td>
+													<td>
+														{% if account.flat %}
+															{{ account.flat }}
+														{% else %}
+															{% trans 'Not specified' %}
+														{% endif %}
+													</td>
+												</tr>
+												<tr>
+													<td>{% trans 'Owner' %}</td>
+													<td>
+														{% if account.flat.owner %}
+															{{ account.flat.owner.full_name }}
+														{% else %}
+															{% trans 'Not specified' %}
+														{% endif %}
+													</td>
+												</tr>
+												<tr>
+													<td>{% trans 'Tariff' %}</td>
+													<td>
+														{% if account.flat.tariff %}
+															{{ account.flat.tariff }}
+														{% else %}
+															{% trans 'Not specified' %}
+														{% endif %}
+													</td>
+												</tr>
+												</tbody>
+											</table>
+											<div>
+												{% if account.flat %}
+													<p><a href="{% url 'admin_panel:list_meter_history' account.flat.pk %}">{% trans 'View meter readings' %}</a></p>
+												{% endif %}
+												<p><a href="{% url 'admin_panel:list_transactions_by_account' account.pk %}">{% trans 'View incomes' %}</a></p>
+												<p><a href="{% url 'admin_panel:list_payment_tickets_by_account' account.pk %}">{% trans 'View transactions' %}</a></p>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script>
-    $(document).ready(function(){
-        $.ajax({
-            url: '{% url "rest_api:get_account_status" %}',
-            type: 'GET',
-            data: {'pk': $('#account_id').val()},
-        })
-        .done(function(response) {
-            if(!response['status']){
-                let create_ticket = $('#create_ticket');
-                let create_transaction = $("#create_transaction"); 
-                
-                create_ticket.addClass('disabled_button');
-                create_ticket.on('click', function(e){
-                    e.preventDefault();
-                    confirm('Лицевой счет неактивен или не привязан к квартире');
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script>
+        $(document).ready(function(){
+            $.ajax({
+                url: '{% url "rest_api:get_account_status" %}',
+                type: 'GET',
+                data: {'pk': $('#account_id').val()},
+            })
+                .done(function(response) {
+                    if(!response['status']){
+                        let create_ticket = $('#create_ticket');
+                        let create_transaction = $("#create_transaction");
+
+                        create_ticket.addClass('disabled_button');
+                        create_ticket.on('click', function(e){
+                            e.preventDefault();
+                            confirm('{% trans "Account inactive or not connected to a flat" %}')
+                        })
+                        create_transaction.addClass('disabled_button');
+                        create_transaction.on('click', function(e){
+                            e.preventDefault();
+                            confirm('{% trans "Account inactive or not connected to a flat" %}');
+                        })
+                    }
                 })
-                create_transaction.addClass('disabled_button');
-                create_transaction.on('click', function(e){
-                    e.preventDefault();
-                    confirm('Лицевой счет неактивен или не привязан к квартире');
+                .fail(function() {
+                    console.log("error");
                 })
-            }
+
         })
-        .fail(function() {
-            console.log("error");
-        })
-        
-    })
-</script>
+	</script>
 {% endblock %}

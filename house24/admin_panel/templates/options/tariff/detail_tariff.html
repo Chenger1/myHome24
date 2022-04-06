@@ -1,8 +1,9 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Тариф: {{ tariff.name }}{% endblock %}
+{% block title %}{% trans 'Tariff' %}: {{ tariff.name }}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -11,19 +12,19 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0 word_break">
-                        Тариф: {{ tariff.name }}
+                        {% trans 'Tariff' %}: {{ tariff.name }}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_tariff_admin' %}"
-                                   style="color: black;">Тарифы</a>
+                                   style="color: black;">{% trans 'Tariffs' %}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Тариф: {{ tariff.name }}
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Tariff' %}: {{ tariff.name }}
                             </li>
                         </ol>
                     </nav>
@@ -47,7 +48,7 @@
                             <a href="{% url 'admin_panel:update_tariff' tariff.pk %}"
                                class="btn btn-primary btn-sm"
                                style="float:right; margin-left:5px;">
-                                Редактировать тариф
+                                {% trans 'Edit tariff' %}
                             </a>
                         </div>
                         <div class="card-body">
@@ -57,15 +58,15 @@
                                         <table class="table table-bordered table-striped table-view">
                                             <tbody>
                                               <tr>
-                                                <td>Название тарифа</td>
+                                                <td>{% trans 'Tariff name' %}</td>
                                                 <td>{{ tariff.name }}</td>
                                               </tr>
                                               <tr>
-                                                <td>Описание</td>
+                                                <td>{% trans 'Description' %}</td>
                                                 <td class="word_break">{{ tariff.description }}</td>
                                               </tr>
                                               <tr>
-                                                <td>Дата редактирования</td>
+                                                <td>{% trans 'Edit date' %}</td>
                                                 <td>{{ tariff.updated }}</td>
                                               </tr>
                                             </tbody>
@@ -76,10 +77,10 @@
                                             <thead>
                                               <tr>
                                                 <th>#</th>
-                                                <th>Услуга</th>
-                                                <th>Eд. изм.</th>
-                                                <th>Цена за ед.,грн</th>
-                                                <th>Валюта</th>
+                                                <th>{% trans 'Service' %}</th>
+                                                <th>{% trans 'Unit' %}</th>
+                                                <th>{% trans 'Price for unit' %}</th>
+                                                <th>{% trans 'Currency' %}</th>
                                               </tr>
                                             </thead>
                                             <tbody>

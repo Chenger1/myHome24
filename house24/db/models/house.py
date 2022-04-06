@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
+from django.utils.translation import gettext_lazy as _, gettext
 
 from db.models.user import User, Role
 
@@ -117,7 +118,7 @@ class Flat(models.Model):
 
     def get_flat_balance(self):
         if not hasattr(self, 'account'):
-            return '(нет счета)'
+            return _('(no account)')
         return self.account.get_account_balance()
 
     def __str__(self):
@@ -126,8 +127,8 @@ class Flat(models.Model):
 
 class PersonalAccount(models.Model):
     status_choices = [
-        (0, 'Активен'),
-        (1, 'Неактивен')
+        (0, _('Active')),
+        (1, _('Inactive'))
     ]
 
     number = models.IntegerField(unique=True)
@@ -159,9 +160,9 @@ class PersonalAccount(models.Model):
 
 class PaymentTicket(models.Model):
     status_choices = [
-        (0, 'Оплачена'),
-        (1, 'Частично оплачена'),
-        (2, 'Неоплачена')
+        (0, _('Paid')),
+        (1, _('Partially paid')),
+        (2, _('Not paid'))
     ]
 
     number = models.IntegerField(unique=True)
@@ -221,7 +222,7 @@ class PaymentTicket(models.Model):
             (total_paid['transactions__paid_sum__sum'] or 0) - (total_debt['sum__sum'] or 0)
 
     def __str__(self):
-        return f'Квитанция №{self.number}'
+        return gettext(f'Receipt №{self.number}')
 
 
 class PaymentTicketService(models.Model):
@@ -234,10 +235,10 @@ class PaymentTicketService(models.Model):
 
 class Meter(models.Model):
     status_choices = [
-        (0, 'Новое'),
-        (1, 'Учтено'),
-        (2, 'Учтено и оплачен'),
-        (3, 'Нулевое')
+        (0, _('New')),
+        (1, _('Accounted')),
+        (2, _('Accounted and paid')),
+        (3, _('Zero'))
     ]
 
     number = models.IntegerField()
@@ -261,8 +262,8 @@ class Meter(models.Model):
 
 class PaymentItem(models.Model):
     type_choices = [
-        (0, 'Приход'),
-        (1, 'Расход')
+        (0, _('Income')),
+        (1, _('Outcome'))
     ]
 
     name = models.CharField(max_length=50, unique=True)
@@ -291,8 +292,8 @@ class Transaction(models.Model):
     @property
     def status_display(self):
         if self.status:
-            return 'Проведена'
-        return 'Непроведена'
+            return _('Completed')
+        return _('Not completed')
 
     @classmethod
     def get_next_income_number(cls):
@@ -359,15 +360,15 @@ class Transaction(models.Model):
 
 class MasterRequest(models.Model):
     type_choices = [
-        (0, 'Любой специалист'),
-        (1, 'Сантехник'),
-        (2, 'Электрик'),
-        (3, 'Слесарь')
+        (0, _('Any master')),
+        (1, _('Plumber')),
+        (2, _('Electrician')),
+        (3, _('Locksmith'))
     ]
     status_choices = [
-        (0, 'Новое'),
-        (1, 'В работе'),
-        (2, 'Выполнено')
+        (0, _('New')),
+        (1, _('In progress')),
+        (2, _('Done'))
     ]
 
     date = models.DateField()

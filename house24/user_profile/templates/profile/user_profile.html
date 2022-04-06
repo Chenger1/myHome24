@@ -1,5 +1,6 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -8,15 +9,15 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Профиль владельца
+                        {% trans 'Owner Profile' %}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Профиль</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Profile' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -39,7 +40,7 @@
                                      class="photo_image profile_list_photo">
                                 {% endif %}
                                 <h3 style="font-size:21px; margin-top:10px;" class="text-center">{{ request.user.full_name }}</h3>
-                                <small class="text-muted text-center">Владелец квартиры</small>
+                                <small class="text-muted text-center">{% trans 'Flat owner' %}</small>
                                 <table style="margin-top:10px;">
                                     <tr class="table_tr">
                                         <td class="table_td font-14">Телефон</td>
@@ -51,7 +52,7 @@
                                             {% if request.user.viber %}
                                                 {{ request.user.viber }}
                                             {% else %}
-                                                Не указано
+                                                {% trans 'Not specified' %}
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -61,7 +62,7 @@
                                             {% if request.user.telegram %}
                                                 {{ request.user.telegram }}
                                             {% else %}
-                                                Не указано
+                                                {% trans 'Not specified' %}
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -70,17 +71,17 @@
                                         <td style="float:right;" class="table_td font-14">{{ request.user.email }}</td>
                                     </tr>
                                 </table>
-                                <a href="{% url 'user_profile:edit_user_client' pk %}" class="btn btn-primary btn-block" style="margin-top:10px;">Изменить</a>
+                                <a href="{% url 'user_profile:edit_user_client' pk %}" class="btn btn-primary btn-block" style="margin-top:10px;">{% trans 'Change' %}</a>
                             </div>
                         </div>
                         <div class="col-md-6 col-lg-12">
-                            <h3 style="font-size:21px; margin-top:10px;">Обо мне (заметки)</h3>
+                            <h3 style="font-size:21px; margin-top:10px;">{% trans 'About me' %}</h3>
                             <div class="card card-default">
                                 <div class="card-body">
                                     {% if request.user.about %}
                                         {{ request.user.about }}
                                     {% else %}
-                                        Не указано
+                                        {% trans 'Not specified' %}
                                     {% endif %}
                                 </div>
                             </div>
@@ -88,11 +89,11 @@
                     </div>
                 </div>
                 <div class="col-xl-9">
-                    <h2>Мои квартиры</h2>
+                    <h2>{% trans 'My flats' %}</h2>
                     {% for flat in request.user.flats.all %}
                         <div class="card card-default">
                             <div class="card-header">
-                                Описание квартиры
+                                {% trans 'Flat Description' %}
                             </div>
                             <div class="card-body">
                                 <p>{{ flat.house }}, {{ flat.house.address }}, кв.{{ flat }}</p>
@@ -151,36 +152,36 @@
                                         <table class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th colspan="2">Описание</th>
+                                                    <th colspan="2">{% trans 'Description' %}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>Название дома</td>
+                                                    <td>{% trans 'House name' %}</td>
                                                     <td>{{ flat.house }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Адрес</td>
+                                                    <td>{% trans 'Address' %}</td>
                                                     <td>{{ flat.house.address }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>№ квартиры</td>
+                                                    <td>{% trans 'Flat №' %}</td>
                                                     <td>{{ flat.number }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Площадь</td>
+                                                    <td>{% trans 'Square' %}</td>
                                                     <td>{{ flat.square }}м<sup>2</sup></td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Этаж</td>
+                                                    <td>{% trans 'Floor' %}</td>
                                                     <td>{{ flat.floor }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Секция</td>
+                                                    <td>{% trans 'Section' %}</td>
                                                     <td>{{ flat.section }}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td>Лицевой счет</td>
+                                                    <td>{% trans 'Account' %}</td>
                                                     <td>{{ flat.account }}</td>
                                                 </tr>
                                             </tbody>
@@ -191,7 +192,7 @@
                     {% empty %}
                         <div class="card card-default">
                             <div class="card-body">
-                                <h5 class="text-center">У вас пока что нет квартир</h5>
+                                <h5 class="text-center">{% trans 'You dont have flats yet.' %}</h5>
                             </div>
                         </div>
                     {% endfor %}

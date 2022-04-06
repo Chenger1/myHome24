@@ -1,6 +1,7 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
 {% block title %}{{ house }}{% endblock %}
 
@@ -34,10 +35,10 @@
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i>{% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_houses_admin' %}"
-                                   style="color: black;">Дома</a>
+                                   style="color: black;">{% trans 'Houses' %}</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">{{ house }}</li>
                         </ol>
@@ -54,30 +55,30 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
-                            <a href="{% url 'admin_panel:update_house_admin' house.pk %}" class="btn btn-primary" style="float:right;">Редактировать дом</a>
+                            <a href="{% url 'admin_panel:update_house_admin' house.pk %}" class="btn btn-primary" style="float:right;">{% trans 'Edit house' %}</a>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-md-12 col-lg-4">
                                     <table class="table table-bordered table-striped table-view" style="table-layout:fixed;">
                                         <tr>
-                                            <td>Название</td>
+                                            <td>{% trans 'Name' %}</td>
                                             <td class="word-break">{{ house }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Адрес</td>
+                                            <td>{% trans 'Address' %}</td>
                                             <td>{{ house.address }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Секций</td>
+                                            <td>{% trans 'Sections' %}</td>
                                             <td>{{ house.sections.count }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Этажей</td>
+                                            <td>{% trans 'Floors' %}</td>
                                             <td>{{ house.floors_count }}</td>
                                         </tr>
                                         <tr>
-                                            <td>Пользователей</td>
+                                            <td>{% trans 'Users' %}</td>
                                             <td>
                                                 {% for house_user in house.users.all %}
                                                     {{ house_user.user.role }}:

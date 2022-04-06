@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from db.models.house import House, Section, Service, Meter, Flat
 
@@ -8,34 +9,34 @@ from datetime import datetime
 class SearchMeasureForm(forms.Form):
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'class': 'form-control'}),
-                                   required=False, empty_label='Выберите...')
+                                   required=False, empty_label=_('Choose...'))
     section = forms.ModelChoiceField(queryset=Section.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
     flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
 
 
 class SearchMeasureHistoryForm(forms.Form):
     status_choices = [
-        ('', 'Выберите...'),
-        (0, 'Новое'),
-        (1, 'Учтено'),
-        (2, 'Учтено и оплачен'),
-        (3, 'Нулевое')
+        ('', _('Choose...')),
+        (0, _('New')),
+        (1, _('Accounted')),
+        (2, _('Accounted and paid')),
+        (3, _('Zero'))
     ]
 
     house = forms.ModelChoiceField(queryset=House.objects.all(),
                                    widget=forms.Select(attrs={'class': 'form-control'}),
-                                   required=False, empty_label='Выберите...')
+                                   required=False, empty_label=_('Choose...'))
     section = forms.ModelChoiceField(queryset=Section.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
     number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     flat = forms.CharField(widget=forms.HiddenInput())
     status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
@@ -51,11 +52,11 @@ class CreateMeterForm(forms.ModelForm):
         if house_pk:
             self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
             self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
-        self.fields['flat'].empty_label = 'Выберите...'
-        self.fields['section'].empty_label = 'Выберите...'
-        self.fields['floor'].empty_label = 'Выберите...'
-        self.fields['house'].empty_label = 'Выберите...'
-        self.fields['service'].empty_label = 'Выберите...'
+        self.fields['flat'].empty_label = _('Choose...')
+        self.fields['section'].empty_label = _('Choose...')
+        self.fields['floor'].empty_label = _('Choose...')
+        self.fields['house'].empty_label = _('Choose...')
+        self.fields['service'].empty_label = _('Choose...')
         self.fields['service'].queryset = Service.objects.filter(status=True)
 
     class Meta:

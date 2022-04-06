@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
 
 from db.models.user import User
 from db.models.house import PaymentTicket, PaymentTicketService, Section, Flat, Service, TicketTemplate
@@ -9,15 +10,15 @@ import datetime
 
 class PaymentTicketSearchForm(forms.Form):
     status_choices = [
-        ('', 'Выберите...'),
-        (0, 'Оплачена'),
-        (1, 'Частично оплачена'),
-        (2, 'Неоплачена')
+        ('', _('Choose...')),
+        (0, _('Paid')),
+        (1, _('Partially paid')),
+        (2, _('Not paid'))
     ]
     done_choices = [
-        ('', 'Выберите...'),
-        (1, 'Проведена'),
-        (0, 'Не проведена')
+        ('', _('Choose...')),
+        (1, _('Completed')),
+        (0, _('Not completed'))
     ]
 
     number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
@@ -32,7 +33,7 @@ class PaymentTicketSearchForm(forms.Form):
                            required=False)
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                   empty_label='Выберите...')
+                                   empty_label=_('Choose...'))
     is_done = forms.ChoiceField(choices=done_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                                 required=False)
 
@@ -44,13 +45,13 @@ class CreatePaymentTicketForm(forms.ModelForm):
         if house_pk:
             self.fields['section'].queryset = Section.objects.filter(house__pk=house_pk)
             self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
-        self.fields['status'].empty_label = 'Выберите...'
-        self.fields['section'].empty_label = 'Выберите...'
-        self.fields['house'].empty_label = 'Выберите...'
-        self.fields['floor'].empty_label = 'Выберите...'
-        self.fields['flat'].empty_label = 'Выберите...'
-        self.fields['personal_account'].empty_label = 'Выберите...'
-        self.fields['tariff'].empty_label = 'Выберите...'
+        self.fields['status'].empty_label = _('Choose...')
+        self.fields['section'].empty_label = _('Choose...')
+        self.fields['house'].empty_label = _('Choose...')
+        self.fields['floor'].empty_label = _('Choose...')
+        self.fields['flat'].empty_label = _('Choose...')
+        self.fields['personal_account'].empty_label = _('Choose...')
+        self.fields['tariff'].empty_label = _('Choose...')
 
     class Meta:
         model = PaymentTicket
@@ -82,7 +83,7 @@ class CreatePaymentTicketForm(forms.ModelForm):
 class TicketServiceForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['service'].empty_label = 'Выберите...'
+        self.fields['service'].empty_label = _('Choose...')
         self.fields['service'].queryset = Service.objects.filter(status=True)
 
     class Meta:
@@ -117,7 +118,7 @@ class AddHtmlTemplate(forms.ModelForm):
         file = self.cleaned_data.get('file')
         if not file:
             # Because the file is required, the only way to have empty file field is wrong type
-            raise ValidationError(f'Неверный формат файла. Требуемый формат - .html')
+            raise ValidationError(_('Wrong file format. Required format - .html'))
 
         if not file.name.startswith('pdf_'):
-            raise ValidationError('Имя файла не соответствует стандарту. Оно должно начинаться с "pdf_"')
+            raise ValidationError('Filename does not match standard. It should star with "pdf_"')

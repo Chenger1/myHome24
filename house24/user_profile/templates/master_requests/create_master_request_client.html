@@ -1,8 +1,9 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Новая заявка{% endblock %}
+{% block title %}{% trans 'New request' %}{% endblock %}
 
 {% block content %}
 {% if form.errors %}
@@ -13,16 +14,16 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Новая заявка</h1>
+                    <h1 class="m-0">{% trans 'New request' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                           <li class="breadcrumb-item"><a href="{% url 'user_profile:list_master_requests_client' request.user.pk %}" style="color: black;">
-                                Вызов мастера</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Новая заявка</li>
+                                {% trans 'Master request' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'New request' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -38,38 +39,38 @@
                     <form action="" method="post">
                         {% csrf_token %}
                         <div class="form-group">
-                            <label for="type">Тип мастера</label>
+                            <label for="type">{% trans 'Master type' %}</label>
                             {{ form.type }}
                         </div>
                         <div class="form-group">
-                            <label for="flat">Квартира</label>
+                            <label for="flat">{% trans 'Flat' %}</label>
                             <select name="flat" id="flat" class="form-control to_valid" required>
-                                <option selected disabled value>Выберите...</option>
+                                <option selected disabled value>{% trans 'Choose...' %}</option>
                                 {% for flat in form.fields.flat.queryset %}
-                                <option value="{{ flat.pk }}">{{ flat.house }}, кв.{{ flat.pk }}</option>
+                                <option value="{{ flat.pk }}">{{ flat.house }}, {% trans 'flat №' %}{{ flat.pk }}</option>
                                 {% endfor %}
                             </select>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="date">Дата работ</label>
+                                    <label for="date">{% trans 'Work date' %}</label>
                                     {{ form.date }}
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
-                                    <label for="time">Время работ</label>
+                                    <label for="time">{% trans 'Time' %}</label>
                                     {{ form.time }}
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="description">Описание</label>
+                            <label for="description">{% trans 'Description' %}</label>
                             {{ form.description }}
-                            <small class="text-muted">Максимальное количество символов - 2000</small>
+                            <small class="text-muted">{% trans 'Max number of symbols' %} - 2000</small>
                         </div>
-                        <button class="btn btn-success" type="submit" style="float:right;">Отправить заявку</button>
+                        <button class="btn btn-success" type="submit" style="float:right;">{% trans 'Send request' %}</button>
                     </form>
                 </div>
             </div>

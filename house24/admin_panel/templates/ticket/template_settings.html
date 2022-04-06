@@ -2,8 +2,9 @@
 {% load static %}
 {% load right_date %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Настройка шаблонов{% endblock %}
+{% block title %}{% trans 'Template settings' %}{% endblock %}
 
 {% block content %}
 {% if form.errors %}
@@ -15,19 +16,19 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Настройка шаблонов
+                        {% trans 'Template settings' %}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_payment_ticket_admin' %}"
-                                   style="color: black;">Квитанции</a>
+                                   style="color: black;">{% trans 'Receipts' %}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Настройка шаблонов</li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Template settings' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -42,22 +43,22 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
-                            <h3 style="display: inline-block; margin: 0;">Список шаблонов</h3>
+                            <h3 style="display: inline-block; margin: 0;">{% trans 'Templates' %}</h3>
                         </div>
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-12">
                                         {% for inst in instances %}
                                         <div class="template" style="margin-top: 10px;">
-                                              <div>{{ inst.name }}  {% if inst.is_default %}<strong>(по-умолчанию)</strong>{% endif %}</div>
-                                              <a href="{% url 'admin_panel:payment_ticket_template_download' inst.pk %}"><i class="fas fa-download"></i> Скачать шаблон</a>
+                                              <div>{{ inst.name }}  {% if inst.is_default %}<strong>{% trans '(by-default)' %}</strong>{% endif %}</div>
+                                              <a href="{% url 'admin_panel:payment_ticket_template_download' inst.pk %}"><i class="fas fa-download"></i> {% trans 'Download template' %}</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_set_default' inst.pk %}"
-                                              id="template_by_default">• Назначить шаблоном по умоланию</a>
+                                              id="template_by_default">• {% trans 'Set tempalte as default' %}</a>
                                               <a href="{% url 'admin_panel:payment_ticket_template_delete' inst.pk %}"
-                                              class="delete_template" id="delete_pdf_template"><i class="fas fa-trash-alt"></i> Удалить шаблон</a>
+                                              class="delete_template" id="delete_pdf_template"><i class="fas fa-trash-alt"></i> {% trans 'Delete template' %}</a>
                                         </div>
                                         {% empty %}
-                                        <h5>Нет шаблонов</h5>
+                                        <h5>{% trans 'No templates' %}</h5>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -66,11 +67,11 @@
                                     <div class="row" style="margin-top:20px;">
                                         <div class="col-12 col-sm-6">
                                             <div class="form-group">
-                                                <label for="file">Загрузить пользовательский шаблон (pdf_*.html)</label>
+                                                <label for="file">{% trans 'Upload custom template (pdf_*.html)' %}</label>
                                                 {{ form.file }}
                                             </div>
                                             <div class="form-group">
-                                                <label for="name">Название</label>
+                                                <label for="name">{% trans 'Name' %}</label>
                                                 {{ form.name }}
                                             </div>
                                         </div>
@@ -78,8 +79,8 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-group" style="margin-bottom: 0; float:right;">
-                                                <a href="" class="btn btn-success">Отменить</a>
-                                                <button class="btn btn-default" type="submit">Сохранить</button>
+                                                <a href="" class="btn btn-success">{% trans 'Cancel' %}</a>
+                                                <button class="btn btn-default" type="submit">{% trans 'Save' %}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -97,7 +98,7 @@
     $(document).ready(function(){
         $('.delete_template').each(function(){
             $(this).on('click', function(e){
-                if(!confirm('Вы уверены что хотите удалить данный шаблон?')){
+                if(!confirm('{% trans "Are you sure you want to delete this template?" %}')){
                     e.preventDefault();
                 }
             })

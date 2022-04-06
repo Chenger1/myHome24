@@ -1,7 +1,8 @@
 {% extends 'admin_base.html' %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Чат{% endblock %}
+{% block title %}{% trans 'Chat' %}{% endblock %}
 
 {% block content %}
 	<div class="content-wrapper">
@@ -15,11 +16,11 @@
 						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
 							<ol class="breadcrumb">
 								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-									<i class="fa fa-home"></i> Главная</a></li>
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
 								<li class="breadcrumb-item">
-									<a href="{% url 'admin_panel:list_chats_admin' %}" style="color: black;">Чаты</a>
+									<a href="{% url 'admin_panel:list_chats_admin' %}" style="color: black;">{% trans 'Chats' %}</a>
 								</li>
-								<li class="breadcrumb-item active" aria-current="page">Чат</li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'Chat' %}</li>
 							</ol>
 						</nav>
 					</div>

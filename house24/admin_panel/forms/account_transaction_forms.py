@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from db.models.user import User
 from db.models.house import PaymentItem, Transaction, PersonalAccount, PaymentTicket
@@ -8,14 +9,14 @@ import datetime
 
 class AccountTransactionSearchForm(forms.Form):
     status_choices = [
-        ('', 'Выберите...'),
-        (0, 'Не проведен'),
-        (1, 'Проведен')
+        ('', _('Choose...')),
+        (0, _('Not completed')),
+        (1, _('Completed'))
     ]
     income_outcome_choices = [
-        ('', 'Выберите...'),
-        (0, 'Приход'),
-        (1, 'Расход')
+        ('', _('Choose')),
+        (0, _('Income')),
+        (1, _('Outcome'))
     ]
 
     number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
@@ -23,10 +24,10 @@ class AccountTransactionSearchForm(forms.Form):
                                required=False)
     payment_item_type = forms.ModelChoiceField(queryset=PaymentItem.objects.all(),
                                                widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                               empty_label='Выберите...')
+                                               empty_label=_('Choose'))
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                   empty_label='Выберите...')
+                                   empty_label=_('Choose'))
     personal_account = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'min': '0'}),
                                           required=False)
     income_outcome = forms.ChoiceField(choices=income_outcome_choices,
@@ -38,22 +39,22 @@ class AccountTransactionSearchForm(forms.Form):
 class CreateIncomeForm(forms.ModelForm):
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'id': 'owner', 'class': 'form-control to_valid'}),
-                                   required=False, empty_label='Выберите...')
+                                   required=False, empty_label=_('Choose...'))
     manager = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
                                      widget=forms.Select(attrs={'id': 'manager', 'class': 'form-control to_valid'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
     payment_item_type = forms.ModelChoiceField(queryset=PaymentItem.objects.filter(type=0),
                                                widget=forms.Select(attrs={'id': 'payment_type',
                                                                           'class': 'form-control to_valid'}),
-                                               empty_label='Выберите...')
+                                               empty_label=_('Choose...'))
     personal_account = forms.ModelChoiceField(queryset=PersonalAccount.objects.all(),
                                               widget=forms.Select(attrs={'class': 'form-control to_valid',
                                                                          'id': 'account'}),
-                                              empty_label='Выберите...', required=False)
+                                              empty_label=_('Choose...'), required=False)
     payment_ticket = forms.ModelChoiceField(queryset=PaymentTicket.objects.all(),
                                             widget=forms.Select(attrs={'class': 'form-control to_valid',
                                                                        'id': 'payment_ticket'},),
-                                            empty_label='Выберите...', required=False)
+                                            empty_label=_('Choose...'), required=False)
 
     class Meta:
         model = Transaction
@@ -78,10 +79,10 @@ class CreateOutcomeForm(forms.ModelForm):
     payment_item_type = forms.ModelChoiceField(queryset=PaymentItem.objects.filter(type=1),
                                                widget=forms.Select(attrs={'id': 'payment_type',
                                                                           'class': 'form-control to_valid'}),
-                                               empty_label='Выберите...')
+                                               empty_label=_('Choose...'))
     manager = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
                                      widget=forms.Select(attrs={'id': 'manager', 'class': 'form-control to_valid'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
 
     class Meta:
         model = Transaction

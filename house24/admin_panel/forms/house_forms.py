@@ -1,7 +1,8 @@
 from django import forms
 from django.db.models import F
+from django.utils.translation import gettext_lazy as _
 
-from db.models.house import House, Section, Floor, HouseUser
+from db.models.house import House, Section, HouseUser
 from db.models.user import User
 
 
@@ -48,7 +49,7 @@ class FloorForm(forms.Form):
 class HouseUserForm(forms.ModelForm):
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
                                   widget=forms.Select(attrs={'class': 'form-control users_select'}),
-                                  empty_label='Выберите...')
+                                  empty_label=_('Choose...'))
 
     class Meta:
         model = HouseUser

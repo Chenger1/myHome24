@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-	<title>{% block title %}Мой дом 24{% endblock %}</title>
+	<title>{% block title %}{% trans 'My House 24' %}{% endblock %}</title>
 
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet"
@@ -33,7 +34,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<a class="nav-link" data-widget="pushmenu" href="#" role="button" id="push"><i class="fas fa-bars"></i></a>
 			</li>
 			<li class="nav-item d-none d-sm-inline-block">
-				<span class="nav-link">Личный кабинет</span>
+				<span class="nav-link">{% trans 'Profile' %}</span>
 			</li>
 		</ul>
 
@@ -70,13 +71,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<!-- Message Start -->
 							<div class="media">
 								<div class="media-body">
-									<p class="text-sm text-center">Нет новых сообщений</p>
+									<p class="text-sm text-center">{% trans 'No new messages' %}</p>
 								</div>
 							</div>
 							<!-- Message End -->
 						</a>
 					{% endfor %}
-					<a href="{% url 'admin_panel:list_chats_admin' %}" class="dropdown-item dropdown-footer">Перейти в чаты</a>
+					<a href="{% url 'admin_panel:list_chats_admin' %}" class="dropdown-item dropdown-footer">{% trans 'Open chats' %}</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown" style="border-left:1px solid #d2d6de; border-right:1px solid #d2d6de;">
@@ -85,7 +86,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<span class="badge badge-warning navbar-badge" style="top: 0px;">{{ messages_count }}</span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-					<span class="dropdown-item dropdown-header">Новых сообщений - {{ messages_count }}</span>
+					<span class="dropdown-item dropdown-header">{% trans 'New messages' %} - {{ messages_count }}</span>
 					<div class="dropdown-divider"></div>
 					{% for message in client_messages %}
 						<a href="{% url 'user_profile:client_detail_message' message.pk %}" class="dropdown-item"
@@ -94,10 +95,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						</a>
 					{% empty %}
 						<a href="" class="dropdown-item">
-							У вас сейчас нет сообщений
+							{% trans 'You dont have new messages' %}
 						</a>
 					{% endfor %}
-					<a href="{% url 'user_profile:list_client_messages_view' request.user.pk %}" class="dropdown-item dropdown-footer">Посмотреть все сообщения</a>
+					<a href="{% url 'user_profile:list_client_messages_view' request.user.pk %}" class="dropdown-item dropdown-footer">{% trans 'Open all messages' %}</a>
 				</div>
 			</li>
 
@@ -128,10 +129,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="menu-footer" style="padding: 10px;">
 						<div class="row text-center" style="background-color: #F9F9F9">
 							<div class="col">
-								<a href="{% url 'user_profile:user_profile' request.user.pk %}" class="btn btn-default btn-flat">Профиль</a>
+								<a href="{% url 'user_profile:user_profile' request.user.pk %}" class="btn btn-default btn-flat">{% trans 'Profile' %}</a>
 							</div>
 							<div class="col">
-								<a href="{% url 'user_profile:logout_client' %}" class="btn btn-default btn-flat">Выйти</a>
+								<a href="{% url 'user_profile:logout_client' %}" class="btn btn-default btn-flat">{% trans 'Logout' %}</a>
 							</div>
 						</div>
 					</div>
@@ -168,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% if '/user_profile/cabinet/flat/' in request.path %}menu-is-opening menu-open{% endif %}">
 						<a href="" class="nav-link">
 							<i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
-							<p>Сводка</p>
+							<p>{% trans 'Summary' %}</p>
 							<i class="fas fa-angle-left right"></i>
 						</a>
 						<ul class="nav nav-treeview">
@@ -176,7 +177,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<li class="nav-item">
 									<a href="{% url 'user_profile:client_statistic' flat.pk %}" class="nav-link">
 										<i class="far fa-building"></i>
-										<p>{{ flat.house }}, кв.{{ flat }}</p>
+										<p>{{ flat.house }}, {% trans 'flat №' %}{{ flat }}</p>
 									</a>
 								</li>
 							{% endfor %}
@@ -186,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% if '/user_profile/payment_tickets/client/' in request.path %}menu-is-opening menu-open{% endif %}">
 						<a href="{}" class="nav-link">
 							<i class="nav-icon far fa-copy" aria-hidden="true"></i>
-							<p>Квитанции</p>
+							<p>{% trans 'Receipts' %}</p>
 							<i class="fas fa-angle-left right"></i>
 						</a>
 						<ul class="nav nav-treeview">
@@ -194,14 +195,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="nav-link
                                     {% if '/user_profile/payment_tickets/client/all/' in request.path %}active{% endif %}">
 									<i class="far fa-copy"></i>
-									<p>Все квитанции</p>
+									<p>{% trans 'All receipts' %}</p>
 								</a>
 							</li>
 							{% for flat in flats %}
 								<li class="nav-item">
 									<a href="{% url 'user_profile:list_payment_tickets_client_by_flat' flat.pk %}" class="nav-link">
 										<i class="far fa-file-alt"></i>
-										<p>{{ flat.house }}, кв.{{ flat }}</p>
+										<p>{{ flat.house }}, {% trans 'flat №' %}{{ flat }}</p>
 									</a>
 								</li>
 							{% endfor %}
@@ -211,7 +212,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     {% if '/user_profile/tariffs/client/' in request.path %}menu-is-opening menu-open{% endif %}">
 						<a href="" class="nav-link">
 							<i class="nav-icon far fa-money-bill-alt" aria-hidden="true"></i>
-							<p>Тарифы</p>
+							<p>{% trans 'Tariffs' %}</p>
 							<i class="fas fa-angle-left right"></i>
 						</a>
 						<ul class="nav nav-treeview" style=
@@ -225,7 +226,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 								<li class="nav-item">
 									<a href="{% url 'user_profile:list_tariffs_client' flat.pk %}" class="nav-link">
 										<i class="far fa-file-alt"></i>
-										<p>{{ flat.house }}, кв.{{ flat }} </p>
+										<p>{{ flat.house }}, {% trans 'flats №' %}{{ flat }} </p>
 									</a>
 								</li>
 							{% endfor %}
@@ -235,28 +236,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<a href="{% url 'user_profile:list_client_messages_view' request.user.pk %}"
 						   class="nav-link {% if '/user_profile/message/' in request.path %}active{% endif %}">
 							<i class="nav-icon far fa-envelope" aria-hidden="true"></i>
-							<p>Сообщения</p>
+							<p>{% trans 'Messages' %}</p>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a href="{% url 'user_profile:user_chat_list' %}"
 						   class="nav-link {% if '/user_profile/chats/' in request.path %}active{% endif %}">
 							<i class="nav-icon far fa-comments" aria-hidden="true"></i>
-							<p>Чаты</p>
+							<p>{% trans 'Chats' %}</p>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a href="{% url 'user_profile:list_master_requests_client' request.user.pk %}"
 						   class="nav-link {% if '/user_profile/master_request/' in request.path %}active{% endif %}">
 							<i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
-							<p>Вызов мастера</p>
+							<p>{% trans 'Master Requests' %}</p>
 						</a>
 					</li>
 					<li class="nav-item">
 						<a href="{% url 'user_profile:user_profile' request.user.pk %}"
 						   class="nav-link {% if '/user_profile/view/' in request.path %}active{% endif %}">
 							<i class="nav-icon fas fa-user-circle" aria-hidden="true"></i>
-							<p>Профиль</p>
+							<p>{% trans 'Profile' %}</p>
 						</a>
 					</li>
 				</ul>
@@ -274,8 +275,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<footer class="main-footer">
 		<!-- To the right -->
 		<!-- Default to the left -->
-		Разработано <a href="https://avada-media.ua/">AVADA-MEDIA</a> на базе системы управления
-		<a href="https://avada-media.ua/moydom24/">"МойДом24"</a>. Документация API доступна по <a href="http://myhouse24.avada-media.ua/doc">ссылке</a>
+		{% trans 'Developed by Chenger1' %}
 	</footer>
 </div>
 <!-- ./wrapper -->

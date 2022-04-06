@@ -1,211 +1,212 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Новый владелец квартиры{% endblock %}
+{% block title %}{% trans 'New flat owner' %}{% endblock %}
 
 {% block content %}
-{% if form.errors %}
-{% include 'errors.html' with errors=form.errors %}
-{% endif %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">
-                        {% if form.instance.pk %}
-                        Владелец
-                        {% else %}
-                        Новый владелец
-                        {% endif %}
-                    </h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'user_profile:user_profile' request.user.pk %}"
-                                   style="color: black;">Профиль</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Редактирование</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	{% if form.errors %}
+		{% include 'errors.html' with errors=form.errors %}
+	{% endif %}
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							{% if form.instance.pk %}
+								{% trans 'Owner' %}
+							{% else %}
+								{% trans 'New Owner' %}
+							{% endif %}
+						</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item">
+									<a href="{% url 'user_profile:user_profile' request.user.pk %}"
+									   style="color: black;">{% trans 'Profile' %}</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'Edit' %}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12" style="margin-top:15px;">
-                    <form action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="card card-default">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-12 col-md-6 col-sm-6">
-                                        <div class="row">
-                                            <div class="col-12 col-md-6">
-                                                {% if form.instance.photo %}
-                                                <img src="{{ form.instance.photo.url }}" alt=""
-                                                     class="photo_image preview_img">
-                                                {% else %}
-                                                <img src="{% static 'img/default_form_image.png' %}" alt=""
-                                                     class="photo_image preview_img">
-                                                {% endif %}
-                                            </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-group">
-                                                    <label for="photo">Сменить изображение</label>
-                                                    {{ form.photo }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="first_name">Имя</label>
-                                            {{ form.first_name }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="last_name">Фамилия</label>
-                                            {{ form.last_name }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="patronym">Отчество</label>
-                                            {{ form.patronym }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="birthday">Дата рождения</label>
-                                            {{ form.birthday }}
-                                        </div>
-                                        <div class="row" style="border-bottom: 1px solid #d2d6de; margin-bottom:20px;">
-                                            <div class="col-12">
-                                                <h4>Контактные данные</h4>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phone_number">Телефон</label>
-                                            {{ form.phone_number }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="viber">Viber</label>
-                                            {{ form.viber }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="telegram">Telegram</label>
-                                            {{ form.telegram }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email(логин)</label>
-                                            {{ form.email }}
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="id">ID</label>
-                                            {{ form.number }}
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="about">О владельце (заметки)</label>
-                                            {{ form.about }}
-                                        </div>
-                                        <div class="row" style="border-bottom: 1px solid #d2d6de; margin-bottom:20px;">
-                                            <div class="col-12">
-                                                <h4>Изменить пароль</h4>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password1">Пароль</label>
-                                            <div class="input_group">
-                                                {{ form.password1 }}
-                                                <div class="delete_input" style="width: 1%;">
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12" style="margin-top:15px;">
+						<form action="" method="post" enctype="multipart/form-data">
+							{% csrf_token %}
+							<div class="card card-default">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12 col-md-6 col-sm-6">
+											<div class="row">
+												<div class="col-12 col-md-6">
+													{% if form.instance.photo %}
+														<img src="{{ form.instance.photo.url }}" alt=""
+															 class="photo_image preview_img">
+													{% else %}
+														<img src="{% static 'img/default_form_image.png' %}" alt=""
+															 class="photo_image preview_img">
+													{% endif %}
+												</div>
+												<div class="col-12 col-md-6">
+													<div class="form-group">
+														<label for="photo">{% trans 'Change image' %}</label>
+														{{ form.photo }}
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="first_name">{% trans 'Name' %}</label>
+												{{ form.first_name }}
+											</div>
+											<div class="form-group">
+												<label for="last_name">{% trans 'Surname' %}</label>
+												{{ form.last_name }}
+											</div>
+											<div class="form-group">
+												<label for="patronym">{% trans 'Middle' %}</label>
+												{{ form.patronym }}
+											</div>
+											<div class="form-group">
+												<label for="birthday">{% trans 'Birthday' %}</label>
+												{{ form.birthday }}
+											</div>
+											<div class="row" style="border-bottom: 1px solid #d2d6de; margin-bottom:20px;">
+												<div class="col-12">
+													<h4>{% trans 'Contacts' %}</h4>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="phone_number">{% trans 'Phone' %}</label>
+												{{ form.phone_number }}
+											</div>
+											<div class="form-group">
+												<label for="viber">Viber</label>
+												{{ form.viber }}
+											</div>
+											<div class="form-group">
+												<label for="telegram">Telegram</label>
+												{{ form.telegram }}
+											</div>
+											<div class="form-group">
+												<label for="email">{% trans 'Email(login)' %}</label>
+												{{ form.email }}
+											</div>
+										</div>
+										<div class="col-12 col-md-6">
+											<div class="form-group">
+												<label for="id">ID</label>
+												{{ form.number }}
+											</div>
+											<div class="form-group">
+												<label for="about">{% trans 'Abount' %}</label>
+												{{ form.about }}
+											</div>
+											<div class="row" style="border-bottom: 1px solid #d2d6de; margin-bottom:20px;">
+												<div class="col-12">
+													<h4>{% trans 'Change password' %}</h4>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="password1">{% trans 'Password' %}</label>
+												<div class="input_group">
+													{{ form.password1 }}
+													<div class="delete_input" style="width: 1%;">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default"
-                                                                id="generate_pass">Сгенерировать</button>
+																id="generate_pass">{% trans 'Generate' %}</button>
                                                         <button type="button" class="btn btn-primary"
-                                                                id="open_button"><i class="fas fa-eye"
-                                                                                    id="eye_icon"></i></button>
+																id="open_button"><i class="fas fa-eye"
+																					id="eye_icon"></i></button>
                                                     </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password2">Повторите пароль</label>
-                                            {{ form.password2 }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="password2">{% trans 'Password again' %}</label>
+												{{ form.password2 }}
+											</div>
+										</div>
+									</div>
+								</div>
 
-                            <div class="row" style="margin-top:15px; margin-bottom: 15px;">
-                                <div class="col-12 text-center">
-                                    <a href="{% url 'admin_panel:list_owners_admin' %}"
-                                       class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success">Сохранить</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+								<div class="row" style="margin-top:15px; margin-bottom: 15px;">
+									<div class="col-12 text-center">
+										<a href="{% url 'admin_panel:list_owners_admin' %}"
+										   class="btn btn-default">{% trans 'Cancel' %}</a>
+										<button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/generate_password.js' %}"></script>
-<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
-<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
-<script>
-    $('.to_valid').each(function(){
-        $(this).on('change', function(){
-            if($(this).val() != ''){
-                colorize_input_valid(this);
-            }else{
-                colorize_input_invalid(this);
-            }
-        })
-    })
-</script>
-<script>
-    $('button[type=submit]').on('click', function(e){
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/js/generate_password.js' %}"></script>
+	<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+	<script src="{% static 'utils/update_img_after_upload.js' %}"></script>
+	<script>
         $('.to_valid').each(function(){
-            if($(this).val() == '' && $(this).attr('required')){
-                e.preventDefault();
-                colorize_input_invalid(this);
+            $(this).on('change', function(){
+                if($(this).val() != ''){
+                    colorize_input_valid(this);
+                }else{
+                    colorize_input_invalid(this);
+                }
+            })
+        })
+	</script>
+	<script>
+        $('button[type=submit]').on('click', function(e){
+            $('.to_valid').each(function(){
+                if($(this).val() == '' && $(this).attr('required')){
+                    e.preventDefault();
+                    colorize_input_invalid(this);
+                }
+            })
+        })
+	</script>
+	<script>
+        $('#generate_pass').on('click', function(){
+            let value = generatePassword();
+            $('#password1').val(value);
+            $('#password2').val(value);
+            colorize_input_valid('#password1');
+            colorize_input_valid('#password2');
+        })
+        $('#open_button').on('click', function(){
+            let pass_input = $('#password1');
+            if($(pass_input).prop('type') == 'password'){
+                $(pass_input).prop('type', 'text');
+                $('#password2').prop('type', 'text');
+                $('#eye_icon').removeClass('fa-eye');
+                $('#eye_icon').addClass('fa-eye-slash');
+            }else{
+                $(pass_input).prop('type', 'password');
+                $('#password2').prop('type', 'password');
+                $('#eye_icon').removeClass('fa-eye-slash');
+                $('#eye_icon').addClass('fa-eye');
             }
         })
-    })
-</script>
-<script>
-    $('#generate_pass').on('click', function(){
-        let value = generatePassword();
-        $('#password1').val(value);
-        $('#password2').val(value);
-        colorize_input_valid('#password1');
-        colorize_input_valid('#password2');
-    })
-    $('#open_button').on('click', function(){
-        let pass_input = $('#password1');
-        if($(pass_input).prop('type') == 'password'){
-            $(pass_input).prop('type', 'text');
-            $('#password2').prop('type', 'text');
-            $('#eye_icon').removeClass('fa-eye');
-            $('#eye_icon').addClass('fa-eye-slash');
-        }else{
-            $(pass_input).prop('type', 'password');
-            $('#password2').prop('type', 'password');
-            $('#eye_icon').removeClass('fa-eye-slash');
-            $('#eye_icon').addClass('fa-eye');
-        }
-    })
-</script>
-<script>
-    $('#photo').on('change', function(){
-        setPreview(this, 'div[class=row]');
-    })
-</script>
+	</script>
+	<script>
+        $('#photo').on('change', function(){
+            setPreview(this, 'div[class=row]');
+        })
+	</script>
 {% endblock %}

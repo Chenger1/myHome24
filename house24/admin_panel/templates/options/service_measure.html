@@ -2,8 +2,9 @@
 {% load static %}
 {% load beautify_line %}
 {% load utils %}
+{% load i18n %}
 
-{% block title %}Услуги и ед. изм.{% endblock %}
+{% block title %}{% trans 'Services and units' %}{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/css/services_measure.css' %}">
 <script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js"
@@ -22,14 +23,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Редактирование услуг</h1>
+                    <h1 class="m-0">{% trans 'Edit services' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Редактирование услуг</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Edit service' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -50,12 +51,11 @@
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link active" id="service-tab" data-toggle="tab"
                                                href="#service"
-                                               role="tab" aria-controls="service" aria-selected="true">Услуги</a>
+                                               role="tab" aria-controls="service" aria-selected="true">{% trans 'Services' %}</a>
                                         </li>
                                         <li class="nav-item" role="presentation">
                                             <a class="nav-link" id="measure-tab" data-toggle="tab" href="#measure"
-                                               role="tab" aria-controls="measure" aria-selected="false">Единицы
-                                                измерения</a>
+                                               role="tab" aria-controls="measure" aria-selected="false">{% trans 'Units' %}</a>
                                         </li>
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
@@ -70,13 +70,13 @@
                                                      style="display:none;">
                                                     <div class="col-xs-12 col-sm-7">
                                                         <div class="form-group">
-                                                            <label for="name">Услуга</label>
+                                                            <label for="name">{% trans 'Service' %}</label>
                                                             {{ service_formset.empty_form.name }}
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-5">
                                                         <div class="form-group">
-                                                            <label for="measure">Ед.изм.</label>
+                                                            <label for="measure">{% trans 'Unit' %}</label>
                                                             <div class="input_group">
                                                                 {{ service_formset.empty_form.measure }}
                                                                 <div class="delete_input">
@@ -92,8 +92,7 @@
                                                     <div class="col-xs-12">
                                                         <div class="form-group form-check">
                                                             {{ service_formset.empty_form.status }}
-                                                            <label for="status" class="form-check-label">Показывать в
-                                                                счетчиках</label>
+                                                            <label for="status" class="form-check-label">{% trans 'Show in meters' %}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -107,13 +106,13 @@
                                                     {{ form.DELETE|add_class:'delete-input-hidden' }}
                                                     <div class="col-12 col-sm-7">
                                                         <div class="form-group">
-                                                            <label for="name">Услуга</label>
+                                                            <label for="name">{% trans 'Service' %}</label>
                                                             {{ form.name }}
                                                         </div>
                                                     </div>
                                                     <div class="col-xs-12 col-sm-5">
                                                         <div class="form-group">
-                                                            <label for="measure">Ед.изм.</label>
+                                                            <label for="measure">{% trans 'Unit' %}</label>
                                                             <div class="input_group">
                                                                 {{ form.measure }}
                                                                 <div class="delete_input">
@@ -136,8 +135,7 @@
                                                     <div class="col-xs-12">
                                                         <div class="form-group form-check">
                                                             {{ form.status }}
-                                                            <label for="status" class="form-check-label">Показывать в
-                                                                счетчиках</label>
+                                                            <label for="status" class="form-check-label">{% trans 'Show in meters' %}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -145,7 +143,7 @@
 
                                                 <div class="border-bottom" style="padding-bottom: 20px;">
                                                     <button type="button" class="btn btn-default btn-hover-blue"
-                                                            id="add_service_formset">Добавить
+                                                            id="add_service_formset">{% trans 'Add' %}
                                                     </button>
                                                 </div>
                                             </form>
@@ -161,7 +159,7 @@
                                                      id="hidden_measure">
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="measure-{{forloop.counter0}}-name">Ед.изм.</label>
+                                                            <label for="measure-{{forloop.counter0}}-name">{% trans 'Unit' %}</label>
                                                             <div class="input-group">
                                                                 {{ measure_formset.empty_form.measure_name }}
                                                                 <span class="input-group-btn">
@@ -183,7 +181,7 @@
                                                     {{ form.DELETE|add_class:'delete-input-hidden' }}
                                                     <div class="col-12">
                                                         <div class="form-group">
-                                                            <label for="measure-{{forloop.counter0}}-name">Ед.изм.</label>
+                                                            <label for="measure-{{forloop.counter0}}-name">{% trans 'Unit' %}</label>
                                                             <div class="input-group">
                                                                 {{ form.measure_name }}
                                                                 <span class="input-group-btn">
@@ -206,7 +204,7 @@
 
                                                 <div class="border-bottom" style="padding-bottom: 20px;">
                                                     <button type="button" class="btn btn-default btn-hover-blue"
-                                                            id="add_measure_formset">Добавить
+                                                            id="add_measure_formset">{% trans 'Add' %}
                                                     </button>
                                                 </div>
                                             </form>
@@ -216,8 +214,8 @@
                             </div>
                             <div class="row" style="margin-top:15px;">
                                 <div class="col-12 text-center">
-                                    <a href="{% url 'admin_panel:service_measure_option' %}" class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success" id="submit_button">Сохранить</button>
+                                    <a href="{% url 'admin_panel:service_measure_option' %}" class="btn btn-default">{% trans 'Cancel' %}</a>
+                                    <button type="submit" class="btn btn-success" id="submit_button">{% trans 'Add' %}</button>
                                 </div>
                             </div>
                         </div>
@@ -258,7 +256,7 @@
     })
     $('.service_formset').find('.disabled_button').each(function(){
         $(this).on('click', function(){
-            confirm('Эту услугу нельзя удалить. Она используется в тарифах');
+            confirm('{% trans "This service cannot be deleted. It is used in tarrifs" %}');
         })
     })
 
@@ -272,7 +270,7 @@
     })
     $('.measure_formset').find('.disabled_button').each(function(){
         $(this).on('click', function(){
-            confirm('Эту единицу измерения нельзя удалить. Она используется в услугах');
+            confirm('{% trans "This unit cannot be deleted. It is used in services" %}');
         })
     })
 </script>
@@ -308,8 +306,8 @@
                     trigger=false;
                     $(document).Toasts('create', {
                         class: 'bg-danger',
-                        title: 'Ошибка уникальности',
-                        body: 'Название ед. изм. не уникальны'
+                        title: '{% trans "Unique error" %}',
+                        body: '{% trans "Unit name is not uniqie" %}'
                     })
                 }
             }

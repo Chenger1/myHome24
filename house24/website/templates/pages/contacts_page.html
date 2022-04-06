@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Система "МОЙ ДОМ" - Контакты{% endblock %}
+{% block title %}{% trans 'System "MY HOUSE" - Contacts' %}{% endblock %}
 
 {% block head %}
 <meta name="title" content="{{ page.seo_title }}">
@@ -10,7 +11,7 @@
 {% endblock %}
 
 {% block contact_header %}
-<li class="nav-item"><a class="nav-link" href="{% url 'website:contacts_page_view' %}">Контакты</a></li>{% endblock %}
+<li class="nav-item"><a class="nav-link" href="{% url 'website:contacts_page_view' %}">{% trans 'Contacts' %}</a></li>{% endblock %}
 
 {% block content %}
 <section class="py-5">
@@ -19,8 +20,8 @@
             <div class="col">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">Главная </a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Контакты</li>
+                        <li class="breadcrumb-item"><a href="{% url 'website:main_page_view' %}">{% trans 'Home' %} </a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{% trans 'Contacts' %}</li>
                     </ol>
                 </nav>
             </div>

@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from db.models.user import User, Role
 from db.models.house import MasterRequest
@@ -8,17 +9,17 @@ import datetime
 
 class MasterRequestSearchForm(forms.Form):
     type_choices = [
-        ('', 'Выберите...'),
-        (0, 'Любой специалист'),
-        (1, 'Сантехник'),
-        (2, 'Электрик'),
-        (3, 'Слесарь')
+        ('', _('Choose...')),
+        (0, _('Any master')),
+        (1, _('Plumber')),
+        (2, _('Electrician')),
+        (3, _('Locksmith'))
     ]
     status_choices = [
-        ('', 'Выберите...'),
-        (0, 'Новое'),
-        (1, 'В работе'),
-        (2, 'Выполнено')
+        ('', _('Choose...')),
+        (0, _('New')),
+        (1, _('In progress')),
+        (2, _('Done'))
     ]
 
     number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
@@ -33,11 +34,11 @@ class MasterRequestSearchForm(forms.Form):
                               required=False)
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                   empty_label='Выберите...')
+                                   empty_label=_('Choose...'))
     phone = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}), required=False)
     master = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True),
                                     widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                    empty_label='Выберите...')
+                                    empty_label=_('Choose...'))
     status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                                required=False)
 
@@ -45,19 +46,19 @@ class MasterRequestSearchForm(forms.Form):
 class CreateMasterRequestForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type'].empty_label = 'Выберите...'
-        self.fields['status'].empty_label = 'Выберите...'
-        self.fields['flat'].empty_label = 'Выберите...'
+        self.fields['type'].empty_label = _('Choose...')
+        self.fields['status'].empty_label = _('Choose...')
+        self.fields['flat'].empty_label = _('Choose...')
 
     owner = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                    widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                   empty_label='Выберите...')
-    type = forms.ModelChoiceField(queryset=Role.objects.exclude(name='Директор'),
+                                   empty_label=_('Choose...'))
+    type = forms.ModelChoiceField(queryset=Role.objects.exclude(name='Director'),
                                   widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                  empty_label='Любой специалист')
-    master = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True).exclude(role__name='Директор'),
+                                  empty_label=_('Any master'))
+    master = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=True).exclude(role__name='Director'),
                                     widget=forms.Select(attrs={'class': 'form-control'}), required=False,
-                                    empty_label='Выберите...')
+                                    empty_label=_('Choose...'))
 
     class Meta:
         model = MasterRequest

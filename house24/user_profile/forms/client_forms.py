@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from db.models.user import User
 from db.models.house import MasterRequest, Transaction
@@ -52,8 +53,8 @@ class OwnerForm(forms.ModelForm):
 class CreateMasterRequest(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type'].empty_label = 'Выберите...'
-        self.fields['flat'].empty_label = 'Выберите...'
+        self.fields['type'].empty_label = _('Choose...')
+        self.fields['flat'].empty_label = _('Choose...')
 
     class Meta:
         model = MasterRequest
@@ -85,10 +86,10 @@ class SearchMessageForm(forms.Form):
 
 class SearchTicketsForm(forms.Form):
     status_choices = [
-        ('', 'Выберите'),
-        (0, 'Оплачена'),
-        (1, 'Частично оплачена'),
-        (2, 'Неоплачена')
+        ('', _('Choose...')),
+        (0, _('Paid')),
+        (1, _('Partially paid')),
+        (2, _('Unpaid'))
     ]
 
     start = forms.DateField(widget=forms.DateInput(attrs={'class': 'form-control', 'id': 'date', 'type': 'date'}),

@@ -1,314 +1,324 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Статистика{% endblock %}
+{% block title %}{% trans 'Statistics' %}{% endblock %}
 
 {% block content %}
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2" style="border-bottom: 1px solid #d2d6de; padding-bottom: 20px;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Статистика</h1>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
+	<!-- Content Wrapper. Contains page content -->
+	<div class="content-wrapper">
+		<!-- Content Header (Page header) -->
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2" style="border-bottom: 1px solid #d2d6de; padding-bottom: 20px;">
+					<div class="col-sm-6">
+						<h1 class="m-0">{% trans 'Statistics' %}</h1>
+					</div><!-- /.col -->
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content-header -->
 
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row md-2">
-                <div class="col-sm-6">
-                    <h4 class="m-0">В вашем обслуживании</h4>
-                </div>
-            </div>
+		<!-- Main content -->
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row md-2">
+					<div class="col-sm-6">
+						<h4 class="m-0">{% trans 'In your service' %}</h4>
+					</div>
+				</div>
 
-            <div class="row" style="margin-top:40px;">
-                <div class="col-lg-4 col-sm-6 col-xs-12">
-                    <div class="small-box bg-primary">
-                        <div class="inner">
-                            <h3>{{ statistic.houses }}</h3>
+				<div class="row" style="margin-top:40px;">
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="small-box bg-primary">
+							<div class="inner">
+								<h3>{{ statistic.houses }}</h3>
 
-                            <p>Домов</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fas fa-building"></i>
-                        </div>
-                        <a href="{% url 'admin_panel:list_houses_admin' %}" class="small-box-footer">
-                            Перейти в дома <i class="fas fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- /.col-md-6 -->
-                <div class="col-lg-4 col-sm-6 col-xs-12">
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>{{ statistic.users }}</h3>
-                            <p>Активных владельцев</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-users"></i>
-                        </div>
-                        <a href="{% url 'admin_panel:list_owners_admin' %}" class="small-box-footer">
-                            Перейти к владельцам <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12">
-                    <div class="small-box bg-yellow">
-                        <div class="inner">
-                            <h3>{{ statistic.requests_in_work }}</h3>
-                            <p>Заявок мастера в работе</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-wrench"></i>
-                        </div>
-                        <a href="{% url 'admin_panel:list_master_requests_admin' %}" class="small-box-footer">
-                            Перейти в заявки <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12">
-                    <div class="small-box bg-primary">
-                        <div class="inner">
-                            <h3>{{ statistic.flats }}</h3>
-                            <p>Квартир</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-key"></i>
-                        </div>
-                        <a href="{% url 'admin_panel:list_flats_admin' %}" class="small-box-footer">
-                            Перейти в квартиры <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12">
-                    <div class="small-box bg-green">
-                        <div class="inner">
-                            <h3>{{ statistic.accounts }}</h3>
-                            <p>Лицевых счетов</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-child"></i>
-                        </div>
-                        <a href="{% url 'admin_panel:list_accounts_admin' %}" class="small-box-footer">
-                            Перейти к счетам <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-6 col-xs-12">
-                    <div class="small-box bg-yellow">
-                        <div class="inner">
-                            <h3>{{ statistic.new_requests }}</h3>
-                            <p>Новых заявок мастера</p>
-                        </div>
-                        <div class="icon">
-                            <i class="fa fa-user-plus"></i>
-                        </div>
-                        <a href="{% url 'admin_panel:list_master_requests_admin' %}" class="small-box-footer">
-                            Перейти в заявки <i class="fa fa-arrow-circle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- /.col-md-6 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-8 col-md-7 col-xs-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">График погашения квитанций, грн</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas id="barChart"
-                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;"
-                                        width="715" height="312" class="chartjs-render-monitor"></canvas>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-5 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-danger"><i class="far fa-money-bill-alt"></i></span>
+								<p>{% trans 'Houses' %}</p>
+							</div>
+							<div class="icon">
+								<i class="fas fa-building"></i>
+							</div>
+							<a href="{% url 'admin_panel:list_houses_admin' %}" class="small-box-footer">
+								{% trans 'Open houses' %} <i class="fas fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- /.col-md-6 -->
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="small-box bg-green">
+							<div class="inner">
+								<h3>{{ statistic.users }}</h3>
+								<p>{% trans 'Active owners' %}</p>
+							</div>
+							<div class="icon">
+								<i class="fa fa-users"></i>
+							</div>
+							<a href="{% url 'admin_panel:list_owners_admin' %}" class="small-box-footer">
+								{% trans 'Open owners' %} <i class="fa fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="small-box bg-yellow">
+							<div class="inner">
+								<h3>{{ statistic.requests_in_work }}</h3>
+								<p>{% trans 'Master requests in progress' %}</p>
+							</div>
+							<div class="icon">
+								<i class="fa fa-wrench"></i>
+							</div>
+							<a href="{% url 'admin_panel:list_master_requests_admin' %}" class="small-box-footer">
+								{% trans 'Go requests' %} <i class="fa fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="small-box bg-primary">
+							<div class="inner">
+								<h3>{{ statistic.flats }}</h3>
+								<p>{% trans 'Flats' %}</p>
+							</div>
+							<div class="icon">
+								<i class="fa fa-key"></i>
+							</div>
+							<a href="{% url 'admin_panel:list_flats_admin' %}" class="small-box-footer">
+								{% trans 'Open flats' %} <i class="fa fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="small-box bg-green">
+							<div class="inner">
+								<h3>{{ statistic.accounts }}</h3>
+								<p>{% trans 'Accounts' %}</p>
+							</div>
+							<div class="icon">
+								<i class="fa fa-child"></i>
+							</div>
+							<a href="{% url 'admin_panel:list_accounts_admin' %}" class="small-box-footer">
+								{% trans 'Open accounts' %} <i class="fa fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-4 col-sm-6 col-xs-12">
+						<div class="small-box bg-yellow">
+							<div class="inner">
+								<h3>{{ statistic.new_requests }}</h3>
+								<p>{% trans 'New requests for master' %}</p>
+							</div>
+							<div class="icon">
+								<i class="fa fa-user-plus"></i>
+							</div>
+							<a href="{% url 'admin_panel:list_master_requests_admin' %}" class="small-box-footer">
+								{% trans 'Open master requests' %} <i class="fa fa-arrow-circle-right"></i>
+							</a>
+						</div>
+					</div>
+					<!-- /.col-md-6 -->
+				</div>
+				<!-- /.row -->
+				<div class="row">
+					<div class="col-lg-8 col-md-7 col-xs-12">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">{% trans 'Repayment Schedule' %}</h3>
+							</div>
+							<div class="card-body">
+								<div class="chart">
+									<div class="chartjs-size-monitor">
+										<div class="chartjs-size-monitor-expand">
+											<div class=""></div>
+										</div>
+										<div class="chartjs-size-monitor-shrink">
+											<div class=""></div>
+										</div>
+									</div>
+									<canvas id="barChart"
+											style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;"
+											width="715" height="312" class="chartjs-render-monitor"></canvas>
+								</div>
+							</div>
+							<!-- /.card-body -->
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-5 col-xs-12">
+						<div class="info-box">
+							<span class="info-box-icon bg-danger"><i class="far fa-money-bill-alt"></i></span>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Задолженность по счетам, грн</span>
-                            <span class="info-box-number">{{ statistic.total_debt }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <div class="info-box">
-                        <span class="info-box-icon bg-primary"><i class="far fa-money-bill-alt"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text">{% trans 'Account debts' %}</span>
+								<span class="info-box-number">{{ statistic.total_debt }}</span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<div class="info-box">
+							<span class="info-box-icon bg-primary"><i class="far fa-money-bill-alt"></i></span>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Баланс по счетам, грн</span>
-                            <span class="info-box-number">{{ statistic.total_account_balance }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                    <div class="info-box">
-                        <span class="info-box-icon bg-success"><i class="far fa-money-bill-alt"></i></span>
+							<div class="info-box-content">
+								<span class="info-box-text">{% trans 'Accounts Balance' %}</span>
+								<span class="info-box-number">{{ statistic.total_account_balance }}</span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+						<div class="info-box">
+							<span class="info-box-icon bg-success"><i class="far fa-money-bill-alt"></i></span>
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Состояние кассы, грн</span>
-                            <span class="info-box-number">{{ statistic.total_cash }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
-                    </div>
-                </div>
-            </div>
+							<div class="info-box-content">
+								<span class="info-box-text">{% trans 'Cash' %}</span>
+								<span class="info-box-number">{{ statistic.total_cash }}</span>
+							</div>
+							<!-- /.info-box-content -->
+						</div>
+					</div>
+				</div>
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">График приходов и расходов по кассе, грн</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="chart">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas id="barChart-income-outcome"
-                                        style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;"
-                                        width="715" height="312" class="chartjs-render-monitor"></canvas>
-                            </div>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                </div>
-            </div>
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header">
+								<h3 class="card-title">{% trans "Cashier's income and expense schedule" %}</h3>
+							</div>
+							<div class="card-body">
+								<div class="chart">
+									<div class="chartjs-size-monitor">
+										<div class="chartjs-size-monitor-expand">
+											<div class=""></div>
+										</div>
+										<div class="chartjs-size-monitor-shrink">
+											<div class=""></div>
+										</div>
+									</div>
+									<canvas id="barChart-income-outcome"
+											style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 572px;"
+											width="715" height="312" class="chartjs-render-monitor"></canvas>
+								</div>
+							</div>
+							<!-- /.card-body -->
+						</div>
+					</div>
+				</div>
 
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/plugins/chart.js/Chart.min.js' %}"></script>
-<script>
-    const current_year = new Date().getFullYear();
-    const month =   ['янв., '+current_year, 'февр., '+ current_year, 'март, '+current_year, 'апр., '+current_year,
-                     'май, '+current_year, 'июнь, '+current_year, 'июль, '+ current_year, 'авг., '+current_year,
-                     'сент., '+current_year, 'окт., '+current_year, 'нояб., '+current_year, 'дек., '+current_year]
+			</div><!-- /.container-fluid -->
+		</div>
+		<!-- /.content -->
+	</div>
+	<!-- /.content-wrapper -->
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/plugins/chart.js/Chart.min.js' %}"></script>
+	<script>
+        const current_year = new Date().getFullYear();
+        const month =   ["{% trans 'jan., ' %}"+current_year,
+            			 "{% trans 'feb., ' %}"+ current_year,
+            			 "{% trans 'mar, ' %}"+current_year,
+						 "{% trans 'apr., ' %}"+current_year,
+						 "{% trans 'may, ' %}"+current_year,
+						 "{% trans 'jun, ' %}"+current_year,
+						 "{% trans 'jul, ' %}"+ current_year,
+						 "{% trans 'aug., ' %}"+current_year,
+						 "{% trans 'sept., ' %}"+current_year,
+						 "{% trans 'oct., ' %}"+current_year,
+						 "{% trans 'nov., ' %}"+current_year,
+						 "{% trans 'dec., ' %}"+current_year]
 
-    var areaChartData = {
-      labels  : month,
-      datasets: [
-        {
-          label               : 'Погашение задолженности',
-          backgroundColor     : 'rgba(0, 166, 90, 1)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [{% for value in statistic.paid_ticket.values %}{{ value }},{% endfor %}]
-        },
-        {
-          label               : 'Задолженность',
-          backgroundColor     : 'rgba(221, 75, 57, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [{% for value in statistic.unpaid_ticket.values %}{{ value }},{% endfor %}]
-        },
-      ]
-    }
-    //-------------
-    //- BAR CHART -
-    //-------------
-    var barChartCanvas = $('#barChart').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, areaChartData)
-    var temp0 = areaChartData.datasets[0]
-    var temp1 = areaChartData.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
+        var areaChartData = {
+            labels  : month,
+            datasets: [
+                {
+                    label               : "{% trans 'Debt repayment' %}",
+                    backgroundColor     : 'rgba(0, 166, 90, 1)',
+                    borderColor         : 'rgba(60,141,188,0.8)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgba(60,141,188,1)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data                : [{% for value in statistic.paid_ticket.values %}{{ value }},{% endfor %}]
+                },
+                {
+                    label               : '{% trans "Debt" %}',
+                    backgroundColor     : 'rgba(221, 75, 57, 1)',
+                    borderColor         : 'rgba(210, 214, 222, 1)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data                : [{% for value in statistic.unpaid_ticket.values %}{{ value }},{% endfor %}]
+                },
+            ]
+        }
+        //-------------
+        //- BAR CHART -
+        //-------------
+        var barChartCanvas = $('#barChart').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartData)
+        var temp0 = areaChartData.datasets[0]
+        var temp1 = areaChartData.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
 
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
-    }
+        var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+        }
 
-    new Chart(barChartCanvas, {
-      type: 'bar',
-      data: barChartData,
-      options: barChartOptions
-    })
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        })
 
         //-------------
-    //- BAR CHART - income outcome
-    //-------------
-    var areaChartData2 = {
-      labels  : month,
-      datasets: [
-        {
-          label               : 'Приход',
-          backgroundColor     : 'rgba(0, 166, 90, 1)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [{% for value in statistic.transaction_chart_income.values %}{{ value }},{% endfor %}]
-        },
-        {
-          label               : 'Расход',
-          backgroundColor     : 'rgba(221, 75, 57, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
-          data                : [{% for value in statistic.transaction_chart_outcome.values %}{{ value }},{% endfor %}]
-        },
-      ]
-    }
+        //- BAR CHART - income outcome
+        //-------------
+        var areaChartData2 = {
+            labels  : month,
+            datasets: [
+                {
+                    label               : '{% trans "Income" %}',
+                    backgroundColor     : 'rgba(0, 166, 90, 1)',
+                    borderColor         : 'rgba(60,141,188,0.8)',
+                    pointRadius          : false,
+                    pointColor          : '#3b8bba',
+                    pointStrokeColor    : 'rgba(60,141,188,1)',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(60,141,188,1)',
+                    data                : [{% for value in statistic.transaction_chart_income.values %}{{ value }},{% endfor %}]
+                },
+                {
+                    label               : '{% trans "Outcome" %}',
+                    backgroundColor     : 'rgba(221, 75, 57, 1)',
+                    borderColor         : 'rgba(210, 214, 222, 1)',
+                    pointRadius         : false,
+                    pointColor          : 'rgba(210, 214, 222, 1)',
+                    pointStrokeColor    : '#c1c7d1',
+                    pointHighlightFill  : '#fff',
+                    pointHighlightStroke: 'rgba(220,220,220,1)',
+                    data                : [{% for value in statistic.transaction_chart_outcome.values %}{{ value }},{% endfor %}]
+                },
+            ]
+        }
 
 
-    var barChartCanvas = $('#barChart-income-outcome').get(0).getContext('2d')
-    var barChartData = $.extend(true, {}, areaChartData2)
-    var temp0 = areaChartData2.datasets[0]
-    var temp1 = areaChartData2.datasets[1]
-    barChartData.datasets[0] = temp1
-    barChartData.datasets[1] = temp0
+        var barChartCanvas = $('#barChart-income-outcome').get(0).getContext('2d')
+        var barChartData = $.extend(true, {}, areaChartData2)
+        var temp0 = areaChartData2.datasets[0]
+        var temp1 = areaChartData2.datasets[1]
+        barChartData.datasets[0] = temp1
+        barChartData.datasets[1] = temp0
 
-    var barChartOptions = {
-      responsive              : true,
-      maintainAspectRatio     : false,
-      datasetFill             : false
-    }
+        var barChartOptions = {
+            responsive              : true,
+            maintainAspectRatio     : false,
+            datasetFill             : false
+        }
 
-    new Chart(barChartCanvas, {
-      type: 'bar',
-      data: barChartData,
-      options: barChartOptions
-    })
-</script>
+        new Chart(barChartCanvas, {
+            type: 'bar',
+            data: barChartData,
+            options: barChartOptions
+        })
+	</script>
 {% endblock %}

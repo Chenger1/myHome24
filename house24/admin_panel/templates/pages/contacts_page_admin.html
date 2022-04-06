@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Редактирование страницы{% endblock %}
+{% block title %}{% trans 'Edit page' %}{% endblock %}
 
 {% block head %}
 <script src="https://cdn.tiny.cloud/1/4c0s2hrr61vyezka49reupxn64f4mwo8jtmsx297ybf93agh/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -17,14 +18,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Редактирование страницы</h1>
+                    <h1 class="m-0">{% trans 'Edit page' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Редактирование страницы</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Edit page' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -39,14 +40,14 @@
                 <div class="col-12">
                     <div class="card card-default">
                         <div class="card-header">
-                            <span style="font-size:22px;">Редактирование страницы "Контакты"</span>
+                            <span style="font-size:22px;">{% trans 'Edit page "Contacts"' %}</span>
                             <a style="float:right;" class="btn btn-default"
-                            href="{% url 'website:get_sitemap' %}">Обновить robots и sitemap</a>
+                            href="{% url 'website:get_sitemap' %}">{% trans 'Update robots and sitemap' %}</a>
                         </div>
                         <div class="card-body">
                             <div class="row border_bottom">
                                 <div class="col-12">
-                                    <h5>Контактная информация</h5>
+                                    <h5>{% trans 'Contact information' %}</h5>
                                 </div>
                             </div>
 
@@ -60,52 +61,52 @@
                                 <div class="row">
                                     <div class="col-xs-12 col-md-8">
                                         <div class="form-group">
-                                            <label for="title">Заголовок</label>
+                                            <label for="title">{% trans 'Title' %}>
                                             {{ form.title }}
                                         </div>
 
                                         <div class="form-group">
-                                            <label for="description">Краткий текст</label>
+                                            <label for="description">{% trans 'Description' %}</label>
                                             {{ form.description|safe }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="link">Ссылка на коммерческий сайт</label>
+                                            <label for="link">{% trans 'Commercial site link' %}</label>
                                             {{ form.link }}
                                         </div>
                                     </div>
 
                                     <div class="col-xs-12 col-md-4">
                                         <div class="form-group">
-                                            <label for="full_name">ФИО</label>
+                                            <label for="full_name">{% trans 'Full name' %}</label>
                                             {{ form.full_name }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="location">Локация</label>
+                                            <label for="location">{% trans 'Location' %}</label>
                                             {{ form.location }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="address">Адрес</label>
+                                            <label for="address">{% trans 'Address' %}</label>
                                             {{ form.address }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="phone">Телефон</label>
+                                            <label for="phone">{% trans 'Phone' %}</label>
                                             {{ form.phone }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="email">E-mail</label>
+                                            <label for="email">{% trans 'E-mail' %}</label>
                                             {{ form.email }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row border_bottom" style="margin-top:50px;">
                                     <div class="col-12">
-                                        <h5>Карта</h5>
+                                        <h5>{% trans 'Map' %}</h5>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top:20px;">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="map">Код карты</label>
+                                            <label for="map">{% trans 'Map code' %}</label>
                                             {{ form.map }}
                                         </div>
                                     </div>
@@ -113,30 +114,30 @@
 
                                 <div class="row border_bottom" style="margin-top:50px;">
                                     <div class="col-12">
-                                        <h5>Настройки SEO</h5>
+                                        <h5>{% trans 'SEO settings' %}</h5>
                                     </div>
                                 </div>
 
                                 <div class="row" style="margin-top:20px;">
                                     <div class="col-12">
                                         <div class="form-group">
-                                            <label for="seo_title">Title</label>
+                                            <label for="seo_title">{% trans 'Title' %}</label>
                                             {{ form.seo_title }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="seo_description">Description</label>
+                                            <label for="seo_description">{% trans 'Description' %}</label>
                                             {{ form.seo_description }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="seo_keywords">Keywords</label>
+                                            <label for="seo_keywords">{% trans 'Keywords' %}</label>
                                             {{ form.seo_keywords }}
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row" style="margin-top:15px;">
                                     <div class="col-12 text-center">
-                                        <a href="{% url 'admin_panel:contacts_page' %}" class="btn btn-default">Отмена</a>
-                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                        <a href="{% url 'admin_panel:contacts_page' %}" class="btn btn-default">{% trans 'Отмена' %}</a>
+                                        <button type="submit" class="btn btn-success">{% trans 'Сохранить' %}</button>
                                     </div>
                                 </div>
 

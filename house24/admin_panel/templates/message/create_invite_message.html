@@ -1,8 +1,9 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-Пригласить пользователя
+{% trans 'Invite user' %}
 {% endblock %}
 
 {% block content %}
@@ -15,15 +16,15 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Пригласить пользователя
+                        {% trans 'Invite user' %}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Пригласить пользователя</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Invite user' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -40,16 +41,16 @@
                         {% csrf_token %}
                         <div class="card card-default">
                             <div class="card-header">
-                                <h5>Отправить приглашение</h5>
+                                <h5>{% trans 'Send invite' %}</h5>
                             </div>
                             <div class="card-body row">
                                 <div class="col-6">
                                     <div class="form-group">
-                                        <label for="phone">Телефон</label>
+                                        <label for="phone">{% trans 'Phone' %}</label>
                                         {{ form.phone }}
                                     </div>
                                     <div class="form-group">
-                                        <label for="text">Сообщение</label>
+                                        <label for="text">{% trans 'Message' %}</label>
                                         {{ form.text }}
                                     </div>
                                 </div>
@@ -57,7 +58,7 @@
                             <div class="row">
                                 <div class="col-12" style="text-align:center; padding-bottom:10px;">
                                     <button type="submit" class="btn btn-success">
-                                        Отправить приглашение</button>
+                                        {% trans 'Send invite' %}</button>
                                 </div>
                             </div>
                         </div>

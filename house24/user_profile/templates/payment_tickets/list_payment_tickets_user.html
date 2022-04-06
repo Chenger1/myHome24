@@ -1,156 +1,157 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
 {% block title %}
-{% if flat %}
-Квитанции - {{ flat.house }}, кв.{{ flat }}
-{% else %}
-Квитанции на оплату
-{% endif %}
+	{% if flat %}
+		{% trans 'Receipts' %} - {{ flat.house }}, {% trans 'flat №' %}{{ flat }}
+	{% else %}
+		{% trans 'Receipts for payment' %}
+	{% endif %}
 {% endblock %}
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">
-                        {% if flat %}
-                        Квитанции - {{ flat.house }}, кв.{{ flat }}
-                        {% else %}
-                        Квитанции на оплату
-                        {% endif %}
-                    </h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">
-                                {% if flat %}
-                                Квитанции - {{ flat.house }}, кв.{{ flat }}
-                                {% else %}
-                                Квитанции на оплату
-                                {% endif %}
-                            </li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							{% if flat %}
+								{% trans 'Receipts' %} - {{ flat.house }}, {% trans 'flat №' %}{{ flat }}
+							{% else %}
+								{% trans 'Receipts for payment' %}
+							{% endif %}
+						</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
+									<i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item active" aria-current="page">
+									{% if flat %}
+										{% trans 'Receipts' %} - {{ flat.house }}, {% trans 'flat №' %}{{ flat }}
+									{% else %}
+										{% trans 'Receipts for payment' %}
+									{% endif %}
+								</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-success alert-dismissible">
-                      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                      <h5><i class="icon fas fa-check"></i>Операция прошла успешно</h5>
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <div class="row">
-                <div class="col-12" style="margin-top:15px;">
-                    <div class="card card-default">
-                        <div class="card-header">
-                            {% if flat %}
-                                <a href="{% url 'user_profile:list_payment_tickets_client_by_flat' flat.pk %}" class="btn btn-default"
-                                style="float:right;">Очистить</a>
-                            {% else %}
-                                <a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="btn btn-default"
-                                style="float:right;">Очистить</a>
-                            {% endif %}
-                        </div>
-                        <div class="card-body card-body table-responsive p-0">
-                            <form action="" method="get">
-                                {% csrf_token %}
-                                <table class="table table-striped linkedRow">
-                                <thead>
-                                <tr>
-                                    <th>№ квитанции</th>
-                                    <th>Дата</th>
-                                    <th class="text-center">Статус</th>
-                                    <th>Сумма</th>
-                                    <th>Остаток</th>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <th>{{ form.start }}</th>
-                                    <td>{{ form.status }}</td>
-                                    <td></td>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for ticket in instances %}
-                                <tr>
-                                    <td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.number }}</a></td>
-                                    <td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.start }}</a></td>
-                                    <td class="text-center">
-                                        {% if ticket.status == 0 %}
-                                        <a href="">
-                                            <small class="label label-success">Оплачена</small>
-                                        </a>
-                                        {% elif ticket.status == 1 %}
-                                        <a href="">
-                                            <small class="label label-warning">Частично оплачена</small>
-                                        </a>
-                                        {% else %}
-                                        <a href="">
-                                            <small class="label label-danger">Неоплачена</small>
-                                        </a>
-                                        {% endif %}
-                                    </td>
-                                    <td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.sum }}</a></td>
-                                    <td class="ticket_sum_td">
-                                        <input type="hidden" value="{{ ticket.pk }}" class="ticket_pk">
-                                        <a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">
-                                            <strong class="sum"></strong>
-                                        </a>
-                                    </td>
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="10">Ничего не найдено</td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div style="margin: auto;">
-                    {% include 'pagination.html' with page=instances %}
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+		<div class="content">
+			<div class="container-fluid">
+				{% if messages %}
+					{% for message in messages %}
+						<div class="alert alert-success alert-dismissible">
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+							<h5><i class="icon fas fa-check"></i>{% trans 'Successfull operation' %}</h5>
+							{{ message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+				<div class="row">
+					<div class="col-12" style="margin-top:15px;">
+						<div class="card card-default">
+							<div class="card-header">
+								{% if flat %}
+									<a href="{% url 'user_profile:list_payment_tickets_client_by_flat' flat.pk %}" class="btn btn-default"
+									   style="float:right;">{% trans 'Clear' %}</a>
+								{% else %}
+									<a href="{% url 'user_profile:list_payment_tickets_client' request.user.pk %}" class="btn btn-default"
+									   style="float:right;">{% trans 'Clear' %}</a>
+								{% endif %}
+							</div>
+							<div class="card-body card-body table-responsive p-0">
+								<form action="" method="get">
+									{% csrf_token %}
+									<table class="table table-striped linkedRow">
+										<thead>
+										<tr>
+											<th>{% trans 'Receipt №' %}</th>
+											<th>{% trans 'Date' %}</th>
+											<th class="text-center">{% trans 'Status' %}</th>
+											<th>{% trans 'Sum' %}</th>
+											<th>{% trans 'Balance' %}</th>
+										</tr>
+										<tr>
+											<th></th>
+											<th>{{ form.start }}</th>
+											<td>{{ form.status }}</td>
+											<td></td>
+										</tr>
+										</thead>
+										<tbody>
+										{% for ticket in instances %}
+											<tr>
+												<td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.number }}</a></td>
+												<td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.start }}</a></td>
+												<td class="text-center">
+													{% if ticket.status == 0 %}
+														<a href="">
+															<small class="label label-success">{% trans 'Paid' %}</small>
+														</a>
+													{% elif ticket.status == 1 %}
+														<a href="">
+															<small class="label label-warning">{% trans 'Partially paid' %}</small>
+														</a>
+													{% else %}
+														<a href="">
+															<small class="label label-danger">{% trans 'Not paid' %}</small>
+														</a>
+													{% endif %}
+												</td>
+												<td><a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">{{ ticket.sum }}</a></td>
+												<td class="ticket_sum_td">
+													<input type="hidden" value="{{ ticket.pk }}" class="ticket_pk">
+													<a href="{% url 'user_profile:payment_ticket_detail_client' ticket.pk %}">
+														<strong class="sum"></strong>
+													</a>
+												</td>
+											</tr>
+										{% empty %}
+											<tr>
+												<td colspan="10">{% trans 'No data found' %}</td>
+											</tr>
+										{% endfor %}
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+					<div style="margin: auto;">
+						{% include 'pagination.html' with page=instances %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/utils.js' %}"></script>
-<script>
-    $(document).ready(function(){
-        submit_form_after_keypress();
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/js/utils.js' %}"></script>
+	<script>
+        $(document).ready(function(){
+            submit_form_after_keypress();
 
-        $('.ticket_pk').each(function(){
-            const pk = $(this).val();
-            const closest = $(this).closest('.ticket_sum_td');
-            $.ajax({
-                url: '{% url "rest_api:payment_ticket_sum" %}',
-                type: 'GET',
-                data: {'pk': pk},
-            })
-            .done(function(response) {
-                    $(closest).find('.sum').text(response['sum'].toFixed(2));
+            $('.ticket_pk').each(function(){
+                const pk = $(this).val();
+                const closest = $(this).closest('.ticket_sum_td');
+                $.ajax({
+                    url: '{% url "rest_api:payment_ticket_sum" %}',
+                    type: 'GET',
+                    data: {'pk': pk},
+                })
+                    .done(function(response) {
+                        $(closest).find('.sum').text(response['sum'].toFixed(2));
+                    })
             })
         })
-    })
-</script>
+	</script>
 {% endblock %}

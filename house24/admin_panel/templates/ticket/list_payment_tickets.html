@@ -1,8 +1,9 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Квитанции на оплату{% endblock %}
+{% block title %}{% trans 'Receipts for payment' %}{% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static 'admin_panel/plugins/daterangepicker/daterangepicker.css' %}">
@@ -17,14 +18,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Квитанции на оплату</h1>
+                    <h1 class="m-0">{% trans 'Receipts for payment' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Квитанции на оплату</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Receipts for payment' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -41,8 +42,8 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-green overflow-hidden">
                         <div class="inner">
-                            <h3>{{ statistic.total_cash }} грн</h3>
-                            <p>Состояние кассы</p>
+                            <h3>{{ statistic.total_cash }}</h3>
+                            <p>{% trans 'Cash state' %}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-dollar-sign"></i>
@@ -53,8 +54,8 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-blue overflow-hidden">
                         <div class="inner">
-                            <h3>{{ statistic.total_account_balance }} грн</h3>
-                            <p>Баланс по счетам</p>
+                            <h3>{{ statistic.total_account_balance }}</h3>
+                            <p>{% trans 'Accounts balance' %}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-dollar-sign"></i>
@@ -66,7 +67,7 @@
                       <div class="small-box bg-red overflow-hidden">
                         <div class="inner">
                             <h3>{{ statistic.total_debt }} грн</h3>
-                            <p>Задолженность по счетам</p>
+                            <p>{% trans 'Accounts debt' %}</p>
                         </div>
                         <div class="icon">
                              <i class="fas fa-dollar-sign"></i>
@@ -78,18 +79,18 @@
                 </div>
                 <div class="col-12 col-md-12 col-lg-3">
                    <button class="btn btn-success dropdown-toggle breadcrumb_pull_right" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Выберите действие
+                            aria-haspopup="true" aria-expanded="false">{% trans 'Actions' %}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'admin_panel:create_payment_ticket_admin' %}">Создать общую квитанцию</a>
-                        <button class="dropdown-item" type="button" id="delete_mass">Удалить</button>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_payment_ticket_admin' %}">{% trans 'Create receipt' %}</a>
+                        <button class="dropdown-item" type="button" id="delete_mass">{% trans 'Delete' %}</button>
                     </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
                             <a href="{% url 'admin_panel:list_payment_ticket_admin' %}" class="btn btn-default"
-                            style="float:right;">Очистить</a>
+                            style="float:right;">{% trans 'Clear' %}</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
                             <form action="" method="get">
@@ -100,27 +101,27 @@
                                     <th style="padding: 10px; width: 40px; min-width: 40px">
                                         <input type="checkbox" id="main_checkbox">
                                     </th>
-                                    <th>№ квитанции</th>
-                                    <th>Статус</th>
+                                    <th>{% trans 'Receipt №' %}</th>
+                                    <th>{% trans 'Status' %}</th>
                                     <th>
                                         {% if 'date_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}"
                                             class="submit_link">
-                                               Дата <i class="fas fa-sort-amount-up"></i>
+                                               {% trans 'Date' %} <i class="fas fa-sort-amount-up"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
                                         {% elif 'date_descending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}"
                                             class="submit_link">
-                                               Дата <i class="fas fa-sort-amount-down"></i>
+                                               {% trans 'Date' %} <i class="fas fa-sort-amount-down"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_date_ascending_admin' %}">
                                         {% else %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}"
                                             class="submit_link">
-                                                   Дата
+                                                   {% trans 'Date' %}
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_date_descending_admin' %}">
@@ -130,30 +131,30 @@
                                         {% if 'month_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}"
                                             class="submit_link">
-                                               Месяц <i class="fas fa-sort-amount-up"></i>
+                                               {% trans 'Month' %} <i class="fas fa-sort-amount-up"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
                                         {% elif 'month_descending' in request.path %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}"
                                             class="submit_link">
-                                               Месяц <i class="fas fa-sort-amount-down"></i>
+                                               {% trans 'Month' %} <i class="fas fa-sort-amount-down"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_month_ascending_admin' %}">
                                         {% else %}
                                             <a href="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}"
                                             class="submit_link">
-                                                   Месяц
+                                                   {% trans 'Month' %}
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_payment_ticket_month_descending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th>Квартира</th>
-                                    <th>Владелец</th>
-                                    <th>Проведена</th>
-                                    <th>Сумма(грн)</th>
+                                    <th>{% trans 'Flat' %}</th>
+                                    <th>{% trans 'Owner' %}</th>
+                                    <th>{% trans 'Completed' %}</th>
+                                    <th>{% trans 'Sum' %}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -197,15 +198,15 @@
                                     <td class="text-center">
                                         {% if ticket.status == 0 %}
                                         <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
-                                            <small class="label label-success">Оплачена</small>
+                                            <small class="label label-success">{% trans 'Paid' %}</small>
                                         </a>
                                         {% elif ticket.status == 1 %}
                                         <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
-                                            <small class="label label-warning">Частично оплачена</small>
+                                            <small class="label label-warning">{% trans 'Partially paid' %}</small>
                                         </a>
                                         {% else %}
                                         <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}">
-                                            <small class="label label-danger">Неоплачена</small>
+                                            <small class="label label-danger">{% trans 'Not paid' %}</small>
                                         </a>
                                         {% endif %}
                                     </td>
@@ -222,15 +223,15 @@
                                     <td>{% if ticket.flat %}
                                             {{ ticket.flat }}, {{ ticket.flat.house }}
                                         {% else %}
-                                            Не указано
+                                            {% trans 'Not specified' %}
                                         {% endif %}
                                     </td>
                                     <td>{{ ticket.flat.owner|filter_none|truncatechars:30 }}</td>
                                     <td>
                                         {% if ticket.is_done %}
-                                            Проведена
+                                            {% trans 'Completed' %}
                                         {% else %}
-                                            Не проведена
+                                            {% trans 'Not completed' %}
                                         {% endif %}
                                     </td>
                                     <td>{{ ticket.sum|filter_none }}</td>
@@ -238,17 +239,17 @@
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:duplicate_payment_ticket' ticket.pk %}"
-                                            title="Копировать">
+                                            title="{% trans 'Copy' %}">
                                                 <i class="fa fa-clone"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:update_payment_ticket_admin' ticket.pk %}"
-                                            title="Редактировать">
+                                            title="{% trans 'Edit' %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_payment_ticket_admin' ticket.pk %}"
-                                            title="Удалить">
+                                            title="{% trans 'Delete' %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -257,7 +258,7 @@
                                 {% empty %}
                                 <tr>
                                     <td colspan="9">
-                                        Ничего не найдено
+                                        {% trans 'No data found' %}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -325,7 +326,7 @@
             window.location.reload();
         })
         .fail(function(){
-            confirm('Неправильно выбранные данные.');
+            confirm('{% trans "Wrong data chosen" %}');
         })
     })
 </script>

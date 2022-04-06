@@ -1,8 +1,9 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Вызов мастера{% endblock %}
+{% block title %}{% trans 'Master Request' %}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -10,14 +11,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Вызов мастера</h1>
+                    <h1 class="m-0">{% trans 'Master Request' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Вызов мастера</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Master Request' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -30,8 +31,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12">
-                    <a href="{% url 'user_profile:create_master_request_client' request.user.pk %}" class="btn btn-success" style="float: right;">Добавить
-                        заявку</a>
+                    <a href="{% url 'user_profile:create_master_request_client' request.user.pk %}" class="btn btn-success" style="float: right;">{% trans 'Add Request' %}</a>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
@@ -40,16 +40,16 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 80px; min-width: 80px">
-                                        № заявки
+                                        {% trans 'Request №' %}
                                     </th>
                                     <th style="width: 135px; min-width: 135px">
-                                        Тип мастера
+                                        {% trans 'Master type' %}
                                     </th>
                                     <th style="min-width: 125px">
-                                        Описание
+                                        {% trans 'Description' %}
                                     </th>
-                                    <th style="min-width: 125px; width: 125px;">Удобное время</th>
-                                    <th style="width: 60px; min-width: 60px;">Статус</th>
+                                    <th style="min-width: 125px; width: 125px;">{% trans 'Comfortable time' %}</th>
+                                    <th style="width: 60px; min-width: 60px;">{% trans 'Status' %}</th>
                                     <th style="width: 48px; min-width: 48px"></th>
                                 </tr>
                                 </thead>
@@ -63,18 +63,18 @@
 
                                     <td class="text-center">
                                         {% if req.status == 0 %}
-                                        <small class="label label-primary">Новое</small>
+                                        <small class="label label-primary">{% trans 'New' %}</small>
                                         {% elif req.status == 1 %}
-                                        <small class="label label-warning">В работе</small>
+                                        <small class="label label-warning">{% trans 'In progress' %}</small>
                                         {% elif req.status == 2 %}
-                                        <small class="label label-success">Выполнено</small>
+                                        <small class="label label-success">{% trans 'Completed' %}</small>
                                         {% endif %}
                                     </td>
                                     <td>
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'user_profile:delete_master_request_client' req.pk %}"
-                                            title="Удалить">
+                                            title="{% trans 'Delete' %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -82,7 +82,7 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="10">Ничего не найдено</td>
+                                    <td colspan="10">{% trans 'No data found' %}</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>

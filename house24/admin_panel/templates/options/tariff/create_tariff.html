@@ -2,8 +2,9 @@
 {% load static %}
 {% load beautify_line %}
 {% load utils %}
+{% load i18n %}
 
-{% block title %}Новый тариф{% endblock %}
+{% block title %}{% trans 'New Tariff' %}{% endblock %}
 
 
 {% block content %}
@@ -20,9 +21,9 @@
                 <div class="col-sm-6">
                     <h1 class="m-0">
                         {% if form.instance.pk %}
-                            Тариф
+                            {% trans 'Tariff' %}
                         {% else %}
-                            Новый тариф
+                            {% trans 'New Tariff' %}
                         {% endif %}
                     </h1>
                 </div><!-- /.col -->
@@ -30,11 +31,11 @@
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_tariff_admin' %}" style="color: black;">Тарифы</a>
+                                <a href="{% url 'admin_panel:list_tariff_admin' %}" style="color: black;">{% trans 'Tariffs' %}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Новый тариф</li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'New Tariff' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -55,11 +56,11 @@
 
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="name">Название тарифа</label>
+                                            <label for="name">{% trans 'Tariff name' %}</label>
                                             {{ form.name }}
                                         </div>
                                         <div class="form-group">
-                                            <label for="description">Описание тарифа</label>
+                                            <label for="description">{% trans 'Tariff description' %}</label>
                                             {{ form.description }}
                                         </div>
                                         <div class="form-group">
@@ -71,25 +72,25 @@
                                                 {% endfor %}
                                                 <div class="col-6 col-md-4">
                                                     <div class="form-group">
-                                                        <label for="service">Услуга</label>
+                                                        <label for="service">{% trans 'Service' %}</label>
                                                         {{ formset.empty_form.service }}
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div class="form-group">
-                                                        <label for="">Цена</label>
+                                                        <label for="">{% trans 'Price' %}</label>
                                                         {{ formset.empty_form.price }}
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-2">
                                                     <div class="form-group">
-                                                        <label for="">Валюта</label>
+                                                        <label for="">{% trans 'Currency' %}</label>
                                                         {{ formset.empty_form.currency }}
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div class="form-group">
-                                                        <label for="">Ед. изм.</label>
+                                                        <label for="">{% trans 'Unit' %}</label>
                                                         <div class="input-group">
                                                             <select name="measure" class="form-control"
                                                                     disabled>
@@ -116,25 +117,25 @@
                                                 {{ inline_form.DELETE|add_class:'delete-input-hidden' }}
                                                 <div class="col-6 col-md-4">
                                                     <div class="form-group">
-                                                        <label for="service">Услуга</label>
+                                                        <label for="service">{% trans 'Service' %}</label>
                                                         {{ inline_form.service }}
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div class="form-group">
-                                                        <label for="">Цена</label>
+                                                        <label for="">{% trans 'Price' %}</label>
                                                         {{ inline_form.price }}
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-2">
                                                     <div class="form-group">
-                                                        <label for="">Валюта</label>
+                                                        <label for="">{% trans 'Currency' %}</label>
                                                         {{ inline_form.currency }}
                                                     </div>
                                                 </div>
                                                 <div class="col-6 col-md-3">
                                                     <div class="form-group">
-                                                        <label for="">Ед. изм.</label>
+                                                        <label for="">{% trans 'Unit' %}</label>
                                                         <div class="input-group">
                                                             <select name="measure" class="form-control"
                                                                     disabled>
@@ -159,7 +160,7 @@
                                             </div>
                                             {% endfor %}
 
-                                            <button class="btn btn-primary" id="add_service" type="button">Добавить услугу</button>
+                                            <button class="btn btn-primary" id="add_service" type="button">{% trans 'Add service' %}</button>
                                         </div>
                                     </div>
 
@@ -168,8 +169,8 @@
                             <div class="row" style="margin-top:15px; margin-bottom: 15px;">
                                 <div class="col-12 text-center">
                                     <a href="{% url 'admin_panel:list_tariff_admin' %}"
-                                       class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success">Сохранить</button>
+                                       class="btn btn-default">{% trans 'Cancel' %}</a>
+                                    <button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
                                 </div>
                             </div>
                         </div>

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="content">
 	<div class="container-fluid" style="height: 80vh;">
 		<section class="msger">
@@ -51,8 +53,8 @@
 			</main>
 
 			<form class="msger-inputarea">
-				<input type="text" class="msger-input" placeholder="Введите ваше сообщение...">
-				<button type="submit" class="msger-send-btn">Отправить</button>
+				<input type="text" class="msger-input" placeholder="{% trans 'Input message' %}...">
+				<button type="submit" class="msger-send-btn">{% trans 'Send' %}</button>
 			</form>
 		</section>
 	</div>

@@ -1,11 +1,12 @@
 from django.core.mail import EmailMessage
 from django.conf import settings
+from django.utils.translation import gettext_lazy as _
 
 import datetime
 
 
 class MailSender:
-    subject = 'Система управления "Мой дом 24"'
+    subject = _('Management system "My House 24"')
 
     def __init__(self, user, file, ticket_number):
         self.user = user
@@ -17,7 +18,7 @@ class MailSender:
         to = self.user.email
         email = EmailMessage(
             self.subject,
-            'Квитанция на оплату',
+            _('Receipt for payment'),
             from_email,
             [to],
             headers={'Reply-To': from_email}

@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Пользователь{% endblock %}
+{% block title %}{% trans 'User' %}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -10,19 +11,19 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Пользователь
+                        {% trans 'User' %}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i>{% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_users_admin' %}"
-                                   style="color: black;">Пользователи</a>
+                                   style="color: black;">{% trans 'Users' %}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Пользователь</li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'User' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -39,7 +40,7 @@
                         <div class="card-header">
                             <a href="{% url 'admin_panel:update_user_admin' user.pk %}" class="btn btn-primary btn-sm"
                                style="float:right; margin-left:5px;">
-                                Редактировать пользователя
+                                {% trans 'Edit user' %}
                             </a>
                         </div>
                         <div class="card-body">
@@ -49,25 +50,25 @@
                                         <table class="table table-bordered table-striped table-view">
                                             <tbody>
                                             <tr>
-                                                <td>Пользователь</td>
+                                                <td>{% trans 'User' %}</td>
                                                 <td>
                                                     {{ user.full_name }}
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Роль</td>
+                                                <td>{% trans 'Role' %}</td>
                                                 <td>{{ user.role }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Телефон</td>
+                                                <td>{% trans 'Phone' %}</td>
                                                 <td>{{ user.phone_number }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Email(логин)</td>
+                                                <td>{% trans 'Email(логин)' %}</td>
                                                 <td>{{ user.email }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Статус</td>
+                                                <td>{% trans 'Статус' %}</td>
                                                 <td>
                                                     {% if user.status == 0 %}
                                                     <small class="label label-success">{{ user.get_status_display }}</small>

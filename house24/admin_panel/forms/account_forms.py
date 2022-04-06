@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from db.models.house import PersonalAccount, House, Section, Flat, Floor
 from db.models.user import User
@@ -12,27 +13,27 @@ class PersonalAccountForm(forms.ModelForm):
 
 class AccountSearchForm(forms.Form):
     debt_choices = [
-        ('', 'Выберите...'),
-        (0, 'Нет долга'),
-        (1, 'Есть долг')
+        ('', _('Choose...')),
+        (0, _('No debt')),
+        (1, _('Debt'))
     ]
     status_choices = [
-        ('', 'Выберите...'),
-        (0, 'Активен'),
-        (1, 'Неактивен')
+        ('', _('Choose...')),
+        (0, _('Active')),
+        (1, _('Inactive'))
     ]
 
     number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                              required=False)
     house = forms.ModelChoiceField(queryset=House.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
-                                   required=False, empty_label='Выберите...')
+                                   required=False, empty_label=_('Choose...'))
     section = forms.ModelChoiceField(queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
-                                     required=False, empty_label='Выберите...')
+                                     required=False, empty_label=_('Choose...'))
     flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                            required=False)
     user = forms.ModelChoiceField(queryset=User.objects.filter(is_staff=False),
                                   widget=forms.Select(attrs={'class': 'form-control'}),
-                                  required=False, empty_label='Выберите...')
+                                  required=False, empty_label=_('Choose...'))
     debt = forms.ChoiceField(choices=debt_choices, widget=forms.Select(attrs={'class': 'form-control'}),
                              required=False)
     status = forms.ChoiceField(choices=status_choices, widget=forms.Select(attrs={'class': 'form-control'}),
@@ -48,21 +49,21 @@ class CreatePersonalAccountForm(forms.ModelForm):
             self.fields['flat'].queryset = Flat.objects.filter(house__pk=house_pk)
 
     status_choices = [
-        (0, 'Активен'),
-        (1, 'Неактивен')
+        (0, _('Active')),
+        (1, _('Inactive'))
     ]
     status = forms.ChoiceField(choices=status_choices,
                                widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'status'}))
-    house = forms.ModelChoiceField(queryset=House.objects.all(), empty_label='Выберите...',
+    house = forms.ModelChoiceField(queryset=House.objects.all(), empty_label=_('Choose...'),
                                    widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'house'}),
                                    required=False)
-    section = forms.ModelChoiceField(queryset=Section.objects.all(), empty_label='Выберите...',
+    section = forms.ModelChoiceField(queryset=Section.objects.all(), empty_label=_('Choose...'),
                                      widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'section'}),
                                      required=False)
-    floor = forms.ModelChoiceField(queryset=Floor.objects.all(), empty_label='Выберите...',
+    floor = forms.ModelChoiceField(queryset=Floor.objects.all(), empty_label=_('Choose...'),
                                    widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'floor'}),
                                    required=False)
-    flat = forms.ModelChoiceField(queryset=Flat.objects.all(), empty_label='Выберите...',
+    flat = forms.ModelChoiceField(queryset=Flat.objects.all(), empty_label=_('Choose...'),
                                   widget=forms.Select(attrs={'class': 'form-control to_valid', 'id': 'flat'}),
                                   required=False)
 

@@ -1,7 +1,8 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Владельцы квартир{% endblock %}
+{% block title %}{% trans 'Flat Owners' %}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
@@ -15,14 +16,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Владельцы квартир</h1>
+                    <h1 class="m-0">{% trans 'Flat Owners' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Владельцы квартир</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Flat Owners' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -36,19 +37,19 @@
             <div class="row">
                 <div class="col-12">
                     <button class="btn btn-success dropdown-toggle breadcrumb_pull_right" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Выберите действие
+                            aria-haspopup="true" aria-expanded="false">{% trans 'Actions' %}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'admin_panel:create_owner_admin' %}">Добавить владельца квартиры</a>
-                        <a class="dropdown-item" href="{% url 'admin_panel:create_message_with_debt_admin' %}">Отправить сообщение должникам</a>
-                        <a class="dropdown-item" href="{% url 'admin_panel:create_invite_message' %}">Отправить приглашение</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_owner_admin' %}">{% trans 'Add flat owner' %}</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_message_with_debt_admin' %}">{% trans 'Send message to a debtors' %}</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_invite_message' %}">{% trans 'Send invite' %}</a>
                     </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
                             <a href="{% url 'admin_panel:list_owners_admin' %}" class="btn btn-default"
-                            style="float:right;">Очистить</a>
+                            style="float:right;">{% trans 'Clear' %}</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
                             <form action="" method="get">
@@ -61,56 +62,56 @@
                                         {% if 'name_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}"
                                             class="submit_link">
-                                               ФИО <i class="fas fa-sort-amount-up"></i>
+											 {% trans 'Full name' %} <i class="fas fa-sort-amount-up"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_name_descending_admin' %}">
                                         {% elif 'name_descending' in request.path %}
                                             <a href="{% url 'admin_panel:list_owners_name_ascending_admin' %}"
                                             class="submit_link">
-                                               ФИО <i class="fas fa-sort-amount-down"></i>
+                                               {% trans 'Full name' %} <i class="fas fa-sort-amount-down"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_name_ascending_admin' %}">
                                         {% else %}
                                             <a href="{% url 'admin_panel:list_owners_name_descending_admin' %}"
                                             class="submit_link">
-                                                   ФИО
+                                                   {% trans 'Full name' %}
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_name_descending_admin' %}">
                                         {% endif %}
                                     </th>
-                                    <th style="width: 140px; min-width: 140px">Телефон</th>
-                                    <th style="width: 140px; min-width: 140px">Email</th>
-                                    <th style="min-width: 250px">Дом</th>
-                                    <th style="min-width: 150px">Квартира</th>
+                                    <th style="width: 140px; min-width: 140px">{% trans 'Phone' %}</th>
+                                    <th style="width: 140px; min-width: 140px">{% trans 'Email' %}</th>
+                                    <th style="min-width: 250px">{% trans 'House' %}</th>
+                                    <th style="min-width: 150px">{% trans 'Flat' %}</th>
                                     <th style="width: 110px; min-width: 110px">
                                         {% if 'date_ascending' in request.path %}
                                             <a href="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}"
                                             class="submit_link">
-                                               Добавлен <i class="fas fa-sort-amount-up"></i>
+                                               {% trans 'Added' %} <i class="fas fa-sort-amount-up"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_date_joined_descending_admin' %}">
                                         {% elif 'date_descending' in request.path %}
                                             <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}"
                                             class="submit_link">
-                                               Добавлен <i class="fas fa-sort-amount-down"></i>
+                                               {% trans 'Added' %} <i class="fas fa-sort-amount-down"></i>
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
                                         {% else %}
                                             <a href="{% url 'admin_panel:list_owners_date_joined_ascending' %}"
                                             class="submit_link">
-                                                   Добавлен
+                                                   {% trans 'Added' %}
                                             </a>
                                             <input type="hidden" class="next_link" 
                                             value="{% url 'admin_panel:list_owners_date_joined_ascending' %}">
                                         {% endif %}
                                     </th>
-                                    <th style="min-width: 150px">Статус</th>
-                                    <th style="min-width: 150px">Есть долг</th>
+                                    <th style="min-width: 150px">{% trans 'Status' %}</th>
+                                    <th style="min-width: 150px">{% trans 'Has debt' %}</th>
                                     <th style="width: 100px; min-width: 100px"></th>
                                 </tr>
                                 </thead>
@@ -180,31 +181,31 @@
                                     </td>
                                     <td>
                                         {% if user.has_debt %}
-                                            Да
+                                            {% trans 'Yes' %}
                                         {% else %}
-                                            Нет
+                                            {% trans 'No' %}
                                         {% endif %}
                                     </td>
                                     <td>
                                         <div class="btn-group">
 											<a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:detail_chat_admin' user.pk %}"
-                                            title="Открыть чат">
+                                            title="{% trans 'Open chat' %}">
                                                 <i class="fas fa-comment"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:create_message_for_owner' user.pk %}"
-                                            title="Отправить сообщение">
+                                            title="{% trans 'Send message' %}">
                                                 <i class="fas fa-envelope"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:update_owner_admin' user.pk %}"
-                                            title="Редактировать">
+                                            title="{% trans 'Edit' %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_owner_admin' user.pk %}"
-                                            title="Удалить">
+                                            title="{% trans 'Delete' %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -213,7 +214,7 @@
                                 {% empty %}
                                 <tr>
                                     <td colspan="10">
-                                        Ничего не найдено
+                                        {% trans 'No data found.' %}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -224,7 +225,7 @@
                         <div class="card-footer">
                             <div class="row" style="align-items:center;">
                                 <div class="col-6">
-                                    Количество владельцев: <strong>{{ count }}</strong>
+                                    {% trans 'Number of owners' %}: <strong>{{ count }}</strong>
                                 </div>
                                 <div class="col-6">
                                     {% include "pagination.html" with page=instances %}

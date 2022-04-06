@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from db.models.house import Service, Measure, Tariff, TariffService, PaymentItem
 from db.models.pages import Credentials
@@ -18,7 +19,7 @@ MeasureFormset = forms.modelformset_factory(model=Measure, form=MeasureForm, can
 
 class ServiceForm(forms.ModelForm):
     measure = forms.ModelChoiceField(widget=forms.Select(attrs={'class': 'form-control to_valid'}),
-                                     queryset=Measure.objects.all(), required=True, empty_label='Выберите...')
+                                     queryset=Measure.objects.all(), required=True, empty_label=_('Choose...'))
 
     class Meta:
         model = Service
@@ -51,7 +52,7 @@ class TariffForm(forms.ModelForm):
 class TariffServiceBlockForm(forms.ModelForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control service_select to_valid'}),
-                                     empty_label='Выберите...')
+                                     empty_label=_('Choose...'))
     currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency to_valid', 'disabled': 'true'}),
                                required=False)
 
@@ -81,7 +82,7 @@ class CredentialsForm(forms.ModelForm):
 class PaymentItemForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type'].empty_label = 'Выберите...'
+        self.fields['type'].empty_label = _('Choose...')
 
     class Meta:
         model = PaymentItem

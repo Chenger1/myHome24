@@ -1,8 +1,9 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Роли{% endblock %}
+{% block title %}{% trans 'Roles' %}{% endblock %}
 
 
 {% block content %}
@@ -14,14 +15,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Роли</h1>
+                    <h1 class="m-0">{% trans 'Roles' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Роли</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Roles' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -41,23 +42,23 @@
                                 <table class="table table-hover table-striped text-nowrap linkedRow">
                                     <thead>
                                     <tr>
-                                        <th>Роль</th>
-                                        <th>Статистика</th>
-                                        <th>Касса</th>
-                                        <th>Квитанции на оплату</th>
-                                        <th>Лицевые счета</th>
-                                        <th>Квартиры</th>
-                                        <th>Владельцы квартир</th>
-                                        <th>Дома</th>
-                                        <th>Сообщения</th>
-                                        <th>Заявки вызова мастера</th>
-                                        <th>Счетчики</th>
-                                        <th>Управление сайтом</th>
-                                        <th>Услуги</th>
-                                        <th>Тарифы</th>
-                                        <th>Роли</th>
-                                        <th>Пользователи</th>
-                                        <th>Платежные реквизиты</th>
+                                        <th>{% trans 'Role' %}</th>
+                                        <th>{% trans 'Statistics' %}</th>
+                                        <th>{% trans 'Cash' %}</th>
+                                        <th>{% trans 'Receipts' %}</th>
+                                        <th>{% trans 'Accounts' %}</th>
+                                        <th>{% trans 'Flats' %}</th>
+                                        <th>{% trans 'Owners' %}</th>
+                                        <th>{% trans 'House' %}а</th>
+                                        <th>{% trans 'Messages' %}</th>
+                                        <th>{% trans 'Master requests' %}</th>
+                                        <th>{% trans 'Meters' %}</th>
+                                        <th>{% trans 'Site management' %}</th>
+                                        <th>{% trans 'Services' %}</th>
+                                        <th>{% trans 'Tariffs' %}</th>
+                                        <th>{% trans 'Roles' %}</th>
+                                        <th>{% trans 'Users' %}</th>
+                                        <th>{% trans 'Payment credentials' %}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -158,8 +159,8 @@
                                 <div class="col-12">
                                     <div style="float:right;">
                                         <a href="{% url 'admin_panel:list_roles_admin' %}"
-                                           class="btn btn-default">Отмена</a>
-                                        <button type="submit" class="btn btn-success">Сохранить</button>
+                                           class="btn btn-default">{% trans 'Cancel' %}</a>
+                                        <button type="submit" class="btn btn-success">{% trans 'Save' %}</button>
                                     </div>
                                 </div>
                             </div>

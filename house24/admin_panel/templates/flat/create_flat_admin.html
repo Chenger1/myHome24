@@ -1,201 +1,196 @@
 {% extends "admin_base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-    {% if form.instance.pk %}
-        Квартира
-    {% else %}
-        Новая квартира
-    {% endif %}
+	{% if form.instance.pk %}
+		{% trans 'Flat' %}
+	{% else %}
+		{% trans 'Flat' %}
+	{% endif %}
 {% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
-<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
+	<link rel="stylesheet" href="{% static 'admin_panel/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
 {% endblock %}
 
 {% block content %}
-{% if form.errors %}
-{% include 'errors.html' with errors=form.errors %}
-{% endif %}
-{% if account_errors %}
-{% include 'errors.html' with errors=account_errors %}
-{% endif %}
-<div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2 border_bottom" style="align-items: center;">
-                <div class="col-sm-6">
-                    <h1 class="m-0">
-                        {% if form.instance.pk %}
-                        Квартира
-                        {% else %}
-                        Новая квартира
-                        {% endif %}
-                    </h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
-                            <li class="breadcrumb-item">
-                                <a href="{% url 'admin_panel:list_flats_admin' %}"
-                                   style="color: black;">Квартиры</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Новая квартира</li>
-                        </ol>
-                    </nav>
-                </div>
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
+	{% if form.errors %}
+		{% include 'errors.html' with errors=form.errors %}
+	{% endif %}
+	{% if account_errors %}
+		{% include 'errors.html' with errors=account_errors %}
+	{% endif %}
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row mb-2 border_bottom" style="align-items: center;">
+					<div class="col-sm-6">
+						<h1 class="m-0">
+							{% if form.instance.pk %}
+								{% trans 'Flat' %}
+							{% else %}
+								{% trans 'Flat' %}
+							{% endif %}
+						</h1>
+					</div><!-- /.col -->
+					<div class="col-sm-6">
+						<nav aria-label="breadcrumb" class="breadcrumb_pull_right">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
+									<i class="fa fa-home"></i>{% trans 'Home' %}</a></li>
+								<li class="breadcrumb-item">
+									<a href="{% url 'admin_panel:list_flats_admin' %}"
+									   style="color: black;">{% trans 'Flats' %}</a>
+								</li>
+								<li class="breadcrumb-item active" aria-current="page">{% trans 'New flat' %}</li>
+							</ol>
+						</nav>
+					</div>
+				</div><!-- /.row -->
+			</div><!-- /.container-fluid -->
+		</div>
 
 
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12" style="margin-top:15px;">
-                    <form action="" method="post">
-                        {% csrf_token %}
-                        <div class="card card-default">
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12" style="margin-top:15px;">
+						<form action="" method="post">
+							{% csrf_token %}
+							<div class="card card-default">
 
-                            <div class="card-body">
-                                <div class="row">
-                                  <div class="col-12 col-sm-6">
-                                      <div class="form-group">
-                                        <label for="number">Номер квартиры</label>
-                                          {{ form.number }}
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="square">Площадь (кв.м.)</label>
-                                          {{ form.square }}
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="house">Дом</label>
-                                          {{ form.house }}
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="section">Секция</label>
-<!--                                          <select name="section" id="section" class="form-control to_valid" required>-->
-<!--                                              <option disabled selected>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
-<!--                                          </select>-->
-                                          {{ form.section }}
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="floor">Этаж</label>
-<!--                                          <select name="floor" id="floor" class="form-control to_valid" required>-->
-<!--                                            <option disabled selected>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
-<!--                                          </select>-->
-                                          {{ form.floor }}
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="owner">Владелец</label>
-                                          {{ form.owner }}
-                                      </div>
-                                      <div class="form-group">
-                                          <label for="tariff">Тариф</label>
-                                          {{ form.tariff }}
-                                      </div>
-                                  </div>
-                                  <div class="col-12 col-sm-6">
-                                        <div class="form-group">
-                                            <label for="personal_account">Лицевой счет</label>
-                                            {{ form.account }}
-                                            <select id="personal_account_select" class="form-control">
-                                                <option></option>
-                                                {% for account in personal_accounts %}
-                                                    <option value="{{ account.pk }}">{{ account.number }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                  </div>
-                                </div>
-                            </div>
+								<div class="card-body">
+									<div class="row">
+										<div class="col-12 col-sm-6">
+											<div class="form-group">
+												<label for="number">{% trans 'Flat Number' %}</label>
+												{{ form.number }}
+											</div>
+											<div class="form-group">
+												<label for="square">{% trans 'Square (m.)' %}</label>
+												{{ form.square }}
+											</div>
+											<div class="form-group">
+												<label for="house">{% trans 'House' %}</label>
+												{{ form.house }}
+											</div>
+											<div class="form-group">
+												<label for="section">{% trans 'Section' %}</label>
+												{{ form.section }}
+											</div>
+											<div class="form-group">
+												<label for="floor">{% trans 'Floor' %}</label>
+												{{ form.floor }}
+											</div>
+											<div class="form-group">
+												<label for="owner">{% trans 'Owner' %}</label>
+												{{ form.owner }}
+											</div>
+											<div class="form-group">
+												<label for="tariff">{% trans 'Tariff' %}</label>
+												{{ form.tariff }}
+											</div>
+										</div>
+										<div class="col-12 col-sm-6">
+											<div class="form-group">
+												<label for="personal_account">{% trans 'Account' %}</label>
+												{{ form.account }}
+												<select id="personal_account_select" class="form-control">
+													<option></option>
+													{% for account in personal_accounts %}
+														<option value="{{ account.pk }}">{{ account.number }}</option>
+													{% endfor %}
+												</select>
+											</div>
+										</div>
+									</div>
+								</div>
 
-                            <div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
-                                <div class="col-12 text-right">
-                                    <a href="{% url 'admin_panel:list_flats_admin' %}"
-                                       class="btn btn-default">Отмена</a>
-                                    <button type="submit" class="btn btn-success" name="multiple" value="0">Сохранить</button>
-                                    {% if not form.instance.pk %}
-                                    <button type="submit" class="btn btn-success" name="multiple" value="1">Сохранить и добавить новую</button>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+								<div class="row" style="margin-top:15px; margin-bottom: 15px; margin-right:10px;">
+									<div class="col-12 text-right">
+										<a href="{% url 'admin_panel:list_flats_admin' %}"
+										   class="btn btn-default">{% trans 'Cancel' %}</a>
+										<button type="submit" class="btn btn-success" name="multiple" value="0">{% trans 'Save' %}</button>
+										{% if not form.instance.pk %}
+											<button type="submit" class="btn btn-success" name="multiple" value="1">{% trans 'Save and add another' %}</button>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
-<script src="{% static 'admin_panel/js/requests.js' %}"></script>
-<script>
-    $('.to_valid').each(function(){
-        $(this).on('change', function(){
-            if($(this).val() != ''){
-                colorize_input_valid(this);
-            }else{
-                colorize_input_invalid(this);
-            }
-        })
-    })
-</script>
-<script>
-    $('button[type=submit]').on('click', function(e){
+	<script src="{% static 'bootstrap/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'admin_panel/js/colorize_input.js' %}"></script>
+	<script src="{% static 'admin_panel/js/requests.js' %}"></script>
+	<script>
         $('.to_valid').each(function(){
-            if($(this).val() == '' && $(this).attr('required')){
-                e.preventDefault();
-                colorize_input_invalid(this);
-            }
+            $(this).on('change', function(){
+                if($(this).val() != ''){
+                    colorize_input_valid(this);
+                }else{
+                    colorize_input_invalid(this);
+                }
+            })
         })
-    })
-</script>
-<script>
-    $(document).ready(function() {
-        $('.select2bs4').select2({
-            theme: 'bootstrap4',
-            width: '100%'
+	</script>
+	<script>
+        $('button[type=submit]').on('click', function(e){
+            $('.to_valid').each(function(){
+                if($(this).val() == '' && $(this).attr('required')){
+                    e.preventDefault();
+                    colorize_input_invalid(this);
+                }
+            })
+        })
+	</script>
+	<script>
+        $(document).ready(function() {
+            $('.select2bs4').select2({
+                theme: 'bootstrap4',
+                width: '100%'
+            });
+            $('#personal_account_select').select2({
+                theme: 'bootstrap4',
+                placeholder: {% trans 'or choose from list' %},
+                width: '100%'
+            });
+            $('.select2bs4').on('change', function(e){
+                colorize_input_valid(this);
+            })
+            $('#personal_account_select').on('change', function(e){
+                $('#personal_account').val($(this).find(':selected').text());
+                colorize_input_valid(this);
+                $(this).val('').trigger('change.select2');
+            })
         });
-        $('#personal_account_select').select2({
-            theme: 'bootstrap4',
-            placeholder: 'или выберите из списка',
-            width: '100%'
-        });
-        $('.select2bs4').on('change', function(e){
-          colorize_input_valid(this);
-        })
-        $('#personal_account_select').on('change', function(e){
-          $('#personal_account').val($(this).find(':selected').text());
-          colorize_input_valid(this);
-          $(this).val('').trigger('change.select2');
-        })
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        {% if not form.instance.pk and not form.errors %}
-            update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
-            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");
-        {% endif %}
+	</script>
+	<script>
+        $(document).ready(function(){
+            {% if not form.instance.pk and not form.errors %}
+                update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}");
+                update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}");
+            {% endif %}
 
 
-        $('select[name=house]').on('change', function(){
-            let value = $(this).find(':selected').val();
-            update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
-            $('select[name=floor]').children().remove();
-            $('select[name=floor]').append('<option>Выберите...</option>');
+            $('select[name=house]').on('change', function(){
+                let value = $(this).find(':selected').val();
+                update_select(element=$('#section'), url="{% url 'rest_api:get_section_list' %}", parent_pk=value,
+                    constructor=append_select_section_floor);
+                $('select[name=floor]').children().remove();
+                $('select[name=floor]').append('<option>{% trans "Choose..." %}</option>');
+            })
+            $('select[name=section]').on('change', function(){
+                let value = $(this).find(':selected').val();
+                update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
+                    constructor=append_select_section_floor);
+            })
         })
-        $('select[name=section]').on('change', function(){
-            let value = $(this).find(':selected').val();
-            update_select(element=$('#floor'), url="{% url 'rest_api:get_floor_list' %}", parent_pk=value,
-                          constructor=append_select_section_floor);
-        })
-    })
-</script>
+	</script>
 {% endblock %}

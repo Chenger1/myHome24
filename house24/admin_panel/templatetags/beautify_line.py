@@ -1,4 +1,5 @@
 from django import template
+from django.utils.translation import gettext_lazy as _
 
 register = template.Library()
 
@@ -12,7 +13,7 @@ def beauty_filter(value):
 @register.filter(name='beauty_error_tag')
 def beauty_filter(value):
     tags = {
-        '__all__': 'Ошибка'
+        '__all__': _('Error')
     }
     return tags[value] if value in tags.keys() else value
 
@@ -32,5 +33,5 @@ def prepare_message(value):
 @register.filter(name='filter_none')
 def filter_none(value):
     if not value:
-        return 'Не указано'
+        return _('Not specified')
     return value

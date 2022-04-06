@@ -1,4 +1,5 @@
 import xlwt
+from django.utils.translation import gettext_lazy as _
 
 
 class SpreadSheerCreator:
@@ -26,15 +27,15 @@ class TransactionSpreadSheet(SpreadSheerCreator):
         font_style = xlwt.XFStyle()
         font_style.font.bold = True
         self.ws.write(0, 0, '#', font_style)
-        self.ws.write(0, 1, 'Дата', font_style)
-        self.ws.write(0, 3, 'Тип платежа', font_style)
-        self.ws.write(0, 5, 'Владелец', font_style)
-        self.ws.write(0, 8, 'Лицевой счет', font_style)
-        self.ws.write(0, 11, 'Статус', font_style)
-        self.ws.write(0, 14, 'Квитанция', font_style)
-        self.ws.write(0, 17, 'Приход/расход', font_style)
-        self.ws.write(0, 19, 'Сумма(грн)', font_style)
-        self.ws.write(0, 21, 'Валюта', font_style)
+        self.ws.write(0, 1, _('Date'), font_style)
+        self.ws.write(0, 3, _('Transaction type'), font_style)
+        self.ws.write(0, 5, _('Owner'), font_style)
+        self.ws.write(0, 8, _('Account'), font_style)
+        self.ws.write(0, 11, _('Status'), font_style)
+        self.ws.write(0, 14, _('Receipt'), font_style)
+        self.ws.write(0, 17, _('Income/outcome'), font_style)
+        self.ws.write(0, 19, _('Sum'), font_style)
+        self.ws.write(0, 21, _('Currency'), font_style)
 
         font_style = xlwt.XFStyle()
         row_num = 0
@@ -57,18 +58,18 @@ class ConcreteTransactionSpreadSheer(SpreadSheerCreator):
     def create_spreadsheet(self, queryset):
         font_style = xlwt.XFStyle()
         # init info row
-        self.ws.write(0, 0, 'Платеж', font_style)
-        self.ws.write(1, 0, 'Дата', font_style)
-        self.ws.write(2, 0, 'Владелец квартиры', font_style)
-        self.ws.write(3, 0, 'Лицевой счет', font_style)
-        self.ws.write(4, 0, 'Приход/расход', font_style)
-        self.ws.write(5, 0, 'Статус', font_style)
-        self.ws.write(6, 0, 'Статья', font_style)
-        self.ws.write(7, 0, 'Квитанция', font_style)
-        self.ws.write(8, 0, 'Сумма', font_style)
-        self.ws.write(9, 0, 'Валюта', font_style)
-        self.ws.write(10, 0, 'Комментарий', font_style)
-        self.ws.write(11, 0, 'Менеджер', font_style)
+        self.ws.write(0, 0, _('Transaction'), font_style)
+        self.ws.write(1, 0, _('Date'), font_style)
+        self.ws.write(2, 0, _('Flat owner'), font_style)
+        self.ws.write(3, 0, _('Account'), font_style)
+        self.ws.write(4, 0, _('Income/Outcome'), font_style)
+        self.ws.write(5, 0, _('Status'), font_style)
+        self.ws.write(6, 0, _('Type'), font_style)
+        self.ws.write(7, 0, _('Receipt'), font_style)
+        self.ws.write(8, 0, _('SUm'), font_style)
+        self.ws.write(9, 0, _('Currency'), font_style)
+        self.ws.write(10, 0, _('Comment'), font_style)
+        self.ws.write(11, 0, _('Manager'), font_style)
         # init data rows
         self.ws.write(0, 4, queryset.number, font_style)
         self.ws.write(1, 4, queryset.created.strftime('%d.%m.%Y'), font_style)
@@ -90,12 +91,12 @@ class AccountSpreadSheet(SpreadSheerCreator):
         font_style = xlwt.XFStyle()
         font_style.font.bold = True
         self.ws.write(0, 0, '№', font_style)
-        self.ws.write(0, 1, 'Статус', font_style)
-        self.ws.write(0, 3, 'Квартира', font_style)
-        self.ws.write(0, 5, 'Дом', font_style)
-        self.ws.write(0, 8, 'Секция', font_style)
-        self.ws.write(0, 11, 'Владелец', font_style)
-        self.ws.write(0, 14, 'Остаток(грн)', font_style)
+        self.ws.write(0, 1, _('Status'), font_style)
+        self.ws.write(0, 3, _('Flat'), font_style)
+        self.ws.write(0, 5, _('House'), font_style)
+        self.ws.write(0, 8, _('Section'), font_style)
+        self.ws.write(0, 11, _('Owner'), font_style)
+        self.ws.write(0, 14, _('Balance'), font_style)
         font_style = xlwt.XFStyle()
         row_num = 0
         for row_data in queryset:

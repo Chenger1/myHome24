@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,7 +10,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
-	<title>{% block title %}Мой дом 24{% endblock %}</title>
+	<title>{% block title %}{% trans 'My House 24' %}{% endblock %}</title>
 
 	<!-- Google Font: Source Sans Pro -->
 	<link rel="stylesheet"
@@ -32,7 +33,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<a class="nav-link" data-widget="pushmenu" href="#" role="button" id="push"><i class="fas fa-bars"></i></a>
 			</li>
 			<li class="nav-item d-none d-sm-inline-block">
-				<span class="nav-link">Панель администратора</span>
+				<span class="nav-link">{% trans 'Admin Panel' %}</span>
 			</li>
 		</ul>
 
@@ -65,13 +66,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<!-- Message Start -->
 							<div class="media">
 								<div class="media-body">
-									<p class="text-sm text-center">Нет новых сообщений</p>
+									<p class="text-sm text-center">{% trans 'No new messages' %}</p>
 								</div>
 							</div>
 							<!-- Message End -->
 						</a>
 					{% endfor %}
-					<a href="{% url 'admin_panel:list_chats_admin' %}" class="dropdown-item dropdown-footer">Перейти в чаты</a>
+					<a href="{% url 'admin_panel:list_chats_admin' %}" class="dropdown-item dropdown-footer">{% trans 'Open chats' %}</a>
 				</div>
 			</li>
 
@@ -81,14 +82,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<span class="badge badge-warning navbar-badge" style="top: 0px;">{{ new_users_count }}</span>
 				</a>
 				<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right" style="left: inherit; right: 0px;">
-					<span class="dropdown-item dropdown-header">Новых пользователей - {{ new_users_count }}</span>
+					<span class="dropdown-item dropdown-header">{% trans 'New users' %} - {{ new_users_count }}</span>
 					<div class="dropdown-divider"></div>
 					{% for new_user in new_users_query %}
 						<a href="{% url 'admin_panel:detail_owner_admin' new_user.pk %}" class="dropdown-item" style="text-overflow: ellipsis; overflow: hidden;">
 							{{ new_user.full_name }}
 						</a>
 					{% endfor %}
-					<a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">Посмотреть всех пользователей</a>
+					<a href="{% url 'admin_panel:list_users_admin' %}" class="dropdown-item dropdown-footer">{% trans 'View all users' %}</a>
 				</div>
 			</li>
 
@@ -110,10 +111,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
 					<div class="menu-footer" style="padding: 10px;">
 						<div class="row text-center" style="background-color: #F9F9F9">
 							<div class="col">
-								<a href="{% url 'admin_panel:detail_user_admin' request.user.pk %}" class="btn btn-default btn-flat">Профиль</a>
+								<a href="{% url 'admin_panel:detail_user_admin' request.user.pk %}" class="btn btn-default btn-flat">{% trans 'Profile' %}</a>
 							</div>
 							<div class="col">
-								<a href="{% url 'admin_panel:logout_admin' %}" class="btn btn-default btn-flat">Выйти</a>
+								<a href="{% url 'admin_panel:logout_admin' %}" class="btn btn-default btn-flat">{% trans 'Logout' %}</a>
 							</div>
 						</div>
 					</div>
@@ -150,7 +151,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						<li class="nav-item">
 							<a href="{% url 'admin_panel:index' %}" class="nav-link {% if request.path == '/admin/' %}active{% endif %}">
 								<i class="nav-icon fa fa-chart-line" aria-hidden="true"></i>
-								<p>Статистика</p>
+								<p>{% trans 'Statistic' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -159,7 +160,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_account_transaction_admin' %}" class="nav-link
                         {% if 'account-transaction/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon fas fa-dollar-sign" aria-hidden="true"></i>
-								<p>Касса</p>
+								<p>{% trans 'Cash' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -168,7 +169,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_payment_ticket_admin' %}" class="nav-link
                         {% if '/admin/payment_ticket/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon far fa-copy" aria-hidden="true"></i>
-								<p>Квитанции на оплату</p>
+								<p>{% trans 'Receipt for paid' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -177,7 +178,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_accounts_admin' %}" class="nav-link
                         {% if '/admin/accounts/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon far fa-credit-card" aria-hidden="true"></i>
-								<p>Лицевые счета</p>
+								<p>{% trans 'Accounts' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -186,7 +187,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_flats_admin' %}" class="nav-link
                         {% if '/admin/flats/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon fas fa-key" aria-hidden="true"></i>
-								<p>Квартиры</p>
+								<p>{% trans 'Flats' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -195,7 +196,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_owners_admin' %}" class="nav-link
                         {% if '/admin/owners/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon fas fa-users" aria-hidden="true"></i>
-								<p>Владельцы квартир</p>
+								<p>{% trans 'Owners' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -204,7 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_houses_admin' %}" class="nav-link
                         {% if '/admin/houses/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon fas fa-building" aria-hidden="true"></i>
-								<p>Дома</p>
+								<p>{% trans 'Houses' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -213,14 +214,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_messages_admin' %}" class="nav-link
                         {% if '/message/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon far fa-envelope" aria-hidden="true"></i>
-								<p>Сообщения</p>
+								<p>{% trans 'Messages' %}</p>
 							</a>
 						</li>
 						<li class="nav-item">
 							<a href="{% url 'admin_panel:list_chats_admin' %}" class="nav-link
                         {% if '/chats/' in request.path %}active{% endif %}">
 								<i class="nav-icon far fa-comment" aria-hidden="true"></i>
-								<p>Чаты</p>
+								<p>{% trans 'Chats' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -229,7 +230,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_master_requests_admin' %}" class="nav-link
                                  {% if '/admin/master_request/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon fas fa-wrench" aria-hidden="true"></i>
-								<p>Заявки вызова мастера</p>
+								<p>{% trans 'Plumber call request' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -238,7 +239,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 							<a href="{% url 'admin_panel:list_meters_admin' %}" class="nav-link
                                  {% if '/admin/meters/index/' in request.path %}active{% endif %}">
 								<i class="nav-icon fas fa-tachometer-alt" aria-hidden="true"></i>
-								<p>Показания счетчиков</p>
+								<p>{% trans 'Meter reading' %}</p>
 							</a>
 						</li>
 					{% endif %}
@@ -252,7 +253,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         {% endif %}">
 							<a href="" class="nav-link">
 								<i class="nav-icon fas fa-desktop" aria-hidden="true"></i>
-								<p>Управление сайтом</p>
+								<p>{% trans 'Manage site' %}</p>
 								<i class="fas fa-angle-left right"></i>
 							</a>
 							<ul class="nav nav-treeview" style=
@@ -266,28 +267,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<a href="{% url 'admin_panel:main_page' %}" class="nav-link
                                 {% if request.path == '/admin/main_page/index/' %}active{% endif %}">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Главная страница</p>
+										<p>{% trans 'Main page' %}</p>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="{% url 'admin_panel:about_page' %}" class="nav-link
                                    {% if request.path == '/admin/about/index/' %}active{% endif %}">
 										<i class="far fa-circle nav-icon"></i>
-										<p>О нас</p>
+										<p>{% trans 'About us' %}</p>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="{% url 'admin_panel:services_page' %}" class="nav-link
                                     {% if request.path == '/admin/services/index/' %}active{% endif %}">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Услуги</p>
+										<p>{% trans 'Services' %}</p>
 									</a>
 								</li>
 								<li class="nav-item">
 									<a href="{% url 'admin_panel:contacts_page' %}" class="nav-link
                                     {% if request.path == '/admin/contacts/index/' %}active{% endif %}">
 										<i class="far fa-circle nav-icon"></i>
-										<p>Контакты</p>
+										<p>{% trans 'Contacts' %}</p>
 									</a>
 								</li>
 							</ul>
@@ -304,7 +305,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         {% endif %}">
 							<a href="" class="nav-link">
 								<i class="nav-icon fas fa-cogs" aria-hidden="true"></i>
-								<p>Настройки системы</p>
+								<p>{% trans 'System settings' %}</p>
 								<i class="fas fa-angle-left right"></i>
 							</a>
 							<ul class="nav nav-treeview" style=
@@ -320,7 +321,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<a href="{% url 'admin_panel:service_measure_option' %}" class="nav-link
                                 {% if request.path == '/admin/service/index/' %}active{% endif %}">
 											<i class="fas fa-briefcase nav-icon"></i>
-											<p>Услуги</p>
+											<p>{% trans 'Services' %}</p>
 										</a>
 									</li>
 								{% endif %}
@@ -329,7 +330,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<a href="{% url 'admin_panel:list_tariff_admin' %}" class="nav-link
                                 {% if '/admin/tariff/index/' in request.path %}active{% endif %}">
 											<i class="fas fa-money-bill-alt nav-icon"></i>
-											<p>Тарифы</p>
+											<p>{% trans 'Tariffs' %}</p>
 										</a>
 									</li>
 								{% endif %}
@@ -338,7 +339,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<a href="{% url 'admin_panel:list_roles_admin' %}" class="nav-link
                                 {% if request.path == '/admin/roles/index/' %}active{% endif %}">
 											<i class="fas fa-user nav-icon"></i>
-											<p>Роли</p>
+											<p>{% trans 'Roles' %}</p>
 										</a>
 									</li>
 								{% endif %}
@@ -347,7 +348,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<a href="{% url 'admin_panel:list_users_admin' %}" class="nav-link
                                 {% if '/admin/user-admin/index/' in request.path %}active{% endif %}">
 											<i class="fas fa-user-plus nav-icon"></i>
-											<p>Пользователи</p>
+											<p>{% trans 'Users' %}</p>
 										</a>
 									</li>
 								{% endif %}
@@ -356,14 +357,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 										<a href="{% url 'admin_panel:credentials_admin' %}" class="nav-link
                                 {% if request.path == '/admin/credentials/index/' %}active{% endif %}">
 											<i class="far fa-credit-card nav-icon"></i>
-											<p>Платежные реквизиты</p>
+											<p>{% trans 'Payment credentials' %}</p>
 										</a>
 									</li>
 									<li class="nav-item">
 										<a href="{% url 'admin_panel:payment_items_admin' %}" class="nav-link
                                 {% if '/admin/payment_items/index/' in request.path  %}active{% endif %}">
 											<i class="fas fa-list-ol nav-icon"></i>
-											<p>Статьи платежей</p>
+											<p>{% trans 'Transaction types' %}</p>
 										</a>
 									</li>
 								{% endif %}
@@ -385,8 +386,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 	<footer class="main-footer">
 		<!-- To the right -->
 		<!-- Default to the left -->
-		Разработано <a href="https://avada-media.ua/">AVADA-MEDIA</a> на базе системы управления
-		<a href="https://avada-media.ua/moydom24/">"МойДом24"</a>. Документация API доступна по <a href="http://myhouse24.avada-media.ua/doc">ссылке</a>
+		{% blocktrans %}
+			Developed by <strong>Chenger1</strong>
+		{% endblocktrans %}
 	</footer>
 </div>
 <!-- ./wrapper -->

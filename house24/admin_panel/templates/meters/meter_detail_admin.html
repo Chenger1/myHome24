@@ -83,7 +83,7 @@
                                                 <td>{{ meter.service }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Дом</td>
+                                                <td>{% trans 'House' %}</td>
                                                 <td>
                                                     {% if meter.house %}
                                                     <a href="{% url 'admin_panel:detail_house_admin' meter.house.pk %}">
@@ -95,7 +95,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Секция</td>
+                                                <td>{% trans 'Section' %}</td>
                                                 <td>
                                                     {% if meter.section %}
                                                     {{ meter.section }}

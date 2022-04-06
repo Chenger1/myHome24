@@ -1,8 +1,9 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Квартира №{{ flat.number }}, {{ flat.house }}{% endblock %}
+{% block title %}{% trans 'Flat' %} №{{ flat.number }}, {{ flat.house }}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -11,19 +12,19 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Квартира №{{ flat.number }}, {{ flat.house }}
+                        {% trans 'Flat' %} №{{ flat.number }}, {{ flat.house }}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i>{% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_flats_admin' %}"
-                                   style="color: black;">Квартиры</a>
+                                   style="color: black;">{% trans 'Flats' %}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Квартира №{{ flat.number }}, {{ flat.house }}</li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Flat' %} №{{ flat.number }}, {{ flat.house }}</li>
                         </ol>
                     </nav>
                 </div>
@@ -38,19 +39,19 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
-                            <h3 style="display: inline-block; margin: 0;">Просмотр квартиры</h3>
+                            <h3 style="display: inline-block; margin: 0;">{% trans 'View Flat' %}</h3>
                             <a href="{% url 'admin_panel:update_flat_admin' flat.pk %}" class="btn btn-primary btn-sm"
                                style="float:right; margin-left:5px;">
-                                Редактировать квартиру
+                                {% trans 'Edit' %}
                             </a>
                             {% if flat.account %}
                             <a href="{% url 'admin_panel:create_ticket_with_flat' flat.pk %}" class="btn btn-default    btn-sm"
                                style="float:right; margin-left:5px;">
-                                <i class="far fa-copy"></i> Оформить квитанцию
+                                <i class="far fa-copy"></i> {% trans 'Make receipt' %}
                             </a>
                             <a href="{% url 'admin_panel:create_income_with_flat' flat.pk %}" class="btn btn-default btn-sm"
                                style="float:right; margin-left:5px;">
-                                <i class="fas fa-dollar-sign"></i> Принять платеж
+                                <i class="fas fa-dollar-sign"></i> {% trans 'Accept payment' %}
                             </a>
                             {% endif %}
                         </div>
@@ -61,52 +62,52 @@
                                         <table class="table table-bordered table-striped table-view">
                                             <tbody>
                                             <tr>
-                                                <td>Лицевой счет</td>
+                                                <td>{% trans 'Account' %}</td>
                                                 <td>
                                                     {{ flat.account|filter_none }}
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Номер квартиры</td>
+                                                <td>{% trans 'Flat number' %}</td>
                                                 <td>{{ flat }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Площадь</td>
+                                                <td>{% trans 'Square' %}</td>
                                                 <td>{{ flat.square|filter_none }} м <sup>2</sup></td>
                                             </tr>
                                             <tr>
-                                                <td>Дом</td>
+                                                <td>{% trans 'House' %}</td>
                                                 <td><a href="{% url 'admin_panel:detail_house_admin' flat.house.pk %}">{{ flat.house }}</a></td>
                                             </tr>
                                             <tr>
-                                                <td>Секция</td>
+                                                <td>{% trans 'Section' %}</td>
                                                 <td>{{ flat.section|filter_none }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Этаж</td>
+                                                <td>{% trans 'Floor' %}</td>
                                                 <td>{{ flat.floor|filter_none }}</td>
                                             </tr>
                                             <tr>
-                                                <td>Владелец</td>
+                                                <td>{% trans 'Owner' %}</td>
                                                 <td>
                                                     {% if flat.owner %}
                                                     <a href="{% url 'admin_panel:detail_owner_admin' flat.owner.pk %}">{{ flat.owner.full_name }}</a>
                                                     {% else %}
-                                                        Не указано
+                                                        {% trans 'Not specified' %}
                                                     {% endif %}
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td>Тариф</td>
+                                                <td>{% trans 'Tariff' %}</td>
                                                 <td>{{ flat.tariff|filter_none }}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                         <div>
-                                            <p><a href="{% url 'admin_panel:list_meter_history' flat.pk %}">Посмотреть показания счетчиков</a></p>
+                                            <p><a href="{% url 'admin_panel:list_meter_history' flat.pk %}">{% trans 'View meter readings' %}</a></p>
                                             {% if flat.account %}
-                                            <p><a href="{% url 'admin_panel:list_transactions_by_account' flat.account.pk %}">Посмотреть приходы</a></p>
-                                            <p><a href="{% url 'admin_panel:list_payment_tickets_by_account' flat.account.pk %}">Посмотреть квитанции</a></p>
+                                            <p><a href="{% url 'admin_panel:list_transactions_by_account' flat.account.pk %}">{% trans 'View incomes' %}</a></p>
+                                            <p><a href="{% url 'admin_panel:list_payment_tickets_by_account' flat.account.pk %}">{% trans 'View receipts' %}</a></p>
                                             {% endif %}
                                         </div>
                                     </div>

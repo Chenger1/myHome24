@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib.auth import login
+from django.utils.translation import gettext_lazy as _
 
 from db.models.user import Role
 from db.services.search import OwnerSearch, UserSearch
@@ -26,7 +27,7 @@ class UpdateRolesView(AdminPermissionMixin, View):
     redirect_url = 'admin_panel:list_roles_admin'
 
     def get(self, request):
-        director = Role.objects.get(name='Директор')
+        director = Role.objects.get(name='Director')
         director_form = None
         formset = RoleFormSet()
         for form in formset.forms:
@@ -40,7 +41,7 @@ class UpdateRolesView(AdminPermissionMixin, View):
         return render(request, self.template_name, context={'roles': formset})
 
     def post(self, request):
-        director = Role.objects.get(name='Директор')
+        director = Role.objects.get(name='Director')
         formset = RoleFormSet(request.POST)
         if formset.is_valid():
             for form in formset:

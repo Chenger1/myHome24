@@ -2,8 +2,9 @@
 {% load static %}
 {% load right_date %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Печатная форма документа{% endblock %}
+{% block title %}{% trans 'The printed form of the document' %}{% endblock %}
 
 {% block content %}
 <div class="content-wrapper">
@@ -12,23 +13,23 @@
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
                     <h1 class="m-0">
-                        Печатная форма документа
+                        {% trans 'The printed form of the document' %}
                     </h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i>Главная</a></li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
                             <li class="breadcrumb-item">
                                 <a href="{% url 'admin_panel:list_payment_ticket_admin' %}"
-                                   style="color: black;">Квитанции</a>
+                                   style="color: black;">{% trans 'Receipt' %}</a>
                             </li>
                             <li class="breadcrumb-item active" aria-current="page">
                                 <a href="{% url 'admin_panel:detail_payment_ticket_admin' ticket.pk %}"
-                                   style="color: black;">Квитанция #{{ ticket.number }}</a>
+                                   style="color: black;">{% trans 'Receipt' %} #{{ ticket.number }}</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Печатная форма документа</li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'The printed form of the document' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -43,10 +44,10 @@
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
-                            <h3 style="display: inline-block; margin: 0;">Список шаблонов</h3>
+                            <h3 style="display: inline-block; margin: 0;">{% trans 'Templates list' %}</h3>
                             <a href="{% url 'admin_panel:payment_ticket_template_settings' %}" class="btn btn-default btn-sm"
                                style="float:right; margin-left:5px;">
-                                Настройка шаблона
+                                {% trans 'Template settings' %}
                             </a>
                         </div>
                         <form action="{% url 'admin_panel:payment_ticket_render_pdf' %}" method="get">
@@ -62,15 +63,15 @@
                                                 <label for="" class="form-check-label">{{ inst.name }}</label>
                                             </div>
                                         {% empty %}
-                                        <h5>Нет шаблонов</h5>
+                                        <h5>{% trans 'No templates' %}</h5>
                                         {% endfor %}
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-group" style="float:right;">
-                                             <button class="btn btn-success" name="download" type="submit" value="0">Скачать</button>
-                                            <button class="btn btn-default" name="send" type="submit" value="1">Отправить на e-mail</button>
+                                             <button class="btn btn-success" name="download" type="submit" value="0">{% trans 'Download' %}</button>
+                                            <button class="btn btn-default" name="send" type="submit" value="1">{% trans 'Send to e-email' %}</button>
                                         </div>
                                     </div>
                                  </div>

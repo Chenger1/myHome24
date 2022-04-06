@@ -1,8 +1,9 @@
 {% extends "admin_base.html" %}
 {% load static %}
 {% load beautify_line %}
+{% load i18n %}
 
-{% block title %}Лицевые счета{% endblock %}
+{% block title %}{% trans 'Accounts' %}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/select2/css/select2.min.css' %}">
@@ -16,14 +17,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Лицевые счета</h1>
+                    <h1 class="m-0">{% trans 'Accounts' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'admin_panel:index' %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Лицевые счета</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Accounts' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -40,8 +41,8 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-green overflow-hidden">
                         <div class="inner">
-                            <h3>{{ statistic.total_cash }} грн</h3>
-                            <p>Состояние кассы</p>
+                            <h3>{{ statistic.total_cash }}</h3>
+                            <p>{% trans 'Cash state' %}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-dollar-sign"></i>
@@ -52,8 +53,8 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-blue overflow-hidden">
                         <div class="inner">
-                            <h3>{{ statistic.total_account_balance }} грн</h3>
-                            <p>Баланс по счетам</p>
+                            <h3>{{ statistic.total_account_balance }}</h3>
+                            <p>{% trans 'Accounts Balance' %}</p>
                         </div>
                         <div class="icon">
                             <i class="fas fa-dollar-sign"></i>
@@ -64,8 +65,8 @@
                     <div class="col-12 col-md-4">
                       <div class="small-box bg-red overflow-hidden">
                         <div class="inner">
-                            <h3>{{ statistic.total_debt }} грн</h3>
-                            <p>Задолженность по счетам</p>
+                            <h3>{{ statistic.total_debt }}</h3>
+                            <p>{% trans 'Accounts debt' %}</p>
                         </div>
                         <div class="icon">
                              <i class="fas fa-dollar-sign"></i>
@@ -77,19 +78,19 @@
                 </div>
                 <div class="col-12 col-md-12 col-lg-3">
                    <button class="btn btn-success dropdown-toggle breadcrumb_pull_right" type="button" data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">Выберите действие
+                            aria-haspopup="true" aria-expanded="false">{% trans 'Actions' %}
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{% url 'admin_panel:create_account_admin' %}">Добавить лицевой счет</a>
+                        <a class="dropdown-item" href="{% url 'admin_panel:create_account_admin' %}">{% trans 'Add account' %}</a>
                         <a class="dropdown-item" href="{% url 'admin_panel:download_spreadsheet_account' %}"
-                        id="download_spreadsheet">Выгрузить в Excel</a>
+                        id="download_spreadsheet">{% trans 'Download Excel' %}</a>
                     </div>
                 </div>
                 <div class="col-12" style="margin-top:15px;">
                     <div class="card card-default">
                         <div class="card-header">
                             <a href="{% url 'admin_panel:list_accounts_admin' %}" class="btn btn-default"
-                            style="float:right;">Очистить</a>
+                            style="float:right;">{% trans 'Clear' %}</a>
                         </div>
                         <div class="card-body card-body table-responsive p-0">
                             <form action="" method="get">
@@ -98,12 +99,12 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 125px; min-width: 125px">#</th>
-                                    <th>Статус</th>
-                                    <th>Квартира</th>
-                                    <th>Дом</th>
-                                    <th>Секция</th>
-                                    <th>Владелец</th>
-                                    <th style="width: 125px; min-width: 125px">Остаток(грн)</th>
+                                    <th>{% trans 'Status' %}</th>
+                                    <th>{% trans 'Flat' %}</th>
+                                    <th>{% trans 'House' %}</th>
+                                    <th>{% trans 'Section' %}</th>
+                                    <th>{% trans 'Owner' %}</th>
+                                    <th style="width: 125px; min-width: 125px">{% trans 'Balance' %}</th>
                                     <th></th>
                                 </tr>
                                 </thead>
@@ -138,9 +139,9 @@
                                     <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">{{ account.number }}</a></td>
                                     <td class="text-center">
                                         {% if account.status == 0 %}
-                                        <small class="label label-success">Активен</small>
+                                        <small class="label label-success">{% trans 'Active' %}</small>
                                         {% else %}
-                                        <small class="label label-danger">Неактивен</small>
+                                        <small class="label label-danger">{% trans 'Inactive' %}</small>
                                         {% endif %}
                                     </td>
                                     <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">
@@ -153,7 +154,7 @@
                                             <a href="{% url 'admin_panel:detail_owner_admin' account.flat.owner.pk %}"
                                             style="color: #007bff;">{{ account.flat.owner.full_name|filter_none|truncatechars:30 }}</a>
                                         {% else %}
-                                            Не указано
+                                            {% trans 'Not specified' %}
                                         {% endif %}
                                     </td>
                                     <td><a href="{% url 'admin_panel:detail_account_admin' account.pk %}">
@@ -163,12 +164,12 @@
                                         <div class="btn-group">
                                             <a class="btn btn-default btn-sm"
                                                href="{% url 'admin_panel:update_account_admin' account.pk %}"
-                                            title="Редактировать">
+                                            title="{% trans 'Edit' %}">
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             <a class="btn btn-default btn-sm delete_instances"
                                                href="{% url 'admin_panel:delete_account_admin' account.pk %}"
-                                            title="Удалить">
+                                            title="{% trans 'Delete' %}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
                                         </div>
@@ -176,7 +177,7 @@
                                 </tr>
                                 {% empty %}
                                 <tr>
-                                    <td colspan="8">Ничего не найдено</td>
+                                    <td colspan="8">{% trans 'Not found any data' %}</td>
                                 </tr>
                                 {% endfor %}
                                 </tbody>
@@ -186,7 +187,7 @@
                         <div class="card-footer">
                             <div class="row" style="align-items:center;">
                                 <div class="col-6">
-                                    Количество счетов: <strong>{{ count }}</strong>
+									{% trans 'Number of accounts' %}: <strong>{{ count }}</strong>
                                 </div>
                                 <div class="col-6">
                                     {% include "pagination.html" with page=instances %}

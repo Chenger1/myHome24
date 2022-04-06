@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import DetailView, View
 from django.contrib import messages
+from django.utils.translation import gettext_lazy as _
 
 from user_profile.views.mixin import ListPaginatedQuery
 from user_profile.forms.client_forms import SearchTicketsForm, CreateTransaction
@@ -87,7 +88,7 @@ class CreateTransactionByTicket(View):
         form = self.form(request.POST)
         if form.is_valid():
             form.save()
-            messages.info(request, 'Ваша оплата отправлена на обработку')
+            messages.info(request, _('Your payment has been sent for processing'))
             return redirect('user_profile:list_payment_tickets_client', pk=request.user.pk)
         else:
             ticket = get_object_or_404(PaymentTicket, pk=pk)

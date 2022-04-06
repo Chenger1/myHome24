@@ -1,7 +1,8 @@
 {% extends "user_profile_base.html" %}
 {% load static %}
+{% load i18n %}
 
-{% block title %}Сообщения{% endblock %}
+{% block title %}{% trans 'Messages' %}{% endblock %}
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'admin_panel/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %}">
@@ -13,14 +14,14 @@
         <div class="container-fluid">
             <div class="row mb-2 border_bottom" style="align-items: center;">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Сообщения</h1>
+                    <h1 class="m-0">{% trans 'Messages' %}</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <nav aria-label="breadcrumb" class="breadcrumb_pull_right">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{% url 'user_profile:user_profile' request.user.pk %}" style="color: black;">
-                                <i class="fa fa-home"></i> Главная</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">Сообщения</li>
+                                <i class="fa fa-home"></i> {% trans 'Home' %}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% trans 'Messages' %}</li>
                         </ol>
                     </nav>
                 </div>
@@ -60,15 +61,15 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 50px;"></th>
-                                            <th style="width: 200px; min-width: 200px;">От кого</th>
-                                            <th>Текст</th>
-                                            <th style="width: 135px; min-width: 135px;">Дата</th>
+                                            <th style="width: 200px; min-width: 200px;">{% trans 'From' %}</th>
+                                            <th>{% trans 'Text' %}</th>
+                                            <th style="width: 135px; min-width: 135px;">{% trans 'Date' %}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {% if not instances %}
                                             <tr>
-                                                <td colspan="4">Ничего не найдено</td>
+                                                <td colspan="4">{% trans 'No data found' %}</td>
                                             </tr>
                                         {% else %}
                                             {% for message in instances %}
@@ -169,7 +170,7 @@
         })
         $('.delete_toggle').each(function(){
             $(this).on('click', function(){
-                if(confirm('Вы уверены что хотите удалить эти сообщения?')){
+                if(confirm('{% trans "Are you sure you want to delete these messages?" %}')){
                     let result = [];
                     $('input[type=checkbox]:checked').each(function(){
                         result.push($(this).closest('tr').find('.message_pk').val());
