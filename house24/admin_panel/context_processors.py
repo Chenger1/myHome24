@@ -25,7 +25,9 @@ class UnreadMessage:
 
         messages = []
         for message in raw_messages:
-            user = next((u for u in users if u.uuid == message.from_user))
+            user = next((u for u in users if u.uuid == message.from_user), None)
+            if not user:
+                continue
             messages.append(UnreadMessage(text=message.text,
                                           photo_url=user.photo_url,
                                           user_full_name=user.full_name,

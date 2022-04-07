@@ -78,8 +78,7 @@ class Message(me.Document):
 
     @classmethod
     def get_unread_messages(cls, current_user):
-        return cls.objects(me.Q(from_user=current_user, read=False) |
-                           me.Q(to_user=current_user, read=False))
+        return cls.objects(to_user=current_user, read=False)
 
 
 # SQL Part
