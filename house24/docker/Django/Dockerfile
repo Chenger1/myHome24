@@ -32,7 +32,7 @@ RUN chown -R house24:house24 $APP_HOME
 
 
 RUN pip install --upgrade pip
-COPY requirements.txt ./
+COPY ../../requirements.txt ./
 RUN pip install -r requirements.txt
 
-COPY . .
+COPY ../.. .

@@ -132,5 +132,5 @@ house24/static/admin
 house24/static/rest_framework
 house24/media/
 house24/house24/config.py
-house24/local.env
+house24/config/local.env
 house24/.env
