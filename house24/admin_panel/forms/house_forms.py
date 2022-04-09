@@ -41,7 +41,8 @@ class FloorForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control to_valid'}),
                            required=False)
     sections = forms.ModelMultipleChoiceField(queryset=Section.objects.all(),
-                                              widget=forms.SelectMultiple(attrs={'class': 'form-control to_valid section_select',
+                                              widget=forms.SelectMultiple(attrs={'class': 'form-control ' +
+                                                                                          'to_valid section_select',
                                                                                  'multiple': 'true'}),
                                               required=False)
 

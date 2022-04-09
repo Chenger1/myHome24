@@ -87,9 +87,10 @@ class PostInstanceMixin:
             obj = form.save()
             account_data = form.cleaned_data.get('account')
             if account_data:
-                personal_account, created = PersonalAccount.objects.get_or_create(number=account_data,
-                                                                                  defaults={'house': form.cleaned_data.get('house'),
-                                                                                            'section': form.cleaned_data.get('section')})
+                personal_account, created = PersonalAccount.objects. \
+                    get_or_create(number=account_data,
+                                  defaults={'house': form.cleaned_data.get('house'),
+                                            'section': form.cleaned_data.get('section')})
                 if hasattr(obj, 'account'):
                     old_account = obj.account
                     old_account.flat = None

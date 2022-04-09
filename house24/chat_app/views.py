@@ -1,5 +1,4 @@
 import logging
-import eventlet
 
 from flask_socketio import SocketIO, join_room, leave_room, emit, Namespace
 from flask import request, session
@@ -20,7 +19,7 @@ class ChatNamespace(Namespace):
                                     'user_uuid': data['user_uuid']}
             join_room(data['chat_uuid'])
             join_room(f'notifications-{data["user_uuid"]}')
-        except Exception as e:
+        except Exception:
             emit('client_info_handler', {'success': False,
                                          'type': 'connect'})
         else:

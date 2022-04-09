@@ -51,7 +51,5 @@ def add_new_users_to_template(request):
 def add_unread_messages_to_template(request):
     if request.user.is_authenticated:
         raw_messages = Message.get_unread_messages(request.user.uuid)
-        return {
-             'unread_messages': UnreadMessage.prepare_unread_messages(raw_messages)
-        }
+        return {'unread_messages': UnreadMessage.prepare_unread_messages(raw_messages)}
     return {}

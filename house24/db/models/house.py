@@ -204,7 +204,9 @@ class PaymentTicket(models.Model):
 
     @property
     def ticket_date(self):
-        return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
+        return datetime.date(month=self.created.month,
+                             year=self.created.year,
+                             day=self.created.day).strftime('%d.%m.%Y')
 
     @property
     def has_owner(self):
@@ -325,7 +327,9 @@ class Transaction(models.Model):
 
     @property
     def transaction_date(self):
-        return datetime.date(month=self.created.month, year=self.created.year, day=self.created.day).strftime('%d.%m.%Y')
+        return datetime.date(month=self.created.month,
+                             year=self.created.year,
+                             day=self.created.day).strftime('%d.%m.%Y')
 
     @classmethod
     def total_cash(cls):

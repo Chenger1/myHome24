@@ -120,7 +120,8 @@ class UpdateHouseView(AdminPermissionMixin, View):
                         #  if floor already exists in section - get, otherwise - create
                         floor, is_created = Floor.objects.get_or_create(name=floor_form.cleaned_data['name'],
                                                                         section=section)
-                    floors = Floor.objects.filter(section__in=inst.sections.all(), name=floor_form.cleaned_data['name'])\
+                    floors = Floor.objects.filter(section__in=inst.sections.all(),
+                                                  name=floor_form.cleaned_data['name']) \
                         .exclude(section__in=floor_form.cleaned_data['sections'])
                     floors.delete()
                 # if there are no section in form cleaned data - section doesnt contains this floor anymore

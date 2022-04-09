@@ -60,13 +60,13 @@ class CreateMasterRequest(forms.ModelForm):
         model = MasterRequest
         fields = ('type', 'flat', 'date', 'time', 'description')
         widgets = {
-            'date': forms.DateInput(format=('%Y-%m-%d'), attrs={
+            'date': forms.DateInput(format='%Y-%m-%d', attrs={
                 'type': "date",
                 'value': datetime.datetime.now().strftime('%Y-%m-%d'),
                 'class': "form-control to_valid",
                 'id': 'created'
             }),
-            'time':  forms.TimeInput(format=('%H:%M'), attrs={
+            'time':  forms.TimeInput(format='%H:%M', attrs={
                 'type': "time",
                 'value': datetime.datetime.now().strftime('%H:%M'),
                 'class': "form-control to_valid",

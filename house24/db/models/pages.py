@@ -1,17 +1,14 @@
-from django.db import models
-from django.core.validators import RegexValidator
 from django.urls import reverse
 
-
 from db.models.mixin import SingletonModel
-from db.models.receiver import *
+from django.db import models
 
 
 class MainPage(SingletonModel):
     slide1 = models.ImageField(upload_to='main_page/')
     slide2 = models.ImageField(upload_to='main_page/')
     slide3 = models.ImageField(upload_to='main_page/')
-    title = models.CharField(max_length=150,  blank=True, null=True)
+    title = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
     show_link = models.BooleanField(default=1)
     seo_title = models.CharField(max_length=150, blank=True, null=True)
@@ -27,8 +24,8 @@ class MainPage(SingletonModel):
 
 class InfoBlock(models.Model):
     entity = models.ForeignKey(MainPage, related_name='blocks', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='main_page/block/',  blank=True, null=True)
-    title = models.CharField(max_length=150,  blank=True, null=True)
+    image = models.ImageField(upload_to='main_page/block/', blank=True, null=True)
+    title = models.CharField(max_length=150, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     def get_files(self):

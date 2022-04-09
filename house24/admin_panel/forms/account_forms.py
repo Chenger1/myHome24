@@ -27,7 +27,8 @@ class AccountSearchForm(forms.Form):
                              required=False)
     house = forms.ModelChoiceField(queryset=House.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
                                    required=False, empty_label=_('Choose...'))
-    section = forms.ModelChoiceField(queryset=Section.objects.all(), widget=forms.Select(attrs={'class': 'form-control'}),
+    section = forms.ModelChoiceField(queryset=Section.objects.all(),
+                                     widget=forms.Select(attrs={'class': 'form-control'}),
                                      required=False, empty_label=_('Choose...'))
     flat = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                            required=False)

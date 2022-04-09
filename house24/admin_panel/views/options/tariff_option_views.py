@@ -127,7 +127,7 @@ class DuplicateTariff(AdminPermissionMixin, View):
             else:
                 new_obj.delete()
                 return render(request, self.template_name, context={'form': form,
-                                                             'formset': formset})
+                                                                    'formset': formset})
         else:
             return render(request, self.template_name, context={'form': form,
                                                                 'formset': formset})

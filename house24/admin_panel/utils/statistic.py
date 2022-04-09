@@ -30,20 +30,20 @@ class StatisticController:
     def prepare_statistic(self):
         total_cash, total_debt, total_account_balance = self.prepare_transaction()
         statistic = Statistic(
-                self.prepare_houses(),
-                self.prepare_flats(),
-                self.prepare_accounts(),
-                self.prepare_users(),
-                self.prepare_new_requests(),
-                self.prepare_requests_in_work(),
-                total_cash,
-                total_debt,
-                total_account_balance,
-                self.prepare_income(),
-                self.prepare_outcome(),
-                self.prepare_paid_ticket(),
-                self.prepare_unpaid_ticket()
-           )
+            self.prepare_houses(),
+            self.prepare_flats(),
+            self.prepare_accounts(),
+            self.prepare_users(),
+            self.prepare_new_requests(),
+            self.prepare_requests_in_work(),
+            total_cash,
+            total_debt,
+            total_account_balance,
+            self.prepare_income(),
+            self.prepare_outcome(),
+            self.prepare_paid_ticket(),
+            self.prepare_unpaid_ticket()
+        )
         return statistic
 
     @staticmethod
@@ -79,7 +79,7 @@ class StatisticController:
     def prepare_income():
         result = {}
         for month in range(1, 13):
-            result[month] = Transaction.objects.filter(created__month=month, payment_item_type__type=0).\
+            result[month] = Transaction.objects.filter(created__month=month, payment_item_type__type=0). \
                                 aggregate(Sum('paid_sum'))['paid_sum__sum'] or 0
         return result
 
@@ -87,7 +87,7 @@ class StatisticController:
     def prepare_outcome():
         result = {}
         for month in range(1, 13):
-            result[month] = Transaction.objects.filter(created__month=month, payment_item_type__type=1).\
+            result[month] = Transaction.objects.filter(created__month=month, payment_item_type__type=1). \
                                 aggregate(Sum('paid_sum'))['paid_sum__sum'] or 0
         return result
 

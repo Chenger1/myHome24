@@ -53,7 +53,8 @@ class TariffServiceBlockForm(forms.ModelForm):
     service = forms.ModelChoiceField(queryset=Service.objects.all(),
                                      widget=forms.Select(attrs={'class': 'form-control service_select to_valid'}),
                                      empty_label=_('Choose...'))
-    currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency to_valid', 'disabled': 'true'}),
+    currency = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control currency to_valid',
+                                                             'disabled': 'true'}),
                                required=False)
 
     class Meta:

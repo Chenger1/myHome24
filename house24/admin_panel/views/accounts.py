@@ -113,7 +113,8 @@ class DownloadSpreadSheet(View):
         if form.is_valid():
             instances = self.search_obj.search(form.cleaned_data, self.model.objects.all())
             response = HttpResponse(content_type='application/ms-excel')
-            response['Content-Disposition'] = f'attachment; filename="{self.model.__name__}{datetime.date.today().strftime("%Y%m%d")}.xls"'
+            time_now = datetime.date.today().strftime("%Y%m%d")
+            response['Content-Disposition'] = f'attachment; filename="{self.model.__name__}{time_now}.xls"'
             constructor = AccountSpreadSheet(self.model)
             file = constructor.create_spreadsheet(instances)
             file.save(response)

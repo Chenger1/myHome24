@@ -4,7 +4,6 @@ from django.contrib.auth import get_user_model
 from django.urls import reverse_lazy
 from django.core.exceptions import ValidationError
 from django.contrib.auth import login
-from django.utils.translation import gettext_lazy as _
 
 from db.models.user import Role
 from db.services.search import OwnerSearch, UserSearch
