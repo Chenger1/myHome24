@@ -1,30 +1,32 @@
 from django.apps import AppConfig
 from django.db.models.signals import post_migrate
+from django.utils.translation import gettext_lazy as _
 
 
 def create_role_instances(sender, **kwargs):
     #  Create basic instances after migrations
-    from db.models.user import Role  # import inside function because apps aren`t loaded yet
-    for name in Role.reserved_names:
-        if not Role.objects.filter(name=name).exists():
-            Role.objects.create(name=name)
+    from db.models.user import Role, RoleEnum  # import inside function because apps aren`t loaded yet
+
+    for name in RoleEnum:
+        if not Role.objects.filter(name.value).exists():
+            Role.objects.create(name=name.value)
 
 
 def create_payment_item_instance(sender, **kwargs):
     from db.models.house import PaymentItem
-    PaymentItem.objects.get_or_create(name='Основной приход', type=0, default_income_type=True)
-    PaymentItem.objects.get_or_create(name='Основной расход', type=1)
+    PaymentItem.objects.get_or_create(name=_('Main income'), type=0, default_income_type=True)
+    PaymentItem.objects.get_or_create(name=_('Main outcome'), type=1)
 
 
 def create_measure_instances(sender, **kwargs):
     from db.models.house import Measure
-    Measure.objects.get_or_create(measure_name='м3')
-    Measure.objects.get_or_create(measure_name='грн./м2')
-    Measure.objects.get_or_create(measure_name='грн./мес.')
-    Measure.objects.get_or_create(measure_name='кв.м.кКал')
-    Measure.objects.get_or_create(measure_name='ед.')
-    Measure.objects.get_or_create(measure_name='мес.')
-    Measure.objects.get_or_create(measure_name='кВт.ч')
+    Measure.objects.get_or_create(measure_name=_('м3'))
+    Measure.objects.get_or_create(measure_name=_('cur./м2'))
+    Measure.objects.get_or_create(measure_name=_('cur./mon'))
+    Measure.objects.get_or_create(measure_name=_('sq.m.cCal'))
+    Measure.objects.get_or_create(measure_name='un.')
+    Measure.objects.get_or_create(measure_name='month')
+    Measure.objects.get_or_create(measure_name='kw.h')
 
 
 class DbConfig(AppConfig):

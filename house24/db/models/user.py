@@ -1,4 +1,5 @@
 from uuid import uuid4
+from enum import Enum
 
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
@@ -9,13 +10,19 @@ from django.utils.translation import gettext_lazy as _
 from db.models.manager import UserManager
 
 
+class RoleEnum(Enum):
+    director = _('Director')
+    manager = _('Manager')
+    accountant = _('Accountant')
+    electrician = _('Electrician')
+    plumber = _('Plumber')
+
+
 def get_dir_name(instance, filename):
     return f'users/{instance.last_name}/{filename}'
 
 
 class Role(models.Model):
-    reserved_names = ('Director', 'Manager', 'Accountant', 'Electrician', 'Plumber')
-
     name = models.CharField(max_length=30)
     statistic = models.BooleanField(default=1)
     account_transaction = models.BooleanField(default=1)
