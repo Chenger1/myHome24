@@ -64,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 
     'admin_panel.middleware.AdminCheckMiddleware',
     'user_profile.middleware.CheckUserProfileAccess'
@@ -170,3 +171,10 @@ ROBOTS_SITEMAP_URLS = [
 ]
 
 SOCKET_IO_PATH = os.environ.get('SOCKET_IO_PATH', 'http://127.0.0.1:5000/')
+
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'",)
+CSP_FONT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_DEFAULT_SRC = ("'none'",)
+
