@@ -20,5 +20,6 @@ urlpatterns = [
     path('rest_api/', include('rest_api.urls', namespace='rest_api')),
     path('', include('website.urls', namespace='website')),
     path('robots.txt', include('robots.urls')),
-    path('user_profile/', include('user_profile.urls', namespace='user_profile'))
+    path('user_profile/', include('user_profile.urls', namespace='user_profile')),
+    path('ht/', include('health_check.urls')),
 ]

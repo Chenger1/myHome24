@@ -1,8 +1,8 @@
 #!make
-ENV_FILE_CHECK = local.env
+ENV_FILE_CHECK = config/local.env
 ifneq ("$(wildcard $(ENV_FILE_CHECK))","")
-	include local.env
-	export $(shell sed 's/=.*//' local.env)
+	include config/local.env
+	export $(shell sed 's/=.*//' config/local.env)
 endif
 
 MANAGE = python manage.py
@@ -34,3 +34,9 @@ shell:
 
 super:
 	$(MANAGE) createsuperuser
+
+check:
+	$(MANAGE) check
+
+show:
+	$(MANAGE) showmigrations

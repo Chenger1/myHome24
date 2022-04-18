@@ -7,10 +7,12 @@ def create_role_instances(sender, **kwargs):
     #  Create basic instances after migrations
     from db.models.user import Role, RoleEnum  # import inside function because apps aren`t loaded yet
 
-    for name in RoleEnum:
-        if not Role.objects.filter(name.value).exists():
-            Role.objects.create(name=name.value)
-
+    try:
+        for name in RoleEnum:
+            if not Role.objects.filter(name.value).exists():
+                Role.objects.create(name=name.value)
+    except Exception:
+        pass
 
 def create_payment_item_instance(sender, **kwargs):
     from db.models.house import PaymentItem

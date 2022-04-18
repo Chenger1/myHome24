@@ -53,6 +53,10 @@ INSTALLED_APPS = [
     'admin_panel',
     'user_profile',
     'robots',
+    'axes',
+    'health_check',
+    'health_check.cache',
+    'health_check.storage',
 ]
 
 MIDDLEWARE = [
@@ -67,7 +71,8 @@ MIDDLEWARE = [
     'csp.middleware.CSPMiddleware',
 
     'admin_panel.middleware.AdminCheckMiddleware',
-    'user_profile.middleware.CheckUserProfileAccess'
+    'user_profile.middleware.CheckUserProfileAccess',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'house24.urls'
@@ -126,7 +131,9 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-AUTHENTICATION_BACKENDS = ['website.auth_backend.EmailBackend', 'website.auth_backend.IDBackend']
+AUTHENTICATION_BACKENDS = ['axes.backends.AxesBackend',
+                           'website.auth_backend.EmailBackend',
+                           'website.auth_backend.IDBackend']
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -172,9 +179,40 @@ ROBOTS_SITEMAP_URLS = [
 
 SOCKET_IO_PATH = os.environ.get('SOCKET_IO_PATH', 'http://127.0.0.1:5000/')
 
-CSP_SCRIPT_SRC = ("'self'",)
-CSP_IMG_SRC = ("'self'",)
-CSP_FONT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ('unsafe-inline', 'unsafe-eval')
+CSP_IMG_SRC = ('unsafe-inline',)
+CSP_FONT_SRC = ('unsafe-inline',)
+CSP_STYLE_SRC = ('unsafe-inline',)
 CSP_DEFAULT_SRC = ("'none'",)
 
+SECURE_REFERRER_POLICY = 'same-origin'
+
+EXTRA_CHECKS = {
+    'checks': [
+        # Forbid `unique_together`:
+        'no-unique-together',
+        # Require non empty `upload_to` argument:
+        'field-file-upload-to',
+        # Use the indexes option instead:
+        'no-index-together',
+        # Each model must be registered in admin:
+        'model-admin',
+        # FileField/ImageField must have non empty `upload_to` argument:
+        'field-file-upload-to',
+        # Text fields shouldn't use `null=True`:
+        'field-text-null',
+        # Prefer using BooleanField(null=True) instead of NullBooleanField:
+        'field-boolean-null',
+        # Don't pass `null=False` to model fields (this is django default)
+        'field-null',
+        # ForeignKey fields must specify db_index explicitly if used in
+        # other indexes:
+        {'id': 'field-foreign-key-db-index', 'when': 'indexes'},
+        # If field nullable `(null=True)`,
+        # then default=None argument is redundant and should be removed:
+        'field-default-null',
+        # Fields with choices must have companion CheckConstraint
+        # to enforce choices on database level
+        'field-choices-constraint',
+    ],
+}
