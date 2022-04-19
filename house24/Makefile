@@ -40,3 +40,6 @@ check:
 
 show:
 	$(MANAGE) showmigrations
+
+create_roles:
+	$(MANAGE) create_roles
