@@ -68,7 +68,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'csp.middleware.CSPMiddleware',
+    # 'csp.middleware.CSPMiddleware',
 
     'admin_panel.middleware.AdminCheckMiddleware',
     'user_profile.middleware.CheckUserProfileAccess',
@@ -179,10 +179,18 @@ ROBOTS_SITEMAP_URLS = [
 
 SOCKET_IO_PATH = os.environ.get('SOCKET_IO_PATH', 'http://127.0.0.1:5000/')
 
-CSP_SCRIPT_SRC = ('unsafe-inline', 'unsafe-eval')
-CSP_IMG_SRC = ('unsafe-inline',)
-CSP_FONT_SRC = ('unsafe-inline',)
-CSP_STYLE_SRC = ('unsafe-inline',)
+CSP_SCRIPT_SRC = (
+    'https://use.fontawesome.com',
+    'https://fonts.googleapis.com',
+    "'self'",
+    "unsafe-inline"
+)
+CSP_SCRIPT_ELEM_SRC = (
+    "'self'", "'https:data'"
+)
+CSP_IMG_SRC = ("'self'", "'unsafe-eval'")
+CSP_FONT_SRC = ('https://use.fontawesome.com', 'https://fonts.gstatic.com')
+CSP_STYLE_SRC = ("'self'", "'unsafe-inline'", 'https://fonts.googleapis.com')
 CSP_DEFAULT_SRC = ("'none'",)
 
 SECURE_REFERRER_POLICY = 'same-origin'
