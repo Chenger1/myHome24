@@ -194,5 +194,5 @@ class User(CustomAbstractUser):
 
     def save(self, *args, **kwargs):
         if self.is_superuser:
-            self.role = Role.objects.get(name=RoleEnum.director)
+            self.role = Role.objects.get(name=RoleEnum.director.value)
         return super().save(*args, **kwargs)
